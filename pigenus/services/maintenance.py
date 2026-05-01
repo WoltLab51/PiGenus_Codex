@@ -63,6 +63,7 @@ def mark_stale_workers_offline(session: Session, settings: Settings) -> int:
 def create_nightly_maintenance_jobs(session: Session) -> int:
     job_specs = [
         ("maintenance.rotate_logs", {}),
+        ("maintenance.backup", {}),
         ("maintenance.summarize_sessions", {}),
         ("maintenance.compress_memory", {}),
         ("maintenance.daily_briefing", {}),

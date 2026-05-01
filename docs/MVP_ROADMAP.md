@@ -32,9 +32,9 @@
 
 - Session/message APIs: implemented baseline
 - Memory create/search/update APIs: implemented baseline
-- Nightly session summarization jobs: queued by maintenance
-- Daily briefing generation: queued by maintenance
-- Actual summarizer/compressor worker implementations
+- Nightly session summarization jobs: handled by maintenance worker baseline
+- Daily briefing generation: handled by maintenance worker baseline
+- Actual summarizer/compressor worker implementations: deterministic baseline implemented
 - Human approval queue for critical actions
 
 ## Phase 4: Developer Orchestration

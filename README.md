@@ -73,6 +73,15 @@ Restore from a backup requires an explicit confirmation flag:
 pigenus-admin restore .\backups\pigenus-example.sqlite3 --yes
 ```
 
+Run the local maintenance worker after registering a worker with the `maintenance` capability:
+
+```powershell
+$env:PIGENUS_BASE_URL="http://127.0.0.1:8000"
+$env:PIGENUS_WORKER_ID="1"
+$env:PIGENUS_WORKER_TOKEN="worker-token-from-registration"
+pigenus-worker --once
+```
+
 ## Production Posture
 
 Set secrets through environment or an environment file owned by the service account. Do not commit real tokens. Prefer Tailscale or WireGuard for remote access, and bind PiGenus to private interfaces unless there is a specific reason to do otherwise.

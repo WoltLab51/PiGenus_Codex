@@ -79,15 +79,19 @@ PiGenus includes an in-process fixed-window rate limiter. It is intentionally si
 
 ## Night Mode
 
-Night mode implements a maintenance trigger, stuck-job requeue path, SQLite backup creation, stale-worker detection, and queueing of maintenance jobs. Worker implementations can then perform heavier tasks off-device or on suitable machines.
+Night mode implements a maintenance trigger, stuck-job requeue path, SQLite backup creation, stale-worker detection, and queueing of maintenance jobs. The local maintenance worker leases those jobs through the same worker API as external machines, then performs deterministic low-cost maintenance tasks.
 
 - Rotate logs: queued as `maintenance.rotate_logs`
 - Create backups: implemented for file-backed SQLite
-- Summarize sessions: queued as `maintenance.summarize_sessions`
-- Compress memory: queued as `maintenance.compress_memory`
-- Requeue stuck jobs: implemented
-- Prepare daily briefing: queued as `maintenance.daily_briefing`
+- Summarize sessions: handled by `pigenus-worker`
+- Compress memory: handled by `pigenus-worker`
+- Requeue stuck jobs: implemented in maintenance service
+- Prepare daily briefing: handled by `pigenus-worker`
 - Check worker availability: stale online workers are marked offline, and a worker availability job is queued
+
+## Worker Execution
+
+The first production worker is `pigenus-worker`, a maintenance worker. It authenticates as a trusted worker, sends heartbeats, leases jobs, runs only known maintenance job types, and reports success or failure back to PiGenus. It uses the same SQLite configuration as the core service for local maintenance tasks, keeping the API contract realistic while avoiding an extra internal RPC layer.
 
 ## Operating Philosophy
 

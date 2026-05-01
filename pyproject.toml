@@ -20,6 +20,7 @@ dev = [
 [project.scripts]
 pigenus = "pigenus.main:run"
 pigenus-admin = "pigenus.cli:main"
+pigenus-worker = "pigenus.workers.runner:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

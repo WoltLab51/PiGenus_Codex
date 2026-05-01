@@ -26,8 +26,11 @@ if [[ ! -f "${ENV_DIR}/pigenus.env" ]]; then
 fi
 
 install -m 644 deploy/pigenus.service /etc/systemd/system/pigenus.service
+install -m 644 deploy/pigenus-worker.service /etc/systemd/system/pigenus-worker.service
 systemctl daemon-reload
 systemctl enable pigenus.service
 
 echo "PiGenus systemd unit installed. Edit ${ENV_DIR}/pigenus.env, deploy code to ${APP_DIR}, then run:"
 echo "  systemctl start pigenus"
+echo "After registering a maintenance worker and adding PIGENUS_WORKER_ID/TOKEN, run:"
+echo "  systemctl enable --now pigenus-worker"
