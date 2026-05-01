@@ -51,6 +51,8 @@ Open `http://127.0.0.1:8000/health`.
 
 For Raspberry Pi deployment, follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
+For future development, follow [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/ROADMAP_GUARDRAILS.md](docs/ROADMAP_GUARDRAILS.md). Run `pigenus-guardrails` before merging roadmap-relevant work.
+
 Initialize the database:
 
 ```powershell

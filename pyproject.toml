@@ -23,6 +23,7 @@ pigenus-admin = "pigenus.cli:main"
 pigenus-worker = "pigenus.workers.runner:main"
 pigenus-healthcheck = "pigenus.ops.healthcheck:main"
 pigenus-register-worker = "pigenus.ops.register_worker:main"
+pigenus-guardrails = "pigenus.ops.guardrails:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
