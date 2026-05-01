@@ -49,6 +49,8 @@ Open `http://127.0.0.1:8000/health`.
 
 ## Operations
 
+For Raspberry Pi deployment, follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 Initialize the database:
 
 ```powershell

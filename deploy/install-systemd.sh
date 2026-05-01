@@ -24,6 +24,8 @@ if [[ ! -f "${ENV_DIR}/pigenus.env" ]]; then
   install -m 640 -o root -g "${SERVICE_USER}" deploy/pigenus.env.example "${ENV_DIR}/pigenus.env"
   echo "Created ${ENV_DIR}/pigenus.env. Edit secrets before starting the service."
 fi
+chown root:"${SERVICE_USER}" "${ENV_DIR}/pigenus.env"
+chmod 640 "${ENV_DIR}/pigenus.env"
 
 install -m 644 deploy/pigenus.service /etc/systemd/system/pigenus.service
 install -m 644 deploy/pigenus-worker.service /etc/systemd/system/pigenus-worker.service
