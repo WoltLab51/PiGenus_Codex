@@ -1,0 +1,30 @@
+[project]
+name = "pigenus"
+version = "0.1.0"
+description = "Private Raspberry Pi orchestration and memory node for the GENUS ecosystem."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.110,<1.0",
+    "pydantic>=2.7,<3.0",
+    "sqlalchemy>=2.0,<3.0",
+    "uvicorn[standard]>=0.29,<1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx>=0.27,<1.0",
+    "pytest>=8.0,<9.0",
+]
+
+[project.scripts]
+pigenus = "pigenus.main:run"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
