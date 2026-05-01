@@ -55,6 +55,12 @@ Initialize the database:
 pigenus-admin init-db
 ```
 
+Run migrations:
+
+```powershell
+pigenus-admin migrate
+```
+
 Create a SQLite backup:
 
 ```powershell

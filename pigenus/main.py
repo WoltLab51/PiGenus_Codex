@@ -10,6 +10,7 @@ from pigenus.core.config import Settings
 from pigenus.core.logging import configure_logging, get_logger
 from pigenus.db.session import init_db
 from pigenus.scheduler.nightly import NightlyScheduler
+from pigenus.security.rate_limit import RateLimitMiddleware
 
 logger = get_logger(__name__)
 
@@ -38,6 +39,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.nightly_scheduler = NightlyScheduler(settings)
+    app.add_middleware(RateLimitMiddleware, settings=settings)
 
     app.include_router(health.router)
     app.include_router(admin.router)

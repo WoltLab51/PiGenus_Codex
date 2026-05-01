@@ -37,9 +37,9 @@ def init_db(settings: Settings) -> None:
     _engine = build_engine(settings)
     SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False, expire_on_commit=False)
 
-    from pigenus.db import orm  # noqa: F401
+    from pigenus.db.migrations import migrate_database
 
-    Base.metadata.create_all(bind=_engine)
+    migrate_database(_engine)
 
 
 def get_session() -> Generator[Session, None, None]:
@@ -50,4 +50,3 @@ def get_session() -> Generator[Session, None, None]:
         yield session
     finally:
         session.close()
-

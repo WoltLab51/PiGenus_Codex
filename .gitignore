@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+.testdata/
 .ruff_cache/
 .mypy_cache/
 *.sqlite

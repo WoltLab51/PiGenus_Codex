@@ -57,7 +57,9 @@ This keeps deployment simple on Raspberry Pi while preserving clean boundaries f
 
 SQLite is the default. It is appropriate for a private low-throughput orchestration node and keeps backup/recovery simple. The SQLAlchemy layer leaves room for PostgreSQL later if PiGenus outgrows SQLite.
 
-The operational CLI exposes `init-db`, `backup`, and guarded `restore` commands. Restore refuses to overwrite the configured database unless `--yes` is supplied.
+The operational CLI exposes `init-db`, `migrate`, `schema-version`, `backup`, and guarded `restore` commands. Restore refuses to overwrite the configured database unless `--yes` is supplied.
+
+Schema management uses a lightweight internal migration ledger in Phase 2. This avoids adding an external migration dependency before the Raspberry Pi deployment path is proven. If schema churn increases, the ledger can be replaced with Alembic without changing API contracts.
 
 ## Administration Surface
 
@@ -70,6 +72,10 @@ PiGenus now exposes baseline admin surfaces for:
 - Job listing, inspection, and cancellation
 - Session/message persistence
 - Memory creation, search, and update
+
+## Rate Limiting
+
+PiGenus includes an in-process fixed-window rate limiter. It is intentionally simple and dependency-free for a single Raspberry Pi node. Deployments that place PiGenus behind a reverse proxy can add proxy-level limits later without removing this baseline protection.
 
 ## Night Mode
 

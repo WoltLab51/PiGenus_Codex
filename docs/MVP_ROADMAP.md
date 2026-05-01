@@ -21,11 +21,12 @@
 - Admin audit endpoint: implemented
 - User and trusted device administration: implemented baseline
 - Manual maintenance endpoint: implemented
-- Alembic migrations
+- Lightweight schema migration ledger: implemented
 - Log rotation integration
-- Per-token rate limiting
+- Per-token rate limiting: implemented in-process baseline
 - Job cancellation: implemented
 - Retry policy controls
+- systemd install helper: implemented
 
 ## Phase 3: Memory and Session Workflows
 

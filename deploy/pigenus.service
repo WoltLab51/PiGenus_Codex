@@ -17,7 +17,9 @@ PrivateTmp=true
 ProtectSystem=full
 ProtectHome=true
 ReadWritePaths=/var/lib/pigenus /var/log/pigenus
+RuntimeDirectory=pigenus
+StateDirectory=pigenus
+LogsDirectory=pigenus
 
 [Install]
 WantedBy=multi-user.target
-

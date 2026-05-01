@@ -19,6 +19,8 @@ class Settings(BaseModel):
     stuck_job_seconds: int = 3600
     worker_stale_seconds: int = 600
     backup_dir: str = "./backups"
+    rate_limit_enabled: bool = True
+    rate_limit_requests_per_minute: int = 120
     enable_scheduler: bool = False
     nightly_hour_utc: int = 2
 
@@ -73,6 +75,11 @@ class Settings(BaseModel):
             stuck_job_seconds=int(os.getenv("PIGENUS_STUCK_JOB_SECONDS", "3600")),
             worker_stale_seconds=int(os.getenv("PIGENUS_WORKER_STALE_SECONDS", "600")),
             backup_dir=os.getenv("PIGENUS_BACKUP_DIR", "./backups"),
+            rate_limit_enabled=os.getenv("PIGENUS_RATE_LIMIT_ENABLED", "true").lower()
+            in {"1", "true", "yes"},
+            rate_limit_requests_per_minute=int(
+                os.getenv("PIGENUS_RATE_LIMIT_REQUESTS_PER_MINUTE", "120")
+            ),
             enable_scheduler=os.getenv("PIGENUS_ENABLE_SCHEDULER", "false").lower()
             in {"1", "true", "yes"},
             nightly_hour_utc=int(os.getenv("PIGENUS_NIGHTLY_HOUR_UTC", "2")),
