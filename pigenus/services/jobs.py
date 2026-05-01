@@ -78,6 +78,48 @@ def submit_job(
     return job
 
 
+def list_jobs(session: Session, *, status: JobStatus | None = None, limit: int = 100) -> list[Job]:
+    statement = select(Job)
+    if status is not None:
+        statement = statement.where(Job.status == status)
+    statement = statement.order_by(Job.created_at.desc(), Job.id.desc()).limit(limit)
+    return list(session.scalars(statement).all())
+
+
+def get_job(session: Session, *, job_id: int) -> Job:
+    job = session.get(Job, job_id)
+    if job is None:
+        raise LookupError("job not found")
+    return job
+
+
+def cancel_job(session: Session, *, job_id: int, actor_id: str = "admin") -> Job:
+    job = get_job(session, job_id=job_id)
+    if job.status in {JobStatus.succeeded, JobStatus.failed, JobStatus.canceled}:
+        raise ValueError("terminal jobs cannot be canceled")
+    job.status = JobStatus.canceled
+    job.leased_by_worker_id = None
+    job.lease_expires_at = None
+    _job_event(
+        session,
+        job=job,
+        event_type="canceled",
+        actor_type=EventActorType.admin,
+        actor_id=actor_id,
+    )
+    audit(
+        session,
+        action="job.canceled",
+        actor_type=EventActorType.admin,
+        actor_id=actor_id,
+        target_type="job",
+        target_id=str(job.id),
+    )
+    session.commit()
+    session.refresh(job)
+    return job
+
+
 def lease_jobs(
     session: Session,
     settings: Settings,
@@ -219,4 +261,3 @@ def requeue_stuck_jobs(session: Session) -> int:
         )
     session.commit()
     return len(jobs)
-

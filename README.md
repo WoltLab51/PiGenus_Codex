@@ -26,8 +26,12 @@ Its five permanent responsibilities are:
 - Trusted worker registration
 - Worker heartbeat
 - Job submit, lease, ack, and fail lifecycle
+- Job list, detail, and cancellation
+- User and trusted device administration
+- Session and message persistence APIs
+- Memory create/search/update APIs
 - Audit log and job event history
-- Nightly maintenance skeleton
+- Nightly maintenance with backup, stale-worker detection, stuck-job recovery, and maintenance job queueing
 - systemd deployment files
 - pytest coverage for core API flows
 
@@ -42,6 +46,26 @@ uvicorn pigenus.main:app --reload
 ```
 
 Open `http://127.0.0.1:8000/health`.
+
+## Operations
+
+Initialize the database:
+
+```powershell
+pigenus-admin init-db
+```
+
+Create a SQLite backup:
+
+```powershell
+pigenus-admin backup
+```
+
+Restore from a backup requires an explicit confirmation flag:
+
+```powershell
+pigenus-admin restore .\backups\pigenus-example.sqlite3 --yes
+```
 
 ## Production Posture
 

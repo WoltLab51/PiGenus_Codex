@@ -57,17 +57,31 @@ This keeps deployment simple on Raspberry Pi while preserving clean boundaries f
 
 SQLite is the default. It is appropriate for a private low-throughput orchestration node and keeps backup/recovery simple. The SQLAlchemy layer leaves room for PostgreSQL later if PiGenus outgrows SQLite.
 
+The operational CLI exposes `init-db`, `backup`, and guarded `restore` commands. Restore refuses to overwrite the configured database unless `--yes` is supplied.
+
+## Administration Surface
+
+PiGenus now exposes baseline admin surfaces for:
+
+- Users
+- Trusted devices
+- Audit events
+- Manual maintenance runs
+- Job listing, inspection, and cancellation
+- Session/message persistence
+- Memory creation, search, and update
+
 ## Night Mode
 
-Phase 1 implements the maintenance trigger and stuck-job requeue path. The planned night mode responsibilities are:
+Night mode implements a maintenance trigger, stuck-job requeue path, SQLite backup creation, stale-worker detection, and queueing of maintenance jobs. Worker implementations can then perform heavier tasks off-device or on suitable machines.
 
-- Rotate logs
-- Create backups
-- Summarize sessions
-- Compress memory
-- Requeue stuck jobs
-- Prepare daily briefing
-- Check worker availability
+- Rotate logs: queued as `maintenance.rotate_logs`
+- Create backups: implemented for file-backed SQLite
+- Summarize sessions: queued as `maintenance.summarize_sessions`
+- Compress memory: queued as `maintenance.compress_memory`
+- Requeue stuck jobs: implemented
+- Prepare daily briefing: queued as `maintenance.daily_briefing`
+- Check worker availability: stale online workers are marked offline, and a worker availability job is queued
 
 ## Operating Philosophy
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
-from pigenus.db.orm import Worker
+from pigenus.db.orm import JobStatus, Worker
 from pigenus.db.session import get_session
 from pigenus.models.schemas import (
     JobAckRequest,
@@ -14,7 +14,7 @@ from pigenus.models.schemas import (
     JobSubmitRequest,
 )
 from pigenus.security.auth import require_admin, require_worker
-from pigenus.services.jobs import ack_job, fail_job, lease_jobs, submit_job
+from pigenus.services.jobs import ack_job, cancel_job, fail_job, get_job, lease_jobs, list_jobs, submit_job
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 
@@ -53,6 +53,47 @@ def submit(
         max_attempts=payload.max_attempts,
         submitted_by="admin",
     )
+    return to_job_response(job)
+
+
+@router.get("", response_model=list[JobResponse])
+def list_job_records(
+    status_filter: JobStatus | None = None,
+    limit: int = 100,
+    _: str = Depends(require_admin),
+    session: Session = Depends(get_session),
+) -> list[JobResponse]:
+    return [
+        to_job_response(job)
+        for job in list_jobs(session, status=status_filter, limit=min(limit, 500))
+    ]
+
+
+@router.get("/{job_id}", response_model=JobResponse)
+def get_job_record(
+    job_id: int,
+    _: str = Depends(require_admin),
+    session: Session = Depends(get_session),
+) -> JobResponse:
+    try:
+        job = get_job(session, job_id=job_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+    return to_job_response(job)
+
+
+@router.post("/{job_id}/cancel", response_model=JobResponse)
+def cancel_job_record(
+    job_id: int,
+    _: str = Depends(require_admin),
+    session: Session = Depends(get_session),
+) -> JobResponse:
+    try:
+        job = cancel_job(session, job_id=job_id)
+    except LookupError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
     return to_job_response(job)
 
 
@@ -112,4 +153,3 @@ def fail(
     except PermissionError as exc:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
     return to_job_response(job)
-

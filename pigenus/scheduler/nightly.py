@@ -2,13 +2,11 @@ from __future__ import annotations
 
 import threading
 import time
-from datetime import timedelta
-
 from pigenus.core.config import Settings
 from pigenus.core.logging import get_logger
 from pigenus.core.time import utcnow
 from pigenus.db.session import SessionLocal
-from pigenus.services.jobs import requeue_stuck_jobs
+from pigenus.services.maintenance import run_maintenance
 
 logger = get_logger(__name__)
 
@@ -49,23 +47,24 @@ class NightlyScheduler:
     def run_once(self) -> dict[str, int]:
         if SessionLocal is None:
             logger.warning("nightly_skipped_database_not_initialized")
-            return {"requeued_stuck_jobs": 0}
+            return {
+                "requeued_stuck_jobs": 0,
+                "stale_workers_marked_offline": 0,
+                "maintenance_jobs_created": 0,
+            }
         with SessionLocal() as session:
-            requeued = requeue_stuck_jobs(session)
+            result = run_maintenance(session, self.settings)
         logger.info(
             "nightly_maintenance_complete",
             extra={
-                "requeued_stuck_jobs": requeued,
-                "next_tasks": [
-                    "rotate_logs",
-                    "create_backups",
-                    "summarize_sessions",
-                    "compress_memory",
-                    "prepare_daily_briefing",
-                    "check_worker_availability",
-                ],
-                "stuck_job_threshold": str(timedelta(seconds=self.settings.stuck_job_seconds)),
+                "requeued_stuck_jobs": result["requeued_stuck_jobs"],
+                "stale_workers_marked_offline": result["stale_workers_marked_offline"],
+                "backup_path": result["backup_path"],
+                "maintenance_jobs_created": result["maintenance_jobs_created"],
             },
         )
-        return {"requeued_stuck_jobs": requeued}
-
+        return {
+            "requeued_stuck_jobs": int(result["requeued_stuck_jobs"] or 0),
+            "stale_workers_marked_offline": int(result["stale_workers_marked_offline"] or 0),
+            "maintenance_jobs_created": int(result["maintenance_jobs_created"] or 0),
+        }

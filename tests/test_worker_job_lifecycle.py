@@ -108,3 +108,20 @@ def test_job_failure_can_requeue(client, admin_headers):
     assert failed.json()["status"] == "queued"
     assert failed.json()["error"] == "temporary upstream failure"
 
+
+def test_admin_can_list_and_cancel_queued_job(client, admin_headers):
+    submitted = client.post(
+        "/jobs",
+        headers=admin_headers,
+        json={"job_type": "maintenance.daily_briefing"},
+    )
+    assert submitted.status_code == 201
+    job_id = submitted.json()["id"]
+
+    listed = client.get("/jobs", headers=admin_headers)
+    assert listed.status_code == 200
+    assert any(job["id"] == job_id for job in listed.json())
+
+    canceled = client.post(f"/jobs/{job_id}/cancel", headers=admin_headers)
+    assert canceled.status_code == 200, canceled.text
+    assert canceled.json()["status"] == "canceled"

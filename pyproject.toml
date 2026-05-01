@@ -19,6 +19,7 @@ dev = [
 
 [project.scripts]
 pigenus = "pigenus.main:run"
+pigenus-admin = "pigenus.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -27,4 +28,3 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-

@@ -16,21 +16,24 @@
 
 ## Phase 2: Operational Hardening
 
+- Backup and restore command: implemented
+- Worker stale/offline detection: implemented in maintenance
+- Admin audit endpoint: implemented
+- User and trusted device administration: implemented baseline
+- Manual maintenance endpoint: implemented
 - Alembic migrations
-- Backup and restore command
 - Log rotation integration
 - Per-token rate limiting
-- Worker stale/offline detection
-- Admin audit browser endpoint
-- Job cancellation
+- Job cancellation: implemented
 - Retry policy controls
 
 ## Phase 3: Memory and Session Workflows
 
-- Session/message APIs
-- Memory search and compaction
-- Nightly session summarization jobs
-- Daily briefing generation
+- Session/message APIs: implemented baseline
+- Memory create/search/update APIs: implemented baseline
+- Nightly session summarization jobs: queued by maintenance
+- Daily briefing generation: queued by maintenance
+- Actual summarizer/compressor worker implementations
 - Human approval queue for critical actions
 
 ## Phase 4: Developer Orchestration
@@ -40,4 +43,3 @@
 - Pull request status tracking
 - Worker sandbox policy
 - Signed worker attestations
-

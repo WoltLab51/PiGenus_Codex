@@ -17,6 +17,8 @@ class Settings(BaseModel):
     log_level: str = "INFO"
     worker_lease_seconds: int = 900
     stuck_job_seconds: int = 3600
+    worker_stale_seconds: int = 600
+    backup_dir: str = "./backups"
     enable_scheduler: bool = False
     nightly_hour_utc: int = 2
 
@@ -69,6 +71,8 @@ class Settings(BaseModel):
             log_level=os.getenv("PIGENUS_LOG_LEVEL", "INFO"),
             worker_lease_seconds=int(os.getenv("PIGENUS_WORKER_LEASE_SECONDS", "900")),
             stuck_job_seconds=int(os.getenv("PIGENUS_STUCK_JOB_SECONDS", "3600")),
+            worker_stale_seconds=int(os.getenv("PIGENUS_WORKER_STALE_SECONDS", "600")),
+            backup_dir=os.getenv("PIGENUS_BACKUP_DIR", "./backups"),
             enable_scheduler=os.getenv("PIGENUS_ENABLE_SCHEDULER", "false").lower()
             in {"1", "true", "yes"},
             nightly_hour_utc=int(os.getenv("PIGENUS_NIGHTLY_HOUR_UTC", "2")),

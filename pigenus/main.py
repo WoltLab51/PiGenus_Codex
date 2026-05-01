@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
-from pigenus.api.routes import admin, health, jobs, workers
+from pigenus.api.routes import admin, health, jobs, memory, sessions, workers
 from pigenus.core.config import Settings
 from pigenus.core.logging import configure_logging, get_logger
 from pigenus.db.session import init_db
@@ -43,6 +43,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(admin.router)
     app.include_router(workers.router)
     app.include_router(jobs.router)
+    app.include_router(sessions.router)
+    app.include_router(memory.router)
 
     return app
 
