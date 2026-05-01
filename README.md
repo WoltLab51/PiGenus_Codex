@@ -4,6 +4,20 @@ PiGenus is the always-on private orchestration and memory node for the GENUS eco
 
 PiGenus is not a local giant model host. It accepts trusted requests, persists state, turns work into jobs, leases those jobs to stronger workers, records results, and runs maintenance workflows.
 
+The binding product definition lives in [docs/PIGENUS_CHARTER.md](docs/PIGENUS_CHARTER.md). When architecture or feature choices are unclear, PiGenus must choose the reliable private orchestration node path over flashy AI features.
+
+## Core Identity
+
+PiGenus is the always-available private infrastructure core of GENUS. It preserves information, organizes work, connects systems, and maintains long-term continuity.
+
+Its five permanent responsibilities are:
+
+- Persistence
+- Orchestration
+- Administration
+- Interface readiness
+- Continuity
+
 ## Phase 1 MVP
 
 - FastAPI service
@@ -32,4 +46,3 @@ Open `http://127.0.0.1:8000/health`.
 ## Production Posture
 
 Set secrets through environment or an environment file owned by the service account. Do not commit real tokens. Prefer Tailscale or WireGuard for remote access, and bind PiGenus to private interfaces unless there is a specific reason to do otherwise.
-

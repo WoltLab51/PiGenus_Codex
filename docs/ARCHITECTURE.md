@@ -4,16 +4,19 @@
 
 PiGenus is a persistent private orchestration node. It runs continuously on low-power hardware and coordinates stronger workers. It owns durable state, job lifecycle, auditability, and maintenance scheduling.
 
+The binding product charter is [PIGENUS_CHARTER.md](PIGENUS_CHARTER.md). It is the first reference for architecture decisions, scope control, and future milestones.
+
 ## Boundaries
 
 PiGenus does:
 
 - Accept trusted requests over a private API
-- Persist sessions, messages, tasks, workers, jobs, memory, audit events, and settings
+- Persist memories, sessions, messages, task state, decisions, project data, workers, jobs, audit events, and settings
 - Lease jobs to capable workers
 - Track job events and results
 - Run nightly maintenance triggers
 - Expose health and admin status
+- Connect clients, workers, cloud APIs, GitHub, and later GENUS modules through private, auditable interfaces
 
 PiGenus does not:
 
@@ -21,6 +24,8 @@ PiGenus does not:
 - Require GPUs
 - Run a microservice fleet
 - Self-modify without human oversight
+- Become a disposable demo or a frontend-only project
+- Optimize for short-term spectacle over long-term reliability
 
 ## Runtime Shape
 
@@ -64,3 +69,8 @@ Phase 1 implements the maintenance trigger and stuck-job requeue path. The plann
 - Prepare daily briefing
 - Check worker availability
 
+## Operating Philosophy
+
+PiGenus prioritizes maximum reliability over maximum raw performance. It should not do every task locally; it should preserve state, choose the right worker or service, coordinate execution, and keep the system recoverable.
+
+GENUS is the larger organism. PiGenus is its local memory, coordination layer, circulation, and operations desk. Workers provide muscle, models provide thinking tools, and clients provide eyes, hands, and voice.
