@@ -1,2 +1,1 @@
-"""Core runtime utilities."""
-
+"""Core runtime components for PiGenus."""

@@ -1,6 +1,3 @@
-"""PiGenus private orchestration node."""
-
-__all__ = ["__version__"]
+"""PiGenus Phase 1 core runtime."""
 
 __version__ = "0.1.0"
-
