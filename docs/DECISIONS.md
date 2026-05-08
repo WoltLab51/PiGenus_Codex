@@ -73,3 +73,15 @@ Reason:
 
 Memory aging, expiry, and canonical protection are core trust behavior. The
 rules should be explicit before code starts enforcing them.
+
+## D-007: Expiry Changes Status, Not Rows
+
+Decision:
+
+Memory expiry does not delete memory rows. It applies deterministic status
+transitions such as `active -> dead` or `dormant -> fossil`.
+
+Reason:
+
+PiGenus needs auditability and historical continuity. Removing memory
+automatically would make it harder to explain why the system changed behavior.

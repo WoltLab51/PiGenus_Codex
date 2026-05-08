@@ -42,8 +42,6 @@ Phase 1.5 Core Contracts made core behavior more explicit:
 - Separate `CellState` for operational cell-local state
 - Invariant tests for direct-write rejection and cell-state separation
 
-## Current
-
 ### pigenus-v0.1.6-contexts
 
 Phase 1.6 Context Boundaries establishes minimal room separation:
@@ -54,17 +52,16 @@ Phase 1.6 Context Boundaries establishes minimal room separation:
 - Cell `allowed_contexts` enforcement in the orchestrator
 - Invariant tests for context rejection and preservation
 
-## Next
+### pigenus-v0.2-memory-lifecycle
 
-### Phase 2 Memory Lifecycle
-
-Goal: make memory age, review, and protect itself without adding external AI.
+Phase 2 Memory Lifecycle makes memory age, review, and protect itself without
+adding external AI.
 
 Specification:
 
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md`
 
-Planned scope:
+Implemented scope:
 
 - `review_due_at` and `expires_at` behavior
 - Status transition rules
@@ -72,6 +69,25 @@ Planned scope:
 - Memory review CLI
 - Audit logs for memory status changes
 - Tests for lifecycle invariants
+
+## Current
+
+### pigenus-v0.2-memory-lifecycle
+
+Phase 2 is the current runtime shape.
+
+## Next
+
+### Phase 2.1 Lifecycle Polish
+
+Goal: harden lifecycle ergonomics without adding intelligence.
+
+Planned scope:
+
+- CLI command conventions and exit-code documentation
+- Primitive SQLite migration policy
+- Optional memory listing command for inspection
+- More focused lifecycle documentation examples
 
 Out of scope:
 

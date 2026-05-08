@@ -1,3 +1,3 @@
-"""PiGenus Phase 1 core runtime."""
+"""PiGenus local cognitive core runtime."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

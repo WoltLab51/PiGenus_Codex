@@ -15,6 +15,7 @@ Redis, RabbitMQ, or autonomous evolution loops in Phase 1.
 - A cell registry
 - A local event bus
 - A minimal context boundary engine
+- A deterministic memory lifecycle engine
 - A simple permission engine
 - MVP cells for input, rule guarding, memory proposal, memory writing, and explanation
 - A deterministic demo orchestrator
@@ -37,6 +38,19 @@ Events and memory objects carry a structured context. The core currently knows
 Cells declare `allowed_contexts`, and the orchestrator checks that boundary
 before a cell can process an event. No cell may silently move work from one
 context to another.
+
+## Phase 2 Memory Lifecycle
+
+Memory does not get deleted automatically. The lifecycle engine applies
+deterministic review and expiry rules, updates memory status, and records audit
+logs for status changes. Canonical memory is protected from automatic
+downgrade, expiry, deletion, or fossilization.
+
+Run lifecycle review with:
+
+```powershell
+python -m pigenus.cli.main memory-review --db pigenus.sqlite3
+```
 
 ## Demo Flow
 

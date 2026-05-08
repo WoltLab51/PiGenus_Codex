@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.1.6-contexts`
+- Name: `pigenus-v0.2-memory-lifecycle`
 - Branch: `main`
 - Status: checkpointed
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `20 passed`
+- Last verified result: `29 passed`
 
 ## Current Runtime Shape
 
@@ -18,6 +18,7 @@ PiGenus is a small local cognitive core. It has:
 - A cell registry
 - A permission engine
 - A context boundary engine
+- A memory lifecycle engine
 - Audit logging
 - A CLI demo
 - Living project control documents
@@ -38,17 +39,20 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Unknown contexts are rejected.
 - Cells may only process allowed contexts.
 - Memory proposals preserve their source context.
+- Review-due memory moves conservatively to `watch`.
+- Expired memory changes status but is not deleted.
+- Expired `dormant` memory becomes `fossil`.
+- `canonical` memory is not changed by automatic review or expiry.
+- Lifecycle status changes create audit logs.
 
 ## Next Recommended Work
 
-Build Phase 2 Memory Lifecycle:
+Checkpoint Phase 2 Memory Lifecycle, then build Phase 2.1 Lifecycle Polish:
 
-- Define explicit memory status transition rules.
-- Implement review and expiry behavior.
-- Protect `canonical` memory from automatic deletion.
-- Add a small review CLI.
-- Audit lifecycle changes.
-- Add invariant tests before expanding intelligence or interfaces.
+- Document CLI conventions and exit codes.
+- Add a primitive SQLite migration policy.
+- Consider a read-only memory listing command for inspection.
+- Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
 

@@ -6,7 +6,7 @@ from typing import Any
 from pigenus.schemas.base import new_id, utc_now
 from pigenus.schemas.cells import CellSpec, CellState
 from pigenus.schemas.events import Event
-from pigenus.schemas.memory import MemoryObject
+from pigenus.schemas.memory import MemoryObject, MemoryStatus
 from pigenus.storage.database import Database
 
 
@@ -90,9 +90,58 @@ class MemoryRepository:
             return None
         return MemoryObject.model_validate(json.loads(row["data"]))
 
+    def list(self) -> list[MemoryObject]:
+        rows = self.database.fetchall("SELECT data FROM memory_objects ORDER BY created_at, memory_id")
+        return [MemoryObject.model_validate(json.loads(row["data"])) for row in rows]
+
     def count(self) -> int:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM memory_objects")
         return int(row["count"]) if row else 0
+
+    def list_due_for_lifecycle(self, now: str) -> list[MemoryObject]:
+        rows = self.database.fetchall(
+            """
+            SELECT data FROM memory_objects
+            WHERE (review_due_at IS NOT NULL AND review_due_at <= ?)
+               OR (expires_at IS NOT NULL AND expires_at <= ?)
+            ORDER BY created_at, memory_id
+            """,
+            (now, now),
+        )
+        return [MemoryObject.model_validate(json.loads(row["data"])) for row in rows]
+
+    def update_lifecycle(
+        self,
+        memory: MemoryObject,
+        *,
+        status: MemoryStatus,
+        last_validated_at: str | None = None,
+        last_used_at: str | None = None,
+    ) -> MemoryObject:
+        data = memory.model_dump(mode="json")
+        data["status"] = status
+        if last_validated_at is not None:
+            data["last_validated_at"] = last_validated_at
+        if last_used_at is not None:
+            data["last_used_at"] = last_used_at
+
+        updated = MemoryObject.model_validate(data)
+        updated_data = updated.model_dump(mode="json")
+        self.database.execute(
+            """
+            UPDATE memory_objects
+            SET status = ?, last_validated_at = ?, last_used_at = ?, data = ?
+            WHERE memory_id = ?
+            """,
+            (
+                updated.status,
+                updated_data["last_validated_at"],
+                updated_data["last_used_at"],
+                _json(updated_data),
+                updated.memory_id,
+            ),
+        )
+        return updated
 
 
 class CellRepository:
@@ -194,3 +243,17 @@ class AuditRepository:
     def count(self) -> int:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM audit_logs")
         return int(row["count"]) if row else 0
+
+    def list(self) -> list[dict[str, Any]]:
+        rows = self.database.fetchall("SELECT * FROM audit_logs ORDER BY created_at, audit_id")
+        return [
+            {
+                "audit_id": row["audit_id"],
+                "created_at": row["created_at"],
+                "actor": row["actor"],
+                "action": row["action"],
+                "context": json.loads(row["context"]),
+                "details": json.loads(row["details"]),
+            }
+            for row in rows
+        ]

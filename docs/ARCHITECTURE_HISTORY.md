@@ -89,22 +89,31 @@ Why it mattered:
 PiGenus now has the first form of room separation. A cell cannot silently move
 work across contexts, and a memory proposal preserves its source context.
 
-## Next: Phase 2 Memory Lifecycle
+## pigenus-v0.2-memory-lifecycle
 
-The next architectural step is memory aging and protection.
+Phase 2 implemented memory aging and protection.
 
-The planned direction:
+The system gained:
 
 - Explicit status transitions
-- Review due dates
-- Expiry behavior
+- Review due behavior
+- Expiry behavior without deletion
 - `canonical` protection
-- Memory review CLI
+- `memory-review` CLI
 - Audit logs for lifecycle changes
 - Implementation contract in `docs/PHASE_2_MEMORY_LIFECYCLE.md`
 
-Why this is next:
+Why it mattered:
 
-PiGenus now knows what a memory proposal is and where that memory belongs. The
-next question is how long that memory should remain active, when it should be
-reviewed, and what must never be automatically deleted.
+PiGenus now knows where memory belongs and how memory ages. Expiry no longer
+means deletion; it means a controlled status transition. Canonical memory is
+protected from automatic lifecycle changes.
+
+## Next: Phase 2.1 Lifecycle Polish
+
+The next step is not more intelligence. It is operational clarity:
+
+- CLI conventions and exit-code documentation
+- A primitive SQLite migration policy
+- Optional read-only memory inspection
+- Focused lifecycle examples

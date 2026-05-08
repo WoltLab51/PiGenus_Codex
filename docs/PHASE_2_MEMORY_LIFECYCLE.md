@@ -3,6 +3,8 @@
 This document defines the next implementation phase for PiGenus. It should be
 updated before Phase 2 code changes if the lifecycle contract changes.
 
+Implementation status: implemented in `pigenus-v0.2-memory-lifecycle`.
+
 ## Goal
 
 Make memory age, require review, expire when appropriate, and protect canonical

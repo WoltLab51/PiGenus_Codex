@@ -2,9 +2,20 @@
 
 ## Unreleased
 
+## pigenus-v0.2-memory-lifecycle
+
+- Bumped package version to `0.2.0`
 - Added Phase 2 Memory Lifecycle implementation specification
+- Added deterministic `MemoryLifecycleEngine`
+- Added memory lifecycle service with status persistence and audit logging
+- Added repository support for memory listing, due lifecycle lookup, and status updates
+- Added `memory-review` CLI with deterministic `--now`
+- Implemented review due and expiry rules without automatic deletion
+- Protected `canonical` memory from automatic lifecycle changes
+- Added lifecycle invariant tests
 - Added architecture history and decision log documents
 - Updated project-control rules for future checkpoints
+- Verified: 29 tests passed
 
 ## pigenus-v0.1.6-contexts
 
