@@ -3,9 +3,10 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from pigenus.schemas.base import new_id, utc_now
+from pigenus.schemas.context import Context
 
 MemoryStatus = Literal[
     "fresh",
@@ -35,3 +36,8 @@ class MemoryObject(BaseModel):
     last_validated_at: datetime | None = None
     review_due_at: datetime | None = None
     expires_at: datetime | None = None
+
+    @model_validator(mode="after")
+    def validate_context_contract(self) -> MemoryObject:
+        Context.model_validate(self.context)
+        return self

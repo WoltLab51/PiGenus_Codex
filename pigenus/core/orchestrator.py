@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from pigenus.cells.explain_cell import ExplainCell
 from pigenus.cells.input_cell import InputCell
@@ -9,9 +10,11 @@ from pigenus.cells.memory_proposer import MemoryProposerCell
 from pigenus.cells.memory_writer import MemoryWriterCell
 from pigenus.cells.rule_guard import RuleGuardCell
 from pigenus.core.audit import AuditLogger
+from pigenus.core.context_boundary import ContextBoundaryEngine
 from pigenus.core.event_bus import EventBus
 from pigenus.core.permissions import PermissionEngine
 from pigenus.core.registry import CellRegistry
+from pigenus.schemas.context import Context
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
@@ -21,7 +24,7 @@ from pigenus.storage.repositories import (
 )
 
 DEMO_TEXT = "Merke dir: PiGenus ist der Zellkern."
-DEFAULT_CONTEXT = {"name": "developer/default"}
+DEFAULT_CONTEXT = Context().as_event_context()
 
 
 @dataclass(frozen=True)
@@ -49,6 +52,7 @@ class SimpleOrchestrator:
         self.audit_logger = AuditLogger(self.audit)
         self.registry = CellRegistry(self.cells)
         self.permission_engine = PermissionEngine()
+        self.context_boundary = ContextBoundaryEngine()
 
         self.input_cell = InputCell()
         self.rule_guard = RuleGuardCell(self.permission_engine, self.audit_logger)
@@ -65,21 +69,27 @@ class SimpleOrchestrator:
         ):
             self.registry.register(cell.spec)
 
-    def run_demo(self, text: str = DEMO_TEXT) -> DemoResult:
+    def run_demo(self, text: str = DEMO_TEXT, context: dict[str, Any] | None = None) -> DemoResult:
         starting_event_count = self.event_bus.count()
+        event_context = Context.model_validate(context or DEFAULT_CONTEXT).as_event_context()
 
-        task_event = self.input_cell.create_task_request(text, DEFAULT_CONTEXT)
+        self.context_boundary.require_allowed(cell=self.input_cell.spec, context=event_context)
+        task_event = self.input_cell.create_task_request(text, event_context)
         self.event_bus.publish(task_event)
 
+        self.context_boundary.require_allowed(cell=self.memory_proposer.spec, context=task_event.context)
         proposal_event = self.memory_proposer.propose(task_event)
         self.event_bus.publish(proposal_event)
 
+        self.context_boundary.require_allowed(cell=self.rule_guard.spec, context=proposal_event.context)
         guard_event = self.rule_guard.check(proposal_event)
         self.event_bus.publish(guard_event)
 
+        self.context_boundary.require_allowed(cell=self.memory_writer.spec, context=proposal_event.context)
         memory, stored_event = self.memory_writer.write(proposal_event, guard_event)
         self.event_bus.publish(stored_event)
 
+        self.context_boundary.require_allowed(cell=self.explain_cell.spec, context=memory.context)
         final_response, response_event = self.explain_cell.explain(memory)
         self.event_bus.publish(response_event)
 

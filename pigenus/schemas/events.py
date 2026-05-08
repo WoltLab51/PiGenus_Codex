@@ -6,6 +6,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, model_validator
 
 from pigenus.schemas.base import new_id, utc_now
+from pigenus.schemas.context import Context
 
 EventType = Literal[
     "UserInput",
@@ -38,6 +39,7 @@ class Event(BaseModel):
 
     @model_validator(mode="after")
     def validate_contract_payload(self) -> Event:
+        Context.model_validate(self.context)
         required_keys = REQUIRED_PAYLOAD_KEYS.get(self.object_type, set())
         missing_keys = sorted(required_keys.difference(self.payload))
         if missing_keys:

@@ -14,6 +14,7 @@ Redis, RabbitMQ, or autonomous evolution loops in Phase 1.
 - A SQLite-backed event, memory, cell, cell-state, and audit store
 - A cell registry
 - A local event bus
+- A minimal context boundary engine
 - A simple permission engine
 - MVP cells for input, rule guarding, memory proposal, memory writing, and explanation
 - A deterministic demo orchestrator
@@ -28,6 +29,14 @@ structured `MemoryProposal` events, but only guarded proposals can become
 Cell-local state is stored separately from core memory. It is intended for
 operational data such as caches, cursors, counters, and telemetry, not for
 canonical facts about the user, world, or projects.
+
+## Phase 1.6 Context Boundaries
+
+Events and memory objects carry a structured context. The core currently knows
+`developer/default`, `private/default`, `family/default`, and `trading/default`.
+Cells declare `allowed_contexts`, and the orchestrator checks that boundary
+before a cell can process an event. No cell may silently move work from one
+context to another.
 
 ## Demo Flow
 
@@ -72,6 +81,14 @@ in the current working directory.
 ```powershell
 pytest
 ```
+
+## Project Control
+
+- `BUILD_PLAN.md` defines completed phases, the current phase, and the next build step.
+- `STATUS.md` records the current checkpoint, runtime shape, invariants, and next work.
+- `CHANGELOG.md` records versioned changes.
+
+Update these files before every checkpoint commit.
 
 ## Phase 1 Boundary
 
