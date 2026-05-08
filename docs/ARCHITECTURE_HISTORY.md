@@ -101,6 +101,7 @@ The planned direction:
 - `canonical` protection
 - Memory review CLI
 - Audit logs for lifecycle changes
+- Implementation contract in `docs/PHASE_2_MEMORY_LIFECYCLE.md`
 
 Why this is next:
 

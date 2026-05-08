@@ -61,3 +61,15 @@ Reason:
 
 PiGenus should preserve its own development lineage. Future work should be able
 to recover what changed, why it changed, what is stable, and what comes next.
+
+## D-006: Specify Lifecycle Before Implementing It
+
+Decision:
+
+Phase 2 Memory Lifecycle is specified in `docs/PHASE_2_MEMORY_LIFECYCLE.md`
+before implementation.
+
+Reason:
+
+Memory aging, expiry, and canonical protection are core trust behavior. The
+rules should be explicit before code starts enforcing them.

@@ -60,6 +60,10 @@ Phase 1.6 Context Boundaries establishes minimal room separation:
 
 Goal: make memory age, review, and protect itself without adding external AI.
 
+Specification:
+
+- `docs/PHASE_2_MEMORY_LIFECYCLE.md`
+
 Planned scope:
 
 - `review_due_at` and `expires_at` behavior

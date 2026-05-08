@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added Phase 2 Memory Lifecycle implementation specification
 - Added architecture history and decision log documents
 - Updated project-control rules for future checkpoints
 

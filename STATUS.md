@@ -61,3 +61,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `CHANGELOG.md`: versioned changes
 - `docs/ARCHITECTURE_HISTORY.md`: narrative system evolution
 - `docs/DECISIONS.md`: durable architectural decisions
+- `docs/PHASE_2_MEMORY_LIFECYCLE.md`: next phase implementation contract
