@@ -10,14 +10,24 @@ Redis, RabbitMQ, or autonomous evolution loops in Phase 1.
 
 ## What Phase 1 Includes
 
-- Pydantic schemas for events, memory objects, and cell specs
-- A SQLite-backed event, memory, cell, and audit store
+- Pydantic schemas for events, memory objects, cell specs, and cell state
+- A SQLite-backed event, memory, cell, cell-state, and audit store
 - A cell registry
 - A local event bus
 - A simple permission engine
-- MVP cells for input, rule guarding, memory writing, and explanation
+- MVP cells for input, rule guarding, memory proposal, memory writing, and explanation
 - A deterministic demo orchestrator
 - Pytest coverage for the core flow
+
+## Phase 1.5 Core Contracts
+
+PiGenus keeps durable memory under core control. Cells may propose memory through
+structured `MemoryProposal` events, but only guarded proposals can become
+`MemoryStored` events and persisted `MemoryObject` rows.
+
+Cell-local state is stored separately from core memory. It is intended for
+operational data such as caches, cursors, counters, and telemetry, not for
+canonical facts about the user, world, or projects.
 
 ## Demo Flow
 
@@ -30,7 +40,7 @@ Merke dir: PiGenus ist der Zellkern.
 The runtime executes:
 
 ```text
-InputCell -> RuleGuardCell -> MemoryWriterCell -> ExplainCell
+InputCell -> RuleGuardCell -> MemoryProposerCell -> MemoryWriterCell -> ExplainCell
 ```
 
 Expected response:

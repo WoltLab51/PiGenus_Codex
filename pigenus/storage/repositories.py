@@ -4,7 +4,7 @@ import json
 from typing import Any
 
 from pigenus.schemas.base import new_id, utc_now
-from pigenus.schemas.cells import CellSpec
+from pigenus.schemas.cells import CellSpec, CellState
 from pigenus.schemas.events import Event
 from pigenus.schemas.memory import MemoryObject
 from pigenus.storage.database import Database
@@ -129,6 +129,39 @@ class CellRepository:
 
     def count(self) -> int:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM cells")
+        return int(row["count"]) if row else 0
+
+
+class CellStateRepository:
+    """Persistence adapter for operational cell state."""
+
+    def __init__(self, database: Database) -> None:
+        self.database = database
+
+    def set(self, state: CellState) -> None:
+        data = state.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT OR REPLACE INTO cell_states (
+                cell_id, updated_at, state, data
+            ) VALUES (?, ?, ?, ?)
+            """,
+            (
+                state.cell_id,
+                str(data["updated_at"]),
+                _json(data["state"]),
+                _json(data),
+            ),
+        )
+
+    def get(self, cell_id: str) -> CellState | None:
+        row = self.database.fetchone("SELECT data FROM cell_states WHERE cell_id = ?", (cell_id,))
+        if row is None:
+            return None
+        return CellState.model_validate(json.loads(row["data"]))
+
+    def count(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM cell_states")
         return int(row["count"]) if row else 0
 
 

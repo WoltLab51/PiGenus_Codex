@@ -19,7 +19,7 @@ class RuleGuardCell(BaseCell):
         return CellSpec(
             name="rule_guard",
             version="0.1.0",
-            input_event_types=["TaskRequest"],
+            input_event_types=["TaskRequest", "MemoryProposal"],
             output_event_types=["GuardDecision"],
             permissions=[],
             description="Checks requested actions against local permissions.",
@@ -37,6 +37,7 @@ class RuleGuardCell(BaseCell):
                 "requested_action": action,
                 "allowed": decision.allowed,
                 "reason": decision.reason,
+                "blocking_cell": self.spec.cell_id if not decision.allowed else "",
                 "source_event_id": task_event.event_id,
             },
         )
@@ -48,6 +49,7 @@ class RuleGuardCell(BaseCell):
                 "action": action,
                 "allowed": decision.allowed,
                 "reason": decision.reason,
+                "blocking_cell": self.spec.cell_id if not decision.allowed else "",
                 "source_event_id": task_event.event_id,
                 "allowed_permissions": list(decision.allowed_permissions),
                 "denied_permissions": list(decision.denied_permissions),

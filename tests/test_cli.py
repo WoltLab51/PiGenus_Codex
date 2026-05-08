@@ -29,4 +29,4 @@ def test_run_demo_cli_works_from_module_entrypoint():
 
     assert "Final response: Gespeichert: PiGenus ist der Zellkern." in result.stdout
     assert "Created memory object ID: mem_" in result.stdout
-    assert "Events stored: 4" in result.stdout
+    assert "Events stored: 5" in result.stdout

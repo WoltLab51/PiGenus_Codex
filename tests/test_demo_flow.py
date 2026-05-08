@@ -29,7 +29,7 @@ def test_full_demo_flow_works():
     assert result.final_response == "Gespeichert: PiGenus ist der Zellkern."
     assert memory_repository.get(result.memory_id) is not None
     assert memory_repository.count() == 1
-    assert result.events_stored == 4
+    assert result.events_stored == 5
     assert audit_repository.count() == 2
     database.close()
 
@@ -42,5 +42,5 @@ def test_demo_flow_reports_events_from_the_current_run_only():
     second = orchestrator.run_demo()
     orchestrator.close()
 
-    assert first.events_stored == 4
-    assert second.events_stored == 4
+    assert first.events_stored == 5
+    assert second.events_stored == 5

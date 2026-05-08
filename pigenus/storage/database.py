@@ -62,6 +62,13 @@ class Database:
                 data TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS cell_states (
+                cell_id TEXT PRIMARY KEY,
+                updated_at TEXT NOT NULL,
+                state TEXT NOT NULL,
+                data TEXT NOT NULL
+            );
+
             CREATE TABLE IF NOT EXISTS audit_logs (
                 audit_id TEXT PRIMARY KEY,
                 created_at TEXT NOT NULL,

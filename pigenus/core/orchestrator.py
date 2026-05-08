@@ -5,6 +5,7 @@ from pathlib import Path
 
 from pigenus.cells.explain_cell import ExplainCell
 from pigenus.cells.input_cell import InputCell
+from pigenus.cells.memory_proposer import MemoryProposerCell
 from pigenus.cells.memory_writer import MemoryWriterCell
 from pigenus.cells.rule_guard import RuleGuardCell
 from pigenus.core.audit import AuditLogger
@@ -51,12 +52,14 @@ class SimpleOrchestrator:
 
         self.input_cell = InputCell()
         self.rule_guard = RuleGuardCell(self.permission_engine, self.audit_logger)
+        self.memory_proposer = MemoryProposerCell()
         self.memory_writer = MemoryWriterCell(self.memory, self.audit_logger)
         self.explain_cell = ExplainCell()
 
         for cell in (
             self.input_cell,
             self.rule_guard,
+            self.memory_proposer,
             self.memory_writer,
             self.explain_cell,
         ):
@@ -68,10 +71,13 @@ class SimpleOrchestrator:
         task_event = self.input_cell.create_task_request(text, DEFAULT_CONTEXT)
         self.event_bus.publish(task_event)
 
-        guard_event = self.rule_guard.check(task_event)
+        proposal_event = self.memory_proposer.propose(task_event)
+        self.event_bus.publish(proposal_event)
+
+        guard_event = self.rule_guard.check(proposal_event)
         self.event_bus.publish(guard_event)
 
-        memory, stored_event = self.memory_writer.write(task_event, guard_event)
+        memory, stored_event = self.memory_writer.write(proposal_event, guard_event)
         self.event_bus.publish(stored_event)
 
         final_response, response_event = self.explain_cell.explain(memory)

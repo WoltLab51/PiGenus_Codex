@@ -30,4 +30,6 @@ def test_cell_registry_can_register_a_cell():
     registry.register(spec)
 
     assert registry.get("example_cell@0.1.0") == spec
+    assert registry.get("example_cell@0.1.0").status == "active"
+    assert registry.get("example_cell@0.1.0").allowed_contexts == ["developer/default"]
     database.close()
