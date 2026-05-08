@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added architecture history and decision log documents
+- Updated project-control rules for future checkpoints
+
 ## pigenus-v0.1.6-contexts
 
 - Added Phase 1.6 minimal context boundaries

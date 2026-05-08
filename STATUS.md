@@ -4,7 +4,7 @@
 
 - Name: `pigenus-v0.1.6-contexts`
 - Branch: `main`
-- Status: ready to checkpoint
+- Status: checkpointed
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `20 passed`
 
@@ -20,6 +20,7 @@ PiGenus is a small local cognitive core. It has:
 - A context boundary engine
 - Audit logging
 - A CLI demo
+- Living project control documents
 
 Current demo flow:
 
@@ -53,3 +54,10 @@ Build Phase 2 Memory Lifecycle:
 
 Keep PiGenus boring at the core. New intelligence should sit on top of stable
 contracts, not inside ambiguous storage, context, or guard behavior.
+
+## Project Control Files
+
+- `BUILD_PLAN.md`: current phase map and next work
+- `CHANGELOG.md`: versioned changes
+- `docs/ARCHITECTURE_HISTORY.md`: narrative system evolution
+- `docs/DECISIONS.md`: durable architectural decisions

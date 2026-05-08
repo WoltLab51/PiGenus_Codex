@@ -87,6 +87,8 @@ pytest
 - `BUILD_PLAN.md` defines completed phases, the current phase, and the next build step.
 - `STATUS.md` records the current checkpoint, runtime shape, invariants, and next work.
 - `CHANGELOG.md` records versioned changes.
+- `docs/ARCHITECTURE_HISTORY.md` explains the architectural evolution.
+- `docs/DECISIONS.md` records durable design decisions.
 
 Update these files before every checkpoint commit.
 

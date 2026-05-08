@@ -11,6 +11,8 @@ Every checkpoint should leave the repository with:
 - Updated `CHANGELOG.md`
 - Updated `STATUS.md`
 - This build plan adjusted when the next step changes
+- `docs/ARCHITECTURE_HISTORY.md` updated when the architecture changes
+- `docs/DECISIONS.md` updated when a durable decision is made
 - A Git commit
 - A version tag for stable phase checkpoints
 
@@ -79,7 +81,6 @@ Out of scope:
 
 - Context boundary expansion
 - Schema registry
-- Decision log
 - Cell lifecycle and fitness
 - Guard families
 - Worker interface
