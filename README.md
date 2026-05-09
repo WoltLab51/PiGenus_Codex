@@ -94,6 +94,12 @@ Inspect built-in default permissions:
 python -m pigenus.cli.main permission-list
 ```
 
+Inspect audit logs without modifying them:
+
+```powershell
+python -m pigenus.cli.main audit-list --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:

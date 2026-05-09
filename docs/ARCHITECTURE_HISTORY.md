@@ -202,3 +202,17 @@ Why it mattered:
 PiGenus can now show what default actions are allowed before adding richer guard
 families or editable policies. The inspection path reads enforcement defaults
 instead of maintaining a second description.
+
+## Next: Phase 2.8 Audit Inspection Minimal
+
+Phase 2.8 made audit logs safely inspectable:
+
+- read-only `audit-list` CLI
+- filters for actor, action, and context
+- tests proving inspection does not mutate storage
+
+Why it mattered:
+
+PiGenus can now show its append-only audit trail directly. This makes runtime
+actions inspectable without adding export systems, dashboards, or mutation
+paths.

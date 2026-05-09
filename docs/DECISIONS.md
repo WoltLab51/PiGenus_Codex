@@ -184,3 +184,16 @@ Reason:
 Permission visibility should not drift from enforcement. Inspection must show
 what the core actually allows, without introducing policy editing or a second
 permission source.
+
+## D-016: Audit Inspection Is Passive
+
+Decision:
+
+Audit logs can be listed through a read-only CLI with small filters for actor,
+action, and context. The inspection path does not modify audit rows or related
+runtime storage.
+
+Reason:
+
+Audit exists to explain what happened. Operators need safe visibility into that
+record before the system grows export formats, dashboards, or retention policy.

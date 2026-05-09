@@ -289,9 +289,15 @@ class AuditRepository:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM audit_logs")
         return int(row["count"]) if row else 0
 
-    def list(self) -> list[dict[str, Any]]:
+    def list(
+        self,
+        *,
+        actor: str | None = None,
+        action: str | None = None,
+        context: str | None = None,
+    ) -> list[dict[str, Any]]:
         rows = self.database.fetchall("SELECT * FROM audit_logs ORDER BY created_at, audit_id")
-        return [
+        audits = [
             {
                 "audit_id": row["audit_id"],
                 "created_at": row["created_at"],
@@ -302,6 +308,13 @@ class AuditRepository:
             }
             for row in rows
         ]
+        if actor is not None:
+            audits = [audit for audit in audits if audit["actor"] == actor]
+        if action is not None:
+            audits = [audit for audit in audits if audit["action"] == action]
+        if context is not None:
+            audits = [audit for audit in audits if str(audit["context"].get("name") or "") == context]
+        return audits
 
 
 class DecisionRepository:

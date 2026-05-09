@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## pigenus-v0.2.8-audit-inspection
+
+- Added read-only `audit-list` CLI command
+- Added audit filters for actor, action, and context
+- Added repository filter support for audit listing
+- Added audit inspection tests
+- Verified: 61 tests passed
+
 ## pigenus-v0.2.7-permission-inspection
 
 - Added minimal read-only permission registry

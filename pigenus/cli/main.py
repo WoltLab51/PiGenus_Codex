@@ -17,6 +17,7 @@ from pigenus.storage.repositories import AuditRepository, CellRepository, Decisi
 
 EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
 EMPTY_CELL_LIST_MESSAGE = "No cells found."
+EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -50,6 +51,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     decision_list = subparsers.add_parser("decision-list", help="List durable decision records.")
     decision_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    audit_list = subparsers.add_parser("audit-list", help="List audit log rows without modifying them.")
+    audit_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    audit_list.add_argument("--actor", default=None, help="Filter by audit actor.")
+    audit_list.add_argument("--action", default=None, help="Filter by audit action.")
+    audit_list.add_argument("--context", default=None, help="Filter by context name.")
 
     cell_list = subparsers.add_parser("cell-list", help="List registered cells without modifying them.")
     cell_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -159,6 +166,30 @@ def main(argv: list[str] | None = None) -> int:
                 f"{decision.decision_id} | {decision.decision_type} | "
                 f"{decision.subject_id} | {context_name} | "
                 f"{decision.reason} | {decision.source}"
+            )
+        return 0
+
+    if args.command == "audit-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            audits = AuditRepository(database).list(
+                actor=args.actor,
+                action=args.action,
+                context=args.context,
+            )
+        finally:
+            database.close()
+
+        if not audits:
+            print(EMPTY_AUDIT_LIST_MESSAGE)
+            return 0
+
+        for audit in audits:
+            context_name = str(audit["context"].get("name") or "")
+            print(
+                f"{audit['audit_id']} | {audit['created_at']} | "
+                f"{audit['actor']} | {audit['action']} | {context_name}"
             )
         return 0
 

@@ -145,30 +145,38 @@ behavior:
 - `permission-list` CLI
 - tests tying inspection output to runtime permission defaults
 
+### pigenus-v0.2.8-audit-inspection
+
+Phase 2.8 makes audit logs safely inspectable:
+
+- read-only `audit-list` CLI
+- actor, action, and context filters
+- tests proving audit inspection does not mutate storage
+
 ## Current
 
-### pigenus-v0.2.7-permission-inspection
+### pigenus-v0.2.8-audit-inspection
 
-Phase 2.7 is the current runtime shape.
+Phase 2.8 is the current runtime shape.
 
 ## Next
 
-### Phase 2.8 Audit Inspection Minimal
+### Phase 2.9 Event Inspection Minimal
 
-Goal: make audit logs safely visible from the CLI.
+Goal: make stored events safely visible from the CLI.
 
 Planned scope:
 
-- read-only `audit-list` CLI
-- filters for actor, action, and context
-- tests that audit inspection does not mutate storage
+- read-only `event-list` CLI
+- filters for event type, created-by cell, and context
+- tests that event inspection does not mutate storage
 
 Out of scope:
 
-- audit mutation
+- event replay
+- event mutation
 - export formats
 - dashboards
-- retention policies
 
 ## Later
 

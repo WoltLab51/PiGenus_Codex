@@ -29,6 +29,7 @@ python -m pigenus.cli.main run-demo --db pigenus.sqlite3
 python -m pigenus.cli.main memory-review --db pigenus.sqlite3 --now 2026-05-08T00:00:00+00:00
 python -m pigenus.cli.main memory-list --db pigenus.sqlite3
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
+python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 python -m pigenus.cli.main context-list
 python -m pigenus.cli.main permission-list
@@ -36,5 +37,5 @@ python -m pigenus.cli.main permission-list
 
 `memory-review` may update memory lifecycle status and write audit logs.
 
-`memory-list`, `decision-list`, `cell-list`, `context-list`, and
+`memory-list`, `decision-list`, `audit-list`, `cell-list`, `context-list`, and
 `permission-list` are read-only.
