@@ -64,6 +64,12 @@ Inspect known schema contracts:
 python -m pigenus.cli.main schema-list
 ```
 
+Inspect durable decision records:
+
+```powershell
+python -m pigenus.cli.main decision-list --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:

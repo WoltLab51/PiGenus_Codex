@@ -96,25 +96,36 @@ Phase 2.3 makes runtime contracts inspectable:
 - `schema-list` CLI
 - tests that registry output matches runtime validation
 
+### pigenus-v0.2.4-decision-log
+
+Phase 2.4 makes important decisions queryable separately from raw events and
+audit logs:
+
+- `DecisionRecord` schema
+- `decision_logs` SQLite table
+- decision repository
+- lifecycle decision recording
+- read-only `decision-list` CLI
+
 ## Current
 
-### pigenus-v0.2.3-schema-registry
+### pigenus-v0.2.4-decision-log
 
-Phase 2.3 is the current runtime shape.
+Phase 2.4 is the current runtime shape.
 
 ## Next
 
-### Phase 2.4 Decision Log Minimal
+### Phase 2.5 Cell Lifecycle Minimal
 
-Goal: make important decisions queryable separately from raw events and audit
-logs.
+Goal: make cells observable as lifecycle-managed runtime units without adding
+evolution.
 
 Planned scope:
 
-- small decision record schema
-- SQLite persistence
-- read-only decision list CLI
-- tests that lifecycle/manual decisions can be reconstructed
+- explicit cell lifecycle status handling
+- update `last_used_at`
+- simple fitness fields remain passive
+- read-only cell listing CLI
 
 Out of scope:
 

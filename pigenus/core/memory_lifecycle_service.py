@@ -5,8 +5,9 @@ from datetime import datetime
 
 from pigenus.core.audit import AuditLogger
 from pigenus.core.memory_lifecycle import MemoryLifecycleDecision, MemoryLifecycleEngine
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.memory import MemoryObject, MemoryStatus
-from pigenus.storage.repositories import MemoryRepository
+from pigenus.storage.repositories import DecisionRepository, MemoryRepository
 
 
 @dataclass(frozen=True)
@@ -28,10 +29,12 @@ class MemoryLifecycleService:
         *,
         repository: MemoryRepository,
         audit_logger: AuditLogger,
+        decision_repository: DecisionRepository | None = None,
         engine: MemoryLifecycleEngine | None = None,
     ) -> None:
         self.repository = repository
         self.audit_logger = audit_logger
+        self.decision_repository = decision_repository
         self.engine = engine or MemoryLifecycleEngine()
 
     def review(self, *, now: datetime) -> MemoryReviewResult:
@@ -87,6 +90,22 @@ class MemoryLifecycleService:
                 "source": decision.source,
             },
         )
+        if self.decision_repository is not None:
+            self.decision_repository.add(
+                DecisionRecord(
+                    decision_type="memory_lifecycle_status_change",
+                    context=memory.context,
+                    subject_id=decision.memory_id,
+                    actor=self.actor,
+                    reason=decision.reason,
+                    source=decision.source,
+                    created_at=decision.decided_at,
+                    details={
+                        "old_status": decision.old_status,
+                        "new_status": decision.new_status,
+                    },
+                )
+            )
         return updated
 
     @staticmethod

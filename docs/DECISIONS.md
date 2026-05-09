@@ -132,3 +132,15 @@ Reason:
 
 PiGenus should not maintain a second, drifting description of its own event
 contracts.
+
+## D-012: Decision Log Complements Events And Audit
+
+Decision:
+
+Important system decisions are recorded in `decision_logs` in addition to raw
+events and audit logs.
+
+Reason:
+
+Events show flow, and audit logs show actions. Decision records make important
+outcomes directly queryable and easier to explain.

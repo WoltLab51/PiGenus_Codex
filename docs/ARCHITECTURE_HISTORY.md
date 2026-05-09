@@ -151,9 +151,22 @@ of truth used by runtime validation.
 
 ## Next: Phase 2.4 Decision Log Minimal
 
-The next step is preserving important decisions separately from raw events and
-audit logs:
+Phase 2.4 preserves important decisions separately from raw events and audit
+logs:
 
 - decision record schema
 - SQLite persistence
 - read-only decision list CLI
+
+Why it mattered:
+
+PiGenus can now answer "what important decision was made?" without forcing
+operators to reconstruct that from raw events and audit rows.
+
+## Next: Phase 2.5 Cell Lifecycle Minimal
+
+The next step is making cells observable as runtime units:
+
+- explicit cell lifecycle status handling
+- `last_used_at` updates
+- read-only cell listing

@@ -9,7 +9,7 @@ from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
-from pigenus.storage.repositories import AuditRepository, MemoryRepository
+from pigenus.storage.repositories import AuditRepository, DecisionRepository, MemoryRepository
 
 
 EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
@@ -44,6 +44,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("schema-list", help="List known schema contracts.")
 
+    decision_list = subparsers.add_parser("decision-list", help="List durable decision records.")
+    decision_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
     return parser
 
 
@@ -70,6 +73,7 @@ def main(argv: list[str] | None = None) -> int:
             service = MemoryLifecycleService(
                 repository=MemoryRepository(database),
                 audit_logger=AuditLogger(AuditRepository(database)),
+                decision_repository=DecisionRepository(database),
             )
             result = service.review(now=parse_datetime(args.now))
         finally:
@@ -116,6 +120,27 @@ def main(argv: list[str] | None = None) -> int:
                 f"{contract.object_type} | "
                 f"schema {contract.schema_version} | "
                 f"required: {required}"
+            )
+        return 0
+
+    if args.command == "decision-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            decisions = DecisionRepository(database).list()
+        finally:
+            database.close()
+
+        if not decisions:
+            print("No decision records found.")
+            return 0
+
+        for decision in decisions:
+            context_name = str(decision.context.get("name") or "")
+            print(
+                f"{decision.decision_id} | {decision.decision_type} | "
+                f"{decision.subject_id} | {context_name} | "
+                f"{decision.reason} | {decision.source}"
             )
         return 0
 

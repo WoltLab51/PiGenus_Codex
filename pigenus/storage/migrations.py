@@ -74,6 +74,23 @@ MIGRATIONS: tuple[Migration, ...] = (
         );
         """,
     ),
+    Migration(
+        version="0002_decision_logs",
+        sql="""
+        CREATE TABLE IF NOT EXISTS decision_logs (
+            decision_id TEXT PRIMARY KEY,
+            decision_type TEXT NOT NULL,
+            context TEXT NOT NULL,
+            subject_id TEXT NOT NULL,
+            actor TEXT NOT NULL,
+            reason TEXT NOT NULL,
+            source TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            details TEXT NOT NULL,
+            data TEXT NOT NULL
+        );
+        """,
+    ),
 )
 
 

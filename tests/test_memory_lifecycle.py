@@ -13,7 +13,7 @@ from pigenus.core.memory_lifecycle import MemoryLifecycleEngine
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.schemas.memory import MemoryObject
 from pigenus.storage.database import Database
-from pigenus.storage.repositories import AuditRepository, MemoryRepository
+from pigenus.storage.repositories import AuditRepository, DecisionRepository, MemoryRepository
 
 
 def db_path(name: str) -> Path:
@@ -34,16 +34,20 @@ def memory(status: str = "active", **overrides) -> MemoryObject:
     return MemoryObject(**data)
 
 
-def lifecycle_service(path: Path) -> tuple[Database, MemoryRepository, AuditRepository, MemoryLifecycleService]:
+def lifecycle_service(
+    path: Path,
+) -> tuple[Database, MemoryRepository, AuditRepository, DecisionRepository, MemoryLifecycleService]:
     database = Database(path)
     database.initialize()
     memory_repository = MemoryRepository(database)
     audit_repository = AuditRepository(database)
+    decision_repository = DecisionRepository(database)
     service = MemoryLifecycleService(
         repository=memory_repository,
         audit_logger=AuditLogger(audit_repository),
+        decision_repository=decision_repository,
     )
-    return database, memory_repository, audit_repository, service
+    return database, memory_repository, audit_repository, decision_repository, service
 
 
 def test_manual_transition_allows_documented_paths():
@@ -70,7 +74,7 @@ def test_manual_transition_rejects_undocumented_paths():
 def test_review_due_changes_active_to_watch():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("review-due")
-    database, memory_repository, audit_repository, service = lifecycle_service(path)
+    database, memory_repository, audit_repository, _decision_repository, service = lifecycle_service(path)
     item = memory("active", review_due_at=now - timedelta(minutes=1))
     memory_repository.add(item)
 
@@ -87,7 +91,7 @@ def test_review_due_changes_active_to_watch():
 def test_expiry_changes_active_to_dead():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("expiry-active")
-    database, memory_repository, audit_repository, service = lifecycle_service(path)
+    database, memory_repository, audit_repository, _decision_repository, service = lifecycle_service(path)
     item = memory("active", expires_at=now - timedelta(minutes=1))
     memory_repository.add(item)
 
@@ -101,7 +105,7 @@ def test_expiry_changes_active_to_dead():
 def test_expiry_changes_dormant_to_fossil():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("expiry-dormant")
-    database, memory_repository, audit_repository, service = lifecycle_service(path)
+    database, memory_repository, audit_repository, _decision_repository, service = lifecycle_service(path)
     item = memory("dormant", expires_at=now - timedelta(minutes=1))
     memory_repository.add(item)
 
@@ -115,7 +119,7 @@ def test_expiry_changes_dormant_to_fossil():
 def test_canonical_is_not_changed_by_review_or_expiry():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("canonical")
-    database, memory_repository, audit_repository, service = lifecycle_service(path)
+    database, memory_repository, audit_repository, _decision_repository, service = lifecycle_service(path)
     item = memory(
         "canonical",
         review_due_at=now - timedelta(days=1),
@@ -135,7 +139,7 @@ def test_canonical_is_not_changed_by_review_or_expiry():
 def test_manual_transition_to_active_sets_last_validated_and_audit():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("manual-active")
-    database, memory_repository, audit_repository, service = lifecycle_service(path)
+    database, memory_repository, audit_repository, decision_repository, service = lifecycle_service(path)
     item = memory("stale")
     memory_repository.add(item)
 
@@ -147,13 +151,19 @@ def test_manual_transition_to_active_sets_last_validated_and_audit():
     assert audit["action"] == "memory_lifecycle_manual_transition"
     assert audit["details"]["old_status"] == "stale"
     assert audit["details"]["new_status"] == "active"
+    decision = decision_repository.list()[0]
+    assert decision.decision_type == "memory_lifecycle_status_change"
+    assert decision.subject_id == item.memory_id
+    assert decision.reason == "manual_transition"
+    assert decision.details["old_status"] == "stale"
+    assert decision.details["new_status"] == "active"
     database.close()
 
 
 def test_lifecycle_rules_do_not_change_context():
     now = datetime(2026, 5, 8, tzinfo=timezone.utc)
     path = db_path("context-preserved")
-    database, memory_repository, _audit_repository, service = lifecycle_service(path)
+    database, memory_repository, _audit_repository, _decision_repository, service = lifecycle_service(path)
     item = memory("active", review_due_at=now - timedelta(minutes=1))
     memory_repository.add(item)
 

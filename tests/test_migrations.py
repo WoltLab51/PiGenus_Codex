@@ -30,6 +30,7 @@ def test_initialize_creates_schema_migrations_and_runtime_tables():
 
     assert "schema_migrations" in table_names(database)
     assert "memory_objects" in table_names(database)
+    assert "decision_logs" in table_names(database)
     assert migration_versions(database) == [migration.version for migration in MIGRATIONS]
     database.close()
 
@@ -75,6 +76,6 @@ def test_runner_records_initial_schema_for_existing_database():
     applied = MigrationRunner(connection).apply()
     rows = connection.execute("SELECT version FROM schema_migrations").fetchall()
 
-    assert applied == ["0001_initial_schema"]
-    assert [str(row["version"]) for row in rows] == ["0001_initial_schema"]
+    assert applied == [migration.version for migration in MIGRATIONS]
+    assert [str(row["version"]) for row in rows] == [migration.version for migration in MIGRATIONS]
     connection.close()

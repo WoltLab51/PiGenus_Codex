@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## pigenus-v0.2.4-decision-log
+
+- Added `DecisionRecord` schema
+- Added `decision_logs` SQLite table through migration `0002_decision_logs`
+- Added decision repository
+- Added lifecycle decision recording for status changes
+- Added read-only `decision-list` CLI command
+- Added decision log tests
+- Verified: 45 tests passed
+
 ## pigenus-v0.2.3-schema-registry
 
 - Added minimal schema registry for event contracts

@@ -5,6 +5,7 @@ from typing import Any
 
 from pigenus.schemas.base import new_id, utc_now
 from pigenus.schemas.cells import CellSpec, CellState
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.events import Event
 from pigenus.schemas.memory import MemoryObject, MemoryStatus
 from pigenus.storage.database import Database
@@ -257,3 +258,41 @@ class AuditRepository:
             }
             for row in rows
         ]
+
+
+class DecisionRepository:
+    """Persistence adapter for durable decision records."""
+
+    def __init__(self, database: Database) -> None:
+        self.database = database
+
+    def add(self, decision: DecisionRecord) -> None:
+        data = decision.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT INTO decision_logs (
+                decision_id, decision_type, context, subject_id, actor,
+                reason, source, created_at, details, data
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                decision.decision_id,
+                decision.decision_type,
+                _json(data["context"]),
+                decision.subject_id,
+                decision.actor,
+                decision.reason,
+                decision.source,
+                str(data["created_at"]),
+                _json(data["details"]),
+                _json(data),
+            ),
+        )
+
+    def list(self) -> list[DecisionRecord]:
+        rows = self.database.fetchall("SELECT data FROM decision_logs ORDER BY created_at, decision_id")
+        return [DecisionRecord.model_validate(json.loads(row["data"])) for row in rows]
+
+    def count(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM decision_logs")
+        return int(row["count"]) if row else 0
