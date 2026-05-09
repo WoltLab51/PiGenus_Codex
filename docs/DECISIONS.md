@@ -224,3 +224,17 @@ Reason:
 
 Operators need one calm place to see what exists before deeper health checks or
 backup workflows arrive. Summary and diagnosis stay separate.
+
+## D-019: Health Check Diagnoses Without Repair
+
+Decision:
+
+`health-check` opens existing SQLite storage read-only and reports database
+presence, required tables, and migration state. It returns a non-zero exit code
+for unhealthy storage, but it does not initialize, migrate, repair, or back up
+the database.
+
+Reason:
+
+Health checks must be trustworthy. A diagnostic command should not hide damage
+by changing the thing it is checking.

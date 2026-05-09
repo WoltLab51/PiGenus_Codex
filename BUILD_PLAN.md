@@ -171,30 +171,40 @@ Phase 2.10 provides one small operator overview of the local runtime:
 - counts for events, memory objects, cells, audit logs, and decision records
 - known contexts and default permissions
 
+### pigenus-v0.2.11-health-check
+
+Phase 2.11 reports whether local runtime storage is structurally healthy:
+
+- read-only health checker
+- `health-check` CLI
+- migration-state checks
+- required-table checks
+- non-zero exit for unhealthy storage
+
 ## Current
 
-### pigenus-v0.2.10-runtime-overview
+### pigenus-v0.2.11-health-check
 
-Phase 2.10 is the current runtime shape.
+Phase 2.11 is the current runtime shape.
 
 ## Next
 
-### Phase 2.11 Health Check Minimal
+### Phase 2.12 Snapshot/Backup Minimal
 
-Goal: report whether the local runtime storage is structurally healthy.
+Goal: create safe local snapshots of healthy runtime storage.
 
 Planned scope:
 
-- read-only `health-check` CLI
-- check migration state
-- check required tables
-- non-zero exit on failed health check
-- tests for healthy and broken databases
+- `snapshot-create` CLI
+- health-check before snapshot
+- timestamped SQLite copy
+- tests for successful snapshot and unhealthy refusal
 
 Out of scope:
 
-- backups
-- repair
+- restore
+- scheduling
+- cloud sync
 - dashboards
 - exports
 

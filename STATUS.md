@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.10-runtime-overview`
+- Name: `pigenus-v0.2.11-health-check`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `70 passed`
+- Last verified result: `75 passed`
 
 ## Current Runtime Shape
 
@@ -32,6 +32,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal audit inspection surface
 - A minimal event inspection surface
 - A minimal runtime overview CLI
+- A minimal health-check CLI
 - Living project control documents
 
 Current demo flow:
@@ -72,16 +73,16 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Stored events can be listed and inspected without mutation.
 - Unknown event IDs return a clean CLI error.
 - Runtime overview summarizes storage counts and static boundaries without mutation.
+- Health check validates storage structure without applying migrations or repairs.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.10 Runtime Overview CLI, then build Phase 2.11 Health Check
-Minimal:
+Checkpoint Phase 2.11 Health Check Minimal, then build Phase 2.12
+Snapshot/Backup Minimal:
 
-- Verify database initialization and migration state.
-- Report core table availability.
-- Return non-zero on failed health checks.
-- Keep repair, backups, dashboards, and exports out of scope.
+- Add a command to copy a healthy SQLite DB to a timestamped snapshot file.
+- Refuse to snapshot unhealthy or missing databases.
+- Keep restore, scheduling, cloud sync, dashboards, and exports out of scope.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

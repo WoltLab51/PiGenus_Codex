@@ -244,3 +244,18 @@ Why it mattered:
 PiGenus now has a single operator-facing summary of its local state. The command
 stays read-only and avoids becoming a health check, repair tool, dashboard, or
 export path.
+
+## Next: Phase 2.11 Health Check Minimal
+
+Phase 2.11 added structural storage diagnosis:
+
+- read-only `health-check` CLI
+- required-table checks
+- migration-state checks
+- non-zero exit for unhealthy storage
+
+Why it mattered:
+
+PiGenus can now distinguish "what exists" from "is the storage structurally
+sound?" The health check diagnoses without applying migrations or repairs, so it
+does not mask damage while inspecting it.

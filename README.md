@@ -113,6 +113,12 @@ Show a compact runtime overview:
 python -m pigenus.cli.main runtime-overview --db pigenus.sqlite3
 ```
 
+Check local runtime storage health:
+
+```powershell
+python -m pigenus.cli.main health-check --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:

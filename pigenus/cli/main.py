@@ -8,6 +8,7 @@ from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
 from pigenus.core.context_registry import ContextRegistry
+from pigenus.core.health import HealthChecker
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
@@ -49,6 +50,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     overview = subparsers.add_parser("runtime-overview", help="Show a read-only runtime overview.")
     overview.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    health = subparsers.add_parser("health-check", help="Check local runtime storage health.")
+    health.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
     review = subparsers.add_parser("memory-review", help="Apply deterministic memory lifecycle rules.")
     review.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -137,6 +141,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Contexts: {', '.join(overview.contexts) or '-'}")
         print(f"Default permissions: {', '.join(overview.default_permissions) or '-'}")
         return 0
+
+    if args.command == "health-check":
+        result = HealthChecker(Path(args.db)).check()
+        print("PiGenus Health Check")
+        for check in result.checks:
+            print(f"OK: {check}")
+        for failure in result.failures:
+            print(f"FAIL: {failure}")
+        print("Status: healthy" if result.ok else "Status: unhealthy")
+        return 0 if result.ok else 1
 
     if args.command == "memory-review":
         database = Database(Path(args.db))

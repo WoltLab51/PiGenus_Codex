@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.11-health-check
+
+- Added read-only health checker for local SQLite runtime storage
+- Added `health-check` CLI command
+- Checked database presence, required tables, and recorded migration state
+- Added non-zero health-check exit codes for unhealthy storage
+- Added health-check tests for healthy and broken databases
+- Verified: 75 tests passed
+
 ## pigenus-v0.2.10-runtime-overview
 
 - Added read-only runtime overview builder
