@@ -46,9 +46,31 @@ class EventRepository:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM events")
         return int(row["count"]) if row else 0
 
-    def list(self) -> list[Event]:
+    def get(self, event_id: str) -> Event | None:
+        row = self.database.fetchone("SELECT data FROM events WHERE event_id = ?", (event_id,))
+        if row is None:
+            return None
+        return Event.model_validate(json.loads(row["data"]))
+
+    def list(
+        self,
+        *,
+        object_type: str | None = None,
+        created_by_cell: str | None = None,
+        context: str | None = None,
+        limit: int | None = None,
+    ) -> list[Event]:
         rows = self.database.fetchall("SELECT data FROM events ORDER BY created_at, event_id")
-        return [Event.model_validate(json.loads(row["data"])) for row in rows]
+        events = [Event.model_validate(json.loads(row["data"])) for row in rows]
+        if object_type is not None:
+            events = [event for event in events if event.object_type == object_type]
+        if created_by_cell is not None:
+            events = [event for event in events if event.created_by_cell == created_by_cell]
+        if context is not None:
+            events = [event for event in events if str(event.context.get("name") or "") == context]
+        if limit is not None:
+            events = events[-limit:]
+        return events
 
 
 class MemoryRepository:

@@ -100,6 +100,13 @@ Inspect audit logs without modifying them:
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 ```
 
+Inspect stored events without modifying them:
+
+```powershell
+python -m pigenus.cli.main event-list --db pigenus.sqlite3
+python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:

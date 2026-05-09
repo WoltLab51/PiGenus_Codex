@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.8-audit-inspection`
+- Name: `pigenus-v0.2.9-event-inspection`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `61 passed`
+- Last verified result: `67 passed`
 
 ## Current Runtime Shape
 
@@ -30,6 +30,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal context inspection surface
 - A minimal permission inspection surface
 - A minimal audit inspection surface
+- A minimal event inspection surface
 - Living project control documents
 
 Current demo flow:
@@ -67,15 +68,17 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `permission-list` is read-only.
 - Audit logs are append-only.
 - `audit-list` is read-only.
+- Stored events can be listed and inspected without mutation.
+- Unknown event IDs return a clean CLI error.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.8 Audit Inspection Minimal, then build Phase 2.9 Event
-Inspection Minimal:
+Checkpoint Phase 2.9 Event Inspection Minimal, then build Phase 2.10 Runtime
+Overview CLI:
 
-- Add a read-only event listing CLI.
-- Support filters for event type, created-by cell, and context.
-- Keep event replay, event mutation, and export formats out of scope.
+- Summarize counts for events, memory, cells, audit logs, and decisions.
+- Show known contexts and default permissions at a glance.
+- Keep health checks, backups, dashboards, and exports out of scope.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

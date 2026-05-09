@@ -27,6 +27,8 @@ PiGenus CLI commands should stay boring, scriptable, and testable.
 ```powershell
 python -m pigenus.cli.main run-demo --db pigenus.sqlite3
 python -m pigenus.cli.main memory-review --db pigenus.sqlite3 --now 2026-05-08T00:00:00+00:00
+python -m pigenus.cli.main event-list --db pigenus.sqlite3
+python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
 python -m pigenus.cli.main memory-list --db pigenus.sqlite3
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
@@ -37,5 +39,5 @@ python -m pigenus.cli.main permission-list
 
 `memory-review` may update memory lifecycle status and write audit logs.
 
-`memory-list`, `decision-list`, `audit-list`, `cell-list`, `context-list`, and
-`permission-list` are read-only.
+`event-list`, `event-show`, `memory-list`, `decision-list`, `audit-list`,
+`cell-list`, `context-list`, and `permission-list` are read-only.

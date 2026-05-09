@@ -216,3 +216,17 @@ Why it mattered:
 PiGenus can now show its append-only audit trail directly. This makes runtime
 actions inspectable without adding export systems, dashboards, or mutation
 paths.
+
+## Next: Phase 2.9 Event Inspection Minimal
+
+Phase 2.9 made stored events inspectable:
+
+- read-only `event-list` CLI
+- filters for object type, created-by cell, context, and limit
+- read-only `event-show` CLI with JSON payload output
+
+Why it mattered:
+
+PiGenus can now show the structured runtime trace directly. Operators can
+inspect recent events or one event by ID without introducing replay, mutation,
+or export behavior.

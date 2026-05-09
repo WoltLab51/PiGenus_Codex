@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,12 +13,19 @@ from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
-from pigenus.storage.repositories import AuditRepository, CellRepository, DecisionRepository, MemoryRepository
+from pigenus.storage.repositories import (
+    AuditRepository,
+    CellRepository,
+    DecisionRepository,
+    EventRepository,
+    MemoryRepository,
+)
 
 
 EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
 EMPTY_CELL_LIST_MESSAGE = "No cells found."
 EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
+EMPTY_EVENT_LIST_MESSAGE = "No events found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -46,6 +54,17 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     memory_list.add_argument("--status", default=None, help="Filter by memory status.")
     memory_list.add_argument("--context", default=None, help="Filter by context name.")
+
+    event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
+    event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    event_list.add_argument("--object-type", default=None, help="Filter by event object type.")
+    event_list.add_argument("--created-by-cell", default=None, help="Filter by creator cell ID.")
+    event_list.add_argument("--context", default=None, help="Filter by context name.")
+    event_list.add_argument("--limit", type=int, default=None, help="Show only the most recent N events.")
+
+    event_show = subparsers.add_parser("event-show", help="Show one event by ID without modifying it.")
+    event_show.add_argument("event_id", help="Event ID to inspect.")
+    event_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
     subparsers.add_parser("schema-list", help="List known schema contracts.")
 
@@ -135,6 +154,57 @@ def main(argv: list[str] | None = None) -> int:
                 f"{memory.memory_id} | {memory.status} | "
                 f"{context_name} | {memory.human_summary}"
             )
+        return 0
+
+    if args.command == "event-list":
+        if args.limit is not None and args.limit < 1:
+            parser.error("--limit must be greater than 0")
+
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            events = EventRepository(database).list(
+                object_type=args.object_type,
+                created_by_cell=args.created_by_cell,
+                context=args.context,
+                limit=args.limit,
+            )
+        finally:
+            database.close()
+
+        if not events:
+            print(EMPTY_EVENT_LIST_MESSAGE)
+            return 0
+
+        for event in events:
+            context_name = str(event.context.get("name") or "")
+            print(
+                f"{event.event_id} | {event.created_at.isoformat()} | "
+                f"{event.object_type} | {event.created_by_cell} | {context_name}"
+            )
+        return 0
+
+    if args.command == "event-show":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            event = EventRepository(database).get(args.event_id)
+        finally:
+            database.close()
+
+        if event is None:
+            print(f"Event not found: {args.event_id}")
+            return 1
+
+        context_name = str(event.context.get("name") or "")
+        print(f"Event ID: {event.event_id}")
+        print(f"Object type: {event.object_type}")
+        print(f"Schema version: {event.schema_version}")
+        print(f"Context: {context_name}")
+        print(f"Created at: {event.created_at.isoformat()}")
+        print(f"Created by cell: {event.created_by_cell}")
+        print("Payload:")
+        print(json.dumps(event.payload, ensure_ascii=True, indent=2, sort_keys=True))
         return 0
 
     if args.command == "schema-list":

@@ -197,3 +197,17 @@ Reason:
 
 Audit exists to explain what happened. Operators need safe visibility into that
 record before the system grows export formats, dashboards, or retention policy.
+
+## D-017: Event Inspection Does Not Replay
+
+Decision:
+
+Stored events can be listed and inspected by ID through read-only CLI commands.
+Inspection may show payload JSON, but it does not replay, mutate, export, or
+reprocess events.
+
+Reason:
+
+Events are the runtime trace. Operators need to see that trace before PiGenus
+adds replay or worker behavior, and viewing an event must remain a safe
+operation.

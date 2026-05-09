@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.9-event-inspection
+
+- Added read-only `event-list` CLI command
+- Added event filters for object type, created-by cell, context, and limit
+- Added read-only `event-show` CLI command with readable JSON payload output
+- Added clean error handling for unknown event IDs
+- Added event inspection tests
+- Verified: 67 tests passed
+
 ## pigenus-v0.2.8-audit-inspection
 
 - Added read-only `audit-list` CLI command

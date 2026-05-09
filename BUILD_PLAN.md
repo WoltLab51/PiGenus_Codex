@@ -153,30 +153,40 @@ Phase 2.8 makes audit logs safely inspectable:
 - actor, action, and context filters
 - tests proving audit inspection does not mutate storage
 
+### pigenus-v0.2.9-event-inspection
+
+Phase 2.9 makes stored events safely inspectable:
+
+- read-only `event-list` CLI
+- filters for event type, created-by cell, context, and limit
+- read-only `event-show` CLI with JSON payload output
+- clean error handling for unknown event IDs
+
 ## Current
 
-### pigenus-v0.2.8-audit-inspection
+### pigenus-v0.2.9-event-inspection
 
-Phase 2.8 is the current runtime shape.
+Phase 2.9 is the current runtime shape.
 
 ## Next
 
-### Phase 2.9 Event Inspection Minimal
+### Phase 2.10 Runtime Overview CLI
 
-Goal: make stored events safely visible from the CLI.
+Goal: provide one small operator overview of the local runtime.
 
 Planned scope:
 
-- read-only `event-list` CLI
-- filters for event type, created-by cell, and context
-- tests that event inspection does not mutate storage
+- counts for events, memory objects, cells, audit logs, and decision records
+- known contexts
+- default permissions
+- read-only command with tests
 
 Out of scope:
 
-- event replay
-- event mutation
-- export formats
+- health checks
+- backups
 - dashboards
+- exports
 
 ## Later
 
