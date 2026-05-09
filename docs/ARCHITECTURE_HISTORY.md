@@ -138,8 +138,22 @@ can become explicit migrations instead of hidden side effects of initialization.
 
 ## Next: Phase 2.3 Schema Registry Minimal
 
-The next step is making runtime contracts inspectable:
+Phase 2.3 made runtime contracts inspectable:
 
 - known event types
 - required payload keys
 - CLI inspection for schema contracts
+
+Why it mattered:
+
+PiGenus can now describe its structured event contracts through the same source
+of truth used by runtime validation.
+
+## Next: Phase 2.4 Decision Log Minimal
+
+The next step is preserving important decisions separately from raw events and
+audit logs:
+
+- decision record schema
+- SQLite persistence
+- read-only decision list CLI

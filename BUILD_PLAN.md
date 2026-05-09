@@ -70,58 +70,51 @@ Implemented scope:
 - Audit logs for memory status changes
 - Tests for lifecycle invariants
 
-## Current
-
-### pigenus-v0.2-memory-lifecycle
-
-Phase 2 is the current runtime shape.
-
 ### pigenus-v0.2.1-lifecycle-polish
 
-Phase 2.1 hardens lifecycle ergonomics without adding intelligence.
-
-Implemented scope:
+Phase 2.1 hardens lifecycle ergonomics without adding intelligence:
 
 - CLI command conventions and exit-code documentation
 - Primitive SQLite migration policy
 - Read-only memory listing command for inspection
 
-## Current
-
-### pigenus-v0.2.1-lifecycle-polish
-
-Phase 2.1 is the current runtime shape.
-
 ### pigenus-v0.2.2-migrations
 
 Phase 2.2 adds the smallest useful migration runner before future schema
-evolution.
-
-Implemented scope:
+evolution:
 
 - `schema_migrations` table
 - idempotent migration application
 - smoke tests for fresh and existing databases
 - no destructive migrations
 
+### pigenus-v0.2.3-schema-registry
+
+Phase 2.3 makes runtime contracts inspectable:
+
+- event contract registry
+- `schema-list` CLI
+- tests that registry output matches runtime validation
+
 ## Current
 
-### pigenus-v0.2.2-migrations
+### pigenus-v0.2.3-schema-registry
 
-Phase 2.2 is the current runtime shape.
+Phase 2.3 is the current runtime shape.
 
 ## Next
 
-### Phase 2.3 Schema Registry Minimal
+### Phase 2.4 Decision Log Minimal
 
-Goal: make event and object contracts discoverable without adding a large
-framework.
+Goal: make important decisions queryable separately from raw events and audit
+logs.
 
 Planned scope:
 
-- expose known event types and required payload keys through a small registry
-- CLI inspection for schema contracts
-- tests for registry output matching runtime validation
+- small decision record schema
+- SQLite persistence
+- read-only decision list CLI
+- tests that lifecycle/manual decisions can be reconstructed
 
 Out of scope:
 

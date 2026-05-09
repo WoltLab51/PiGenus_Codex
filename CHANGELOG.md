@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## pigenus-v0.2.3-schema-registry
+
+- Added minimal schema registry for event contracts
+- Added `schema-list` CLI command
+- Added tests tying registry output to runtime event validation
+- Cleaned current status and build-plan phase layout
+- Verified: 41 tests passed
+
 ## pigenus-v0.2.2-migrations
 
 - Added minimal SQLite migration runner

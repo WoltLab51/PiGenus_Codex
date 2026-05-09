@@ -7,6 +7,7 @@ from pathlib import Path
 from pigenus.core.audit import AuditLogger
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
+from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import AuditRepository, MemoryRepository
 
@@ -40,6 +41,8 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     memory_list.add_argument("--status", default=None, help="Filter by memory status.")
     memory_list.add_argument("--context", default=None, help="Filter by context name.")
+
+    subparsers.add_parser("schema-list", help="List known schema contracts.")
 
     return parser
 
@@ -102,6 +105,17 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 f"{memory.memory_id} | {memory.status} | "
                 f"{context_name} | {memory.human_summary}"
+            )
+        return 0
+
+    if args.command == "schema-list":
+        registry = SchemaRegistry()
+        for contract in registry.list_event_contracts():
+            required = ", ".join(contract.required_payload_keys) or "-"
+            print(
+                f"{contract.object_type} | "
+                f"schema {contract.schema_version} | "
+                f"required: {required}"
             )
         return 0
 

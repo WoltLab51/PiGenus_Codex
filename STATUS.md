@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.2-migrations`
+- Name: `pigenus-v0.2.3-schema-registry`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `36 passed`
+- Last verified result: `41 passed`
 
 ## Current Runtime Shape
 
@@ -24,6 +24,7 @@ PiGenus is a small local cognitive core. It has:
 - CLI conventions
 - Migration policy
 - A minimal SQLite migration runner
+- A minimal schema registry
 - Living project control documents
 
 Current demo flow:
@@ -49,14 +50,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Lifecycle status changes create audit logs.
 - `memory-list` is read-only.
 - `Database.initialize()` applies recorded migrations idempotently.
+- Schema registry output matches runtime event validation constants.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.2 Migration Runner, then build Phase 2.3 Schema Registry Minimal:
+Checkpoint Phase 2.3 Schema Registry Minimal, then build Phase 2.4 Decision Log Minimal:
 
-- Expose event/object contracts through a small registry.
-- Add CLI inspection for schema contracts.
-- Test registry output against runtime validation.
+- Add a small decision record schema.
+- Persist decisions separately from raw events and audit logs.
+- Add read-only decision list CLI.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

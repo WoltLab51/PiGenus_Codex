@@ -58,6 +58,12 @@ Inspect memory without modifying it:
 python -m pigenus.cli.main memory-list --db pigenus.sqlite3
 ```
 
+Inspect known schema contracts:
+
+```powershell
+python -m pigenus.cli.main schema-list
+```
+
 ## Demo Flow
 
 The demo input is:

@@ -120,3 +120,15 @@ Reason:
 
 The database should carry its own schema lineage. Future runtime changes should
 be explicit, idempotent, and inspectable.
+
+## D-011: Schema Registry Uses Runtime Contracts
+
+Decision:
+
+The schema registry reads from the same event type and required-key constants
+used by runtime validation.
+
+Reason:
+
+PiGenus should not maintain a second, drifting description of its own event
+contracts.
