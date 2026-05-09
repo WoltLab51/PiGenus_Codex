@@ -11,6 +11,9 @@ from pigenus.storage.database import Database
 from pigenus.storage.repositories import AuditRepository, MemoryRepository
 
 
+EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
+
+
 def parse_datetime(value: str | None) -> datetime:
     if value is None:
         return datetime.now(timezone.utc)
@@ -32,6 +35,11 @@ def build_parser() -> argparse.ArgumentParser:
     review = subparsers.add_parser("memory-review", help="Apply deterministic memory lifecycle rules.")
     review.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     review.add_argument("--now", default=None, help="ISO timestamp for deterministic review.")
+
+    memory_list = subparsers.add_parser("memory-list", help="List memory objects without modifying them.")
+    memory_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    memory_list.add_argument("--status", default=None, help="Filter by memory status.")
+    memory_list.add_argument("--context", default=None, help="Filter by context name.")
 
     return parser
 
@@ -66,6 +74,35 @@ def main(argv: list[str] | None = None) -> int:
 
         print(f"Memories checked: {result.checked}")
         print(f"Statuses changed: {result.changed}")
+        return 0
+
+    if args.command == "memory-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            memories = MemoryRepository(database).list()
+        finally:
+            database.close()
+
+        if args.status is not None:
+            memories = [memory for memory in memories if memory.status == args.status]
+        if args.context is not None:
+            memories = [
+                memory
+                for memory in memories
+                if str(memory.context.get("name") or "") == args.context
+            ]
+
+        if not memories:
+            print(EMPTY_MEMORY_LIST_MESSAGE)
+            return 0
+
+        for memory in memories:
+            context_name = str(memory.context.get("name") or "")
+            print(
+                f"{memory.memory_id} | {memory.status} | "
+                f"{context_name} | {memory.human_summary}"
+            )
         return 0
 
     parser.error(f"Unknown command: {args.command}")

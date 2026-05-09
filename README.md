@@ -52,6 +52,12 @@ Run lifecycle review with:
 python -m pigenus.cli.main memory-review --db pigenus.sqlite3
 ```
 
+Inspect memory without modifying it:
+
+```powershell
+python -m pigenus.cli.main memory-list --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:
@@ -103,6 +109,8 @@ pytest
 - `CHANGELOG.md` records versioned changes.
 - `docs/ARCHITECTURE_HISTORY.md` explains the architectural evolution.
 - `docs/DECISIONS.md` records durable design decisions.
+- `docs/CLI_CONVENTIONS.md` defines CLI behavior and exit codes.
+- `docs/MIGRATIONS.md` defines the early SQLite migration policy.
 
 Update these files before every checkpoint commit.
 

@@ -76,18 +76,34 @@ Implemented scope:
 
 Phase 2 is the current runtime shape.
 
-## Next
+### pigenus-v0.2.1-lifecycle-polish
 
-### Phase 2.1 Lifecycle Polish
+Phase 2.1 hardens lifecycle ergonomics without adding intelligence.
 
-Goal: harden lifecycle ergonomics without adding intelligence.
-
-Planned scope:
+Implemented scope:
 
 - CLI command conventions and exit-code documentation
 - Primitive SQLite migration policy
-- Optional memory listing command for inspection
-- More focused lifecycle documentation examples
+- Read-only memory listing command for inspection
+
+## Current
+
+### pigenus-v0.2.1-lifecycle-polish
+
+Phase 2.1 is the current runtime shape.
+
+## Next
+
+### Phase 2.2 Migration Runner
+
+Goal: add the smallest useful migration runner before future schema evolution.
+
+Planned scope:
+
+- `schema_migrations` table
+- idempotent migration application
+- smoke tests for fresh and existing databases
+- no destructive migrations
 
 Out of scope:
 

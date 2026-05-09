@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.1-lifecycle-polish
+
+- Added read-only `memory-list` CLI command
+- Added status and context filters for memory listing
+- Added CLI conventions and exit-code documentation
+- Added SQLite migration policy documentation
+- Added tests proving `memory-list` does not mutate storage
+- Verified: 33 tests passed
+
 ## pigenus-v0.2-memory-lifecycle
 
 - Bumped package version to `0.2.0`

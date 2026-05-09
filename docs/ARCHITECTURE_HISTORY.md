@@ -111,9 +111,22 @@ protected from automatic lifecycle changes.
 
 ## Next: Phase 2.1 Lifecycle Polish
 
-The next step is not more intelligence. It is operational clarity:
+Phase 2.1 added operational clarity:
 
 - CLI conventions and exit-code documentation
 - A primitive SQLite migration policy
-- Optional read-only memory inspection
-- Focused lifecycle examples
+- Read-only memory inspection through `memory-list`
+
+Why it mattered:
+
+The lifecycle system became inspectable without mutation, and future schema
+changes now have a documented migration policy.
+
+## Next: Phase 2.2 Migration Runner
+
+The next step is implementing the smallest useful migration runner before more
+schema evolution:
+
+- `schema_migrations`
+- idempotent migration application
+- smoke tests for fresh and existing databases

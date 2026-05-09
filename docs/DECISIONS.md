@@ -85,3 +85,26 @@ Reason:
 
 PiGenus needs auditability and historical continuity. Removing memory
 automatically would make it harder to explain why the system changed behavior.
+
+## D-008: Inspection Commands Are Read-Only
+
+Decision:
+
+CLI commands that inspect storage, such as `memory-list`, must not mutate
+memory, audit logs, or lifecycle state.
+
+Reason:
+
+Operators need safe visibility into PiGenus without accidentally changing the
+system by looking at it.
+
+## D-009: Add Migration Policy Before Migration Runner
+
+Decision:
+
+PiGenus documents SQLite migration rules before adding a migration runner.
+
+Reason:
+
+Schema evolution affects stored memory and audit history. The policy should be
+clear before automation starts changing local databases.

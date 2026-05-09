@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2-memory-lifecycle`
+- Name: `pigenus-v0.2.1-lifecycle-polish`
 - Branch: `main`
-- Status: checkpointed
+- Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `29 passed`
+- Last verified result: `33 passed`
 
 ## Current Runtime Shape
 
@@ -21,6 +21,8 @@ PiGenus is a small local cognitive core. It has:
 - A memory lifecycle engine
 - Audit logging
 - A CLI demo
+- CLI conventions
+- Migration policy
 - Living project control documents
 
 Current demo flow:
@@ -44,14 +46,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Expired `dormant` memory becomes `fossil`.
 - `canonical` memory is not changed by automatic review or expiry.
 - Lifecycle status changes create audit logs.
+- `memory-list` is read-only.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2 Memory Lifecycle, then build Phase 2.1 Lifecycle Polish:
+Checkpoint Phase 2.1 Lifecycle Polish, then build Phase 2.2 Migration Runner:
 
-- Document CLI conventions and exit codes.
-- Add a primitive SQLite migration policy.
-- Consider a read-only memory listing command for inspection.
+- Add a `schema_migrations` table.
+- Apply idempotent migrations.
+- Smoke-test fresh and existing databases.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
@@ -66,3 +69,5 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/ARCHITECTURE_HISTORY.md`: narrative system evolution
 - `docs/DECISIONS.md`: durable architectural decisions
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md`: next phase implementation contract
+- `docs/CLI_CONVENTIONS.md`: CLI behavior and exit-code conventions
+- `docs/MIGRATIONS.md`: SQLite migration policy
