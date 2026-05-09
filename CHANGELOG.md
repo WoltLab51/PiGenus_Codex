@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.6-context-inspection
+
+- Added minimal read-only context registry
+- Added `context-list` CLI command
+- Added optional allowed-cell inspection for existing databases
+- Ensured `context-list --show-cells` does not create missing databases
+- Added context inspection tests
+- Verified: 54 tests passed
+
 ## pigenus-v0.2.5-cell-lifecycle
 
 - Added cell lifecycle migration `0003_cell_lifecycle`

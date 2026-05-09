@@ -175,3 +175,16 @@ Why it mattered:
 
 PiGenus can now show which cells are registered and when orchestrated cells were
 used, while keeping fitness passive and avoiding autonomous mutation.
+
+## Next: Phase 2.6 Context Inspection Minimal
+
+Phase 2.6 made known contexts inspectable:
+
+- read-only context registry
+- `context-list` CLI
+- optional allowed-cell display from an existing database
+
+Why it mattered:
+
+PiGenus can now show its room boundaries directly. Inspection stays passive, so
+looking at contexts does not create a database or mutate runtime state.

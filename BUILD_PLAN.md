@@ -127,23 +127,43 @@ Out of scope:
 - Autonomous evolution
 - Vector search
 
+### pigenus-v0.2.6-context-inspection
+
+Phase 2.6 makes known contexts inspectable without changing boundary behavior:
+
+- read-only context registry
+- `context-list` CLI
+- optional allowed-cell display from an existing SQLite database
+- tests proving context inspection does not create missing databases
+
 ## Current
 
-### pigenus-v0.2.5-cell-lifecycle
+### pigenus-v0.2.6-context-inspection
 
-Phase 2.5 is the current runtime shape.
+Phase 2.6 is the current runtime shape.
 
 ## Next
 
-Choose the next narrow hardening phase after checkpointing Phase 2.5. Good
-candidates are richer context inspection, additional schema visibility, or
-guard-family groundwork.
+### Phase 2.7 Permission Inspection Minimal
+
+Goal: make the current permission surface visible before adding guard families.
+
+Planned scope:
+
+- expose default allowed permissions
+- add read-only permission listing CLI
+- tests that permission inspection does not mutate storage
+
+Out of scope:
+
+- permission editing
+- dynamic policy loading
+- guard families
+- role/user modeling
 
 ## Later
 
 - Context boundary expansion
-- Schema registry
-- Cell lifecycle and fitness
 - Guard families
 - Worker interface
 - Controlled cell evolution

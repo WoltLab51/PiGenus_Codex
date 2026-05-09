@@ -76,6 +76,18 @@ Inspect registered cells without modifying them:
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 ```
 
+Inspect known contexts without modifying storage:
+
+```powershell
+python -m pigenus.cli.main context-list
+```
+
+Include registered cells allowed in each context from an existing database:
+
+```powershell
+python -m pigenus.cli.main context-list --db pigenus.sqlite3 --show-cells
+```
+
 ## Demo Flow
 
 The demo input is:

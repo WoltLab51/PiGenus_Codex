@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
+from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.schemas.registry import SchemaRegistry
@@ -51,6 +53,14 @@ def build_parser() -> argparse.ArgumentParser:
     cell_list = subparsers.add_parser("cell-list", help="List registered cells without modifying them.")
     cell_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     cell_list.add_argument("--status", default=None, help="Filter by cell lifecycle status.")
+
+    context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
+    context_list.add_argument("--db", default=None, help="Optional existing SQLite database path.")
+    context_list.add_argument(
+        "--show-cells",
+        action="store_true",
+        help="Show registered cells allowed in each context when --db is provided.",
+    )
 
     return parser
 
@@ -170,6 +180,26 @@ def main(argv: list[str] | None = None) -> int:
                 f"{cell.cell_id} | {cell.status} | "
                 f"fitness={cell.fitness:.2f} | last_used_at={last_used}"
             )
+        return 0
+
+    if args.command == "context-list":
+        cells = []
+        if args.show_cells and args.db is not None and Path(args.db).exists():
+            database = Database(Path(args.db))
+            try:
+                cells = CellRepository(database).list()
+            except sqlite3.Error:
+                cells = []
+            finally:
+                database.close()
+
+        contexts = ContextRegistry().list_contexts(cells)
+        for context in contexts:
+            if args.show_cells:
+                allowed_cells = ", ".join(context.allowed_cell_ids) or "-"
+                print(f"{context.name} | allowed_cells={allowed_cells}")
+            else:
+                print(context.name)
         return 0
 
     parser.error(f"Unknown command: {args.command}")

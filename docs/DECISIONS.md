@@ -158,3 +158,16 @@ Reason:
 Cells should become observable runtime units before they become adaptive ones.
 This preserves deterministic behavior while preparing the core for later
 cell-management work.
+
+## D-014: Context Inspection Is Read-Only
+
+Decision:
+
+Known contexts are exposed through a read-only registry and `context-list`.
+Optional cell visibility reads an existing database only; it does not create a
+missing database just to inspect context boundaries.
+
+Reason:
+
+Context boundaries protect rooms. Operators should be able to inspect those
+rooms without changing storage or accidentally initializing runtime state.

@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.5-cell-lifecycle`
+- Name: `pigenus-v0.2.6-context-inspection`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `50 passed`
+- Last verified result: `54 passed`
 
 ## Current Runtime Shape
 
@@ -27,6 +27,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal schema registry
 - A minimal decision log
 - A minimal cell lifecycle surface
+- A minimal context inspection surface
 - Living project control documents
 
 Current demo flow:
@@ -58,14 +59,17 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Registered cells expose lifecycle status and passive fitness metadata.
 - Orchestrated cells update `last_used_at`.
 - `cell-list` is read-only.
+- Context registry output matches known runtime contexts.
+- `context-list` is read-only and does not create missing databases.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.5 Cell Lifecycle Minimal, then continue with the next small
-runtime hardening step:
+Checkpoint Phase 2.6 Context Inspection Minimal, then build Phase 2.7 Permission
+Inspection Minimal:
 
-- Keep the core deterministic and inspectable.
-- Prefer another small visibility or contract hardening phase.
+- Make default permissions inspectable.
+- Add a read-only permission listing CLI.
+- Keep permission mutation, policy editing, and guard families out of scope.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
