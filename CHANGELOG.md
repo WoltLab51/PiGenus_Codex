@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.2-migrations
+
+- Added minimal SQLite migration runner
+- Added `schema_migrations` table
+- Moved initial table creation into `0001_initial_schema`
+- Made `Database.initialize()` apply migrations idempotently
+- Added migration smoke tests for fresh, repeated, and existing databases
+- Verified: 36 tests passed
+
 ## pigenus-v0.2.1-lifecycle-polish
 
 - Added read-only `memory-list` CLI command

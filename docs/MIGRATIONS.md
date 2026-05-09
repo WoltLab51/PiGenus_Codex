@@ -15,27 +15,36 @@ intentional.
 
 ## Current State
 
-There is no migration runner yet.
+PiGenus has a minimal migration runner in `pigenus.storage.migrations`.
+
+Current migration table:
+
+```text
+schema_migrations(version TEXT PRIMARY KEY, applied_at TEXT NOT NULL)
+```
+
+Current recorded migration:
+
+```text
+0001_initial_schema
+```
+
+`Database.initialize()` applies pending migrations. Running it more than once
+must be safe.
 
 For now:
 
-- New tables may be added through `Database.initialize()`.
-- New nullable columns may be added only with an explicit migration step.
+- New tables should be added as explicit migrations.
+- New nullable columns should be added as explicit migrations.
 - Renaming or dropping columns is out of scope.
 
-## When To Add A Migration Runner
+## When To Add A New Migration
 
-Add a small migration runner before any change that requires:
+Add a new migration before any change that requires:
 
 - `ALTER TABLE`
 - backfilling existing rows
 - changing stored JSON shape in a non-compatible way
 - multiple schema versions in the wild
-
-The first runner should be simple:
-
-```text
-schema_migrations(version TEXT PRIMARY KEY, applied_at TEXT NOT NULL)
-```
 
 Each migration should be idempotent or guarded by the recorded version.

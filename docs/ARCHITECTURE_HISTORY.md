@@ -124,9 +124,22 @@ changes now have a documented migration policy.
 
 ## Next: Phase 2.2 Migration Runner
 
-The next step is implementing the smallest useful migration runner before more
-schema evolution:
+Phase 2.2 implemented the smallest useful migration runner before more schema
+evolution:
 
 - `schema_migrations`
 - idempotent migration application
 - smoke tests for fresh and existing databases
+
+Why it mattered:
+
+PiGenus now records schema evolution inside SQLite itself. Future schema changes
+can become explicit migrations instead of hidden side effects of initialization.
+
+## Next: Phase 2.3 Schema Registry Minimal
+
+The next step is making runtime contracts inspectable:
+
+- known event types
+- required payload keys
+- CLI inspection for schema contracts

@@ -114,6 +114,11 @@ pytest
 
 Update these files before every checkpoint commit.
 
+## Database Migrations
+
+`Database.initialize()` applies recorded SQLite migrations. The current runner
+creates `schema_migrations` and records `0001_initial_schema`.
+
 ## Phase 1 Boundary
 
 PiGenus Phase 1 is only the nucleus: cells, meaning objects, permissions,

@@ -108,3 +108,15 @@ Reason:
 
 Schema evolution affects stored memory and audit history. The policy should be
 clear before automation starts changing local databases.
+
+## D-010: Record Schema Evolution In SQLite
+
+Decision:
+
+PiGenus records applied migrations in `schema_migrations` and routes
+`Database.initialize()` through the migration runner.
+
+Reason:
+
+The database should carry its own schema lineage. Future runtime changes should
+be explicit, idempotent, and inspectable.

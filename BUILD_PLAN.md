@@ -92,18 +92,36 @@ Implemented scope:
 
 Phase 2.1 is the current runtime shape.
 
-## Next
+### pigenus-v0.2.2-migrations
 
-### Phase 2.2 Migration Runner
+Phase 2.2 adds the smallest useful migration runner before future schema
+evolution.
 
-Goal: add the smallest useful migration runner before future schema evolution.
-
-Planned scope:
+Implemented scope:
 
 - `schema_migrations` table
 - idempotent migration application
 - smoke tests for fresh and existing databases
 - no destructive migrations
+
+## Current
+
+### pigenus-v0.2.2-migrations
+
+Phase 2.2 is the current runtime shape.
+
+## Next
+
+### Phase 2.3 Schema Registry Minimal
+
+Goal: make event and object contracts discoverable without adding a large
+framework.
+
+Planned scope:
+
+- expose known event types and required payload keys through a small registry
+- CLI inspection for schema contracts
+- tests for registry output matching runtime validation
 
 Out of scope:
 

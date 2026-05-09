@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.1-lifecycle-polish`
+- Name: `pigenus-v0.2.2-migrations`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `33 passed`
+- Last verified result: `36 passed`
 
 ## Current Runtime Shape
 
@@ -23,6 +23,7 @@ PiGenus is a small local cognitive core. It has:
 - A CLI demo
 - CLI conventions
 - Migration policy
+- A minimal SQLite migration runner
 - Living project control documents
 
 Current demo flow:
@@ -47,14 +48,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `canonical` memory is not changed by automatic review or expiry.
 - Lifecycle status changes create audit logs.
 - `memory-list` is read-only.
+- `Database.initialize()` applies recorded migrations idempotently.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.1 Lifecycle Polish, then build Phase 2.2 Migration Runner:
+Checkpoint Phase 2.2 Migration Runner, then build Phase 2.3 Schema Registry Minimal:
 
-- Add a `schema_migrations` table.
-- Apply idempotent migrations.
-- Smoke-test fresh and existing databases.
+- Expose event/object contracts through a small registry.
+- Add CLI inspection for schema contracts.
+- Test registry output against runtime validation.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
