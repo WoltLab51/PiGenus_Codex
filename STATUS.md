@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.9-event-inspection`
+- Name: `pigenus-v0.2.10-runtime-overview`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `67 passed`
+- Last verified result: `70 passed`
 
 ## Current Runtime Shape
 
@@ -31,6 +31,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal permission inspection surface
 - A minimal audit inspection surface
 - A minimal event inspection surface
+- A minimal runtime overview CLI
 - Living project control documents
 
 Current demo flow:
@@ -70,15 +71,17 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `audit-list` is read-only.
 - Stored events can be listed and inspected without mutation.
 - Unknown event IDs return a clean CLI error.
+- Runtime overview summarizes storage counts and static boundaries without mutation.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.9 Event Inspection Minimal, then build Phase 2.10 Runtime
-Overview CLI:
+Checkpoint Phase 2.10 Runtime Overview CLI, then build Phase 2.11 Health Check
+Minimal:
 
-- Summarize counts for events, memory, cells, audit logs, and decisions.
-- Show known contexts and default permissions at a glance.
-- Keep health checks, backups, dashboards, and exports out of scope.
+- Verify database initialization and migration state.
+- Report core table availability.
+- Return non-zero on failed health checks.
+- Keep repair, backups, dashboards, and exports out of scope.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

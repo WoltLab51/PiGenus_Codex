@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## pigenus-v0.2.10-runtime-overview
+
+- Added read-only runtime overview builder
+- Added `runtime-overview` CLI command
+- Summarized events, memory objects, cells, audit logs, and decision records
+- Included known contexts and default permissions in overview output
+- Added runtime overview tests
+- Verified: 70 tests passed
+
 ## pigenus-v0.2.9-event-inspection
 
 - Added read-only `event-list` CLI command

@@ -162,29 +162,39 @@ Phase 2.9 makes stored events safely inspectable:
 - read-only `event-show` CLI with JSON payload output
 - clean error handling for unknown event IDs
 
+### pigenus-v0.2.10-runtime-overview
+
+Phase 2.10 provides one small operator overview of the local runtime:
+
+- read-only runtime overview builder
+- `runtime-overview` CLI
+- counts for events, memory objects, cells, audit logs, and decision records
+- known contexts and default permissions
+
 ## Current
 
-### pigenus-v0.2.9-event-inspection
+### pigenus-v0.2.10-runtime-overview
 
-Phase 2.9 is the current runtime shape.
+Phase 2.10 is the current runtime shape.
 
 ## Next
 
-### Phase 2.10 Runtime Overview CLI
+### Phase 2.11 Health Check Minimal
 
-Goal: provide one small operator overview of the local runtime.
+Goal: report whether the local runtime storage is structurally healthy.
 
 Planned scope:
 
-- counts for events, memory objects, cells, audit logs, and decision records
-- known contexts
-- default permissions
-- read-only command with tests
+- read-only `health-check` CLI
+- check migration state
+- check required tables
+- non-zero exit on failed health check
+- tests for healthy and broken databases
 
 Out of scope:
 
-- health checks
 - backups
+- repair
 - dashboards
 - exports
 

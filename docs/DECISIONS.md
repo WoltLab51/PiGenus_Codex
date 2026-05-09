@@ -211,3 +211,16 @@ Reason:
 Events are the runtime trace. Operators need to see that trace before PiGenus
 adds replay or worker behavior, and viewing an event must remain a safe
 operation.
+
+## D-018: Runtime Overview Is A Summary, Not A Health Check
+
+Decision:
+
+`runtime-overview` summarizes current storage counts, known contexts, and
+default permissions. It does not validate, repair, back up, export, or score
+the runtime.
+
+Reason:
+
+Operators need one calm place to see what exists before deeper health checks or
+backup workflows arrive. Summary and diagnosis stay separate.

@@ -107,6 +107,12 @@ python -m pigenus.cli.main event-list --db pigenus.sqlite3
 python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
 ```
 
+Show a compact runtime overview:
+
+```powershell
+python -m pigenus.cli.main runtime-overview --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:

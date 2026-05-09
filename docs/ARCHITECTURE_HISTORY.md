@@ -230,3 +230,17 @@ Why it mattered:
 PiGenus can now show the structured runtime trace directly. Operators can
 inspect recent events or one event by ID without introducing replay, mutation,
 or export behavior.
+
+## Next: Phase 2.10 Runtime Overview CLI
+
+Phase 2.10 added a compact runtime overview:
+
+- counts for stored runtime objects
+- known contexts
+- default permissions
+
+Why it mattered:
+
+PiGenus now has a single operator-facing summary of its local state. The command
+stays read-only and avoids becoming a health check, repair tool, dashboard, or
+export path.

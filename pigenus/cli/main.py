@@ -11,6 +11,7 @@ from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
+from pigenus.core.runtime_overview import RuntimeOverviewBuilder
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
@@ -45,6 +46,9 @@ def build_parser() -> argparse.ArgumentParser:
     demo = subparsers.add_parser("run-demo", help="Run the Phase 1 local memory demo.")
     demo.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     demo.add_argument("--text", default=DEMO_TEXT, help="Input text for the demo flow.")
+
+    overview = subparsers.add_parser("runtime-overview", help="Show a read-only runtime overview.")
+    overview.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
     review = subparsers.add_parser("memory-review", help="Apply deterministic memory lifecycle rules.")
     review.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -108,6 +112,30 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Final response: {result.final_response}")
         print(f"Created memory object ID: {result.memory_id}")
         print(f"Events stored: {result.events_stored}")
+        return 0
+
+    if args.command == "runtime-overview":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            overview = RuntimeOverviewBuilder(
+                events=EventRepository(database),
+                memory=MemoryRepository(database),
+                cells=CellRepository(database),
+                audit=AuditRepository(database),
+                decisions=DecisionRepository(database),
+            ).build()
+        finally:
+            database.close()
+
+        print("PiGenus Runtime Overview")
+        print(f"Events: {overview.event_count}")
+        print(f"Memory objects: {overview.memory_count}")
+        print(f"Cells: {overview.cell_count}")
+        print(f"Audit logs: {overview.audit_count}")
+        print(f"Decision records: {overview.decision_count}")
+        print(f"Contexts: {', '.join(overview.contexts) or '-'}")
+        print(f"Default permissions: {', '.join(overview.default_permissions) or '-'}")
         return 0
 
     if args.command == "memory-review":
