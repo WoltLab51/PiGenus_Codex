@@ -25,4 +25,13 @@ class CellRegistry:
         return spec
 
     def list(self) -> list[CellSpec]:
-        return list(self._cells.values())
+        persisted = self.repository.list()
+        for spec in persisted:
+            self._cells[spec.cell_id] = spec
+        return persisted
+
+    def mark_used(self, cell_id: str) -> CellSpec | None:
+        updated = self.repository.touch(cell_id)
+        if updated is not None:
+            self._cells[cell_id] = updated
+        return updated

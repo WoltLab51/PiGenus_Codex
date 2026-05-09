@@ -91,6 +91,15 @@ MIGRATIONS: tuple[Migration, ...] = (
         );
         """,
     ),
+    Migration(
+        version="0003_cell_lifecycle",
+        sql="""
+        ALTER TABLE cells ADD COLUMN status TEXT NOT NULL DEFAULT 'active';
+        ALTER TABLE cells ADD COLUMN fitness REAL NOT NULL DEFAULT 0.0;
+        ALTER TABLE cells ADD COLUMN created_at TEXT;
+        ALTER TABLE cells ADD COLUMN last_used_at TEXT;
+        """,
+    ),
 )
 
 

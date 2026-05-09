@@ -15,6 +15,7 @@ from pigenus.core.event_bus import EventBus
 from pigenus.core.permissions import PermissionEngine
 from pigenus.core.registry import CellRegistry
 from pigenus.schemas.context import Context
+from pigenus.schemas.cells import CellSpec
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
@@ -69,28 +70,36 @@ class SimpleOrchestrator:
         ):
             self.registry.register(cell.spec)
 
+    def _mark_cell_used(self, spec: CellSpec) -> None:
+        self.registry.mark_used(spec.cell_id)
+
     def run_demo(self, text: str = DEMO_TEXT, context: dict[str, Any] | None = None) -> DemoResult:
         starting_event_count = self.event_bus.count()
         event_context = Context.model_validate(context or DEFAULT_CONTEXT).as_event_context()
 
         self.context_boundary.require_allowed(cell=self.input_cell.spec, context=event_context)
         task_event = self.input_cell.create_task_request(text, event_context)
+        self._mark_cell_used(self.input_cell.spec)
         self.event_bus.publish(task_event)
 
         self.context_boundary.require_allowed(cell=self.memory_proposer.spec, context=task_event.context)
         proposal_event = self.memory_proposer.propose(task_event)
+        self._mark_cell_used(self.memory_proposer.spec)
         self.event_bus.publish(proposal_event)
 
         self.context_boundary.require_allowed(cell=self.rule_guard.spec, context=proposal_event.context)
         guard_event = self.rule_guard.check(proposal_event)
+        self._mark_cell_used(self.rule_guard.spec)
         self.event_bus.publish(guard_event)
 
         self.context_boundary.require_allowed(cell=self.memory_writer.spec, context=proposal_event.context)
         memory, stored_event = self.memory_writer.write(proposal_event, guard_event)
+        self._mark_cell_used(self.memory_writer.spec)
         self.event_bus.publish(stored_event)
 
         self.context_boundary.require_allowed(cell=self.explain_cell.spec, context=memory.context)
         final_response, response_event = self.explain_cell.explain(memory)
+        self._mark_cell_used(self.explain_cell.spec)
         self.event_bus.publish(response_event)
 
         return DemoResult(

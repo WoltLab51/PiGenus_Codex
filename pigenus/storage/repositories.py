@@ -152,13 +152,23 @@ class CellRepository:
         self.database = database
 
     def add(self, spec: CellSpec) -> None:
+        existing = self.get(spec.cell_id)
+        if existing is not None:
+            data = spec.model_dump(mode="json")
+            existing_data = existing.model_dump(mode="json")
+            data["status"] = existing.status
+            data["fitness"] = existing.fitness
+            data["created_at"] = existing_data["created_at"]
+            data["last_used_at"] = existing_data["last_used_at"]
+            spec = CellSpec.model_validate(data)
+
         data = spec.model_dump(mode="json")
         self.database.execute(
             """
             INSERT OR REPLACE INTO cells (
                 cell_id, name, version, input_event_types, output_event_types,
-                permissions, data
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                permissions, status, fitness, created_at, last_used_at, data
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 spec.cell_id,
@@ -167,6 +177,10 @@ class CellRepository:
                 _json(spec.input_event_types),
                 _json(spec.output_event_types),
                 _json(spec.permissions),
+                spec.status,
+                spec.fitness,
+                str(data["created_at"]),
+                data["last_used_at"],
                 _json(data),
             ),
         )
@@ -177,9 +191,39 @@ class CellRepository:
             return None
         return CellSpec.model_validate(json.loads(row["data"]))
 
+    def list(self) -> list[CellSpec]:
+        rows = self.database.fetchall("SELECT data FROM cells ORDER BY name, version")
+        return [CellSpec.model_validate(json.loads(row["data"])) for row in rows]
+
     def count(self) -> int:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM cells")
         return int(row["count"]) if row else 0
+
+    def touch(self, cell_id: str, used_at: str | None = None) -> CellSpec | None:
+        spec = self.get(cell_id)
+        if spec is None:
+            return None
+
+        data = spec.model_dump(mode="json")
+        data["last_used_at"] = used_at or utc_now().isoformat()
+        updated = CellSpec.model_validate(data)
+        updated_data = updated.model_dump(mode="json")
+        self.database.execute(
+            """
+            UPDATE cells
+            SET status = ?, fitness = ?, created_at = ?, last_used_at = ?, data = ?
+            WHERE cell_id = ?
+            """,
+            (
+                updated.status,
+                updated.fitness,
+                str(updated_data["created_at"]),
+                updated_data["last_used_at"],
+                _json(updated_data),
+                updated.cell_id,
+            ),
+        )
+        return updated
 
 
 class CellStateRepository:

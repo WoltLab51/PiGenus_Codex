@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## pigenus-v0.2.5-cell-lifecycle
+
+- Added cell lifecycle migration `0003_cell_lifecycle`
+- Made cell status, fitness, creation time, and last-used time explicit in SQLite
+- Added cell repository listing and `last_used_at` update support
+- Updated the orchestrator to mark executed cells as used
+- Added read-only `cell-list` CLI command with status filtering
+- Added cell lifecycle tests
+- Verified: 50 tests passed
+
 ## pigenus-v0.2.4-decision-log
 
 - Added `DecisionRecord` schema

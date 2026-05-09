@@ -9,10 +9,11 @@ from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
-from pigenus.storage.repositories import AuditRepository, DecisionRepository, MemoryRepository
+from pigenus.storage.repositories import AuditRepository, CellRepository, DecisionRepository, MemoryRepository
 
 
 EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
+EMPTY_CELL_LIST_MESSAGE = "No cells found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -46,6 +47,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     decision_list = subparsers.add_parser("decision-list", help="List durable decision records.")
     decision_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    cell_list = subparsers.add_parser("cell-list", help="List registered cells without modifying them.")
+    cell_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    cell_list.add_argument("--status", default=None, help="Filter by cell lifecycle status.")
 
     return parser
 
@@ -141,6 +146,29 @@ def main(argv: list[str] | None = None) -> int:
                 f"{decision.decision_id} | {decision.decision_type} | "
                 f"{decision.subject_id} | {context_name} | "
                 f"{decision.reason} | {decision.source}"
+            )
+        return 0
+
+    if args.command == "cell-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            cells = CellRepository(database).list()
+        finally:
+            database.close()
+
+        if args.status is not None:
+            cells = [cell for cell in cells if cell.status == args.status]
+
+        if not cells:
+            print(EMPTY_CELL_LIST_MESSAGE)
+            return 0
+
+        for cell in cells:
+            last_used = cell.last_used_at.isoformat() if cell.last_used_at is not None else "-"
+            print(
+                f"{cell.cell_id} | {cell.status} | "
+                f"fitness={cell.fitness:.2f} | last_used_at={last_used}"
             )
         return 0
 

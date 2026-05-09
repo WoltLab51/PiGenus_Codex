@@ -24,6 +24,11 @@ def table_names(database: Database) -> set[str]:
     return {str(row["name"]) for row in rows}
 
 
+def column_names(database: Database, table_name: str) -> set[str]:
+    rows = database.fetchall(f"PRAGMA table_info({table_name})")
+    return {str(row["name"]) for row in rows}
+
+
 def test_initialize_creates_schema_migrations_and_runtime_tables():
     database = Database(db_path("fresh"))
     database.initialize()
@@ -31,6 +36,7 @@ def test_initialize_creates_schema_migrations_and_runtime_tables():
     assert "schema_migrations" in table_names(database)
     assert "memory_objects" in table_names(database)
     assert "decision_logs" in table_names(database)
+    assert {"status", "fitness", "created_at", "last_used_at"} <= column_names(database, "cells")
     assert migration_versions(database) == [migration.version for migration in MIGRATIONS]
     database.close()
 

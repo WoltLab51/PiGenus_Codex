@@ -165,8 +165,13 @@ operators to reconstruct that from raw events and audit rows.
 
 ## Next: Phase 2.5 Cell Lifecycle Minimal
 
-The next step is making cells observable as runtime units:
+Phase 2.5 made cells observable as runtime units:
 
 - explicit cell lifecycle status handling
 - `last_used_at` updates
 - read-only cell listing
+
+Why it mattered:
+
+PiGenus can now show which cells are registered and when orchestrated cells were
+used, while keeping fitness passive and avoiding autonomous mutation.

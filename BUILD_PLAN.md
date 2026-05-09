@@ -107,20 +107,12 @@ audit logs:
 - lifecycle decision recording
 - read-only `decision-list` CLI
 
-## Current
-
-### pigenus-v0.2.4-decision-log
-
-Phase 2.4 is the current runtime shape.
-
-## Next
-
-### Phase 2.5 Cell Lifecycle Minimal
+### pigenus-v0.2.5-cell-lifecycle
 
 Goal: make cells observable as lifecycle-managed runtime units without adding
 evolution.
 
-Planned scope:
+Implemented scope:
 
 - explicit cell lifecycle status handling
 - update `last_used_at`
@@ -134,6 +126,18 @@ Out of scope:
 - Distributed workers
 - Autonomous evolution
 - Vector search
+
+## Current
+
+### pigenus-v0.2.5-cell-lifecycle
+
+Phase 2.5 is the current runtime shape.
+
+## Next
+
+Choose the next narrow hardening phase after checkpointing Phase 2.5. Good
+candidates are richer context inspection, additional schema visibility, or
+guard-family groundwork.
 
 ## Later
 

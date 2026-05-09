@@ -70,6 +70,12 @@ Inspect durable decision records:
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 ```
 
+Inspect registered cells without modifying them:
+
+```powershell
+python -m pigenus.cli.main cell-list --db pigenus.sqlite3
+```
+
 ## Demo Flow
 
 The demo input is:
@@ -129,7 +135,8 @@ Update these files before every checkpoint commit.
 ## Database Migrations
 
 `Database.initialize()` applies recorded SQLite migrations. The current runner
-creates `schema_migrations` and records `0001_initial_schema`.
+creates `schema_migrations` and records forward-only migrations including the
+initial schema, decision logs, and cell lifecycle columns.
 
 ## Phase 1 Boundary
 

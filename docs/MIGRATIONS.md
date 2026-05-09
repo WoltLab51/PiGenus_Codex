@@ -23,10 +23,12 @@ Current migration table:
 schema_migrations(version TEXT PRIMARY KEY, applied_at TEXT NOT NULL)
 ```
 
-Current recorded migration:
+Current recorded migrations:
 
 ```text
 0001_initial_schema
+0002_decision_logs
+0003_cell_lifecycle
 ```
 
 `Database.initialize()` applies pending migrations. Running it more than once

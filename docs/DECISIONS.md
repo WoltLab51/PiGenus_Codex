@@ -144,3 +144,17 @@ Reason:
 
 Events show flow, and audit logs show actions. Decision records make important
 outcomes directly queryable and easier to explain.
+
+## D-013: Cell Lifecycle Starts As Observation
+
+Decision:
+
+Cell lifecycle fields are explicit and inspectable, but passive. Phase 2.5
+updates `last_used_at` for orchestrated cells and lists cells through a
+read-only CLI; it does not mutate fitness or evolve cells.
+
+Reason:
+
+Cells should become observable runtime units before they become adaptive ones.
+This preserves deterministic behavior while preparing the core for later
+cell-management work.

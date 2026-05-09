@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.4-decision-log`
+- Name: `pigenus-v0.2.5-cell-lifecycle`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `45 passed`
+- Last verified result: `50 passed`
 
 ## Current Runtime Shape
 
@@ -26,6 +26,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal SQLite migration runner
 - A minimal schema registry
 - A minimal decision log
+- A minimal cell lifecycle surface
 - Living project control documents
 
 Current demo flow:
@@ -54,14 +55,17 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Schema registry output matches runtime event validation constants.
 - Lifecycle status changes write durable decision records.
 - `decision-list` is read-only.
+- Registered cells expose lifecycle status and passive fitness metadata.
+- Orchestrated cells update `last_used_at`.
+- `cell-list` is read-only.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.4 Decision Log Minimal, then build Phase 2.5 Cell Lifecycle Minimal:
+Checkpoint Phase 2.5 Cell Lifecycle Minimal, then continue with the next small
+runtime hardening step:
 
-- Make cell lifecycle status handling explicit.
-- Update `last_used_at` when orchestrated cells run.
-- Add read-only cell listing CLI.
+- Keep the core deterministic and inspectable.
+- Prefer another small visibility or contract hardening phase.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
