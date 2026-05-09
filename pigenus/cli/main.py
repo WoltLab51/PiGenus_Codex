@@ -9,6 +9,7 @@ from pigenus.core.audit import AuditLogger
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
+from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import AuditRepository, CellRepository, DecisionRepository, MemoryRepository
@@ -61,6 +62,8 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Show registered cells allowed in each context when --db is provided.",
     )
+
+    subparsers.add_parser("permission-list", help="List built-in permissions without modifying them.")
 
     return parser
 
@@ -200,6 +203,16 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"{context.name} | allowed_cells={allowed_cells}")
             else:
                 print(context.name)
+        return 0
+
+    if args.command == "permission-list":
+        rules = PermissionRegistry().list_default_rules()
+        if not rules:
+            print("No default permissions found.")
+            return 0
+
+        for rule in rules:
+            print(f"{rule.context} | {rule.action} | source={rule.source}")
         return 0
 
     parser.error(f"Unknown command: {args.command}")

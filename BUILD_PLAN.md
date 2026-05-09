@@ -136,30 +136,39 @@ Phase 2.6 makes known contexts inspectable without changing boundary behavior:
 - optional allowed-cell display from an existing SQLite database
 - tests proving context inspection does not create missing databases
 
+### pigenus-v0.2.7-permission-inspection
+
+Phase 2.7 makes built-in permissions inspectable before adding richer guard
+behavior:
+
+- read-only permission registry
+- `permission-list` CLI
+- tests tying inspection output to runtime permission defaults
+
 ## Current
 
-### pigenus-v0.2.6-context-inspection
+### pigenus-v0.2.7-permission-inspection
 
-Phase 2.6 is the current runtime shape.
+Phase 2.7 is the current runtime shape.
 
 ## Next
 
-### Phase 2.7 Permission Inspection Minimal
+### Phase 2.8 Audit Inspection Minimal
 
-Goal: make the current permission surface visible before adding guard families.
+Goal: make audit logs safely visible from the CLI.
 
 Planned scope:
 
-- expose default allowed permissions
-- add read-only permission listing CLI
-- tests that permission inspection does not mutate storage
+- read-only `audit-list` CLI
+- filters for actor, action, and context
+- tests that audit inspection does not mutate storage
 
 Out of scope:
 
-- permission editing
-- dynamic policy loading
-- guard families
-- role/user modeling
+- audit mutation
+- export formats
+- dashboards
+- retention policies
 
 ## Later
 

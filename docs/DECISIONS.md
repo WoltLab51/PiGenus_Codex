@@ -171,3 +171,16 @@ Reason:
 
 Context boundaries protect rooms. Operators should be able to inspect those
 rooms without changing storage or accidentally initializing runtime state.
+
+## D-015: Permission Inspection Reads Engine Defaults
+
+Decision:
+
+Default permissions are exposed through a read-only registry that reads from
+the same `PermissionEngine.default_allowed` mapping used by runtime checks.
+
+Reason:
+
+Permission visibility should not drift from enforcement. Inspection must show
+what the core actually allows, without introducing policy editing or a second
+permission source.

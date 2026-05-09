@@ -88,6 +88,12 @@ Include registered cells allowed in each context from an existing database:
 python -m pigenus.cli.main context-list --db pigenus.sqlite3 --show-cells
 ```
 
+Inspect built-in default permissions:
+
+```powershell
+python -m pigenus.cli.main permission-list
+```
+
 ## Demo Flow
 
 The demo input is:

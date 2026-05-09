@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.6-context-inspection`
+- Name: `pigenus-v0.2.7-permission-inspection`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `54 passed`
+- Last verified result: `57 passed`
 
 ## Current Runtime Shape
 
@@ -28,6 +28,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal decision log
 - A minimal cell lifecycle surface
 - A minimal context inspection surface
+- A minimal permission inspection surface
 - Living project control documents
 
 Current demo flow:
@@ -61,15 +62,17 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `cell-list` is read-only.
 - Context registry output matches known runtime contexts.
 - `context-list` is read-only and does not create missing databases.
+- Permission registry output matches runtime default permissions.
+- `permission-list` is read-only.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.6 Context Inspection Minimal, then build Phase 2.7 Permission
+Checkpoint Phase 2.7 Permission Inspection Minimal, then build Phase 2.8 Audit
 Inspection Minimal:
 
-- Make default permissions inspectable.
-- Add a read-only permission listing CLI.
-- Keep permission mutation, policy editing, and guard families out of scope.
+- Add a read-only audit listing CLI.
+- Support small filters such as actor, action, and context.
+- Keep audit mutation, export formats, and dashboards out of scope.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

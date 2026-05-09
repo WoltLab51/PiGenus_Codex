@@ -188,3 +188,17 @@ Why it mattered:
 
 PiGenus can now show its room boundaries directly. Inspection stays passive, so
 looking at contexts does not create a database or mutate runtime state.
+
+## Next: Phase 2.7 Permission Inspection Minimal
+
+Phase 2.7 made built-in permissions inspectable:
+
+- read-only permission registry
+- `permission-list` CLI
+- tests tied to runtime permission defaults
+
+Why it mattered:
+
+PiGenus can now show what default actions are allowed before adding richer guard
+families or editable policies. The inspection path reads enforcement defaults
+instead of maintaining a second description.

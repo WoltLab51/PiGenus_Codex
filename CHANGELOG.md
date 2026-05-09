@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## pigenus-v0.2.7-permission-inspection
+
+- Added minimal read-only permission registry
+- Added `permission-list` CLI command
+- Exposed built-in default permissions from the runtime permission engine
+- Added permission inspection tests
+- Verified: 57 tests passed
+
 ## pigenus-v0.2.6-context-inspection
 
 - Added minimal read-only context registry
