@@ -354,3 +354,17 @@ Reason:
 Runtime policy should be observed in the live path before it is allowed to
 change behavior. Warning-mode logging gives PiGenus durable comparison data
 while preserving the current deterministic demo flow.
+
+## D-028: Selective Enforcement Blocks Only Hard Denials
+
+Decision:
+
+The first enforcement step stops only `block` governance decisions. `review`
+and `escalate` remain logged warning states until a human approval workflow
+exists.
+
+Reason:
+
+Hard denials are clear enough to enforce. Review and escalation need a human
+approval model before they should stop runtime work, otherwise the system would
+introduce ambiguous interruption without a resolution path.

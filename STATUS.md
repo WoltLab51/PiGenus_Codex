@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.19-orchestrator-guard-preview`
-- Branch: `codex-orchestrator-guard-preview`
+- Name: `pigenus-v0.2.20-selective-guard-enforcement`
+- Branch: `codex-selective-guard-enforcement`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `140 passed`
+- Last verified result: `142 passed`
 
 ## Current Runtime Shape
 
@@ -42,6 +42,7 @@ PiGenus is a small local cognitive core. It has:
 - Shadow-mode guard runtime preview against adapted runtime objects
 - Governance decision logging through the durable decision log
 - Demo orchestrator guard preview in warning mode
+- Selective guard enforcement for hard block decisions only
 - GENUS Systemform hardening documents
 - Living project control documents
 
@@ -92,13 +93,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Guard runtime preview is shadow mode only and does not publish, persist, block, or enforce.
 - Governance decision logging preserves ordered traces and does not enforce decisions.
 - Orchestrator guard preview logs decisions but keeps task execution unchanged.
+- Selective guard enforcement stops hard block decisions only.
+- Review and escalate decisions remain logged warning states.
 
 ## Next Recommended Work
 
-Checkpoint Orchestrator Guard Preview, then build Selective Guard Enforcement:
+Checkpoint Selective Guard Enforcement, then build Human Approval Stub:
 
-- Enforce only hard `block` decisions.
-- Keep `review` and `escalate` as logged warning states until a human approval stub exists.
+- Add explicit approval status values: pending, approved, rejected.
+- Keep approval as a CLI/storage stub; no dashboard or UI required yet.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

@@ -25,6 +25,8 @@
 - Added governance decision log tests for allow, escalate, block, and trace-order persistence
 - Integrated guard runtime preview into the demo orchestrator in warning mode
 - Added tests proving preview decisions are logged while demo execution continues
+- Enabled selective guard enforcement for hard block decisions only
+- Added tests proving block decisions stop execution while review/escalate remains warning-only
 
 ## pigenus-v0.2.11-health-check
 

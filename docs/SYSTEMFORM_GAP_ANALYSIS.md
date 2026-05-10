@@ -149,6 +149,7 @@ The repository now has:
 - A shadow-mode runtime preview that runs the guard pipeline against adapted runtime objects.
 - Governance decision logging through the existing durable decision log.
 - Demo-orchestrator preview logging before memory writes.
+- Selective enforcement for hard block decisions.
 
 The validator proves the first executable Systemform rule:
 
@@ -158,5 +159,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Selective Guard Enforcement. It should enforce only hard block decisions while keeping
-review/escalate as logged warning states until a human approval stub exists.
+Add Human Approval Stub. It should give review/escalate decisions explicit pending, approved, and
+rejected states without adding a dashboard or rich UI yet.

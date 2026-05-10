@@ -183,13 +183,13 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 
 ## Current
 
-### pigenus-v0.2.19-orchestrator-guard-preview
+### pigenus-v0.2.20-selective-guard-enforcement
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
 existing runtime prototype, then prove deterministic mappings from the current
 prototype contracts into that vocabulary and validate the first executable
 contract, semantic room-flow, guard-pipeline, runtime preview, and governance
-decision logging and orchestrator preview rules.
+decision logging, orchestrator preview, and selective enforcement rules.
 
 Implemented scope:
 
@@ -215,31 +215,33 @@ Implemented scope:
 - tests for allow, escalate/review, block, and trace-order persistence
 - demo orchestrator guard preview in warning mode
 - tests proving preview decisions are logged while demo execution continues
+- selective guard enforcement for hard block decisions only
+- tests proving block stops execution and review/escalate stays warning-only
 
 Out of scope:
 
 - CLI changes
-- orchestration enforcement
+- human approval UI or workflow
 
 ## Next
 
-### Selective Guard Enforcement
+### Human Approval Stub
 
-Goal: stop only hard block decisions while review/escalate remains warning-only.
+Goal: give review/escalate decisions an explicit approval placeholder before richer UX.
 
 Planned scope:
 
-- enforce `block` decisions before memory writes
-- keep `review` and `escalate` logged but non-blocking
-- tests proving block stops the write path
-- tests proving review/escalate still allows current flow
+- approval status model: pending, approved, rejected
+- link approval records to governance decisions
+- minimal persistence through the existing decision log or a small forward migration if needed
+- tests for pending, approval, rejection, and unchanged current flow
 
 Out of scope:
 
 - CLI changes
 - editable policies
-- human approval UI or workflow
-- dashboard or export behavior
+- dashboard or web UI
+- export behavior
 
 ## Later
 
