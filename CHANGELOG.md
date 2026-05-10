@@ -23,6 +23,8 @@
   trace order, and no orchestrator side effects
 - Added governance decision logging through the existing durable decision log
 - Added governance decision log tests for allow, escalate, block, and trace-order persistence
+- Integrated guard runtime preview into the demo orchestrator in warning mode
+- Added tests proving preview decisions are logged while demo execution continues
 
 ## pigenus-v0.2.11-health-check
 

@@ -341,3 +341,16 @@ Reason:
 PiGenus already has a durable, inspectable decision log. Reusing it avoids a
 new migration while making policy decisions queryable before orchestrator
 integration or enforcement changes runtime behavior.
+
+## D-027: Orchestrator Preview Logs But Does Not Enforce
+
+Decision:
+
+The demo orchestrator runs the guard preview before memory writes and persists
+the resulting governance decision, but it does not stop or alter task execution.
+
+Reason:
+
+Runtime policy should be observed in the live path before it is allowed to
+change behavior. Warning-mode logging gives PiGenus durable comparison data
+while preserving the current deterministic demo flow.

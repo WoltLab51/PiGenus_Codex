@@ -12,14 +12,18 @@ from pigenus.cells.rule_guard import RuleGuardCell
 from pigenus.core.audit import AuditLogger
 from pigenus.core.context_boundary import ContextBoundaryEngine
 from pigenus.core.event_bus import EventBus
+from pigenus.core.governance_decision_log import GovernanceDecisionLogger
+from pigenus.core.guard_runtime_preview import GuardPipelineRuntimePreview
 from pigenus.core.permissions import PermissionEngine
 from pigenus.core.registry import CellRegistry
 from pigenus.schemas.context import Context
 from pigenus.schemas.cells import CellSpec
+from pigenus.schemas.systemform_adapters import cell_spec_actor_id, context_to_room
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
     CellRepository,
+    DecisionRepository,
     EventRepository,
     MemoryRepository,
 )
@@ -48,12 +52,15 @@ class SimpleOrchestrator:
         self.memory = MemoryRepository(self.database)
         self.cells = CellRepository(self.database)
         self.audit = AuditRepository(self.database)
+        self.decisions = DecisionRepository(self.database)
 
         self.event_bus = EventBus(self.events)
         self.audit_logger = AuditLogger(self.audit)
+        self.governance_decisions = GovernanceDecisionLogger(self.decisions)
         self.registry = CellRegistry(self.cells)
         self.permission_engine = PermissionEngine()
         self.context_boundary = ContextBoundaryEngine()
+        self.guard_preview = GuardPipelineRuntimePreview()
 
         self.input_cell = InputCell()
         self.rule_guard = RuleGuardCell(self.permission_engine, self.audit_logger)
@@ -72,6 +79,36 @@ class SimpleOrchestrator:
 
     def _mark_cell_used(self, spec: CellSpec) -> None:
         self.registry.mark_used(spec.cell_id)
+
+    def preview_guard_for_cell(
+        self,
+        *,
+        cell: CellSpec,
+        context: dict[str, Any],
+        action: str,
+        capability: str | None = None,
+        target_context: dict[str, Any] | None = None,
+        source_event_id: str | None = None,
+    ) -> None:
+        source_room = context_to_room(context)
+        result = self.guard_preview.preview_cell_action(
+            cell=cell,
+            context=context,
+            action=action,
+            capability=capability,
+            target_context=target_context,
+        )
+        decision = self.guard_preview.pipeline.to_governance_decision(
+            result,
+            actor_id=cell_spec_actor_id(cell),
+            room_id=source_room.id,
+            event_id=source_event_id,
+        )
+        self.governance_decisions.add(
+            decision,
+            context=context,
+            source="orchestrator_guard_preview",
+        )
 
     def run_demo(self, text: str = DEMO_TEXT, context: dict[str, Any] | None = None) -> DemoResult:
         starting_event_count = self.event_bus.count()
@@ -93,6 +130,13 @@ class SimpleOrchestrator:
         self.event_bus.publish(guard_event)
 
         self.context_boundary.require_allowed(cell=self.memory_writer.spec, context=proposal_event.context)
+        self.preview_guard_for_cell(
+            cell=self.memory_writer.spec,
+            context=proposal_event.context,
+            action=str(proposal_event.payload["action"]),
+            capability="consume.MemoryProposal",
+            source_event_id=proposal_event.event_id,
+        )
         memory, stored_event = self.memory_writer.write(proposal_event, guard_event)
         self._mark_cell_used(self.memory_writer.spec)
         self.event_bus.publish(stored_event)

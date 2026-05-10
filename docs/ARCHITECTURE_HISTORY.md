@@ -371,3 +371,17 @@ Why it mattered:
 Policy decisions are now durable without changing orchestration behavior. This
 gives GENUS an audit-ready path for comparing preview decisions with current
 runtime behavior before any enforcement is enabled.
+
+## Orchestrator Guard Preview
+
+The system gained:
+
+- Demo-orchestrator guard preview before memory writes
+- Governance decision persistence for preview results
+- Tests proving event flow and task execution continue unchanged
+
+Why it mattered:
+
+The policy layer now observes a real runtime path in warning mode. GENUS can
+compare guard decisions with actual execution before any selective enforcement
+is enabled.
