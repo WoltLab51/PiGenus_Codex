@@ -238,3 +238,48 @@ Reason:
 
 Health checks must be trustworthy. A diagnostic command should not hide damage
 by changing the thing it is checking.
+
+## D-020: Phase 0 Hardens The Existing Prototype
+
+Decision:
+
+PiGenus Phase 0 does not replace the current runtime prototype. It formalizes,
+hardens, and extends it through additive Systemform models and compatibility
+adapters.
+
+Reason:
+
+The existing prototype already has passing tests, storage, events, cells,
+memory, context boundaries, and inspection surfaces. Rebuilding would destroy
+useful evidence. Hardening preserves the working core while making the deeper
+GENUS ontology explicit.
+
+## D-021: Systemform Adapters Are Deterministic And Side-Effect Free
+
+Decision:
+
+Adapters from `MemoryObject`, `CellSpec`, and `Context` into Systemform objects
+are pure mappings. They do not persist data, mutate storage, run CLI commands,
+or alter orchestration behavior.
+
+Reason:
+
+The bridge between the prototype vocabulary and the Systemform vocabulary must
+be reviewable before it becomes enforceable. Pure adapters let tests prove the
+mapping rules before contract validation, guard pipelines, or storage
+migrations depend on them.
+
+## D-022: Contract Validation Starts Storage-Free
+
+Decision:
+
+The first Systemform contract validator consumes in-memory `ActorIdentity`,
+`Room`, `CellContract`, and optional `ResourceGrant` objects. It returns a
+structured decision but does not persist data, mutate orchestration, or replace
+the existing permission engine.
+
+Reason:
+
+The rule "no execution without a valid contract" needs to become executable
+before it becomes operationally enforced. A storage-free validator makes the
+policy surface testable without risking the current green runtime.

@@ -259,3 +259,53 @@ Why it mattered:
 PiGenus can now distinguish "what exists" from "is the storage structurally
 sound?" The health check diagnoses without applying migrations or repairs, so it
 does not mask damage while inspecting it.
+
+## Systemform Hardening v0.1
+
+The important decision was:
+
+```text
+PiGenus is not rebuilt from scratch.
+Phase 0 hardens the existing runtime prototype.
+```
+
+The system gained:
+
+- GENUS Systemform and Phase 0 kernel documents in `docs/`
+- `docs/SYSTEMFORM_GAP_ANALYSIS.md`
+- Additive Systemform schema models for actors, rooms, meaning objects, cell
+  contracts, resource grants, and governance decisions
+- Deterministic adapters from current prototype concepts to Systemform concepts
+
+Why it mattered:
+
+The working runtime remains intact while the deeper GENUS ontology becomes
+explicit. Current concepts such as `MemoryObject`, `CellSpec`, and `Context`
+can continue to run as the compatibility layer until adapters and validators
+are introduced in later hardening passes.
+
+The adapter pass made that compatibility layer concrete:
+
+- `MemoryObject -> MeaningObject`
+- `CellSpec -> CellContract`
+- `Context -> Room`
+
+The adapters are side-effect free and do not change storage, CLI behavior, or
+runtime orchestration.
+
+## Contract Validator Minimal
+
+The system gained:
+
+- Storage-free `ContractValidator`
+- `ContractValidationResult`
+- Conversion from validator result to `GovernanceDecision`
+- Tests for actor status, contract status, room scope, capabilities,
+  permissions, resource grants, resource limits, and human-approval escalation
+
+Why it mattered:
+
+The Systemform rule "no execution without a valid contract" is now executable
+without disturbing the current runtime. This creates a testable policy core
+that can later be wired into guard pipelines or orchestration after room flow
+rules are equally explicit.

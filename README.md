@@ -187,3 +187,21 @@ PiGenus Phase 1 is only the nucleus: cells, meaning objects, permissions,
 memory, and auditability. Future phases can add richer orchestration,
 interfaces, providers, or distributed infrastructure without changing this
 core contract.
+
+## Systemform Hardening
+
+Phase 0 is now treated as hardening of the existing runtime prototype, not a
+rewrite. The GENUS Systemform documents live in `docs/`, and
+`docs/SYSTEMFORM_GAP_ANALYSIS.md` tracks how current prototype concepts map to
+the stricter kernel vocabulary: actors, rooms, meaning objects, cell contracts,
+resource grants, and governance decisions.
+
+The current bridge is intentionally additive: `pigenus.schemas.systemform`
+defines the target vocabulary, while `pigenus.schemas.systemform_adapters`
+maps existing `MemoryObject`, `CellSpec`, and `Context` contracts into that
+vocabulary without changing storage or CLI behavior.
+
+`pigenus.core.contract_validator` is the first executable Systemform hardening
+rule. It validates actors, rooms, cell contracts, capabilities, permissions,
+resource grants, and human-approval requirements without changing the current
+orchestrator.

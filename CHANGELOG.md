@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- Added GENUS Systemform and Phase 0 kernel documents under `docs/`
+- Added `docs/SYSTEMFORM_GAP_ANALYSIS.md`
+- Added additive Systemform models for `ActorIdentity`, `Room`,
+  `MeaningObject`, `CellContract`, `ResourceGrant`, and `GovernanceDecision`
+- Added Systemform model tests without changing existing runtime storage or CLI
+- Added deterministic Systemform adapters for `MemoryObject -> MeaningObject`,
+  `CellSpec -> CellContract`, and `Context -> Room`
+- Added Systemform adapter tests without adding persistence or CLI behavior
+- Added storage-free `ContractValidator` for Systemform actor, room, contract,
+  permission, capability, resource, and human-approval checks
+- Added contract validator tests without changing orchestration enforcement
+
 ## pigenus-v0.2.11-health-check
 
 - Added read-only health checker for local SQLite runtime storage

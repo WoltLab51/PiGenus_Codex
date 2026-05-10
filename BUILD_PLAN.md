@@ -183,33 +183,59 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 
 ## Current
 
-### pigenus-v0.2.11-health-check
+### pigenus-v0.2.14-contract-validator
 
-Phase 2.11 is the current runtime shape.
+Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
+existing runtime prototype, then prove deterministic mappings from the current
+prototype contracts into that vocabulary and validate the first executable
+contract rule.
 
-## Next
+Implemented scope:
 
-### Phase 2.12 Snapshot/Backup Minimal
-
-Goal: create safe local snapshots of healthy runtime storage.
-
-Planned scope:
-
-- `snapshot-create` CLI
-- health-check before snapshot
-- timestamped SQLite copy
-- tests for successful snapshot and unhealthy refusal
+- GENUS Systemform document copied into `docs/`
+- Phase 0 core kernel specification copied into `docs/`
+- `docs/SYSTEMFORM_GAP_ANALYSIS.md`
+- additive Systemform models for actors, rooms, meaning objects, cell contracts,
+  resource grants, and governance decisions
+- tests for the new models
+- deterministic adapters for `MemoryObject -> MeaningObject`, `CellSpec -> CellContract`,
+  and `Context -> Room`
+- tests for the adapter mappings
+- storage-free contract validator
+- tests for actor, contract, room, capability, permission, resource, and human-approval checks
 
 Out of scope:
 
-- restore
-- scheduling
-- cloud sync
-- dashboards
-- exports
+- storage migrations for Systemform objects
+- CLI changes
+- guard pipeline
+- room flow rules
+- orchestration enforcement
+
+## Next
+
+### Room Flow Rules Minimal
+
+Goal: make information flow between rooms explicit before adding a guard pipeline.
+
+Planned scope:
+
+- deterministic source-room to target-room flow matrix
+- decisions for allow, review, block, and allow-read
+- special handling for sensitive meaning objects
+- tests for private, family, trading, developer, sandbox, and public flows
+
+Out of scope:
+
+- storage migrations
+- CLI changes
+- editable policies
+- guard pipeline
+- orchestration enforcement
 
 ## Later
 
+- Snapshot/Backup Minimal
 - Context boundary expansion
 - Guard families
 - Worker interface

@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.11-health-check`
+- Name: `pigenus-v0.2.14-contract-validator`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `75 passed`
+- Last verified result: `103 passed`
 
 ## Current Runtime Shape
 
@@ -33,6 +33,11 @@ PiGenus is a small local cognitive core. It has:
 - A minimal event inspection surface
 - A minimal runtime overview CLI
 - A minimal health-check CLI
+- Additive Systemform schema models for actors, rooms, meaning objects, cell contracts,
+  resource grants, and governance decisions
+- Deterministic Systemform adapters for memory, cells, and contexts
+- Storage-free Systemform contract validator
+- GENUS Systemform hardening documents
 - Living project control documents
 
 Current demo flow:
@@ -74,15 +79,16 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Unknown event IDs return a clean CLI error.
 - Runtime overview summarizes storage counts and static boundaries without mutation.
 - Health check validates storage structure without applying migrations or repairs.
+- Systemform models are additive and do not mutate existing storage or CLI behavior.
+- Systemform adapters are deterministic and side-effect free.
+- Contract validation is storage-free and does not alter orchestration behavior.
 
 ## Next Recommended Work
 
-Checkpoint Phase 2.11 Health Check Minimal, then build Phase 2.12
-Snapshot/Backup Minimal:
+Checkpoint Contract Validator Minimal, then build Room Flow Rules Minimal:
 
-- Add a command to copy a healthy SQLite DB to a timestamped snapshot file.
-- Refuse to snapshot unhealthy or missing databases.
-- Keep restore, scheduling, cloud sync, dashboards, and exports out of scope.
+- Add deterministic room-to-room flow decisions for allow, review, block, and allow-read cases.
+- Keep flow rules storage-free and separate from orchestration until the guard pipeline exists.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note
