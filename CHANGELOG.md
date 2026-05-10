@@ -29,6 +29,9 @@
 - Added tests proving block decisions stop execution while review/escalate remains warning-only
 - Added human approval stub with pending, approved, and rejected statuses
 - Added tests proving approval records persist without changing current flow
+- Added SQLite-backed `MeaningRepository` for Systemform `MeaningObject` persistence
+- Added `0004_meaning_objects` migration with indexes for room, type, truth status, and sensitivity
+- Added meaning-store tests for serialization, retrieval, ordering, and filters
 
 ## pigenus-v0.2.11-health-check
 

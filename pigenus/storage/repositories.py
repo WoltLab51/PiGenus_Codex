@@ -8,6 +8,7 @@ from pigenus.schemas.cells import CellSpec, CellState
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.events import Event
 from pigenus.schemas.memory import MemoryObject, MemoryStatus
+from pigenus.schemas.systemform import MeaningObject, Sensitivity, TruthStatus
 from pigenus.storage.database import Database
 
 
@@ -165,6 +166,84 @@ class MemoryRepository:
             ),
         )
         return updated
+
+
+class MeaningRepository:
+    """Persistence adapter for Systemform meaning objects."""
+
+    def __init__(self, database: Database) -> None:
+        self.database = database
+
+    def add(self, meaning: MeaningObject) -> None:
+        data = meaning.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT INTO meaning_objects (
+                meaning_id, meaning_type, room_id, truth_status, sensitivity,
+                created_by, created_at, data
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                meaning.id,
+                meaning.type,
+                meaning.room_id,
+                meaning.truth_status,
+                meaning.sensitivity,
+                meaning.created_by,
+                str(data["created_at"]),
+                _json(data),
+            ),
+        )
+
+    def get(self, meaning_id: str) -> MeaningObject | None:
+        row = self.database.fetchone(
+            "SELECT data FROM meaning_objects WHERE meaning_id = ?",
+            (meaning_id,),
+        )
+        if row is None:
+            return None
+        return MeaningObject.model_validate(json.loads(row["data"]))
+
+    def list(
+        self,
+        *,
+        room_id: str | None = None,
+        type: str | None = None,
+        truth_status: TruthStatus | str | None = None,
+        sensitivity: Sensitivity | str | None = None,
+    ) -> list[MeaningObject]:
+        clauses: list[str] = []
+        parameters: list[str] = []
+
+        if room_id is not None:
+            clauses.append("room_id = ?")
+            parameters.append(room_id)
+        if type is not None:
+            clauses.append("meaning_type = ?")
+            parameters.append(type)
+        if truth_status is not None:
+            clauses.append("truth_status = ?")
+            parameters.append(self._enum_value(truth_status))
+        if sensitivity is not None:
+            clauses.append("sensitivity = ?")
+            parameters.append(self._enum_value(sensitivity))
+
+        where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+        rows = self.database.fetchall(
+            f"SELECT data FROM meaning_objects{where} ORDER BY created_at, meaning_id",
+            tuple(parameters),
+        )
+        return [MeaningObject.model_validate(json.loads(row["data"])) for row in rows]
+
+    def count(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM meaning_objects")
+        return int(row["count"]) if row else 0
+
+    @staticmethod
+    def _enum_value(value: TruthStatus | Sensitivity | str) -> str:
+        if isinstance(value, TruthStatus | Sensitivity):
+            return value.value
+        return value
 
 
 class CellRepository:

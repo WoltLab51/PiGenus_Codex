@@ -382,3 +382,19 @@ Reason:
 Review and escalation need a resolution model before they can safely control
 runtime behavior. A small storage-backed stub creates that model without
 expanding the user interface or complicating current guard enforcement.
+
+## D-030: Meaning Store Starts As Plain SQLite Rows
+
+Decision:
+
+Systemform `MeaningObject` records are persisted in a local `meaning_objects`
+table with the complete Pydantic JSON payload plus indexed columns for room,
+type, truth status, and sensitivity. The first repository supports add, get,
+list, and count only.
+
+Reason:
+
+Meaning Runtime needs durable semantic objects before richer retrieval exists.
+Keeping the first store local and relational preserves inspectability, avoids
+premature vector or LLM dependencies, and gives guard and room-flow work a
+stable object source to build on later.

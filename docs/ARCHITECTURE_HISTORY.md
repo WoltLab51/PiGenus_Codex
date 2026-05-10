@@ -414,3 +414,19 @@ Why it mattered:
 Review and escalation decisions now have a safe placeholder before richer
 human-in-the-loop workflows exist. This keeps enforcement narrow while giving
 future approval UI or CLI work a stable storage shape to build on.
+
+## Meaning Store Minimal
+
+The system gained:
+
+- `meaning_objects` SQLite table
+- Indexed query columns for room, type, truth status, and sensitivity
+- `MeaningRepository` for add, get, list, and count
+- Tests proving full `MeaningObject` JSON round-trips through storage
+
+Why it mattered:
+
+Systemform meaning now has a small durable home before vector search, LLM
+integration, dashboards, or memory migration work begins. The store keeps the
+complete semantic object intact while exposing only the first conservative query
+surface needed by the local runtime.

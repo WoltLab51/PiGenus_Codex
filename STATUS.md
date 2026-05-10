@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.21-human-approval-stub`
-- Branch: `codex-human-approval-stub`
+- Name: `pigenus-v0.2.22-meaning-store-minimal`
+- Branch: `codex-meaning-store-minimal`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `147 passed`
+- Last verified result: `151 passed`
 
 ## Current Runtime Shape
 
@@ -44,6 +44,7 @@ PiGenus is a small local cognitive core. It has:
 - Demo orchestrator guard preview in warning mode
 - Selective guard enforcement for hard block decisions only
 - Human approval stub with pending, approved, and rejected states
+- SQLite-backed Systemform Meaning Store for local `MeaningObject` persistence
 - GENUS Systemform hardening documents
 - Living project control documents
 
@@ -97,14 +98,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Selective guard enforcement stops hard block decisions only.
 - Review and escalate decisions remain logged warning states.
 - Human approval records persist through the decision log and do not alter current flow.
+- Meaning objects persist as full Systemform JSON plus indexed query columns.
+- Meaning Store filters are local, deterministic, and limited to room, type, truth status, and sensitivity.
 
 ## Next Recommended Work
 
-Checkpoint Human Approval Stub, then begin Meaning Runtime:
+Finish Meaning Store Minimal:
 
-- Add a minimal Meaning Store for `MeaningObject` persistence and retrieval.
-- Keep it local, SQLite-backed, and queryable before adding vector search or LLM usage.
-- Keep LLMs, dashboards, workers, and vector search out of scope.
+- Checkpoint Meaning Store Minimal.
+- Keep LLMs, dashboards, workers, exports, and vector search out of scope.
 
 ## Operator Note
 

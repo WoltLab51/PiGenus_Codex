@@ -181,8 +181,6 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 - required-table checks
 - non-zero exit for unhealthy storage
 
-## Current
-
 ### pigenus-v0.2.21-human-approval-stub
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
@@ -226,15 +224,15 @@ Out of scope:
 - CLI changes
 - human approval UI
 
-## Next
+## Current
 
-### Meaning Store Minimal
+### pigenus-v0.2.22-meaning-store-minimal
 
 Goal: persist and retrieve Systemform `MeaningObject` records as the start of Meaning Runtime.
 
-Planned scope:
+Implemented scope:
 
-- SQLite migration for meaning objects if needed
+- SQLite migration for meaning objects
 - repository for add/get/list
 - queries by room, type, truth status, and sensitivity
 - tests for serialization and retrieval filters
@@ -247,9 +245,15 @@ Out of scope:
 - dashboard
 - export behavior
 
+## Next
+
+### Snapshot/Backup Minimal
+
+Goal: define a boring local safety path for preserving SQLite runtime state before
+larger Meaning Runtime features arrive.
+
 ## Later
 
-- Snapshot/Backup Minimal
 - Context boundary expansion
 - Guard families
 - Worker interface
