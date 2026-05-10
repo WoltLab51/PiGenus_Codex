@@ -83,3 +83,64 @@ def test_orchestrator_guard_preview_logs_review_without_stopping_later_demo():
     assert decisions[0].details["decision"] == "escalate"
     assert decisions[1].details["decision"] == "allow"
     database.close()
+
+
+def test_orchestrator_enforces_block_decisions():
+    path = db_path("demo-enforce-block")
+    orchestrator = SimpleOrchestrator(path)
+    preview_cell = CellSpec(
+        name="memory_writer",
+        version="0.1.0",
+        input_event_types=["MemoryProposal"],
+        output_event_types=["MemoryStored"],
+        permissions=[],
+        allowed_contexts=["developer/default"],
+    )
+
+    decision = orchestrator.preview_guard_for_cell(
+        cell=preview_cell,
+        context={"name": "developer/default"},
+        action="memory_write",
+        capability="consume.MemoryProposal",
+        source_event_id="evt_preview",
+    )
+
+    try:
+        orchestrator._enforce_guard_decision(decision)
+    except PermissionError as exc:
+        assert str(exc) == "guard_pipeline_blocked:permission_not_allowed"
+    else:
+        raise AssertionError("Expected block decision to stop execution.")
+
+    assert orchestrator.event_bus.count() == 0
+    assert orchestrator.memory.count() == 0
+    assert orchestrator.decisions.count() == 1
+    orchestrator.close()
+
+
+def test_orchestrator_does_not_enforce_review_decisions():
+    path = db_path("demo-review-warning")
+    orchestrator = SimpleOrchestrator(path)
+    preview_cell = CellSpec(
+        name="memory_writer",
+        version="0.1.0",
+        input_event_types=["MemoryProposal"],
+        output_event_types=["MemoryStored"],
+        permissions=["memory_write"],
+        allowed_contexts=["private/default"],
+    )
+
+    decision = orchestrator.preview_guard_for_cell(
+        cell=preview_cell,
+        context={"name": "private/default"},
+        action="memory_write",
+        capability="consume.MemoryProposal",
+        target_context={"name": "family/default"},
+        source_event_id="evt_preview",
+    )
+
+    orchestrator._enforce_guard_decision(decision)
+
+    assert decision.decision == "escalate"
+    assert orchestrator.decisions.count() == 1
+    orchestrator.close()

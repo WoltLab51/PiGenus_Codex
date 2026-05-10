@@ -224,3 +224,6 @@ their ordered traces through the existing durable decision log.
 
 The demo orchestrator now runs the guard preview in warning mode before memory
 writes. Preview decisions are logged, but the current task flow still runs.
+Selective enforcement is intentionally narrow: only hard `block` decisions stop
+execution. `review` and `escalate` remain logged warning states until a human
+approval workflow exists.

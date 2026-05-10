@@ -385,3 +385,17 @@ Why it mattered:
 The policy layer now observes a real runtime path in warning mode. GENUS can
 compare guard decisions with actual execution before any selective enforcement
 is enabled.
+
+## Selective Guard Enforcement
+
+The system gained:
+
+- Enforcement for hard `block` guard decisions
+- Logged warning behavior for `review` and `escalate`
+- Tests proving block stops execution while review/escalate remains non-blocking
+
+Why it mattered:
+
+GENUS now has its first narrow runtime enforcement point. Enforcement remains
+conservative: only explicit blocks stop the write path, and human-review states
+continue to be logged until an approval workflow exists.

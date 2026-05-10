@@ -18,6 +18,7 @@ from pigenus.core.permissions import PermissionEngine
 from pigenus.core.registry import CellRegistry
 from pigenus.schemas.context import Context
 from pigenus.schemas.cells import CellSpec
+from pigenus.schemas.systemform import GovernanceDecision, GuardDecisionType
 from pigenus.schemas.systemform_adapters import cell_spec_actor_id, context_to_room
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
@@ -89,7 +90,7 @@ class SimpleOrchestrator:
         capability: str | None = None,
         target_context: dict[str, Any] | None = None,
         source_event_id: str | None = None,
-    ) -> None:
+    ) -> GovernanceDecision:
         source_room = context_to_room(context)
         result = self.guard_preview.preview_cell_action(
             cell=cell,
@@ -109,6 +110,12 @@ class SimpleOrchestrator:
             context=context,
             source="orchestrator_guard_preview",
         )
+        return decision
+
+    @staticmethod
+    def _enforce_guard_decision(decision: GovernanceDecision) -> None:
+        if decision.decision == GuardDecisionType.BLOCK:
+            raise PermissionError(f"guard_pipeline_blocked:{decision.reason}")
 
     def run_demo(self, text: str = DEMO_TEXT, context: dict[str, Any] | None = None) -> DemoResult:
         starting_event_count = self.event_bus.count()
@@ -130,13 +137,14 @@ class SimpleOrchestrator:
         self.event_bus.publish(guard_event)
 
         self.context_boundary.require_allowed(cell=self.memory_writer.spec, context=proposal_event.context)
-        self.preview_guard_for_cell(
+        preview_decision = self.preview_guard_for_cell(
             cell=self.memory_writer.spec,
             context=proposal_event.context,
             action=str(proposal_event.payload["action"]),
             capability="consume.MemoryProposal",
             source_event_id=proposal_event.event_id,
         )
+        self._enforce_guard_decision(preview_decision)
         memory, stored_event = self.memory_writer.write(proposal_event, guard_event)
         self._mark_cell_used(self.memory_writer.spec)
         self.event_bus.publish(stored_event)
