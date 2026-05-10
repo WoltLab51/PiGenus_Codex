@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from enum import Enum
 from typing import Any
 
@@ -107,5 +108,9 @@ def _resolve(
     data["status"] = status
     data["resolved_by"] = resolved_by
     data["resolution_reason"] = reason
-    data["resolved_at"] = utc_now().isoformat()
+    resolved_at = utc_now()
+    created_at = datetime.fromisoformat(data["created_at"])
+    if resolved_at <= created_at:
+        resolved_at = created_at + timedelta(microseconds=1)
+    data["resolved_at"] = resolved_at.isoformat()
     return HumanApprovalRecord.model_validate(data)
