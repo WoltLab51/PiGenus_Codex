@@ -221,3 +221,6 @@ publish, block, or otherwise alter the current orchestrator flow.
 
 `pigenus.core.governance_decision_log` persists `GovernanceDecision` results and
 their ordered traces through the existing durable decision log.
+
+The demo orchestrator now runs the guard preview in warning mode before memory
+writes. Preview decisions are logged, but the current task flow still runs.

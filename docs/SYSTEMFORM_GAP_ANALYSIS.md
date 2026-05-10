@@ -148,6 +148,7 @@ The repository now has:
 - A storage-free guard pipeline with ordered decision traces.
 - A shadow-mode runtime preview that runs the guard pipeline against adapted runtime objects.
 - Governance decision logging through the existing durable decision log.
+- Demo-orchestrator preview logging before memory writes.
 
 The validator proves the first executable Systemform rule:
 
@@ -157,5 +158,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Orchestrator Guard Preview. It should call the shadow-mode preview from the orchestrator,
-persist the preview decision, and keep task execution unchanged.
+Add Selective Guard Enforcement. It should enforce only hard block decisions while keeping
+review/escalate as logged warning states until a human approval stub exists.
