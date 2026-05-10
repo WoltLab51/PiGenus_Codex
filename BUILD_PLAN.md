@@ -245,12 +245,35 @@ Out of scope:
 - dashboard
 - export behavior
 
-## Next
+## Current
 
-### Snapshot/Backup Minimal
+### pigenus-v0.2.23-snapshot-backup-minimal
 
 Goal: define a boring local safety path for preserving SQLite runtime state before
 larger Meaning Runtime features arrive.
+
+Implemented scope:
+
+- SQLite backup service using the SQLite backup API
+- `backup-create` CLI command
+- missing-source and no-overwrite safety checks
+- integrity check for created snapshots
+- tests for repository-independent backup behavior and CLI behavior
+
+Out of scope:
+
+- restore workflow
+- remote backup targets
+- scheduling
+- compression
+- retention cleanup
+
+## Next
+
+### Meaning Retrieval Queries Minimal
+
+Goal: expose the first operator-safe Meaning Store lookup path without adding
+vector search, LLM ranking, or dashboard behavior.
 
 ## Later
 

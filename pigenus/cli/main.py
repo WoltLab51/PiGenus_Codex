@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
+from pigenus.core.backup import SnapshotBackupService
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.health import HealthChecker
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
@@ -53,6 +54,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     health = subparsers.add_parser("health-check", help="Check local runtime storage health.")
     health.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    backup = subparsers.add_parser("backup-create", help="Create a local SQLite runtime snapshot.")
+    backup.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    backup.add_argument("--output-dir", default="backups", help="Directory for backup files.")
+    backup.add_argument("--name", default=None, help="Optional backup filename.")
 
     review = subparsers.add_parser("memory-review", help="Apply deterministic memory lifecycle rules.")
     review.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -151,6 +157,23 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         print("Status: healthy" if result.ok else "Status: unhealthy")
         return 0 if result.ok else 1
+
+    if args.command == "backup-create":
+        try:
+            result = SnapshotBackupService(Path(args.db)).create(
+                output_dir=Path(args.output_dir),
+                name=args.name,
+            )
+        except (FileExistsError, FileNotFoundError, RuntimeError, sqlite3.Error, OSError) as exc:
+            print(f"Backup failed: {exc}")
+            return 1
+
+        print("PiGenus Backup")
+        print(f"Source: {result.source_path}")
+        print(f"Backup: {result.backup_path}")
+        print(f"Size bytes: {result.size_bytes}")
+        print(f"Integrity: {result.integrity_check}")
+        return 0
 
     if args.command == "memory-review":
         database = Database(Path(args.db))

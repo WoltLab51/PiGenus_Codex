@@ -32,6 +32,9 @@
 - Added SQLite-backed `MeaningRepository` for Systemform `MeaningObject` persistence
 - Added `0004_meaning_objects` migration with indexes for room, type, truth status, and sensitivity
 - Added meaning-store tests for serialization, retrieval, ordering, and filters
+- Added local SQLite snapshot backup service using SQLite's backup API
+- Added `backup-create` CLI command with missing-source, no-overwrite, and integrity checks
+- Added backup tests for snapshot consistency and CLI behavior
 
 ## pigenus-v0.2.11-health-check
 

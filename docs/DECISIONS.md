@@ -398,3 +398,19 @@ Meaning Runtime needs durable semantic objects before richer retrieval exists.
 Keeping the first store local and relational preserves inspectability, avoids
 premature vector or LLM dependencies, and gives guard and room-flow work a
 stable object source to build on later.
+
+## D-031: Backups Are Local SQLite Snapshots First
+
+Decision:
+
+PiGenus creates local runtime backups with SQLite's backup API through a small
+`SnapshotBackupService` and `backup-create` CLI command. The first workflow
+creates a new snapshot file, refuses missing sources, refuses overwrites, and
+checks snapshot integrity.
+
+Reason:
+
+Meaning Runtime makes the local database more valuable before the system has a
+restore UI, scheduler, remote target, or retention policy. A boring local
+snapshot path gives operators a safe checkpoint mechanism without expanding
+storage semantics or pretending backup management is complete.

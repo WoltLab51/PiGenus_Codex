@@ -430,3 +430,20 @@ Systemform meaning now has a small durable home before vector search, LLM
 integration, dashboards, or memory migration work begins. The store keeps the
 complete semantic object intact while exposing only the first conservative query
 surface needed by the local runtime.
+
+## Snapshot/Backup Minimal
+
+The system gained:
+
+- `SnapshotBackupService`
+- `backup-create` CLI command
+- SQLite backup API based snapshot creation
+- Missing-source and no-overwrite safety checks
+- SQLite integrity check for created snapshots
+
+Why it mattered:
+
+Meaning Runtime work increases the value of local SQLite state. Before adding
+richer retrieval or runtime integration, PiGenus now has a small operator-safe
+way to preserve that state without running migrations, repairs, restore logic,
+or remote backup workflows.
