@@ -474,3 +474,17 @@ Operators need to know whether the Meaning Store is populated when inspecting
 runtime health and shape. Keeping this to a count preserves the overview as a
 small status surface while richer meaning inspection remains in dedicated
 commands.
+
+## D-036: Context Boundary Decisions Carry Room Metadata
+
+Decision:
+
+`ContextBoundaryDecision` includes the Systemform `room_id` and room
+`protection_level` derived from the existing context-to-room adapter. The
+allow/block decision remains based on the cell's allowed context names.
+
+Reason:
+
+Context boundaries are the runtime-facing form of room protection. Exposing room
+metadata in the decision gives later logging and governance work a stable shape
+without adding new policy or changing current orchestration behavior.

@@ -44,6 +44,8 @@ def test_context_boundary_allows_cell_in_allowed_context():
     decision = engine.check(cell=cell.spec, context={"name": "developer/default"})
 
     assert decision.allowed is True
+    assert decision.room_id == "room_developer"
+    assert decision.protection_level == "medium"
     assert decision.reason == "context_allowed"
 
 
@@ -51,6 +53,11 @@ def test_context_boundary_blocks_cell_in_foreign_context():
     engine = ContextBoundaryEngine()
     cell = InputCell()
 
+    decision = engine.check(cell=cell.spec, context={"name": "trading/default"})
+
+    assert decision.allowed is False
+    assert decision.room_id == "room_trading"
+    assert decision.protection_level == "very_high"
     with pytest.raises(PermissionError):
         engine.require_allowed(cell=cell.spec, context={"name": "trading/default"})
 

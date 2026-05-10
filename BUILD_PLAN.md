@@ -373,16 +373,36 @@ Out of scope:
 - release tags
 - PR creation
 
+## Current
+
+### pigenus-v0.2.29-context-boundary-room-metadata
+
+Goal: expand context boundary decisions with explicit Systemform room metadata
+without changing allowed/blocked behavior.
+
+Implemented scope:
+
+- context boundary decisions include `room_id`
+- context boundary decisions include `protection_level`
+- existing context allow/block behavior remains unchanged
+- tests cover allowed and blocked contexts with room metadata
+
+Out of scope:
+
+- new context names
+- new enforcement policy
+- room-flow integration changes
+- persistence changes
+
 ## Next
 
-### Pull Request Preparation
+### Context Boundary Decision Logging Preview
 
-Goal: prepare the accumulated checkpoint branch for review and merge without
-adding new runtime behavior.
+Goal: optionally persist context boundary decisions for operator inspection
+without changing orchestration behavior.
 
 ## Later
 
-- Context boundary expansion
 - Guard families
 - Worker interface
 - Controlled cell evolution

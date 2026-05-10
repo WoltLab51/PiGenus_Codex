@@ -507,3 +507,18 @@ Why it mattered:
 Meaning Store is now part of the operator's first runtime glance. The overview
 still stays intentionally small: it reports presence and volume without becoming
 a search surface, dashboard, or semantic analysis tool.
+
+## Context Boundary Room Metadata
+
+The system gained:
+
+- `room_id` on context boundary decisions
+- `protection_level` on context boundary decisions
+- Tests for room metadata on allowed and blocked contexts
+
+Why it mattered:
+
+The first context boundary only said whether a cell could process a context.
+Boundary decisions now also carry the Systemform room identity behind that
+context, which makes later logging, governance, and operator inspection easier
+without changing enforcement behavior.

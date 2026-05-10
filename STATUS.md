@@ -2,8 +2,8 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.28-changelog-release-sections`
-- Branch: `codex-changelog-release-sections`
+- Name: `pigenus-v0.2.29-context-boundary-room-metadata`
+- Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `167 passed`
@@ -109,13 +109,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Meaning ingestion preview can persist adapted memory as meaning without audit, decision, lifecycle, or orchestrator side effects.
 - Runtime overview reports Meaning Store object count.
 - Changelog is split into explicit checkpoint sections through `pigenus-v0.2.27`.
+- Context boundary decisions expose Systemform room ID and protection level.
 
 ## Next Recommended Work
 
-Finish Changelog Release Sections:
+Finish Context Boundary Room Metadata:
 
-- Checkpoint Changelog Release Sections.
-- Keep code changes, release tags, and PR creation out of scope for this hygiene step.
+- Checkpoint Context Boundary Room Metadata.
+- Keep new context names, new enforcement policy, room-flow integration changes, and persistence changes out of scope.
 
 ## Operator Note
 

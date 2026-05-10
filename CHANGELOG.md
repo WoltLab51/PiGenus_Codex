@@ -2,7 +2,14 @@
 
 ## Unreleased
 
-No unreleased changes.
+- Added Systemform room metadata to context boundary decisions
+- Added context boundary tests for room ID and protection level on allow/block decisions
+
+## pigenus-v0.2.28-changelog-release-sections
+
+- Split overloaded `Unreleased` changelog into explicit checkpoint sections
+- Added sections from `pigenus-v0.2.12` through `pigenus-v0.2.27`
+- Verified: 167 tests passed
 
 ## pigenus-v0.2.27-runtime-overview-meaning-count
 
