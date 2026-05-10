@@ -447,3 +447,18 @@ Meaning Runtime work increases the value of local SQLite state. Before adding
 richer retrieval or runtime integration, PiGenus now has a small operator-safe
 way to preserve that state without running migrations, repairs, restore logic,
 or remote backup workflows.
+
+## Meaning Retrieval Queries Minimal
+
+The system gained:
+
+- `meaning-list` CLI command
+- Filters for room, type, truth status, and sensitivity
+- Compact meaning rows for operator inspection
+- Tests proving empty output, read-only behavior, and combined filters
+
+Why it mattered:
+
+The Meaning Store can now be inspected without reaching for SQLite directly.
+Retrieval remains deliberately narrow: indexed filters only, no ranking, no
+vector search, no LLM interpretation, and no dashboard behavior.

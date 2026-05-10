@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.23-snapshot-backup-minimal`
-- Branch: `codex-snapshot-backup-minimal`
+- Name: `pigenus-v0.2.24-meaning-retrieval-queries`
+- Branch: `codex-meaning-retrieval-queries`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `156 passed`
+- Last verified result: `159 passed`
 
 ## Current Runtime Shape
 
@@ -34,6 +34,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal runtime overview CLI
 - A minimal health-check CLI
 - A minimal local SQLite backup CLI
+- A minimal meaning inspection CLI
 - Additive Systemform schema models for actors, rooms, meaning objects, cell contracts,
   resource grants, and governance decisions
 - Deterministic Systemform adapters for memory, cells, and contexts
@@ -103,13 +104,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Meaning Store filters are local, deterministic, and limited to room, type, truth status, and sensitivity.
 - Snapshot backups use SQLite's backup API and do not initialize, migrate, repair, or overwrite storage.
 - Created snapshots must pass SQLite integrity check.
+- `meaning-list` is read-only and uses only indexed Meaning Store filters.
 
 ## Next Recommended Work
 
-Finish Snapshot/Backup Minimal:
+Finish Meaning Retrieval Queries Minimal:
 
-- Checkpoint Snapshot/Backup Minimal.
-- Keep restore, scheduling, remote backup targets, compression, and retention cleanup out of scope.
+- Checkpoint Meaning Retrieval Queries Minimal.
+- Keep detail view, vector search, LLM ranking, dashboards, and exports out of scope.
 
 ## Operator Note
 

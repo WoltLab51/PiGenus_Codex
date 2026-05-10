@@ -35,6 +35,9 @@
 - Added local SQLite snapshot backup service using SQLite's backup API
 - Added `backup-create` CLI command with missing-source, no-overwrite, and integrity checks
 - Added backup tests for snapshot consistency and CLI behavior
+- Added read-only `meaning-list` CLI command for stored Systemform meaning objects
+- Added meaning-list filters for room, type, truth status, and sensitivity
+- Added meaning-list tests for empty output, read-only behavior, and combined filters
 
 ## pigenus-v0.2.11-health-check
 

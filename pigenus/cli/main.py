@@ -21,6 +21,7 @@ from pigenus.storage.repositories import (
     CellRepository,
     DecisionRepository,
     EventRepository,
+    MeaningRepository,
     MemoryRepository,
 )
 
@@ -29,6 +30,7 @@ EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
 EMPTY_CELL_LIST_MESSAGE = "No cells found."
 EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 EMPTY_EVENT_LIST_MESSAGE = "No events found."
+EMPTY_MEANING_LIST_MESSAGE = "No meaning objects found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -68,6 +70,16 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     memory_list.add_argument("--status", default=None, help="Filter by memory status.")
     memory_list.add_argument("--context", default=None, help="Filter by context name.")
+
+    meaning_list = subparsers.add_parser(
+        "meaning-list",
+        help="List Systemform meaning objects without modifying them.",
+    )
+    meaning_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    meaning_list.add_argument("--room", default=None, help="Filter by room ID.")
+    meaning_list.add_argument("--type", default=None, help="Filter by meaning type.")
+    meaning_list.add_argument("--truth-status", default=None, help="Filter by truth status.")
+    meaning_list.add_argument("--sensitivity", default=None, help="Filter by sensitivity.")
 
     event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
     event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -218,6 +230,31 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 f"{memory.memory_id} | {memory.status} | "
                 f"{context_name} | {memory.human_summary}"
+            )
+        return 0
+
+    if args.command == "meaning-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            meanings = MeaningRepository(database).list(
+                room_id=args.room,
+                type=args.type,
+                truth_status=args.truth_status,
+                sensitivity=args.sensitivity,
+            )
+        finally:
+            database.close()
+
+        if not meanings:
+            print(EMPTY_MEANING_LIST_MESSAGE)
+            return 0
+
+        for meaning in meanings:
+            print(
+                f"{meaning.id} | {meaning.type} | {meaning.room_id} | "
+                f"{meaning.truth_status.value} | {meaning.sensitivity.value} | "
+                f"{_meaning_summary(meaning.content)}"
             )
         return 0
 
@@ -383,6 +420,14 @@ def main(argv: list[str] | None = None) -> int:
 
     parser.error(f"Unknown command: {args.command}")
     return 2
+
+
+def _meaning_summary(content: dict[str, object]) -> str:
+    for key in ("claim", "text", "summary"):
+        value = content.get(key)
+        if value is not None:
+            return str(value)
+    return json.dumps(content, ensure_ascii=True, sort_keys=True)
 
 
 if __name__ == "__main__":

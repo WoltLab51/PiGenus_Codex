@@ -268,12 +268,33 @@ Out of scope:
 - compression
 - retention cleanup
 
-## Next
+## Current
 
-### Meaning Retrieval Queries Minimal
+### pigenus-v0.2.24-meaning-retrieval-queries
 
 Goal: expose the first operator-safe Meaning Store lookup path without adding
 vector search, LLM ranking, or dashboard behavior.
+
+Implemented scope:
+
+- read-only `meaning-list` CLI command
+- filters by room, type, truth status, and sensitivity
+- compact operator output for ID, type, room, truth status, sensitivity, and summary
+- tests for empty output, read-only behavior, and combined filters
+
+Out of scope:
+
+- detail view
+- vector search
+- LLM ranking
+- dashboard
+- export behavior
+
+## Next
+
+### Meaning Detail View Minimal
+
+Goal: inspect one stored `MeaningObject` by ID with deterministic JSON output.
 
 ## Later
 

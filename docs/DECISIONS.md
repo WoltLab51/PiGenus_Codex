@@ -414,3 +414,18 @@ Meaning Runtime makes the local database more valuable before the system has a
 restore UI, scheduler, remote target, or retention policy. A boring local
 snapshot path gives operators a safe checkpoint mechanism without expanding
 storage semantics or pretending backup management is complete.
+
+## D-032: Meaning Retrieval Starts As Indexed CLI Inspection
+
+Decision:
+
+Stored `MeaningObject` records are first exposed through a read-only
+`meaning-list` CLI command with filters for room, type, truth status, and
+sensitivity. Output stays compact and operator-readable.
+
+Reason:
+
+GENUS needs inspectable meaning before it needs semantic search. Starting with
+indexed filters keeps retrieval deterministic, testable, and aligned with the
+SQLite store while avoiding premature vector search, LLM ranking, dashboards,
+or export workflows.
