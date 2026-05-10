@@ -218,3 +218,6 @@ precedence explicit: block beats escalation, and escalation beats allow.
 `pigenus.core.guard_runtime_preview` runs that pipeline against adapted runtime
 objects in shadow mode. It returns a decision trace but does not persist,
 publish, block, or otherwise alter the current orchestrator flow.
+
+`pigenus.core.governance_decision_log` persists `GovernanceDecision` results and
+their ordered traces through the existing durable decision log.

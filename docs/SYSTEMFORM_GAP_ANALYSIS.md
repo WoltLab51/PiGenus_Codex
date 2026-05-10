@@ -147,6 +147,7 @@ The repository now has:
 - Storage-free room flow rules for semantic movement between rooms.
 - A storage-free guard pipeline with ordered decision traces.
 - A shadow-mode runtime preview that runs the guard pipeline against adapted runtime objects.
+- Governance decision logging through the existing durable decision log.
 
 The validator proves the first executable Systemform rule:
 
@@ -156,5 +157,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Governance Decision Logging. It should persist pipeline decisions and traces while keeping
-orchestrator behavior unchanged until logging is proven.
+Add Orchestrator Guard Preview. It should call the shadow-mode preview from the orchestrator,
+persist the preview decision, and keep task execution unchanged.

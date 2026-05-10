@@ -21,6 +21,8 @@
 - Added guard pipeline runtime preview for shadow-mode evaluation against adapted runtime objects
 - Added preview tests proving allow, review, block, sensitivity override, truth-status override,
   trace order, and no orchestrator side effects
+- Added governance decision logging through the existing durable decision log
+- Added governance decision log tests for allow, escalate, block, and trace-order persistence
 
 ## pigenus-v0.2.11-health-check
 
