@@ -87,7 +87,7 @@ def human_approval_to_decision_record(approval: HumanApprovalRecord) -> Decision
         actor=approval.resolved_by or approval.requested_by,
         reason=approval.resolution_reason or approval.reason,
         source="human_approval_stub",
-        created_at=utc_now(),
+        created_at=approval.resolved_at or approval.created_at,
         details={
             "approval": data,
             "approval_id": approval.approval_id,
