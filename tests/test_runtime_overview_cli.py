@@ -10,12 +10,14 @@ from pigenus.schemas.cells import CellSpec
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.events import Event
 from pigenus.schemas.memory import MemoryObject
+from pigenus.schemas.systemform_adapters import memory_to_meaning_object
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
     CellRepository,
     DecisionRepository,
     EventRepository,
+    MeaningRepository,
     MemoryRepository,
 )
 
@@ -77,7 +79,9 @@ def populate_database(path: Path) -> None:
     database = Database(path)
     database.initialize()
     EventRepository(database).add(task_event())
-    MemoryRepository(database).add(memory())
+    item = memory()
+    MemoryRepository(database).add(item)
+    MeaningRepository(database).add(memory_to_meaning_object(item))
     CellRepository(database).add(CellSpec(name="input_cell", version="0.1.0"))
     AuditRepository(database).add(
         actor="input_cell@0.1.0",
@@ -98,6 +102,7 @@ def test_runtime_overview_builder_counts_runtime_storage_and_registries():
     overview = RuntimeOverviewBuilder(
         events=EventRepository(database),
         memory=MemoryRepository(database),
+        meanings=MeaningRepository(database),
         cells=CellRepository(database),
         audit=AuditRepository(database),
         decisions=DecisionRepository(database),
@@ -105,6 +110,7 @@ def test_runtime_overview_builder_counts_runtime_storage_and_registries():
 
     assert overview.event_count == 1
     assert overview.memory_count == 1
+    assert overview.meaning_count == 1
     assert overview.cell_count == 1
     assert overview.audit_count == 1
     assert overview.decision_count == 1
@@ -122,6 +128,7 @@ def test_runtime_overview_cli_prints_counts_and_static_boundaries():
     assert "PiGenus Runtime Overview" in result.stdout
     assert "Events: 1" in result.stdout
     assert "Memory objects: 1" in result.stdout
+    assert "Meaning objects: 1" in result.stdout
     assert "Cells: 1" in result.stdout
     assert "Audit logs: 1" in result.stdout
     assert "Decision records: 1" in result.stdout
@@ -139,6 +146,7 @@ def test_runtime_overview_cli_is_read_only():
     database.initialize()
     assert EventRepository(database).count() == 1
     assert MemoryRepository(database).count() == 1
+    assert MeaningRepository(database).count() == 1
     assert CellRepository(database).count() == 1
     assert AuditRepository(database).count() == 1
     assert DecisionRepository(database).count() == 1

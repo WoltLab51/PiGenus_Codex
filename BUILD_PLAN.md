@@ -334,12 +334,32 @@ Out of scope:
 - LLM extraction
 - mutation or revision workflows
 
-## Next
+## Current
 
-### Runtime Overview Meaning Count
+### pigenus-v0.2.27-runtime-overview-meaning-count
 
 Goal: include Meaning Store counts in the existing runtime overview without
 turning overview into a search or dashboard surface.
+
+Implemented scope:
+
+- `RuntimeOverview` includes `meaning_count`
+- `runtime-overview` CLI prints `Meaning objects`
+- tests prove builder count, CLI output, and read-only behavior
+
+Out of scope:
+
+- meaning search
+- meaning detail rendering
+- dashboard widgets
+- per-room breakdowns
+
+## Next
+
+### Changelog Release Sections
+
+Goal: split the overloaded `Unreleased` changelog into checkpoint sections before
+opening a PR or merging.
 
 ## Later
 

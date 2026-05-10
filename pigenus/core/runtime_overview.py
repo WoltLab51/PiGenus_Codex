@@ -9,6 +9,7 @@ from pigenus.storage.repositories import (
     CellRepository,
     DecisionRepository,
     EventRepository,
+    MeaningRepository,
     MemoryRepository,
 )
 
@@ -19,6 +20,7 @@ class RuntimeOverview:
 
     event_count: int
     memory_count: int
+    meaning_count: int
     cell_count: int
     audit_count: int
     decision_count: int
@@ -34,6 +36,7 @@ class RuntimeOverviewBuilder:
         *,
         events: EventRepository,
         memory: MemoryRepository,
+        meanings: MeaningRepository,
         cells: CellRepository,
         audit: AuditRepository,
         decisions: DecisionRepository,
@@ -42,6 +45,7 @@ class RuntimeOverviewBuilder:
     ) -> None:
         self.events = events
         self.memory = memory
+        self.meanings = meanings
         self.cells = cells
         self.audit = audit
         self.decisions = decisions
@@ -52,6 +56,7 @@ class RuntimeOverviewBuilder:
         return RuntimeOverview(
             event_count=self.events.count(),
             memory_count=self.memory.count(),
+            meaning_count=self.meanings.count(),
             cell_count=self.cells.count(),
             audit_count=self.audit.count(),
             decision_count=self.decisions.count(),

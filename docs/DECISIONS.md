@@ -459,3 +459,18 @@ GENUS needs a real bridge from runtime artifacts to Systemform meaning, but
 automatic ingestion would couple the orchestrator, memory lifecycle, and
 governance layers too early. An explicit preview path proves persistence and
 inspection while keeping enforcement and lifecycle behavior unchanged.
+
+## D-035: Runtime Overview Reports Meaning Volume Only
+
+Decision:
+
+The runtime overview includes a `Meaning objects` count backed by
+`MeaningRepository.count()`. It does not expose search, room breakdowns,
+semantic summaries, or detail rendering.
+
+Reason:
+
+Operators need to know whether the Meaning Store is populated when inspecting
+runtime health and shape. Keeping this to a count preserves the overview as a
+small status surface while richer meaning inspection remains in dedicated
+commands.

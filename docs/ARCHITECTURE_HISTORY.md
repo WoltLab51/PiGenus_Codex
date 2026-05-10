@@ -493,3 +493,17 @@ Meaning Store is now reachable from actual runtime memory without changing the
 orchestrator, lifecycle engine, or guard enforcement. The ingestion path is
 explicit and reversible at the workflow level: operators choose when to bridge
 durable memory into Systemform meaning.
+
+## Runtime Overview Meaning Count
+
+The system gained:
+
+- `meaning_count` in `RuntimeOverview`
+- `Meaning objects` line in `runtime-overview`
+- Tests proving overview count and read-only behavior
+
+Why it mattered:
+
+Meaning Store is now part of the operator's first runtime glance. The overview
+still stays intentionally small: it reports presence and volume without becoming
+a search surface, dashboard, or semantic analysis tool.

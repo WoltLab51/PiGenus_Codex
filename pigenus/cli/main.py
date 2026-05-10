@@ -163,6 +163,7 @@ def main(argv: list[str] | None = None) -> int:
             overview = RuntimeOverviewBuilder(
                 events=EventRepository(database),
                 memory=MemoryRepository(database),
+                meanings=MeaningRepository(database),
                 cells=CellRepository(database),
                 audit=AuditRepository(database),
                 decisions=DecisionRepository(database),
@@ -173,6 +174,7 @@ def main(argv: list[str] | None = None) -> int:
         print("PiGenus Runtime Overview")
         print(f"Events: {overview.event_count}")
         print(f"Memory objects: {overview.memory_count}")
+        print(f"Meaning objects: {overview.meaning_count}")
         print(f"Cells: {overview.cell_count}")
         print(f"Audit logs: {overview.audit_count}")
         print(f"Decision records: {overview.decision_count}")

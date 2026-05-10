@@ -2,8 +2,8 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.26-meaning-ingestion-preview`
-- Branch: `codex-meaning-ingestion-preview`
+- Name: `pigenus-v0.2.27-runtime-overview-meaning-count`
+- Branch: `codex-runtime-overview-meaning-count`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `167 passed`
@@ -107,13 +107,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `meaning-list` is read-only and uses only indexed Meaning Store filters.
 - `meaning-show` is read-only and returns deterministic JSON for one MeaningObject.
 - Meaning ingestion preview can persist adapted memory as meaning without audit, decision, lifecycle, or orchestrator side effects.
+- Runtime overview reports Meaning Store object count.
 
 ## Next Recommended Work
 
-Finish Meaning Runtime Ingestion Preview:
+Finish Runtime Overview Meaning Count:
 
-- Checkpoint Meaning Runtime Ingestion Preview.
-- Keep automatic orchestrator ingestion, guard enforcement changes, memory lifecycle changes, LLM extraction, and mutation workflows out of scope.
+- Checkpoint Runtime Overview Meaning Count.
+- Keep meaning search, detail rendering, dashboard widgets, and per-room breakdowns out of scope.
 
 ## Operator Note
 

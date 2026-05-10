@@ -43,6 +43,8 @@
 - Added `MeaningIngestionPreview` for idempotent memory-to-meaning ingestion
 - Added `meaning-ingest-memory` CLI command for explicit Meaning Store ingestion
 - Added ingestion tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
+- Added Meaning Store object count to runtime overview
+- Added runtime-overview tests for meaning count and read-only behavior
 
 ## pigenus-v0.2.11-health-check
 
