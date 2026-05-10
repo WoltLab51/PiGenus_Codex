@@ -146,6 +146,7 @@ The repository now has:
   and human-approval checks.
 - Storage-free room flow rules for semantic movement between rooms.
 - A storage-free guard pipeline with ordered decision traces.
+- A shadow-mode runtime preview that runs the guard pipeline against adapted runtime objects.
 
 The validator proves the first executable Systemform rule:
 
@@ -155,5 +156,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Guard Pipeline Runtime Preview. It should run the pipeline against adapted runtime objects in a
-side-effect-free preview and prove the existing orchestrator still behaves unchanged.
+Add Governance Decision Logging. It should persist pipeline decisions and traces while keeping
+orchestrator behavior unchanged until logging is proven.

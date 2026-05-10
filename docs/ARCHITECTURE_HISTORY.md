@@ -340,3 +340,19 @@ Why it mattered:
 Contract and room-flow policy are now composable without touching persistence
 or the existing orchestrator. The kernel can explain which protective layer
 made the final decision before any runtime enforcement is attempted.
+
+## Guard Pipeline Runtime Preview
+
+The system gained:
+
+- Shadow-mode `GuardPipelineRuntimePreview`
+- Runtime adaptation from `CellSpec` and `Context` into Systemform actor, room, and contract inputs
+- Preview support for optional runtime `MemoryObject` or explicit `MeaningObject`
+- Tests proving preview results do not mutate event, audit, memory, repository, or orchestrator behavior
+
+Why it mattered:
+
+The guard pipeline can now run against real runtime-shaped inputs without
+enforcing decisions. This is the bridge between pure policy and operational
+integration, and it preserves the existing green runtime while the policy layer
+learns to observe real flows.

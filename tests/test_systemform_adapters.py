@@ -8,6 +8,7 @@ from pigenus.schemas.context import Context
 from pigenus.schemas.memory import MemoryObject
 from pigenus.schemas.systemform import ContractStatus, RoomProtectionLevel, Sensitivity, TruthStatus
 from pigenus.schemas.systemform_adapters import (
+    cell_spec_to_actor_identity,
     cell_spec_actor_id,
     cell_spec_to_contract,
     context_to_room,
@@ -89,6 +90,21 @@ def test_cell_spec_to_contract_maps_executable_metadata():
     assert "consume.MemoryProposal" in contract.capabilities
     assert "emit.MemoryStored" in contract.capabilities
     assert contract.governance_policy_id == "policy_memory_write"
+
+
+def test_cell_spec_to_actor_identity_maps_cell_lifecycle_status():
+    spec = CellSpec(
+        name="memory_writer",
+        version="0.1.0",
+        status="active",
+    )
+
+    actor = cell_spec_to_actor_identity(spec)
+
+    assert actor.id == "cell_memory_writer_0_1_0"
+    assert actor.actor_type == "cell"
+    assert actor.status == "active"
+    assert actor.created_at == spec.created_at
 
 
 def test_cell_spec_to_contract_gives_permissionless_cells_execute_only():

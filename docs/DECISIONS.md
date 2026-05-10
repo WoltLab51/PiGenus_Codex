@@ -313,3 +313,17 @@ GENUS needs explainable policy composition before runtime enforcement. A
 decision trace makes precedence and reasons inspectable, and it reduces the
 risk of silently changing working behavior while the policy layer is still
 young.
+
+## D-025: Runtime Preview Runs In Shadow Mode
+
+Decision:
+
+Guard pipeline runtime preview adapts current runtime objects and returns a
+decision trace, but it does not persist, publish, block, or alter orchestrator
+execution.
+
+Reason:
+
+Policy should observe real runtime-shaped inputs before it controls them.
+Shadow mode lets PiGenus compare policy decisions with current behavior while
+keeping existing tests, demos, and storage semantics stable.

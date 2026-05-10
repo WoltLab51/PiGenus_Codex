@@ -214,3 +214,7 @@ orchestration yet.
 `pigenus.core.guard_pipeline` composes the storage-free contract validator and
 room flow rules into an ordered decision trace. It keeps final decision
 precedence explicit: block beats escalation, and escalation beats allow.
+
+`pigenus.core.guard_runtime_preview` runs that pipeline against adapted runtime
+objects in shadow mode. It returns a decision trace but does not persist,
+publish, block, or otherwise alter the current orchestrator flow.

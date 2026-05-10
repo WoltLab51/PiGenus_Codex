@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.16-guard-pipeline`
+- Name: `pigenus-v0.2.17-guard-runtime-preview`
 - Branch: `main`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `127 passed`
+- Last verified result: `135 passed`
 
 ## Current Runtime Shape
 
@@ -39,6 +39,7 @@ PiGenus is a small local cognitive core. It has:
 - Storage-free Systemform contract validator
 - Storage-free room flow rules for semantic movement between rooms
 - Storage-free guard pipeline with ordered decision traces
+- Shadow-mode guard runtime preview against adapted runtime objects
 - GENUS Systemform hardening documents
 - Living project control documents
 
@@ -86,13 +87,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Contract validation is storage-free and does not alter orchestration behavior.
 - Room flow rules are deterministic, storage-free, and not wired into orchestration yet.
 - Guard pipeline decisions are storage-free and do not alter orchestration behavior.
+- Guard runtime preview is shadow mode only and does not publish, persist, block, or enforce.
 
 ## Next Recommended Work
 
-Checkpoint Guard Pipeline Minimal, then build Guard Pipeline Runtime Preview:
+Checkpoint Guard Pipeline Runtime Preview, then build Governance Decision Logging:
 
-- Add a read-only/demo-only preview that runs the pipeline against adapted runtime objects.
-- Do not enforce pipeline decisions in the existing orchestrator yet.
+- Add a durable governance decision log for pipeline results and ordered traces.
+- Keep orchestrator behavior unchanged until logging is proven.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

@@ -18,6 +18,9 @@
 - Added room flow tests for matrix behavior, sensitivity overrides, and truth-status overrides
 - Added storage-free guard pipeline that composes contract validation and room flow decisions
 - Added guard pipeline tests for allow, block precedence, escalation, and decision traces
+- Added guard pipeline runtime preview for shadow-mode evaluation against adapted runtime objects
+- Added preview tests proving allow, review, block, sensitivity override, truth-status override,
+  trace order, and no orchestrator side effects
 
 ## pigenus-v0.2.11-health-check
 

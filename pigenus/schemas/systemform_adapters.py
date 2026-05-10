@@ -7,6 +7,9 @@ from pigenus.schemas.cells import CellSpec
 from pigenus.schemas.context import Context
 from pigenus.schemas.memory import MemoryObject, MemoryStatus
 from pigenus.schemas.systemform import (
+    ActorIdentity,
+    ActorStatus,
+    ActorType,
     CellContract,
     ContractStatus,
     MeaningObject,
@@ -47,6 +50,14 @@ MEMORY_STATUS_TO_TRUTH_STATUS: dict[MemoryStatus, TruthStatus] = {
     "dead": TruthStatus.DEPRECATED,
     "fossil": TruthStatus.HISTORICAL,
     "canonical": TruthStatus.VERIFIED,
+}
+
+CELL_STATUS_TO_ACTOR_STATUS: dict[str, ActorStatus] = {
+    "draft": ActorStatus.DRAFT,
+    "active": ActorStatus.ACTIVE,
+    "watch": ActorStatus.SUSPENDED,
+    "disabled": ActorStatus.REVOKED,
+    "fossil": ActorStatus.FOSSIL,
 }
 
 
@@ -122,6 +133,20 @@ def cell_spec_to_contract(
         resource_limits={},
         risk_profile={"runtime_status": spec.status, "fitness": spec.fitness},
         governance_policy_id=governance_policy_id,
+        created_at=spec.created_at,
+    )
+
+
+def cell_spec_to_actor_identity(spec: CellSpec) -> ActorIdentity:
+    """Map the current executable cell spec to an explicit Systemform actor identity."""
+
+    return ActorIdentity(
+        id=cell_spec_actor_id(spec),
+        actor_type=ActorType.CELL,
+        name=spec.name,
+        version=spec.version,
+        status=CELL_STATUS_TO_ACTOR_STATUS.get(spec.status, ActorStatus.DRAFT),
+        created_by="systemform_adapter",
         created_at=spec.created_at,
     )
 
