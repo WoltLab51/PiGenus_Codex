@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.25-meaning-detail-view`
-- Branch: `codex-meaning-detail-view`
+- Name: `pigenus-v0.2.26-meaning-ingestion-preview`
+- Branch: `codex-meaning-ingestion-preview`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `161 passed`
+- Last verified result: `167 passed`
 
 ## Current Runtime Shape
 
@@ -106,13 +106,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Created snapshots must pass SQLite integrity check.
 - `meaning-list` is read-only and uses only indexed Meaning Store filters.
 - `meaning-show` is read-only and returns deterministic JSON for one MeaningObject.
+- Meaning ingestion preview can persist adapted memory as meaning without audit, decision, lifecycle, or orchestrator side effects.
 
 ## Next Recommended Work
 
-Finish Meaning Detail View Minimal:
+Finish Meaning Runtime Ingestion Preview:
 
-- Checkpoint Meaning Detail View Minimal.
-- Keep editing, export files, semantic search, LLM summarization, and dashboard detail views out of scope.
+- Checkpoint Meaning Runtime Ingestion Preview.
+- Keep automatic orchestrator ingestion, guard enforcement changes, memory lifecycle changes, LLM extraction, and mutation workflows out of scope.
 
 ## Operator Note
 

@@ -311,12 +311,35 @@ Out of scope:
 - LLM summarization
 - dashboard detail page
 
-## Next
+## Current
 
-### Meaning Runtime Ingestion Preview
+### pigenus-v0.2.26-meaning-ingestion-preview
 
 Goal: create a narrow path for runtime-produced semantic objects to enter the
 Meaning Store without changing guard enforcement or memory lifecycle behavior.
+
+Implemented scope:
+
+- `MeaningIngestionPreview` service
+- `meaning-ingest-memory` CLI command
+- deterministic `MemoryObject -> MeaningObject` ingestion through existing adapters
+- idempotent behavior for repeated memory ingestion
+- tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
+
+Out of scope:
+
+- automatic orchestrator ingestion
+- guard enforcement changes
+- memory lifecycle changes
+- LLM extraction
+- mutation or revision workflows
+
+## Next
+
+### Runtime Overview Meaning Count
+
+Goal: include Meaning Store counts in the existing runtime overview without
+turning overview into a search or dashboard surface.
 
 ## Later
 

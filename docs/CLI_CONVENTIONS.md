@@ -35,6 +35,7 @@ python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
 python -m pigenus.cli.main memory-list --db pigenus.sqlite3
 python -m pigenus.cli.main meaning-list --db pigenus.sqlite3 --room room_developer
 python -m pigenus.cli.main meaning-show bo_example --db pigenus.sqlite3
+python -m pigenus.cli.main meaning-ingest-memory mem_example --db pigenus.sqlite3
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
@@ -45,6 +46,8 @@ python -m pigenus.cli.main permission-list
 `memory-review` may update memory lifecycle status and write audit logs.
 `backup-create` creates a new SQLite snapshot file but does not initialize,
 migrate, repair, or overwrite runtime storage.
+`meaning-ingest-memory` creates a meaning object from an existing memory object
+but does not alter memory lifecycle, guard enforcement, audit logs, or decision logs.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `audit-list`, `cell-list`,

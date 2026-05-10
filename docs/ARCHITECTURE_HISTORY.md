@@ -477,3 +477,19 @@ Why it mattered:
 Operators can now inspect a complete semantic object without opening SQLite or
 adding export workflows. List stays compact for scanning; show provides the full
 structured object for debugging and review.
+
+## Meaning Runtime Ingestion Preview
+
+The system gained:
+
+- `MeaningIngestionPreview`
+- `meaning-ingest-memory` CLI command
+- Idempotent `MemoryObject -> MeaningObject` persistence
+- Tests proving missing-memory behavior and no audit or decision side effects
+
+Why it mattered:
+
+Meaning Store is now reachable from actual runtime memory without changing the
+orchestrator, lifecycle engine, or guard enforcement. The ingestion path is
+explicit and reversible at the workflow level: operators choose when to bridge
+durable memory into Systemform meaning.

@@ -443,3 +443,19 @@ Reason:
 The list view is intentionally compact and should remain scan-friendly. A
 separate detail command gives operators the full semantic object for review and
 debugging without adding edit behavior, exports, dashboards, or LLM summaries.
+
+## D-034: Meaning Ingestion Starts As Explicit Memory Bridging
+
+Decision:
+
+Runtime-produced memory enters the Meaning Store first through an explicit
+`MeaningIngestionPreview` service and `meaning-ingest-memory` CLI command. The
+path uses the existing deterministic `MemoryObject -> MeaningObject` adapter and
+is idempotent for repeated memory IDs.
+
+Reason:
+
+GENUS needs a real bridge from runtime artifacts to Systemform meaning, but
+automatic ingestion would couple the orchestrator, memory lifecycle, and
+governance layers too early. An explicit preview path proves persistence and
+inspection while keeping enforcement and lifecycle behavior unchanged.

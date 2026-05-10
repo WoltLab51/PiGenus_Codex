@@ -10,6 +10,7 @@ from pigenus.core.audit import AuditLogger
 from pigenus.core.backup import SnapshotBackupService
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.health import HealthChecker
+from pigenus.core.meaning_ingestion import MeaningIngestionPreview
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
@@ -87,6 +88,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     meaning_show.add_argument("meaning_id", help="Meaning object ID to inspect.")
     meaning_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    meaning_ingest = subparsers.add_parser(
+        "meaning-ingest-memory",
+        help="Preview-ingest one stored memory object into the Meaning Store.",
+    )
+    meaning_ingest.add_argument("memory_id", help="Memory object ID to ingest.")
+    meaning_ingest.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    meaning_ingest.add_argument(
+        "--created-by",
+        default="meaning_ingestion_preview",
+        help="Actor ID recorded on the created meaning object.",
+    )
 
     event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
     event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -278,6 +291,27 @@ def main(argv: list[str] | None = None) -> int:
             return 1
 
         print(json.dumps(meaning.model_dump(mode="json"), ensure_ascii=True, indent=2, sort_keys=True))
+        return 0
+
+    if args.command == "meaning-ingest-memory":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            result = MeaningIngestionPreview(
+                memory_repository=MemoryRepository(database),
+                meaning_repository=MeaningRepository(database),
+            ).ingest_memory_by_id(args.memory_id, created_by=args.created_by)
+        finally:
+            database.close()
+
+        if result is None:
+            print(f"Memory object not found: {args.memory_id}")
+            return 1
+
+        status = "created" if result.created else "already_exists"
+        print(f"Meaning ingestion: {status}")
+        print(f"Memory: {result.source_memory_id}")
+        print(f"Meaning: {result.meaning.id}")
         return 0
 
     if args.command == "event-list":

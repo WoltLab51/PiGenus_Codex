@@ -40,6 +40,9 @@
 - Added meaning-list tests for empty output, read-only behavior, and combined filters
 - Added read-only `meaning-show` CLI command with deterministic JSON output
 - Added meaning-show tests for full object inspection, missing IDs, and read-only behavior
+- Added `MeaningIngestionPreview` for idempotent memory-to-meaning ingestion
+- Added `meaning-ingest-memory` CLI command for explicit Meaning Store ingestion
+- Added ingestion tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
 
 ## pigenus-v0.2.11-health-check
 
