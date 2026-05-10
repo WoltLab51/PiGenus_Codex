@@ -309,3 +309,34 @@ The Systemform rule "no execution without a valid contract" is now executable
 without disturbing the current runtime. This creates a testable policy core
 that can later be wired into guard pipelines or orchestration after room flow
 rules are equally explicit.
+
+## Room Flow Rules Minimal
+
+The system gained:
+
+- Storage-free `RoomFlowRules`
+- Explicit room-to-room flow matrix
+- Decisions for `allow`, `review`, `block`, and `allow_read`
+- Sensitivity overrides for secret, private, family, financial, and child-related meaning
+- Truth-status overrides for unsafe, contested, simulated, deprecated, and historical meaning
+
+Why it mattered:
+
+GENUS now has a small deterministic rule layer for semantic movement between
+rooms. This is still not orchestration enforcement; it is a reviewable policy
+surface that can be composed into a guard pipeline later.
+
+## Guard Pipeline Minimal
+
+The system gained:
+
+- Storage-free `GuardPipeline`
+- Ordered trace steps for contract validation and optional room flow
+- Final decision precedence: block, then escalation, then allow
+- Conversion from pipeline result to `GovernanceDecision`
+
+Why it mattered:
+
+Contract and room-flow policy are now composable without touching persistence
+or the existing orchestrator. The kernel can explain which protective layer
+made the final decision before any runtime enforcement is attempted.

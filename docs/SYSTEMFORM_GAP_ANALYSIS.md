@@ -144,6 +144,8 @@ The repository now has:
 - Deterministic adapters from prototype contracts to Systemform contracts.
 - A storage-free contract validator for actor, room, contract, capability, permission, resource,
   and human-approval checks.
+- Storage-free room flow rules for semantic movement between rooms.
+- A storage-free guard pipeline with ordered decision traces.
 
 The validator proves the first executable Systemform rule:
 
@@ -153,5 +155,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Room Flow Rules Minimal. This should remain storage-free and should decide whether information
-may flow between source and target rooms before any guard pipeline or orchestration integration.
+Add Guard Pipeline Runtime Preview. It should run the pipeline against adapted runtime objects in a
+side-effect-free preview and prove the existing orchestrator still behaves unchanged.

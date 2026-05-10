@@ -283,3 +283,33 @@ Reason:
 The rule "no execution without a valid contract" needs to become executable
 before it becomes operationally enforced. A storage-free validator makes the
 policy surface testable without risking the current green runtime.
+
+## D-023: Room Flow Rules Start As A Fixed Matrix
+
+Decision:
+
+Room flow policy starts as a storage-free fixed matrix with deterministic
+overrides for sensitive and unsafe meaning. Unknown room pairs require review
+instead of default allow.
+
+Reason:
+
+Semantic movement between rooms is safety-critical. A small fixed matrix is
+easier to audit than an editable policy engine, while conservative defaults
+prevent silent cross-room leakage until a guard pipeline can combine all policy
+decisions.
+
+## D-024: Guard Pipeline Explains Before It Enforces
+
+Decision:
+
+The first guard pipeline composes storage-free contract validation and room
+flow decisions into an ordered trace. It does not mutate storage, change CLI
+behavior, or enforce decisions inside the current orchestrator.
+
+Reason:
+
+GENUS needs explainable policy composition before runtime enforcement. A
+decision trace makes precedence and reasons inspectable, and it reduces the
+risk of silently changing working behavior while the policy layer is still
+young.

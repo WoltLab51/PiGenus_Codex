@@ -183,12 +183,12 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 
 ## Current
 
-### pigenus-v0.2.14-contract-validator
+### pigenus-v0.2.16-guard-pipeline
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
 existing runtime prototype, then prove deterministic mappings from the current
 prototype contracts into that vocabulary and validate the first executable
-contract rule.
+contract, semantic room-flow, and guard-pipeline rules.
 
 Implemented scope:
 
@@ -203,35 +203,37 @@ Implemented scope:
 - tests for the adapter mappings
 - storage-free contract validator
 - tests for actor, contract, room, capability, permission, resource, and human-approval checks
+- storage-free room flow rules
+- tests for room matrix behavior, sensitivity overrides, and truth-status overrides
+- storage-free guard pipeline
+- tests for ordered traces, allow, escalation, and block precedence
 
 Out of scope:
 
 - storage migrations for Systemform objects
 - CLI changes
-- guard pipeline
-- room flow rules
 - orchestration enforcement
 
 ## Next
 
-### Room Flow Rules Minimal
+### Guard Pipeline Runtime Preview
 
-Goal: make information flow between rooms explicit before adding a guard pipeline.
+Goal: preview guard-pipeline decisions against adapted runtime objects without enforcing them.
 
 Planned scope:
 
-- deterministic source-room to target-room flow matrix
-- decisions for allow, review, block, and allow-read
-- special handling for sensitive meaning objects
-- tests for private, family, trading, developer, sandbox, and public flows
+- create actor/room/contract inputs from current `CellSpec` and `Context` adapters
+- preview pipeline result for a representative memory-write flow
+- keep preview side-effect free
+- tests proving existing orchestrator behavior remains unchanged
 
 Out of scope:
 
 - storage migrations
 - CLI changes
 - editable policies
-- guard pipeline
 - orchestration enforcement
+- dashboard or export behavior
 
 ## Later
 

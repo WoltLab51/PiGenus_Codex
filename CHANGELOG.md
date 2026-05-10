@@ -13,6 +13,11 @@
 - Added storage-free `ContractValidator` for Systemform actor, room, contract,
   permission, capability, resource, and human-approval checks
 - Added contract validator tests without changing orchestration enforcement
+- Added storage-free room flow rules with deterministic allow, review, block, and
+  allow-read decisions
+- Added room flow tests for matrix behavior, sensitivity overrides, and truth-status overrides
+- Added storage-free guard pipeline that composes contract validation and room flow decisions
+- Added guard pipeline tests for allow, block precedence, escalation, and decision traces
 
 ## pigenus-v0.2.11-health-check
 

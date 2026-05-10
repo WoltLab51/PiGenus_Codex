@@ -205,3 +205,12 @@ vocabulary without changing storage or CLI behavior.
 rule. It validates actors, rooms, cell contracts, capabilities, permissions,
 resource grants, and human-approval requirements without changing the current
 orchestrator.
+
+`pigenus.core.room_flow` adds the first semantic flow policy. It decides whether
+meaning may move between rooms using a fixed matrix plus conservative
+sensitivity and truth-status overrides. It is storage-free and not wired into
+orchestration yet.
+
+`pigenus.core.guard_pipeline` composes the storage-free contract validator and
+room flow rules into an ordered decision trace. It keeps final decision
+precedence explicit: block beats escalation, and escalation beats allow.
