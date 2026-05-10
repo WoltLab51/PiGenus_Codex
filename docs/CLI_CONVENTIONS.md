@@ -34,6 +34,7 @@ python -m pigenus.cli.main event-list --db pigenus.sqlite3
 python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
 python -m pigenus.cli.main memory-list --db pigenus.sqlite3
 python -m pigenus.cli.main meaning-list --db pigenus.sqlite3 --room room_developer
+python -m pigenus.cli.main meaning-show bo_example --db pigenus.sqlite3
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
@@ -46,5 +47,5 @@ python -m pigenus.cli.main permission-list
 migrate, repair, or overwrite runtime storage.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
-`meaning-list`, `decision-list`, `audit-list`, `cell-list`, `context-list`, and
-`permission-list` are read-only.
+`meaning-list`, `meaning-show`, `decision-list`, `audit-list`, `cell-list`,
+`context-list`, and `permission-list` are read-only.

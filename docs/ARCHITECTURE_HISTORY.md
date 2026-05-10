@@ -462,3 +462,18 @@ Why it mattered:
 The Meaning Store can now be inspected without reaching for SQLite directly.
 Retrieval remains deliberately narrow: indexed filters only, no ranking, no
 vector search, no LLM interpretation, and no dashboard behavior.
+
+## Meaning Detail View Minimal
+
+The system gained:
+
+- `meaning-show` CLI command
+- Deterministic JSON output for one stored `MeaningObject`
+- Clean not-found behavior for unknown IDs
+- Tests proving full object inspection and read-only behavior
+
+Why it mattered:
+
+Operators can now inspect a complete semantic object without opening SQLite or
+adding export workflows. List stays compact for scanning; show provides the full
+structured object for debugging and review.

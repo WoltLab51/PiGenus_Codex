@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.24-meaning-retrieval-queries`
-- Branch: `codex-meaning-retrieval-queries`
+- Name: `pigenus-v0.2.25-meaning-detail-view`
+- Branch: `codex-meaning-detail-view`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `159 passed`
+- Last verified result: `161 passed`
 
 ## Current Runtime Shape
 
@@ -105,13 +105,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Snapshot backups use SQLite's backup API and do not initialize, migrate, repair, or overwrite storage.
 - Created snapshots must pass SQLite integrity check.
 - `meaning-list` is read-only and uses only indexed Meaning Store filters.
+- `meaning-show` is read-only and returns deterministic JSON for one MeaningObject.
 
 ## Next Recommended Work
 
-Finish Meaning Retrieval Queries Minimal:
+Finish Meaning Detail View Minimal:
 
-- Checkpoint Meaning Retrieval Queries Minimal.
-- Keep detail view, vector search, LLM ranking, dashboards, and exports out of scope.
+- Checkpoint Meaning Detail View Minimal.
+- Keep editing, export files, semantic search, LLM summarization, and dashboard detail views out of scope.
 
 ## Operator Note
 

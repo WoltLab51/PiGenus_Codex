@@ -429,3 +429,17 @@ GENUS needs inspectable meaning before it needs semantic search. Starting with
 indexed filters keeps retrieval deterministic, testable, and aligned with the
 SQLite store while avoiding premature vector search, LLM ranking, dashboards,
 or export workflows.
+
+## D-033: Meaning Detail Inspection Uses Deterministic JSON
+
+Decision:
+
+One stored `MeaningObject` can be inspected through a read-only `meaning-show`
+CLI command. The command returns the complete Pydantic JSON payload with stable
+key ordering and a clean not-found error.
+
+Reason:
+
+The list view is intentionally compact and should remain scan-friendly. A
+separate detail command gives operators the full semantic object for review and
+debugging without adding edit behavior, exports, dashboards, or LLM summaries.

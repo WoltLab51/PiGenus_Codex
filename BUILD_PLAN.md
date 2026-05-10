@@ -290,11 +290,33 @@ Out of scope:
 - dashboard
 - export behavior
 
-## Next
+## Current
 
-### Meaning Detail View Minimal
+### pigenus-v0.2.25-meaning-detail-view
 
 Goal: inspect one stored `MeaningObject` by ID with deterministic JSON output.
+
+Implemented scope:
+
+- read-only `meaning-show` CLI command
+- deterministic JSON output for full `MeaningObject`
+- clean not-found error for unknown IDs
+- tests for JSON output, not-found behavior, and read-only behavior
+
+Out of scope:
+
+- editing
+- export files
+- semantic search
+- LLM summarization
+- dashboard detail page
+
+## Next
+
+### Meaning Runtime Ingestion Preview
+
+Goal: create a narrow path for runtime-produced semantic objects to enter the
+Meaning Store without changing guard enforcement or memory lifecycle behavior.
 
 ## Later
 

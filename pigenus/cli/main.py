@@ -81,6 +81,13 @@ def build_parser() -> argparse.ArgumentParser:
     meaning_list.add_argument("--truth-status", default=None, help="Filter by truth status.")
     meaning_list.add_argument("--sensitivity", default=None, help="Filter by sensitivity.")
 
+    meaning_show = subparsers.add_parser(
+        "meaning-show",
+        help="Show one Systemform meaning object by ID without modifying it.",
+    )
+    meaning_show.add_argument("meaning_id", help="Meaning object ID to inspect.")
+    meaning_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
     event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
     event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     event_list.add_argument("--object-type", default=None, help="Filter by event object type.")
@@ -256,6 +263,21 @@ def main(argv: list[str] | None = None) -> int:
                 f"{meaning.truth_status.value} | {meaning.sensitivity.value} | "
                 f"{_meaning_summary(meaning.content)}"
             )
+        return 0
+
+    if args.command == "meaning-show":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            meaning = MeaningRepository(database).get(args.meaning_id)
+        finally:
+            database.close()
+
+        if meaning is None:
+            print(f"Meaning object not found: {args.meaning_id}")
+            return 1
+
+        print(json.dumps(meaning.model_dump(mode="json"), ensure_ascii=True, indent=2, sort_keys=True))
         return 0
 
     if args.command == "event-list":

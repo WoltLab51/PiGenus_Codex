@@ -34,6 +34,22 @@ def run_meaning_list(path: Path, *args: str) -> subprocess.CompletedProcess[str]
     )
 
 
+def run_meaning_show(path: Path, meaning_id: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pigenus.cli.main",
+            "meaning-show",
+            meaning_id,
+            "--db",
+            str(path),
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+
 def meaning(
     meaning_id: str,
     *,
@@ -125,3 +141,32 @@ def test_meaning_list_filters_by_room_type_truth_status_and_sensitivity():
     assert "bo_family_note" in result.stdout
     assert "bo_dev_fact" not in result.stdout
     assert "bo_private_fact" not in result.stdout
+
+
+def test_meaning_show_prints_one_meaning_object_as_stable_json():
+    path = db_path("show")
+    database = Database(path)
+    database.initialize()
+    item = meaning("bo_show_fact", claim="PiGenus can inspect meaning.")
+    MeaningRepository(database).add(item)
+    database.close()
+
+    result = run_meaning_show(path, "bo_show_fact")
+
+    database = Database(path)
+    database.initialize()
+    assert result.returncode == 0
+    assert '"id": "bo_show_fact"' in result.stdout
+    assert '"claim": "PiGenus can inspect meaning."' in result.stdout
+    assert '"truth_status": "verified"' in result.stdout
+    assert MeaningRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_meaning_show_returns_clean_error_for_unknown_id():
+    result = run_meaning_show(db_path("missing-show"), "bo_missing")
+
+    assert result.returncode == 1
+    assert "Meaning object not found: bo_missing" in result.stdout
+    assert result.stderr == ""

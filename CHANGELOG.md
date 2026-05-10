@@ -38,6 +38,8 @@
 - Added read-only `meaning-list` CLI command for stored Systemform meaning objects
 - Added meaning-list filters for room, type, truth status, and sensitivity
 - Added meaning-list tests for empty output, read-only behavior, and combined filters
+- Added read-only `meaning-show` CLI command with deterministic JSON output
+- Added meaning-show tests for full object inspection, missing IDs, and read-only behavior
 
 ## pigenus-v0.2.11-health-check
 
