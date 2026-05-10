@@ -2,8 +2,8 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.27-runtime-overview-meaning-count`
-- Branch: `codex-runtime-overview-meaning-count`
+- Name: `pigenus-v0.2.28-changelog-release-sections`
+- Branch: `codex-changelog-release-sections`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `167 passed`
@@ -108,13 +108,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `meaning-show` is read-only and returns deterministic JSON for one MeaningObject.
 - Meaning ingestion preview can persist adapted memory as meaning without audit, decision, lifecycle, or orchestrator side effects.
 - Runtime overview reports Meaning Store object count.
+- Changelog is split into explicit checkpoint sections through `pigenus-v0.2.27`.
 
 ## Next Recommended Work
 
-Finish Runtime Overview Meaning Count:
+Finish Changelog Release Sections:
 
-- Checkpoint Runtime Overview Meaning Count.
-- Keep meaning search, detail rendering, dashboard widgets, and per-room breakdowns out of scope.
+- Checkpoint Changelog Release Sections.
+- Keep code changes, release tags, and PR creation out of scope for this hygiene step.
 
 ## Operator Note
 

@@ -2,49 +2,115 @@
 
 ## Unreleased
 
+No unreleased changes.
+
+## pigenus-v0.2.27-runtime-overview-meaning-count
+
+- Added Meaning Store object count to runtime overview
+- Added runtime-overview tests for meaning count and read-only behavior
+- Verified: 167 tests passed
+
+## pigenus-v0.2.26-meaning-ingestion-preview
+
+- Added `MeaningIngestionPreview` for idempotent memory-to-meaning ingestion
+- Added `meaning-ingest-memory` CLI command for explicit Meaning Store ingestion
+- Added ingestion tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
+- Verified: 167 tests passed
+
+## pigenus-v0.2.25-meaning-detail-view
+
+- Added read-only `meaning-show` CLI command with deterministic JSON output
+- Added meaning-show tests for full object inspection, missing IDs, and read-only behavior
+- Verified: 161 tests passed
+
+## pigenus-v0.2.24-meaning-retrieval-queries
+
+- Added read-only `meaning-list` CLI command for stored Systemform meaning objects
+- Added meaning-list filters for room, type, truth status, and sensitivity
+- Added meaning-list tests for empty output, read-only behavior, and combined filters
+- Verified: 159 tests passed
+
+## pigenus-v0.2.23-snapshot-backup-minimal
+
+- Added local SQLite snapshot backup service using SQLite's backup API
+- Added `backup-create` CLI command with missing-source, no-overwrite, and integrity checks
+- Added backup tests for snapshot consistency and CLI behavior
+- Verified: 156 tests passed
+
+## pigenus-v0.2.22-meaning-store-minimal
+
+- Added SQLite-backed `MeaningRepository` for Systemform `MeaningObject` persistence
+- Added `0004_meaning_objects` migration with indexes for room, type, truth status, and sensitivity
+- Added meaning-store tests for serialization, retrieval, ordering, and filters
+- Verified: 151 tests passed
+
+## pigenus-v0.2.21-human-approval-stub
+
+- Added human approval stub with pending, approved, and rejected statuses
+- Added tests proving approval records persist without changing current flow
+- Stabilized human approval decision timestamp ordering
+- Verified: 147 tests passed
+
+## pigenus-v0.2.20-selective-guard-enforcement
+
+- Enabled selective guard enforcement for hard block decisions only
+- Added tests proving block decisions stop execution while review/escalate remains warning-only
+- Verified: 142 tests passed
+
+## pigenus-v0.2.19-orchestrator-guard-preview
+
+- Integrated guard runtime preview into the demo orchestrator in warning mode
+- Added tests proving preview decisions are logged while demo execution continues
+- Verified: 135 tests passed
+
+## pigenus-v0.2.18-governance-decision-logging
+
+- Added governance decision logging through the existing durable decision log
+- Added governance decision log tests for allow, escalate, block, and trace-order persistence
+- Verified: 132 tests passed
+
+## pigenus-v0.2.17-guard-runtime-preview
+
+- Added guard pipeline runtime preview for shadow-mode evaluation against adapted runtime objects
+- Added preview tests proving allow, review, block, sensitivity override, truth-status override,
+  trace order, and no orchestrator side effects
+- Verified: 127 tests passed
+
+## pigenus-v0.2.16-guard-pipeline
+
+- Added storage-free guard pipeline that composes contract validation and room flow decisions
+- Added guard pipeline tests for allow, block precedence, escalation, and decision traces
+- Verified: 120 tests passed
+
+## pigenus-v0.2.15-room-flow-rules
+
+- Added storage-free room flow rules with deterministic allow, review, block, and
+  allow-read decisions
+- Added room flow tests for matrix behavior, sensitivity overrides, and truth-status overrides
+- Verified: 113 tests passed
+
+## pigenus-v0.2.14-contract-validator
+
+- Added storage-free `ContractValidator` for Systemform actor, room, contract,
+  permission, capability, resource, and human-approval checks
+- Added contract validator tests without changing orchestration enforcement
+- Verified: 96 tests passed
+
+## pigenus-v0.2.13-systemform-adapters
+
+- Added deterministic Systemform adapters for `MemoryObject -> MeaningObject`,
+  `CellSpec -> CellContract`, and `Context -> Room`
+- Added Systemform adapter tests without adding persistence or CLI behavior
+- Verified: 83 tests passed
+
+## pigenus-v0.2.12-systemform-models
+
 - Added GENUS Systemform and Phase 0 kernel documents under `docs/`
 - Added `docs/SYSTEMFORM_GAP_ANALYSIS.md`
 - Added additive Systemform models for `ActorIdentity`, `Room`,
   `MeaningObject`, `CellContract`, `ResourceGrant`, and `GovernanceDecision`
 - Added Systemform model tests without changing existing runtime storage or CLI
-- Added deterministic Systemform adapters for `MemoryObject -> MeaningObject`,
-  `CellSpec -> CellContract`, and `Context -> Room`
-- Added Systemform adapter tests without adding persistence or CLI behavior
-- Added storage-free `ContractValidator` for Systemform actor, room, contract,
-  permission, capability, resource, and human-approval checks
-- Added contract validator tests without changing orchestration enforcement
-- Added storage-free room flow rules with deterministic allow, review, block, and
-  allow-read decisions
-- Added room flow tests for matrix behavior, sensitivity overrides, and truth-status overrides
-- Added storage-free guard pipeline that composes contract validation and room flow decisions
-- Added guard pipeline tests for allow, block precedence, escalation, and decision traces
-- Added guard pipeline runtime preview for shadow-mode evaluation against adapted runtime objects
-- Added preview tests proving allow, review, block, sensitivity override, truth-status override,
-  trace order, and no orchestrator side effects
-- Added governance decision logging through the existing durable decision log
-- Added governance decision log tests for allow, escalate, block, and trace-order persistence
-- Integrated guard runtime preview into the demo orchestrator in warning mode
-- Added tests proving preview decisions are logged while demo execution continues
-- Enabled selective guard enforcement for hard block decisions only
-- Added tests proving block decisions stop execution while review/escalate remains warning-only
-- Added human approval stub with pending, approved, and rejected statuses
-- Added tests proving approval records persist without changing current flow
-- Added SQLite-backed `MeaningRepository` for Systemform `MeaningObject` persistence
-- Added `0004_meaning_objects` migration with indexes for room, type, truth status, and sensitivity
-- Added meaning-store tests for serialization, retrieval, ordering, and filters
-- Added local SQLite snapshot backup service using SQLite's backup API
-- Added `backup-create` CLI command with missing-source, no-overwrite, and integrity checks
-- Added backup tests for snapshot consistency and CLI behavior
-- Added read-only `meaning-list` CLI command for stored Systemform meaning objects
-- Added meaning-list filters for room, type, truth status, and sensitivity
-- Added meaning-list tests for empty output, read-only behavior, and combined filters
-- Added read-only `meaning-show` CLI command with deterministic JSON output
-- Added meaning-show tests for full object inspection, missing IDs, and read-only behavior
-- Added `MeaningIngestionPreview` for idempotent memory-to-meaning ingestion
-- Added `meaning-ingest-memory` CLI command for explicit Meaning Store ingestion
-- Added ingestion tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
-- Added Meaning Store object count to runtime overview
-- Added runtime-overview tests for meaning count and read-only behavior
+- Verified: 75 tests passed
 
 ## pigenus-v0.2.11-health-check
 

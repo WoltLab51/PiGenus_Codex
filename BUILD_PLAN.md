@@ -354,12 +354,31 @@ Out of scope:
 - dashboard widgets
 - per-room breakdowns
 
-## Next
+## Current
 
-### Changelog Release Sections
+### pigenus-v0.2.28-changelog-release-sections
 
 Goal: split the overloaded `Unreleased` changelog into checkpoint sections before
 opening a PR or merging.
+
+Implemented scope:
+
+- moved Systemform and Meaning Runtime changes out of overloaded `Unreleased`
+- added checkpoint sections from `pigenus-v0.2.12` through `pigenus-v0.2.27`
+- preserved concise verified test counts for each checkpoint
+
+Out of scope:
+
+- code changes
+- release tags
+- PR creation
+
+## Next
+
+### Pull Request Preparation
+
+Goal: prepare the accumulated checkpoint branch for review and merge without
+adding new runtime behavior.
 
 ## Later
 
