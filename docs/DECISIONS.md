@@ -327,3 +327,17 @@ Reason:
 Policy should observe real runtime-shaped inputs before it controls them.
 Shadow mode lets PiGenus compare policy decisions with current behavior while
 keeping existing tests, demos, and storage semantics stable.
+
+## D-026: Governance Decisions Use The Durable Decision Log
+
+Decision:
+
+Systemform `GovernanceDecision` results are persisted through the existing
+`decision_logs` table as `DecisionRecord` entries. Their ordered traces live in
+the record details.
+
+Reason:
+
+PiGenus already has a durable, inspectable decision log. Reusing it avoids a
+new migration while making policy decisions queryable before orchestrator
+integration or enforcement changes runtime behavior.

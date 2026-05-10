@@ -356,3 +356,18 @@ The guard pipeline can now run against real runtime-shaped inputs without
 enforcing decisions. This is the bridge between pure policy and operational
 integration, and it preserves the existing green runtime while the policy layer
 learns to observe real flows.
+
+## Governance Decision Logging
+
+The system gained:
+
+- `GovernanceDecisionLogger`
+- Conversion from Systemform `GovernanceDecision` to durable `DecisionRecord`
+- Trace persistence through the existing `decision_logs` table
+- Tests for allow, block, escalate, and ordered trace serialization
+
+Why it mattered:
+
+Policy decisions are now durable without changing orchestration behavior. This
+gives GENUS an audit-ready path for comparing preview decisions with current
+runtime behavior before any enforcement is enabled.

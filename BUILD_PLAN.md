@@ -183,12 +183,13 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 
 ## Current
 
-### pigenus-v0.2.17-guard-runtime-preview
+### pigenus-v0.2.18-governance-decision-logging
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
 existing runtime prototype, then prove deterministic mappings from the current
 prototype contracts into that vocabulary and validate the first executable
-contract, semantic room-flow, guard-pipeline, and runtime preview rules.
+contract, semantic room-flow, guard-pipeline, runtime preview, and governance
+decision logging rules.
 
 Implemented scope:
 
@@ -210,25 +211,26 @@ Implemented scope:
 - shadow-mode guard runtime preview against adapted runtime objects
 - tests for allow, review, block, sensitivity override, truth-status override, trace order,
   and no orchestrator side effects
+- governance decision logging through the existing durable decision log
+- tests for allow, escalate/review, block, and trace-order persistence
 
 Out of scope:
 
-- storage migrations for Systemform objects
 - CLI changes
 - orchestration enforcement
 
 ## Next
 
-### Governance Decision Logging
+### Orchestrator Guard Preview
 
-Goal: persist guard-pipeline decisions and ordered traces without changing orchestration behavior.
+Goal: call the guard preview from the orchestrator in warning mode while preserving task behavior.
 
 Planned scope:
 
-- `GovernanceDecision` serialization from pipeline results
-- durable decision trace storage through a minimal repository or existing decision log path
-- tests for allow, escalate/review, and block decision persistence
-- tests proving trace order survives serialization
+- run preview before guarded memory writes
+- persist the preview `GovernanceDecision`
+- keep task execution unchanged even for preview block/escalate decisions
+- tests proving demo behavior and event counts remain stable
 
 Out of scope:
 
