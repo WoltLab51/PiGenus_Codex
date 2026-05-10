@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.20-selective-guard-enforcement`
-- Branch: `codex-selective-guard-enforcement`
+- Name: `pigenus-v0.2.28-changelog-release-sections`
+- Branch: `codex-changelog-release-sections`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `142 passed`
+- Last verified result: `167 passed`
 
 ## Current Runtime Shape
 
@@ -33,6 +33,8 @@ PiGenus is a small local cognitive core. It has:
 - A minimal event inspection surface
 - A minimal runtime overview CLI
 - A minimal health-check CLI
+- A minimal local SQLite backup CLI
+- A minimal meaning inspection CLI
 - Additive Systemform schema models for actors, rooms, meaning objects, cell contracts,
   resource grants, and governance decisions
 - Deterministic Systemform adapters for memory, cells, and contexts
@@ -43,6 +45,8 @@ PiGenus is a small local cognitive core. It has:
 - Governance decision logging through the durable decision log
 - Demo orchestrator guard preview in warning mode
 - Selective guard enforcement for hard block decisions only
+- Human approval stub with pending, approved, and rejected states
+- SQLite-backed Systemform Meaning Store for local `MeaningObject` persistence
 - GENUS Systemform hardening documents
 - Living project control documents
 
@@ -95,14 +99,23 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Orchestrator guard preview logs decisions but keeps task execution unchanged.
 - Selective guard enforcement stops hard block decisions only.
 - Review and escalate decisions remain logged warning states.
+- Human approval records persist through the decision log and do not alter current flow.
+- Meaning objects persist as full Systemform JSON plus indexed query columns.
+- Meaning Store filters are local, deterministic, and limited to room, type, truth status, and sensitivity.
+- Snapshot backups use SQLite's backup API and do not initialize, migrate, repair, or overwrite storage.
+- Created snapshots must pass SQLite integrity check.
+- `meaning-list` is read-only and uses only indexed Meaning Store filters.
+- `meaning-show` is read-only and returns deterministic JSON for one MeaningObject.
+- Meaning ingestion preview can persist adapted memory as meaning without audit, decision, lifecycle, or orchestrator side effects.
+- Runtime overview reports Meaning Store object count.
+- Changelog is split into explicit checkpoint sections through `pigenus-v0.2.27`.
 
 ## Next Recommended Work
 
-Checkpoint Selective Guard Enforcement, then build Human Approval Stub:
+Finish Changelog Release Sections:
 
-- Add explicit approval status values: pending, approved, rejected.
-- Keep approval as a CLI/storage stub; no dashboard or UI required yet.
-- Keep LLMs, dashboards, workers, and vector search out of scope.
+- Checkpoint Changelog Release Sections.
+- Keep code changes, release tags, and PR creation out of scope for this hygiene step.
 
 ## Operator Note
 

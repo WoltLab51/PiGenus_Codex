@@ -399,3 +399,111 @@ Why it mattered:
 GENUS now has its first narrow runtime enforcement point. Enforcement remains
 conservative: only explicit blocks stop the write path, and human-review states
 continue to be logged until an approval workflow exists.
+
+## Human Approval Stub
+
+The system gained:
+
+- `HumanApprovalRecord`
+- Approval statuses: `pending`, `approved`, `rejected`
+- Approval persistence through the durable decision log
+- Tests proving approval records do not alter current orchestrator flow
+
+Why it mattered:
+
+Review and escalation decisions now have a safe placeholder before richer
+human-in-the-loop workflows exist. This keeps enforcement narrow while giving
+future approval UI or CLI work a stable storage shape to build on.
+
+## Meaning Store Minimal
+
+The system gained:
+
+- `meaning_objects` SQLite table
+- Indexed query columns for room, type, truth status, and sensitivity
+- `MeaningRepository` for add, get, list, and count
+- Tests proving full `MeaningObject` JSON round-trips through storage
+
+Why it mattered:
+
+Systemform meaning now has a small durable home before vector search, LLM
+integration, dashboards, or memory migration work begins. The store keeps the
+complete semantic object intact while exposing only the first conservative query
+surface needed by the local runtime.
+
+## Snapshot/Backup Minimal
+
+The system gained:
+
+- `SnapshotBackupService`
+- `backup-create` CLI command
+- SQLite backup API based snapshot creation
+- Missing-source and no-overwrite safety checks
+- SQLite integrity check for created snapshots
+
+Why it mattered:
+
+Meaning Runtime work increases the value of local SQLite state. Before adding
+richer retrieval or runtime integration, PiGenus now has a small operator-safe
+way to preserve that state without running migrations, repairs, restore logic,
+or remote backup workflows.
+
+## Meaning Retrieval Queries Minimal
+
+The system gained:
+
+- `meaning-list` CLI command
+- Filters for room, type, truth status, and sensitivity
+- Compact meaning rows for operator inspection
+- Tests proving empty output, read-only behavior, and combined filters
+
+Why it mattered:
+
+The Meaning Store can now be inspected without reaching for SQLite directly.
+Retrieval remains deliberately narrow: indexed filters only, no ranking, no
+vector search, no LLM interpretation, and no dashboard behavior.
+
+## Meaning Detail View Minimal
+
+The system gained:
+
+- `meaning-show` CLI command
+- Deterministic JSON output for one stored `MeaningObject`
+- Clean not-found behavior for unknown IDs
+- Tests proving full object inspection and read-only behavior
+
+Why it mattered:
+
+Operators can now inspect a complete semantic object without opening SQLite or
+adding export workflows. List stays compact for scanning; show provides the full
+structured object for debugging and review.
+
+## Meaning Runtime Ingestion Preview
+
+The system gained:
+
+- `MeaningIngestionPreview`
+- `meaning-ingest-memory` CLI command
+- Idempotent `MemoryObject -> MeaningObject` persistence
+- Tests proving missing-memory behavior and no audit or decision side effects
+
+Why it mattered:
+
+Meaning Store is now reachable from actual runtime memory without changing the
+orchestrator, lifecycle engine, or guard enforcement. The ingestion path is
+explicit and reversible at the workflow level: operators choose when to bridge
+durable memory into Systemform meaning.
+
+## Runtime Overview Meaning Count
+
+The system gained:
+
+- `meaning_count` in `RuntimeOverview`
+- `Meaning objects` line in `runtime-overview`
+- Tests proving overview count and read-only behavior
+
+Why it mattered:
+
+Meaning Store is now part of the operator's first runtime glance. The overview
+still stays intentionally small: it reports presence and volume without becoming
+a search surface, dashboard, or semantic analysis tool.

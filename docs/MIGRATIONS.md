@@ -29,6 +29,7 @@ Current recorded migrations:
 0001_initial_schema
 0002_decision_logs
 0003_cell_lifecycle
+0004_meaning_objects
 ```
 
 `Database.initialize()` applies pending migrations. Running it more than once

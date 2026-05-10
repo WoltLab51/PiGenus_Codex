@@ -7,8 +7,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
+from pigenus.core.backup import SnapshotBackupService
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.health import HealthChecker
+from pigenus.core.meaning_ingestion import MeaningIngestionPreview
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
@@ -20,6 +22,7 @@ from pigenus.storage.repositories import (
     CellRepository,
     DecisionRepository,
     EventRepository,
+    MeaningRepository,
     MemoryRepository,
 )
 
@@ -28,6 +31,7 @@ EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
 EMPTY_CELL_LIST_MESSAGE = "No cells found."
 EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 EMPTY_EVENT_LIST_MESSAGE = "No events found."
+EMPTY_MEANING_LIST_MESSAGE = "No meaning objects found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -54,6 +58,11 @@ def build_parser() -> argparse.ArgumentParser:
     health = subparsers.add_parser("health-check", help="Check local runtime storage health.")
     health.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
+    backup = subparsers.add_parser("backup-create", help="Create a local SQLite runtime snapshot.")
+    backup.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    backup.add_argument("--output-dir", default="backups", help="Directory for backup files.")
+    backup.add_argument("--name", default=None, help="Optional backup filename.")
+
     review = subparsers.add_parser("memory-review", help="Apply deterministic memory lifecycle rules.")
     review.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     review.add_argument("--now", default=None, help="ISO timestamp for deterministic review.")
@@ -62,6 +71,35 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     memory_list.add_argument("--status", default=None, help="Filter by memory status.")
     memory_list.add_argument("--context", default=None, help="Filter by context name.")
+
+    meaning_list = subparsers.add_parser(
+        "meaning-list",
+        help="List Systemform meaning objects without modifying them.",
+    )
+    meaning_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    meaning_list.add_argument("--room", default=None, help="Filter by room ID.")
+    meaning_list.add_argument("--type", default=None, help="Filter by meaning type.")
+    meaning_list.add_argument("--truth-status", default=None, help="Filter by truth status.")
+    meaning_list.add_argument("--sensitivity", default=None, help="Filter by sensitivity.")
+
+    meaning_show = subparsers.add_parser(
+        "meaning-show",
+        help="Show one Systemform meaning object by ID without modifying it.",
+    )
+    meaning_show.add_argument("meaning_id", help="Meaning object ID to inspect.")
+    meaning_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    meaning_ingest = subparsers.add_parser(
+        "meaning-ingest-memory",
+        help="Preview-ingest one stored memory object into the Meaning Store.",
+    )
+    meaning_ingest.add_argument("memory_id", help="Memory object ID to ingest.")
+    meaning_ingest.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    meaning_ingest.add_argument(
+        "--created-by",
+        default="meaning_ingestion_preview",
+        help="Actor ID recorded on the created meaning object.",
+    )
 
     event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
     event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -125,6 +163,7 @@ def main(argv: list[str] | None = None) -> int:
             overview = RuntimeOverviewBuilder(
                 events=EventRepository(database),
                 memory=MemoryRepository(database),
+                meanings=MeaningRepository(database),
                 cells=CellRepository(database),
                 audit=AuditRepository(database),
                 decisions=DecisionRepository(database),
@@ -135,6 +174,7 @@ def main(argv: list[str] | None = None) -> int:
         print("PiGenus Runtime Overview")
         print(f"Events: {overview.event_count}")
         print(f"Memory objects: {overview.memory_count}")
+        print(f"Meaning objects: {overview.meaning_count}")
         print(f"Cells: {overview.cell_count}")
         print(f"Audit logs: {overview.audit_count}")
         print(f"Decision records: {overview.decision_count}")
@@ -151,6 +191,23 @@ def main(argv: list[str] | None = None) -> int:
             print(f"FAIL: {failure}")
         print("Status: healthy" if result.ok else "Status: unhealthy")
         return 0 if result.ok else 1
+
+    if args.command == "backup-create":
+        try:
+            result = SnapshotBackupService(Path(args.db)).create(
+                output_dir=Path(args.output_dir),
+                name=args.name,
+            )
+        except (FileExistsError, FileNotFoundError, RuntimeError, sqlite3.Error, OSError) as exc:
+            print(f"Backup failed: {exc}")
+            return 1
+
+        print("PiGenus Backup")
+        print(f"Source: {result.source_path}")
+        print(f"Backup: {result.backup_path}")
+        print(f"Size bytes: {result.size_bytes}")
+        print(f"Integrity: {result.integrity_check}")
+        return 0
 
     if args.command == "memory-review":
         database = Database(Path(args.db))
@@ -196,6 +253,67 @@ def main(argv: list[str] | None = None) -> int:
                 f"{memory.memory_id} | {memory.status} | "
                 f"{context_name} | {memory.human_summary}"
             )
+        return 0
+
+    if args.command == "meaning-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            meanings = MeaningRepository(database).list(
+                room_id=args.room,
+                type=args.type,
+                truth_status=args.truth_status,
+                sensitivity=args.sensitivity,
+            )
+        finally:
+            database.close()
+
+        if not meanings:
+            print(EMPTY_MEANING_LIST_MESSAGE)
+            return 0
+
+        for meaning in meanings:
+            print(
+                f"{meaning.id} | {meaning.type} | {meaning.room_id} | "
+                f"{meaning.truth_status.value} | {meaning.sensitivity.value} | "
+                f"{_meaning_summary(meaning.content)}"
+            )
+        return 0
+
+    if args.command == "meaning-show":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            meaning = MeaningRepository(database).get(args.meaning_id)
+        finally:
+            database.close()
+
+        if meaning is None:
+            print(f"Meaning object not found: {args.meaning_id}")
+            return 1
+
+        print(json.dumps(meaning.model_dump(mode="json"), ensure_ascii=True, indent=2, sort_keys=True))
+        return 0
+
+    if args.command == "meaning-ingest-memory":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            result = MeaningIngestionPreview(
+                memory_repository=MemoryRepository(database),
+                meaning_repository=MeaningRepository(database),
+            ).ingest_memory_by_id(args.memory_id, created_by=args.created_by)
+        finally:
+            database.close()
+
+        if result is None:
+            print(f"Memory object not found: {args.memory_id}")
+            return 1
+
+        status = "created" if result.created else "already_exists"
+        print(f"Meaning ingestion: {status}")
+        print(f"Memory: {result.source_memory_id}")
+        print(f"Meaning: {result.meaning.id}")
         return 0
 
     if args.command == "event-list":
@@ -360,6 +478,14 @@ def main(argv: list[str] | None = None) -> int:
 
     parser.error(f"Unknown command: {args.command}")
     return 2
+
+
+def _meaning_summary(content: dict[str, object]) -> str:
+    for key in ("claim", "text", "summary"):
+        value = content.get(key)
+        if value is not None:
+            return str(value)
+    return json.dumps(content, ensure_ascii=True, sort_keys=True)
 
 
 if __name__ == "__main__":

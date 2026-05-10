@@ -368,3 +368,109 @@ Reason:
 Hard denials are clear enough to enforce. Review and escalation need a human
 approval model before they should stop runtime work, otherwise the system would
 introduce ambiguous interruption without a resolution path.
+
+## D-029: Human Approval Starts As A Stub
+
+Decision:
+
+Human approval starts as a durable placeholder with `pending`, `approved`, and
+`rejected` states, persisted through the existing decision log. It does not add
+UI, CLI commands, or enforcement changes.
+
+Reason:
+
+Review and escalation need a resolution model before they can safely control
+runtime behavior. A small storage-backed stub creates that model without
+expanding the user interface or complicating current guard enforcement.
+
+## D-030: Meaning Store Starts As Plain SQLite Rows
+
+Decision:
+
+Systemform `MeaningObject` records are persisted in a local `meaning_objects`
+table with the complete Pydantic JSON payload plus indexed columns for room,
+type, truth status, and sensitivity. The first repository supports add, get,
+list, and count only.
+
+Reason:
+
+Meaning Runtime needs durable semantic objects before richer retrieval exists.
+Keeping the first store local and relational preserves inspectability, avoids
+premature vector or LLM dependencies, and gives guard and room-flow work a
+stable object source to build on later.
+
+## D-031: Backups Are Local SQLite Snapshots First
+
+Decision:
+
+PiGenus creates local runtime backups with SQLite's backup API through a small
+`SnapshotBackupService` and `backup-create` CLI command. The first workflow
+creates a new snapshot file, refuses missing sources, refuses overwrites, and
+checks snapshot integrity.
+
+Reason:
+
+Meaning Runtime makes the local database more valuable before the system has a
+restore UI, scheduler, remote target, or retention policy. A boring local
+snapshot path gives operators a safe checkpoint mechanism without expanding
+storage semantics or pretending backup management is complete.
+
+## D-032: Meaning Retrieval Starts As Indexed CLI Inspection
+
+Decision:
+
+Stored `MeaningObject` records are first exposed through a read-only
+`meaning-list` CLI command with filters for room, type, truth status, and
+sensitivity. Output stays compact and operator-readable.
+
+Reason:
+
+GENUS needs inspectable meaning before it needs semantic search. Starting with
+indexed filters keeps retrieval deterministic, testable, and aligned with the
+SQLite store while avoiding premature vector search, LLM ranking, dashboards,
+or export workflows.
+
+## D-033: Meaning Detail Inspection Uses Deterministic JSON
+
+Decision:
+
+One stored `MeaningObject` can be inspected through a read-only `meaning-show`
+CLI command. The command returns the complete Pydantic JSON payload with stable
+key ordering and a clean not-found error.
+
+Reason:
+
+The list view is intentionally compact and should remain scan-friendly. A
+separate detail command gives operators the full semantic object for review and
+debugging without adding edit behavior, exports, dashboards, or LLM summaries.
+
+## D-034: Meaning Ingestion Starts As Explicit Memory Bridging
+
+Decision:
+
+Runtime-produced memory enters the Meaning Store first through an explicit
+`MeaningIngestionPreview` service and `meaning-ingest-memory` CLI command. The
+path uses the existing deterministic `MemoryObject -> MeaningObject` adapter and
+is idempotent for repeated memory IDs.
+
+Reason:
+
+GENUS needs a real bridge from runtime artifacts to Systemform meaning, but
+automatic ingestion would couple the orchestrator, memory lifecycle, and
+governance layers too early. An explicit preview path proves persistence and
+inspection while keeping enforcement and lifecycle behavior unchanged.
+
+## D-035: Runtime Overview Reports Meaning Volume Only
+
+Decision:
+
+The runtime overview includes a `Meaning objects` count backed by
+`MeaningRepository.count()`. It does not expose search, room breakdowns,
+semantic summaries, or detail rendering.
+
+Reason:
+
+Operators need to know whether the Meaning Store is populated when inspecting
+runtime health and shape. Keeping this to a count preserves the overview as a
+small status surface while richer meaning inspection remains in dedicated
+commands.

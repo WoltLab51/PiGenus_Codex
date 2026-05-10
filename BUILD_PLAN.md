@@ -181,15 +181,14 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 - required-table checks
 - non-zero exit for unhealthy storage
 
-## Current
-
-### pigenus-v0.2.20-selective-guard-enforcement
+### pigenus-v0.2.21-human-approval-stub
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
 existing runtime prototype, then prove deterministic mappings from the current
 prototype contracts into that vocabulary and validate the first executable
 contract, semantic room-flow, guard-pipeline, runtime preview, and governance
-decision logging, orchestrator preview, and selective enforcement rules.
+decision logging, orchestrator preview, selective enforcement, and approval
+stub rules.
 
 Implemented scope:
 
@@ -217,35 +216,172 @@ Implemented scope:
 - tests proving preview decisions are logged while demo execution continues
 - selective guard enforcement for hard block decisions only
 - tests proving block stops execution and review/escalate stays warning-only
+- human approval stub with pending, approved, and rejected states
+- tests proving approval records persist without changing current flow
 
 Out of scope:
 
 - CLI changes
-- human approval UI or workflow
+- human approval UI
+
+## Current
+
+### pigenus-v0.2.22-meaning-store-minimal
+
+Goal: persist and retrieve Systemform `MeaningObject` records as the start of Meaning Runtime.
+
+Implemented scope:
+
+- SQLite migration for meaning objects
+- repository for add/get/list
+- queries by room, type, truth status, and sensitivity
+- tests for serialization and retrieval filters
+
+Out of scope:
+
+- CLI changes
+- vector search
+- LLM integration
+- dashboard
+- export behavior
+
+## Current
+
+### pigenus-v0.2.23-snapshot-backup-minimal
+
+Goal: define a boring local safety path for preserving SQLite runtime state before
+larger Meaning Runtime features arrive.
+
+Implemented scope:
+
+- SQLite backup service using the SQLite backup API
+- `backup-create` CLI command
+- missing-source and no-overwrite safety checks
+- integrity check for created snapshots
+- tests for repository-independent backup behavior and CLI behavior
+
+Out of scope:
+
+- restore workflow
+- remote backup targets
+- scheduling
+- compression
+- retention cleanup
+
+## Current
+
+### pigenus-v0.2.24-meaning-retrieval-queries
+
+Goal: expose the first operator-safe Meaning Store lookup path without adding
+vector search, LLM ranking, or dashboard behavior.
+
+Implemented scope:
+
+- read-only `meaning-list` CLI command
+- filters by room, type, truth status, and sensitivity
+- compact operator output for ID, type, room, truth status, sensitivity, and summary
+- tests for empty output, read-only behavior, and combined filters
+
+Out of scope:
+
+- detail view
+- vector search
+- LLM ranking
+- dashboard
+- export behavior
+
+## Current
+
+### pigenus-v0.2.25-meaning-detail-view
+
+Goal: inspect one stored `MeaningObject` by ID with deterministic JSON output.
+
+Implemented scope:
+
+- read-only `meaning-show` CLI command
+- deterministic JSON output for full `MeaningObject`
+- clean not-found error for unknown IDs
+- tests for JSON output, not-found behavior, and read-only behavior
+
+Out of scope:
+
+- editing
+- export files
+- semantic search
+- LLM summarization
+- dashboard detail page
+
+## Current
+
+### pigenus-v0.2.26-meaning-ingestion-preview
+
+Goal: create a narrow path for runtime-produced semantic objects to enter the
+Meaning Store without changing guard enforcement or memory lifecycle behavior.
+
+Implemented scope:
+
+- `MeaningIngestionPreview` service
+- `meaning-ingest-memory` CLI command
+- deterministic `MemoryObject -> MeaningObject` ingestion through existing adapters
+- idempotent behavior for repeated memory ingestion
+- tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
+
+Out of scope:
+
+- automatic orchestrator ingestion
+- guard enforcement changes
+- memory lifecycle changes
+- LLM extraction
+- mutation or revision workflows
+
+## Current
+
+### pigenus-v0.2.27-runtime-overview-meaning-count
+
+Goal: include Meaning Store counts in the existing runtime overview without
+turning overview into a search or dashboard surface.
+
+Implemented scope:
+
+- `RuntimeOverview` includes `meaning_count`
+- `runtime-overview` CLI prints `Meaning objects`
+- tests prove builder count, CLI output, and read-only behavior
+
+Out of scope:
+
+- meaning search
+- meaning detail rendering
+- dashboard widgets
+- per-room breakdowns
+
+## Current
+
+### pigenus-v0.2.28-changelog-release-sections
+
+Goal: split the overloaded `Unreleased` changelog into checkpoint sections before
+opening a PR or merging.
+
+Implemented scope:
+
+- moved Systemform and Meaning Runtime changes out of overloaded `Unreleased`
+- added checkpoint sections from `pigenus-v0.2.12` through `pigenus-v0.2.27`
+- preserved concise verified test counts for each checkpoint
+
+Out of scope:
+
+- code changes
+- release tags
+- PR creation
 
 ## Next
 
-### Human Approval Stub
+### Pull Request Preparation
 
-Goal: give review/escalate decisions an explicit approval placeholder before richer UX.
-
-Planned scope:
-
-- approval status model: pending, approved, rejected
-- link approval records to governance decisions
-- minimal persistence through the existing decision log or a small forward migration if needed
-- tests for pending, approval, rejection, and unchanged current flow
-
-Out of scope:
-
-- CLI changes
-- editable policies
-- dashboard or web UI
-- export behavior
+Goal: prepare the accumulated checkpoint branch for review and merge without
+adding new runtime behavior.
 
 ## Later
 
-- Snapshot/Backup Minimal
 - Context boundary expansion
 - Guard families
 - Worker interface

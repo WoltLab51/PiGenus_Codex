@@ -100,6 +100,30 @@ MIGRATIONS: tuple[Migration, ...] = (
         ALTER TABLE cells ADD COLUMN last_used_at TEXT;
         """,
     ),
+    Migration(
+        version="0004_meaning_objects",
+        sql="""
+        CREATE TABLE IF NOT EXISTS meaning_objects (
+            meaning_id TEXT PRIMARY KEY,
+            meaning_type TEXT NOT NULL,
+            room_id TEXT NOT NULL,
+            truth_status TEXT NOT NULL,
+            sensitivity TEXT NOT NULL,
+            created_by TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            data TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_meaning_objects_room_id
+            ON meaning_objects(room_id);
+        CREATE INDEX IF NOT EXISTS idx_meaning_objects_type
+            ON meaning_objects(meaning_type);
+        CREATE INDEX IF NOT EXISTS idx_meaning_objects_truth_status
+            ON meaning_objects(truth_status);
+        CREATE INDEX IF NOT EXISTS idx_meaning_objects_sensitivity
+            ON meaning_objects(sensitivity);
+        """,
+    ),
 )
 
 
