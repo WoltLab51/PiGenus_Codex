@@ -368,3 +368,17 @@ Reason:
 Hard denials are clear enough to enforce. Review and escalation need a human
 approval model before they should stop runtime work, otherwise the system would
 introduce ambiguous interruption without a resolution path.
+
+## D-029: Human Approval Starts As A Stub
+
+Decision:
+
+Human approval starts as a durable placeholder with `pending`, `approved`, and
+`rejected` states, persisted through the existing decision log. It does not add
+UI, CLI commands, or enforcement changes.
+
+Reason:
+
+Review and escalation need a resolution model before they can safely control
+runtime behavior. A small storage-backed stub creates that model without
+expanding the user interface or complicating current guard enforcement.

@@ -399,3 +399,18 @@ Why it mattered:
 GENUS now has its first narrow runtime enforcement point. Enforcement remains
 conservative: only explicit blocks stop the write path, and human-review states
 continue to be logged until an approval workflow exists.
+
+## Human Approval Stub
+
+The system gained:
+
+- `HumanApprovalRecord`
+- Approval statuses: `pending`, `approved`, `rejected`
+- Approval persistence through the durable decision log
+- Tests proving approval records do not alter current orchestrator flow
+
+Why it mattered:
+
+Review and escalation decisions now have a safe placeholder before richer
+human-in-the-loop workflows exist. This keeps enforcement narrow while giving
+future approval UI or CLI work a stable storage shape to build on.

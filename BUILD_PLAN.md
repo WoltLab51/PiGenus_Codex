@@ -183,13 +183,14 @@ Phase 2.11 reports whether local runtime storage is structurally healthy:
 
 ## Current
 
-### pigenus-v0.2.20-selective-guard-enforcement
+### pigenus-v0.2.21-human-approval-stub
 
 Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
 existing runtime prototype, then prove deterministic mappings from the current
 prototype contracts into that vocabulary and validate the first executable
 contract, semantic room-flow, guard-pipeline, runtime preview, and governance
-decision logging, orchestrator preview, and selective enforcement rules.
+decision logging, orchestrator preview, selective enforcement, and approval
+stub rules.
 
 Implemented scope:
 
@@ -217,30 +218,33 @@ Implemented scope:
 - tests proving preview decisions are logged while demo execution continues
 - selective guard enforcement for hard block decisions only
 - tests proving block stops execution and review/escalate stays warning-only
+- human approval stub with pending, approved, and rejected states
+- tests proving approval records persist without changing current flow
 
 Out of scope:
 
 - CLI changes
-- human approval UI or workflow
+- human approval UI
 
 ## Next
 
-### Human Approval Stub
+### Meaning Store Minimal
 
-Goal: give review/escalate decisions an explicit approval placeholder before richer UX.
+Goal: persist and retrieve Systemform `MeaningObject` records as the start of Meaning Runtime.
 
 Planned scope:
 
-- approval status model: pending, approved, rejected
-- link approval records to governance decisions
-- minimal persistence through the existing decision log or a small forward migration if needed
-- tests for pending, approval, rejection, and unchanged current flow
+- SQLite migration for meaning objects if needed
+- repository for add/get/list
+- queries by room, type, truth status, and sensitivity
+- tests for serialization and retrieval filters
 
 Out of scope:
 
 - CLI changes
-- editable policies
-- dashboard or web UI
+- vector search
+- LLM integration
+- dashboard
 - export behavior
 
 ## Later

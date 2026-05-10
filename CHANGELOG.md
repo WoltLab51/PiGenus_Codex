@@ -27,6 +27,8 @@
 - Added tests proving preview decisions are logged while demo execution continues
 - Enabled selective guard enforcement for hard block decisions only
 - Added tests proving block decisions stop execution while review/escalate remains warning-only
+- Added human approval stub with pending, approved, and rejected statuses
+- Added tests proving approval records persist without changing current flow
 
 ## pigenus-v0.2.11-health-check
 

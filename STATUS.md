@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.20-selective-guard-enforcement`
-- Branch: `codex-selective-guard-enforcement`
+- Name: `pigenus-v0.2.21-human-approval-stub`
+- Branch: `codex-human-approval-stub`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `142 passed`
+- Last verified result: `147 passed`
 
 ## Current Runtime Shape
 
@@ -43,6 +43,7 @@ PiGenus is a small local cognitive core. It has:
 - Governance decision logging through the durable decision log
 - Demo orchestrator guard preview in warning mode
 - Selective guard enforcement for hard block decisions only
+- Human approval stub with pending, approved, and rejected states
 - GENUS Systemform hardening documents
 - Living project control documents
 
@@ -95,13 +96,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Orchestrator guard preview logs decisions but keeps task execution unchanged.
 - Selective guard enforcement stops hard block decisions only.
 - Review and escalate decisions remain logged warning states.
+- Human approval records persist through the decision log and do not alter current flow.
 
 ## Next Recommended Work
 
-Checkpoint Selective Guard Enforcement, then build Human Approval Stub:
+Checkpoint Human Approval Stub, then begin Meaning Runtime:
 
-- Add explicit approval status values: pending, approved, rejected.
-- Keep approval as a CLI/storage stub; no dashboard or UI required yet.
+- Add a minimal Meaning Store for `MeaningObject` persistence and retrieval.
+- Keep it local, SQLite-backed, and queryable before adding vector search or LLM usage.
 - Keep LLMs, dashboards, workers, and vector search out of scope.
 
 ## Operator Note

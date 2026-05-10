@@ -150,6 +150,7 @@ The repository now has:
 - Governance decision logging through the existing durable decision log.
 - Demo-orchestrator preview logging before memory writes.
 - Selective enforcement for hard block decisions.
+- Human approval placeholder records for review/escalation outcomes.
 
 The validator proves the first executable Systemform rule:
 
@@ -159,5 +160,5 @@ No execution without actor, room, contract, permission, and resource context.
 
 ## Immediate Next Step
 
-Add Human Approval Stub. It should give review/escalate decisions explicit pending, approved, and
-rejected states without adding a dashboard or rich UI yet.
+Begin Meaning Runtime with a minimal Meaning Store. It should persist `MeaningObject` records and
+support deterministic local retrieval before vector search, LLM usage, dashboards, or exports.

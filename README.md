@@ -227,3 +227,7 @@ writes. Preview decisions are logged, but the current task flow still runs.
 Selective enforcement is intentionally narrow: only hard `block` decisions stop
 execution. `review` and `escalate` remain logged warning states until a human
 approval workflow exists.
+
+`pigenus.core.human_approval` adds a minimal approval placeholder with
+`pending`, `approved`, and `rejected` states, persisted through the existing
+decision log.
