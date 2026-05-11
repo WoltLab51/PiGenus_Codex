@@ -35,6 +35,31 @@ governable. The ordering is intentionally boring:
 7. Add workers, resources, federation, and evolution only after the kernel can
    explain what happened and why.
 
+## Release Semantics
+
+Checkpoint tags such as `pigenus-v0.2.33` are working checkpoints inside a
+larger architecture arc. They are not meant to imply that every patch number is
+a standalone semantic product release.
+
+- `0.1.x`: primitive local runtime and core contracts
+- `0.2.x`: kernel completion arc: Systemform, Meaning Runtime, governance,
+  room/context safety, inspection, backups, and controlled enforcement
+- `0.3.x`: governed runtime arc: a stable local GENUS runtime with meaning,
+  guard families, decision logging, approval stubs, explainability, backup, and
+  operator inspection as one coherent release line
+- `0.4.x`: worker runtime arc: worker registry, capability routing, task
+  scheduling, provider gateways, and tool workers
+- `0.5.x`: federated runtime arc: remote rooms, trust, signatures, replication,
+  and conflict handling
+- `0.6.x`: controlled evolution arc: shadow mutation, fitness comparison,
+  rollback, fossils, and approval-gated activation
+- `1.0`: boring reliability for a local GENUS runtime with stable APIs,
+  recovery, governance, meaning, workers, inspection, and reliable boundaries
+
+The planned semantic cut is `pigenus-v0.3.0-governed-runtime`. It should happen
+after the current `0.2.x` kernel arc proves Guard Families, Meaning Runtime, and
+Context/Room Governance as one stable governed runtime.
+
 ## Roadmap Map
 
 ### A. Foundation Runtime
@@ -149,12 +174,13 @@ Completed checkpoints:
 
 Current checkpoint:
 
-- `pigenus-v0.2.34-roadmap-structure`: restructure this build plan into a
-  readable architecture map without changing runtime behavior
+- `pigenus-v0.2.36-release-semantics`: document the release arc from `0.2.x`
+  kernel completion to `0.3.0` governed runtime without renumbering existing
+  checkpoints
 
 Next checkpoint:
 
-- `pigenus-v0.2.35-guard-family-summary-minimal`: summarize stored guard
+- `pigenus-v0.2.37-guard-family-summary-minimal`: summarize stored guard
   decisions by final decision and family, read-only, no migration, no dashboard
 
 ## Later Architecture Tracks

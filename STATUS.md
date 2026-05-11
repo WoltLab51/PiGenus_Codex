@@ -2,7 +2,7 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.35-genus-philosophy`
+- Name: `pigenus-v0.2.36-release-semantics`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
@@ -54,6 +54,8 @@ PiGenus is a small local cognitive core. It has:
 - Living project control documents
 - Build plan structured as architecture tracks from foundation runtime through
   controlled evolution
+- Release semantics that distinguish `0.2.x` kernel checkpoints from the
+  planned `0.3.0` governed runtime cut
 
 Current demo flow:
 
@@ -121,6 +123,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `guard-decision-list` is read-only and filters logged governance decisions by final decision and family.
 - `BUILD_PLAN.md` is organized as an architecture map instead of repeated current checkpoint sections.
 - GENUS philosophy is documented separately from the build plan.
+- Version numbers distinguish local checkpoints from larger release arcs.
 
 ## Next Recommended Work
 

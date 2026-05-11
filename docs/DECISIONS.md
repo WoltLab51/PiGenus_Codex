@@ -584,3 +584,20 @@ and future evolution. Those choices need a stable compass before worker,
 resource, federation, and mutation tracks become active. Keeping the philosophy
 short and separate prevents `BUILD_PLAN.md` from becoming a manifesto while
 still making the deeper system principles explicit.
+
+## D-043: Version Numbers Distinguish Checkpoints From Release Arcs
+
+Decision:
+
+PiGenus keeps the existing `0.2.x` checkpoint history, but documents it as the
+kernel completion arc rather than a long sequence of semantic patch releases.
+The next major semantic cut is planned as `pigenus-v0.3.0-governed-runtime`
+after Guard Families, Meaning Runtime, and Context/Room Governance are stable
+as one governed local runtime.
+
+Reason:
+
+The project has outgrown simple `0.2.x` patch semantics. Renumbering history
+would create churn, but leaving the meaning implicit would make future tags
+confusing. Explicit release arcs preserve the audit trail while making future
+versioning easier to understand.

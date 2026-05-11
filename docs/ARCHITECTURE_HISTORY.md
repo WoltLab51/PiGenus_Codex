@@ -613,3 +613,19 @@ Why it mattered:
 The architecture now has enough internal shape that the "why" needs its own
 home. Keeping philosophy separate from the build plan lets the plan describe
 how PiGenus is built while the philosophy explains why it grows conservatively.
+
+## Release Semantics
+
+The project gained:
+
+- Release arc definitions for `0.1.x` through `1.0`
+- `0.2.x` documented as the kernel completion arc
+- `pigenus-v0.3.0-governed-runtime` documented as the planned semantic cut
+- A distinction between small checkpoint tags and larger release arcs
+
+Why it mattered:
+
+The `0.2.x` line had become a long sequence of useful checkpoints rather than
+a clean semantic release scale. Naming the arcs now avoids pretending that
+`0.2.35` and later tags are ordinary patch releases while preserving the
+existing checkpoint history.

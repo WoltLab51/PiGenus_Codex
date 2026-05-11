@@ -2,15 +2,24 @@
 
 ## Unreleased
 
-- Clarified GENUS as a cognitive operating environment in `docs/GENUS_PHILOSOPHY.md`
-- Added `Accountability before scale` to the core principles
-- Added `BUILD_PLAN.md` reference to the philosophy document
+No unreleased changes.
+
+## pigenus-v0.2.36-release-semantics
+
+- Documented release semantics for `0.1.x` through `1.0`
+- Defined `0.2.x` as the kernel completion arc
+- Defined planned `pigenus-v0.3.0-governed-runtime` semantic cut
+- Recorded `D-043: Version Numbers Distinguish Checkpoints From Release Arcs`
+- Verified: 179 tests passed
 
 ## pigenus-v0.2.35-genus-philosophy
 
 - Added `docs/GENUS_PHILOSOPHY.md` as a short system philosophy document
 - Added README reference to the GENUS philosophy
 - Documented `D-042: GENUS Philosophy Is Documented Separately`
+- Clarified GENUS as a cognitive operating environment in `docs/GENUS_PHILOSOPHY.md`
+- Added `Accountability before scale` to the core principles
+- Added `BUILD_PLAN.md` reference to the philosophy document
 - Verified: 179 tests passed
 
 ## pigenus-v0.2.34-roadmap-structure
