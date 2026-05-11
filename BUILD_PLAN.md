@@ -4,6 +4,10 @@ This file is the living technical map for PiGenus. It keeps the small
 checkpoints, but groups them by architectural intent so the project stays
 readable as GENUS grows.
 
+The guiding philosophy lives in `docs/GENUS_PHILOSOPHY.md`. This build plan
+describes how PiGenus grows; the philosophy explains why it grows in this
+order.
+
 ## Build Rule
 
 Every checkpoint should leave the repository with:

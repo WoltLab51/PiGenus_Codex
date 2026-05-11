@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-No unreleased changes.
+- Clarified GENUS as a cognitive operating environment in `docs/GENUS_PHILOSOPHY.md`
+- Added `Accountability before scale` to the core principles
+- Added `BUILD_PLAN.md` reference to the philosophy document
 
 ## pigenus-v0.2.35-genus-philosophy
 

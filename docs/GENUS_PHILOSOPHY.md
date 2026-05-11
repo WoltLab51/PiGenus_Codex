@@ -14,6 +14,10 @@ GENUS is a systemform for organized digital intelligence. It treats cells,
 rooms, meaning, memory, contracts, governance, and decisions as first-class
 parts of the runtime instead of hiding them behind one large agent loop.
 
+GENUS is closer to a cognitive operating environment than to a single
+application. It organizes how digital actors exist, communicate, remember,
+receive permissions, and become accountable over time.
+
 GENUS is built for gradual capability. The kernel should know what happened,
 where it happened, why it was allowed, and which boundary was involved before it
 is asked to plan, delegate, mutate, or optimize.
@@ -35,6 +39,7 @@ governance, and human approval.
 - Observation before enforcement.
 - Governance before autonomy.
 - Local safety before federation.
+- Accountability before scale.
 - Controlled evolution before mutation.
 
 ## Cells Before Agents
