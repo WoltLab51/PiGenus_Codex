@@ -518,3 +518,19 @@ Boundary decisions are operationally important enough to deserve focused
 inspection, but not enough to justify new storage or dashboard work yet. A
 filtered read-only command keeps review fast while preserving the existing
 decision log as the durable source.
+
+## D-039: Guard Outcomes Carry Stable Families
+
+Decision:
+
+Guard pipeline results and ordered trace steps expose a `family` field. Contract
+validation reasons map into stable families such as actor, contract, room
+scope, capability, permission, resource, and approval. Room-flow decisions keep
+their own `room_flow` family.
+
+Reason:
+
+Operators and later inspection surfaces need a quick way to understand which
+class of policy produced a decision without parsing every low-level reason
+string. Adding the family at the guard boundary preserves current behavior and
+storage while making traces easier to scan and aggregate later.

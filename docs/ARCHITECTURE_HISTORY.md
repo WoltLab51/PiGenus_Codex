@@ -551,3 +551,19 @@ Why it mattered:
 Persisted boundary decisions now have a focused inspection path instead of
 being buried inside the general decision log. This keeps operator workflows
 simple while leaving aggregation, exports, and dashboards for later.
+
+## Guard Families Minimal
+
+The system gained:
+
+- `family` on guard pipeline results
+- `family` on ordered guard trace steps
+- Stable contract-validation families for actor, contract, room scope,
+  capability, permission, resource, and approval outcomes
+- Runtime preview and governance trace assertions for family propagation
+
+Why it mattered:
+
+Guard output can now be scanned by policy family without parsing individual
+reason strings. This keeps the existing allow, escalate, and block behavior
+unchanged while giving later operator inspection a cleaner shape.

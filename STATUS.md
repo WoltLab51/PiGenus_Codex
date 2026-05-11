@@ -2,7 +2,7 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.31-context-boundary-decision-inspection`
+- Name: `pigenus-v0.2.32-guard-families-minimal`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
@@ -41,6 +41,7 @@ PiGenus is a small local cognitive core. It has:
 - Storage-free Systemform contract validator
 - Storage-free room flow rules for semantic movement between rooms
 - Storage-free guard pipeline with ordered decision traces
+- Stable guard decision families on results and trace steps
 - Shadow-mode guard runtime preview against adapted runtime objects
 - Governance decision logging through the durable decision log
 - Demo orchestrator guard preview in warning mode
@@ -112,13 +113,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Context boundary decisions expose Systemform room ID and protection level.
 - Context boundary decisions can be preview-logged through the decision log with explicit operator opt-in.
 - `context-boundary-list` is read-only and filters logged boundary decisions by cell, context, room, and allowed status.
+- Guard pipeline results and trace steps expose stable decision families without changing policy outcomes.
 
 ## Next Recommended Work
 
-Finish Context Boundary Decision Inspection:
+Finish Guard Family Decision Log Surface:
 
-- Checkpoint Context Boundary Decision Inspection.
-- Keep detail view, aggregation, export behavior, and dashboard inspection out of scope.
+- Make existing governance decision traces easier to inspect by family.
+- Keep new policy, storage migrations, enforcement changes, and dashboard inspection out of scope.
 
 ## Operator Note
 

@@ -416,7 +416,7 @@ Out of scope:
 - new context policy
 - dashboard inspection
 
-## Current
+## Completed
 
 ### pigenus-v0.2.31-context-boundary-decision-inspection
 
@@ -436,12 +436,34 @@ Out of scope:
 - export behavior
 - dashboard inspection
 
-## Next
+## Current
 
-### Guard Families Minimal
+### pigenus-v0.2.32-guard-families-minimal
 
 Goal: group guard decisions into stable families so policy output can be scanned
 without parsing individual reasons.
+
+Implemented scope:
+
+- `family` field on guard pipeline results
+- `family` field on ordered guard trace steps
+- contract-validation family mapping for actor, contract, room scope,
+  capability, permission, resource, and approval outcomes
+- runtime preview and governance trace tests for family propagation
+
+Out of scope:
+
+- new guard policy
+- CLI output changes
+- decision-log schema changes
+- dashboard inspection
+
+## Next
+
+### Guard Family Decision Log Surface
+
+Goal: make guard-family information easy to inspect from stored governance
+decision records without changing guard policy or storage schema.
 
 ## Later
 

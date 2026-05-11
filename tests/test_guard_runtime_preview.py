@@ -74,6 +74,7 @@ def test_runtime_preview_allows_adapted_cell_action():
 
     assert result.allowed is True
     assert result.decision == GuardDecisionType.ALLOW
+    assert result.family == "allowed"
     assert [step.name for step in result.trace] == ["contract_validation", "room_flow"]
 
 
@@ -89,6 +90,7 @@ def test_runtime_preview_escalates_review_flow_without_enforcing():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.ESCALATE
+    assert result.family == "room_flow"
     assert result.reason == "matrix_review"
     assert result.requires_human is True
 
@@ -105,6 +107,7 @@ def test_runtime_preview_blocks_sensitive_public_export():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.BLOCK
+    assert result.family == "room_flow"
     assert result.reason == "sensitive_meaning_public_export_blocked"
 
 

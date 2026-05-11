@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+No unreleased changes.
+
+## pigenus-v0.2.32-guard-families-minimal
+
+- Added stable `family` classification to guard pipeline results and trace steps
+- Added contract-validation family mapping for actor, contract, room scope, capability, permission, resource, and approval outcomes
+- Added guard family assertions for runtime preview and governance trace serialization
+- Verified: 176 tests passed
+
+## pigenus-v0.2.31-context-boundary-decision-inspection
+
 - Added read-only `context-boundary-list` CLI command
 - Added filters for cell, context, room, and allowed status
 - Added context boundary inspection tests for empty output, read-only behavior, and filters

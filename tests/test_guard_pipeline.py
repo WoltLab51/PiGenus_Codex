@@ -79,8 +79,10 @@ def test_guard_pipeline_allows_when_contract_and_room_flow_allow():
 
     assert result.allowed is True
     assert result.decision == GuardDecisionType.ALLOW
+    assert result.family == "allowed"
     assert result.reason == "allowed"
     assert [step.name for step in result.trace] == ["contract_validation", "room_flow"]
+    assert [step.family for step in result.trace] == ["contract", "room_flow"]
 
 
 def test_guard_pipeline_blocks_when_contract_validation_blocks():
@@ -96,6 +98,7 @@ def test_guard_pipeline_blocks_when_contract_validation_blocks():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.BLOCK
+    assert result.family == "actor"
     assert result.reason == "actor_revoked"
     assert len(result.trace) == 2
 
@@ -112,9 +115,12 @@ def test_guard_pipeline_blocks_take_precedence_over_room_review():
     )
 
     assert result.decision == GuardDecisionType.BLOCK
+    assert result.family == "permission"
     assert result.reason == "permission_not_allowed"
     assert result.trace[0].reason == "permission_not_allowed"
+    assert result.trace[0].family == "permission"
     assert result.trace[1].reason == "matrix_review"
+    assert result.trace[1].family == "room_flow"
 
 
 def test_guard_pipeline_escalates_when_contract_requires_human_approval():
@@ -127,6 +133,7 @@ def test_guard_pipeline_escalates_when_contract_requires_human_approval():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.ESCALATE
+    assert result.family == "approval"
     assert result.reason == "human_approval_required"
     assert result.requires_human is True
     assert [step.name for step in result.trace] == ["contract_validation"]
@@ -145,6 +152,7 @@ def test_guard_pipeline_escalates_when_room_flow_requires_review():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.ESCALATE
+    assert result.family == "room_flow"
     assert result.reason == "matrix_review"
     assert result.requires_human is True
 
@@ -162,6 +170,7 @@ def test_guard_pipeline_blocks_when_room_flow_blocks():
 
     assert result.allowed is False
     assert result.decision == GuardDecisionType.BLOCK
+    assert result.family == "room_flow"
     assert result.reason == "sensitive_meaning_public_export_blocked"
 
 
@@ -184,4 +193,5 @@ def test_guard_pipeline_converts_final_result_to_governance_decision_with_trace(
     assert isinstance(decision, GovernanceDecision)
     assert decision.decision == GuardDecisionType.ALLOW
     assert decision.reason == "allowed"
+    assert decision.details["trace"][0]["family"] == "contract"
     assert decision.details["trace"][0]["name"] == "contract_validation"

@@ -21,6 +21,7 @@ class GuardTraceStep(BaseModel):
     """One ordered step in a storage-free guard evaluation."""
 
     name: str
+    family: str
     decision: GuardDecisionType
     reason: str
     requires_human: bool = False
@@ -32,6 +33,7 @@ class GuardPipelineResult(BaseModel):
 
     allowed: bool
     decision: GuardDecisionType
+    family: str
     reason: str
     requires_human: bool = False
     trace: list[GuardTraceStep]
@@ -116,6 +118,7 @@ class GuardPipeline:
 def _contract_step(result: ContractValidationResult) -> GuardTraceStep:
     return GuardTraceStep(
         name="contract_validation",
+        family=_contract_family(result.reason),
         decision=result.decision,
         reason=result.reason,
         requires_human=result.requires_human,
@@ -125,6 +128,7 @@ def _contract_step(result: ContractValidationResult) -> GuardTraceStep:
 def _room_flow_step(result: RoomFlowDecision) -> GuardTraceStep:
     return GuardTraceStep(
         name="room_flow",
+        family="room_flow",
         decision=_room_flow_to_guard(result.decision),
         reason=result.reason,
         requires_human=result.requires_human,
@@ -149,6 +153,7 @@ def _finalize(trace: list[GuardTraceStep]) -> GuardPipelineResult:
             return GuardPipelineResult(
                 allowed=False,
                 decision=GuardDecisionType.BLOCK,
+                family=step.family,
                 reason=step.reason,
                 requires_human=step.requires_human,
                 trace=trace,
@@ -159,6 +164,7 @@ def _finalize(trace: list[GuardTraceStep]) -> GuardPipelineResult:
             return GuardPipelineResult(
                 allowed=False,
                 decision=GuardDecisionType.ESCALATE,
+                family=step.family,
                 reason=step.reason,
                 requires_human=True,
                 trace=trace,
@@ -167,6 +173,27 @@ def _finalize(trace: list[GuardTraceStep]) -> GuardPipelineResult:
     return GuardPipelineResult(
         allowed=True,
         decision=GuardDecisionType.ALLOW,
+        family="allowed",
         reason="allowed",
         trace=trace,
     )
+
+
+def _contract_family(reason: str) -> str:
+    if reason.startswith("actor_"):
+        return "actor"
+    if reason.startswith("contract_"):
+        return "contract"
+    if reason.startswith("room_"):
+        return "room_scope"
+    if reason.startswith("capability_"):
+        return "capability"
+    if reason.startswith("permission_"):
+        return "permission"
+    if reason.startswith("resource_"):
+        return "resource"
+    if reason.startswith("human_"):
+        return "approval"
+    if reason in {"allowed", "contract_valid"}:
+        return "contract"
+    return "policy"
