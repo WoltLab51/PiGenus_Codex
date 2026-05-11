@@ -1,7 +1,8 @@
 # PiGenus Build Plan
 
-This file is the living technical plan for PiGenus. Update it whenever a phase
-is completed, renamed, split, or moved.
+This file is the living technical map for PiGenus. It keeps the small
+checkpoints, but groups them by architectural intent so the project stays
+readable as GENUS grows.
 
 ## Build Rule
 
@@ -16,478 +17,190 @@ Every checkpoint should leave the repository with:
 - A Git commit
 - A version tag for stable phase checkpoints
 
-## Completed
+## Why This Order
+
+PiGenus should become more capable only after it becomes more observable and
+governable. The ordering is intentionally boring:
+
+1. Build a deterministic runtime nucleus.
+2. Make memory and storage lifecycle behavior explicit.
+3. Add read-only inspection and backup surfaces before larger features.
+4. Formalize Systemform models and adapters without replacing the prototype.
+5. Add guard, governance, and approval layers before autonomous behavior.
+6. Persist and inspect meaning before semantic search or LLM extraction.
+7. Add workers, resources, federation, and evolution only after the kernel can
+   explain what happened and why.
+
+## Roadmap Map
+
+### A. Foundation Runtime
+
+Purpose: establish the executable local core.
 
-### pigenus-v0.1-core
+Completed checkpoints:
 
-Phase 1 Core Runtime established the executable nucleus:
+- `pigenus-v0.1-core`: schemas, SQLite storage, event bus, registry, permission
+  engine, audit logger, MVP cells, CLI demo, and core tests
+- `pigenus-v0.1.5-contracts`: explicit event contracts, guarded memory writes,
+  source-linked guard decisions, and separate cell state
+- `pigenus-v0.1.6-contexts`: minimal context boundaries, known context names,
+  context validation, and cell `allowed_contexts`
 
-- Structured schemas
-- SQLite storage
-- Event bus
-- Cell registry
-- Permission engine
-- Audit logger
-- MVP cells
-- CLI demo
-- Core tests
+### B. Memory Lifecycle
 
-### pigenus-v0.1.5-contracts
+Purpose: make memory age, review, and protect itself without adding AI.
 
-Phase 1.5 Core Contracts made core behavior more explicit:
+Completed checkpoints:
 
-- Known event types and required payload keys
-- `MemoryProposal` before durable memory writes
-- Guard decisions tied to the source proposal
-- Separate `CellState` for operational cell-local state
-- Invariant tests for direct-write rejection and cell-state separation
+- `pigenus-v0.2-memory-lifecycle`: review/expiry behavior, lifecycle statuses,
+  canonical protection, memory review CLI, audit logs, and lifecycle tests
+- `pigenus-v0.2.1-lifecycle-polish`: CLI conventions, migration policy, and
+  read-only memory listing
 
-### pigenus-v0.1.6-contexts
+### C. Inspection And Operator Safety
 
-Phase 1.6 Context Boundaries establishes minimal room separation:
+Purpose: make the runtime inspectable before it becomes more autonomous.
 
-- Structured context schema
-- Known context names
-- Event and memory context validation
-- Cell `allowed_contexts` enforcement in the orchestrator
-- Invariant tests for context rejection and preservation
+Completed checkpoints:
 
-### pigenus-v0.2-memory-lifecycle
+- `pigenus-v0.2.2-migrations`: idempotent migration runner
+- `pigenus-v0.2.3-schema-registry`: event contract inspection
+- `pigenus-v0.2.4-decision-log`: durable decision records and `decision-list`
+- `pigenus-v0.2.5-cell-lifecycle`: cell lifecycle and read-only `cell-list`
+- `pigenus-v0.2.6-context-inspection`: read-only `context-list`
+- `pigenus-v0.2.7-permission-inspection`: read-only `permission-list`
+- `pigenus-v0.2.8-audit-inspection`: read-only `audit-list`
+- `pigenus-v0.2.9-event-inspection`: read-only `event-list` and `event-show`
+- `pigenus-v0.2.10-runtime-overview`: local runtime overview
+- `pigenus-v0.2.11-health-check`: read-only storage health checks
+- `pigenus-v0.2.23-snapshot-backup-minimal`: local SQLite snapshot backups
+- `pigenus-v0.2.28-changelog-release-sections`: checkpointed changelog sections
 
-Phase 2 Memory Lifecycle makes memory age, review, and protect itself without
-adding external AI.
+### D. Systemform Kernel
 
-Specification:
+Purpose: formalize GENUS vocabulary and guard behavior while preserving the
+existing prototype as the compatibility layer.
 
-- `docs/PHASE_2_MEMORY_LIFECYCLE.md`
+Completed checkpoints:
 
-Implemented scope:
+- `pigenus-v0.2.12-systemform-models`: Systemform documents, gap analysis, and
+  additive models for actors, rooms, meaning, contracts, resources, and
+  governance decisions
+- `pigenus-v0.2.13-systemform-adapters`: deterministic adapters for
+  `MemoryObject -> MeaningObject`, `CellSpec -> CellContract`, and `Context -> Room`
+- `pigenus-v0.2.14-contract-validator`: storage-free contract validation
+- `pigenus-v0.2.15-room-flow-rules`: deterministic semantic room-flow rules
+- `pigenus-v0.2.16-guard-pipeline`: storage-free guard pipeline and ordered traces
+- `pigenus-v0.2.17-guard-runtime-preview`: shadow-mode guard checks against
+  adapted runtime objects
+- `pigenus-v0.2.18-governance-decision-logging`: guard decisions persisted
+  through the durable decision log
+- `pigenus-v0.2.19-orchestrator-guard-preview`: orchestrator warning-mode preview
+- `pigenus-v0.2.20-selective-guard-enforcement`: hard blocks stop execution;
+  review/escalate stay warning states
+- `pigenus-v0.2.21-human-approval-stub`: pending, approved, and rejected
+  approval records without UI coupling
 
-- `review_due_at` and `expires_at` behavior
-- Status transition rules
-- `canonical` protection
-- Memory review CLI
-- Audit logs for memory status changes
-- Tests for lifecycle invariants
+### E. Meaning Runtime
 
-### pigenus-v0.2.1-lifecycle-polish
+Purpose: persist, inspect, and bridge semantic objects before adding semantic
+search, extraction, or LLM ranking.
 
-Phase 2.1 hardens lifecycle ergonomics without adding intelligence:
+Completed checkpoints:
 
-- CLI command conventions and exit-code documentation
-- Primitive SQLite migration policy
-- Read-only memory listing command for inspection
+- `pigenus-v0.2.22-meaning-store-minimal`: SQLite-backed `MeaningRepository`
+  and indexed filters
+- `pigenus-v0.2.24-meaning-retrieval-queries`: read-only `meaning-list`
+- `pigenus-v0.2.25-meaning-detail-view`: read-only `meaning-show`
+- `pigenus-v0.2.26-meaning-ingestion-preview`: explicit memory-to-meaning
+  ingestion
+- `pigenus-v0.2.27-runtime-overview-meaning-count`: Meaning Store count in the
+  runtime overview
 
-### pigenus-v0.2.2-migrations
+### F. Context And Room Governance
 
-Phase 2.2 adds the smallest useful migration runner before future schema
-evolution:
+Purpose: connect legacy context boundaries to Systemform room metadata and make
+boundary decisions inspectable.
 
-- `schema_migrations` table
-- idempotent migration application
-- smoke tests for fresh and existing databases
-- no destructive migrations
+Completed checkpoints:
 
-### pigenus-v0.2.3-schema-registry
+- `pigenus-v0.2.29-context-boundary-room-metadata`: room ID and protection level
+  on context boundary decisions
+- `pigenus-v0.2.30-context-boundary-decision-logging-preview`: explicit
+  `context-boundary-check --log`
+- `pigenus-v0.2.31-context-boundary-decision-inspection`: read-only
+  `context-boundary-list`
 
-Phase 2.3 makes runtime contracts inspectable:
+### G. Guard Families
 
-- event contract registry
-- `schema-list` CLI
-- tests that registry output matches runtime validation
+Purpose: make guard output scannable by policy family without parsing low-level
+reason strings.
 
-### pigenus-v0.2.4-decision-log
+Completed checkpoints:
 
-Phase 2.4 makes important decisions queryable separately from raw events and
-audit logs:
+- `pigenus-v0.2.32-guard-families-minimal`: `family` on guard results and trace
+  steps
+- `pigenus-v0.2.33-guard-family-decision-log-surface`: read-only
+  `guard-decision-list` with decision and family filters
 
-- `DecisionRecord` schema
-- `decision_logs` SQLite table
-- decision repository
-- lifecycle decision recording
-- read-only `decision-list` CLI
+Current checkpoint:
 
-### pigenus-v0.2.5-cell-lifecycle
+- `pigenus-v0.2.34-roadmap-structure`: restructure this build plan into a
+  readable architecture map without changing runtime behavior
 
-Goal: make cells observable as lifecycle-managed runtime units without adding
-evolution.
+Next checkpoint:
 
-Implemented scope:
+- `pigenus-v0.2.35-guard-family-summary-minimal`: summarize stored guard
+  decisions by final decision and family, read-only, no migration, no dashboard
 
-- explicit cell lifecycle status handling
-- update `last_used_at`
-- simple fitness fields remain passive
-- read-only cell listing CLI
-
-Out of scope:
-
-- LLM reasoning
-- Dashboards
-- Distributed workers
-- Autonomous evolution
-- Vector search
+## Later Architecture Tracks
 
-### pigenus-v0.2.6-context-inspection
+These are intentionally not current work. They become safer after guard,
+meaning, inspection, and backup surfaces remain stable.
 
-Phase 2.6 makes known contexts inspectable without changing boundary behavior:
+### H. Worker Interface
 
-- read-only context registry
-- `context-list` CLI
-- optional allowed-cell display from an existing SQLite database
-- tests proving context inspection does not create missing databases
+- Worker identity and heartbeat
+- Capability declarations
+- Cost and privacy profile
+- Local-first worker registry
+- Failure and timeout semantics
 
-### pigenus-v0.2.7-permission-inspection
+### I. Resource Economy
 
-Phase 2.7 makes built-in permissions inspectable before adding richer guard
-behavior:
+- Resource grants beyond static limits
+- Compute, attention, storage, and time budgets
+- Per-room quotas
+- Cost reporting before optimization
+- No market mechanics until accounting is reliable
 
-- read-only permission registry
-- `permission-list` CLI
-- tests tying inspection output to runtime permission defaults
+### J. Federation
 
-### pigenus-v0.2.8-audit-inspection
+- Exportable runtime snapshots
+- Trust-scoped remote rooms
+- Signed decision and meaning records
+- Replication policy
+- Conflict handling before autonomous synchronization
 
-Phase 2.8 makes audit logs safely inspectable:
+### K. Controlled Evolution
 
-- read-only `audit-list` CLI
-- actor, action, and context filters
-- tests proving audit inspection does not mutate storage
+- Mutation proposals only in shadow mode
+- Fitness comparisons against explicit tests
+- Rollback and fossil records
+- Human approval before activation
+- No self-modification until traceability is boring and complete
 
-### pigenus-v0.2.9-event-inspection
+### L. Product Surfaces
 
-Phase 2.9 makes stored events safely inspectable:
+- CLI remains the primary operator surface
+- Dashboard follows CLI semantics, not the other way around
+- Human approval UI after approval records and guard summaries are stable
+- Visual system maps after the architecture vocabulary stops shifting rapidly
 
-- read-only `event-list` CLI
-- filters for event type, created-by cell, context, and limit
-- read-only `event-show` CLI with JSON payload output
-- clean error handling for unknown event IDs
+## Non-Goals For The Current Kernel Phase
 
-### pigenus-v0.2.10-runtime-overview
-
-Phase 2.10 provides one small operator overview of the local runtime:
-
-- read-only runtime overview builder
-- `runtime-overview` CLI
-- counts for events, memory objects, cells, audit logs, and decision records
-- known contexts and default permissions
-
-### pigenus-v0.2.11-health-check
-
-Phase 2.11 reports whether local runtime storage is structurally healthy:
-
-- read-only health checker
-- `health-check` CLI
-- migration-state checks
-- required-table checks
-- non-zero exit for unhealthy storage
-
-### pigenus-v0.2.21-human-approval-stub
-
-Goal: formalize the GENUS Systemform kernel vocabulary without replacing the
-existing runtime prototype, then prove deterministic mappings from the current
-prototype contracts into that vocabulary and validate the first executable
-contract, semantic room-flow, guard-pipeline, runtime preview, and governance
-decision logging, orchestrator preview, selective enforcement, and approval
-stub rules.
-
-Implemented scope:
-
-- GENUS Systemform document copied into `docs/`
-- Phase 0 core kernel specification copied into `docs/`
-- `docs/SYSTEMFORM_GAP_ANALYSIS.md`
-- additive Systemform models for actors, rooms, meaning objects, cell contracts,
-  resource grants, and governance decisions
-- tests for the new models
-- deterministic adapters for `MemoryObject -> MeaningObject`, `CellSpec -> CellContract`,
-  and `Context -> Room`
-- tests for the adapter mappings
-- storage-free contract validator
-- tests for actor, contract, room, capability, permission, resource, and human-approval checks
-- storage-free room flow rules
-- tests for room matrix behavior, sensitivity overrides, and truth-status overrides
-- storage-free guard pipeline
-- tests for ordered traces, allow, escalation, and block precedence
-- shadow-mode guard runtime preview against adapted runtime objects
-- tests for allow, review, block, sensitivity override, truth-status override, trace order,
-  and no orchestrator side effects
-- governance decision logging through the existing durable decision log
-- tests for allow, escalate/review, block, and trace-order persistence
-- demo orchestrator guard preview in warning mode
-- tests proving preview decisions are logged while demo execution continues
-- selective guard enforcement for hard block decisions only
-- tests proving block stops execution and review/escalate stays warning-only
-- human approval stub with pending, approved, and rejected states
-- tests proving approval records persist without changing current flow
-
-Out of scope:
-
-- CLI changes
-- human approval UI
-
-## Current
-
-### pigenus-v0.2.22-meaning-store-minimal
-
-Goal: persist and retrieve Systemform `MeaningObject` records as the start of Meaning Runtime.
-
-Implemented scope:
-
-- SQLite migration for meaning objects
-- repository for add/get/list
-- queries by room, type, truth status, and sensitivity
-- tests for serialization and retrieval filters
-
-Out of scope:
-
-- CLI changes
-- vector search
-- LLM integration
-- dashboard
-- export behavior
-
-## Current
-
-### pigenus-v0.2.23-snapshot-backup-minimal
-
-Goal: define a boring local safety path for preserving SQLite runtime state before
-larger Meaning Runtime features arrive.
-
-Implemented scope:
-
-- SQLite backup service using the SQLite backup API
-- `backup-create` CLI command
-- missing-source and no-overwrite safety checks
-- integrity check for created snapshots
-- tests for repository-independent backup behavior and CLI behavior
-
-Out of scope:
-
-- restore workflow
-- remote backup targets
-- scheduling
-- compression
-- retention cleanup
-
-## Current
-
-### pigenus-v0.2.24-meaning-retrieval-queries
-
-Goal: expose the first operator-safe Meaning Store lookup path without adding
-vector search, LLM ranking, or dashboard behavior.
-
-Implemented scope:
-
-- read-only `meaning-list` CLI command
-- filters by room, type, truth status, and sensitivity
-- compact operator output for ID, type, room, truth status, sensitivity, and summary
-- tests for empty output, read-only behavior, and combined filters
-
-Out of scope:
-
-- detail view
-- vector search
-- LLM ranking
-- dashboard
-- export behavior
-
-## Current
-
-### pigenus-v0.2.25-meaning-detail-view
-
-Goal: inspect one stored `MeaningObject` by ID with deterministic JSON output.
-
-Implemented scope:
-
-- read-only `meaning-show` CLI command
-- deterministic JSON output for full `MeaningObject`
-- clean not-found error for unknown IDs
-- tests for JSON output, not-found behavior, and read-only behavior
-
-Out of scope:
-
-- editing
-- export files
-- semantic search
-- LLM summarization
-- dashboard detail page
-
-## Current
-
-### pigenus-v0.2.26-meaning-ingestion-preview
-
-Goal: create a narrow path for runtime-produced semantic objects to enter the
-Meaning Store without changing guard enforcement or memory lifecycle behavior.
-
-Implemented scope:
-
-- `MeaningIngestionPreview` service
-- `meaning-ingest-memory` CLI command
-- deterministic `MemoryObject -> MeaningObject` ingestion through existing adapters
-- idempotent behavior for repeated memory ingestion
-- tests for service behavior, CLI behavior, missing memory, and no audit/decision side effects
-
-Out of scope:
-
-- automatic orchestrator ingestion
-- guard enforcement changes
-- memory lifecycle changes
-- LLM extraction
-- mutation or revision workflows
-
-## Current
-
-### pigenus-v0.2.27-runtime-overview-meaning-count
-
-Goal: include Meaning Store counts in the existing runtime overview without
-turning overview into a search or dashboard surface.
-
-Implemented scope:
-
-- `RuntimeOverview` includes `meaning_count`
-- `runtime-overview` CLI prints `Meaning objects`
-- tests prove builder count, CLI output, and read-only behavior
-
-Out of scope:
-
-- meaning search
-- meaning detail rendering
-- dashboard widgets
-- per-room breakdowns
-
-## Current
-
-### pigenus-v0.2.28-changelog-release-sections
-
-Goal: split the overloaded `Unreleased` changelog into checkpoint sections before
-opening a PR or merging.
-
-Implemented scope:
-
-- moved Systemform and Meaning Runtime changes out of overloaded `Unreleased`
-- added checkpoint sections from `pigenus-v0.2.12` through `pigenus-v0.2.27`
-- preserved concise verified test counts for each checkpoint
-
-Out of scope:
-
-- code changes
-- release tags
-- PR creation
-
-## Completed
-
-### pigenus-v0.2.29-context-boundary-room-metadata
-
-Goal: expand context boundary decisions with explicit Systemform room metadata
-without changing allowed/blocked behavior.
-
-Implemented scope:
-
-- context boundary decisions include `room_id`
-- context boundary decisions include `protection_level`
-- existing context allow/block behavior remains unchanged
-- tests cover allowed and blocked contexts with room metadata
-
-Out of scope:
-
-- new context names
-- new enforcement policy
-- room-flow integration changes
-- persistence changes
-
-## Completed
-
-### pigenus-v0.2.30-context-boundary-decision-logging-preview
-
-Goal: optionally persist context boundary decisions for operator inspection
-without changing orchestration behavior.
-
-Implemented scope:
-
-- `ContextBoundaryDecisionLogger`
-- `context-boundary-check` CLI command
-- default read-only preview behavior
-- optional `--log` persistence into the decision log
-- tests for record conversion, CLI preview, CLI logging, and missing cells
-
-Out of scope:
-
-- automatic orchestrator logging
-- enforcement changes
-- new context policy
-- dashboard inspection
-
-## Completed
-
-### pigenus-v0.2.31-context-boundary-decision-inspection
-
-Goal: expose persisted context boundary decisions through a focused read-only
-inspection path without changing existing decision-list behavior.
-
-Implemented scope:
-
-- read-only `context-boundary-list` CLI command
-- filters for cell, context, room, and allowed status
-- tests for empty output, list output, filters, and read-only behavior
-
-Out of scope:
-
-- detail view
-- aggregation
-- export behavior
-- dashboard inspection
-
-## Completed
-
-### pigenus-v0.2.32-guard-families-minimal
-
-Goal: group guard decisions into stable families so policy output can be scanned
-without parsing individual reasons.
-
-Implemented scope:
-
-- `family` field on guard pipeline results
-- `family` field on ordered guard trace steps
-- contract-validation family mapping for actor, contract, room scope,
-  capability, permission, resource, and approval outcomes
-- runtime preview and governance trace tests for family propagation
-
-Out of scope:
-
-- new guard policy
-- CLI output changes
-- decision-log schema changes
-- dashboard inspection
-
-## Current
-
-### pigenus-v0.2.33-guard-family-decision-log-surface
-
-Goal: make guard-family information easy to inspect from stored governance
-decision records without changing guard policy or storage schema.
-
-Implemented scope:
-
-- `guard-decision-list` CLI command
-- filters for final guard decision and decision family
-- final family persisted in governance decision record details
-- fallback family extraction from existing trace details
-- tests for output, filters, empty databases, and read-only behavior
-
-Out of scope:
-
-- new guard policy
-- storage migration
-- aggregation
-- dashboard inspection
-
-## Next
-
-### Guard Family Summary Minimal
-
-Goal: provide a tiny local summary of stored guard decisions by decision and
-family without adding dashboards or analytics storage.
-
-## Later
-
-- Worker interface
-- Controlled cell evolution
+- No LLM-first behavior
+- No hidden mutation
+- No dashboard-driven architecture
+- No distributed execution before local governance is inspectable
+- No vector search before deterministic meaning storage and retrieval are stable

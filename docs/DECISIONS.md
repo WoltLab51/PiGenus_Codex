@@ -550,3 +550,20 @@ The generic `decision-list` should remain stable and compact. Guard decisions
 now carry enough structure to deserve a focused inspection path, especially as
 families become the primary operator-level explanation of why a guard allowed,
 blocked, or escalated work.
+
+## D-041: The Build Plan Is An Architecture Map
+
+Decision:
+
+`BUILD_PLAN.md` is organized by architecture tracks instead of repeated
+linear "Current" checkpoint sections. Checkpoints remain small and versioned,
+but the plan now shows Foundation Runtime, Memory Lifecycle, Operator Safety,
+Systemform Kernel, Meaning Runtime, Context/Room Governance, Guard Families,
+and later tracks.
+
+Reason:
+
+PiGenus has grown past a simple patch queue. The project still needs tiny,
+testable commits, but operators and contributors also need a readable map of
+why work happens in this order and which larger system concern each checkpoint
+serves.

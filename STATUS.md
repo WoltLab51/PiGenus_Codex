@@ -2,7 +2,7 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.33-guard-family-decision-log-surface`
+- Name: `pigenus-v0.2.34-roadmap-structure`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
@@ -51,6 +51,8 @@ PiGenus is a small local cognitive core. It has:
 - SQLite-backed Systemform Meaning Store for local `MeaningObject` persistence
 - GENUS Systemform hardening documents
 - Living project control documents
+- Build plan structured as architecture tracks from foundation runtime through
+  controlled evolution
 
 Current demo flow:
 
@@ -116,6 +118,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `context-boundary-list` is read-only and filters logged boundary decisions by cell, context, room, and allowed status.
 - Guard pipeline results and trace steps expose stable decision families without changing policy outcomes.
 - `guard-decision-list` is read-only and filters logged governance decisions by final decision and family.
+- `BUILD_PLAN.md` is organized as an architecture map instead of repeated current checkpoint sections.
 
 ## Next Recommended Work
 

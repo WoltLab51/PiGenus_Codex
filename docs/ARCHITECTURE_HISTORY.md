@@ -583,3 +583,18 @@ Logged guard decisions now have a focused operator view that can answer
 "which family caused this?" without digging through serialized traces. This
 keeps the durable decision log schema unchanged while making guard behavior
 easier to inspect after demo or orchestrator runs.
+
+## Roadmap Structure
+
+The project gained:
+
+- Architecture-track grouping in `BUILD_PLAN.md`
+- Explicit ordering rationale for runtime, inspection, governance, and meaning
+- Later tracks for workers, resource economy, federation, controlled evolution,
+  and product surfaces
+
+Why it mattered:
+
+The checkpoint list had become accurate but hard to scan. Grouping it into
+tracks preserves the small-test discipline while restoring the larger map of
+what PiGenus is becoming and why the conservative order matters.

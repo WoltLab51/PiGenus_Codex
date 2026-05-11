@@ -4,6 +4,13 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.34-roadmap-structure
+
+- Restructured `BUILD_PLAN.md` into architecture tracks instead of repeated checkpoint headings
+- Added an explicit "Why This Order" section for the runtime/governance sequence
+- Added later architecture tracks for workers, resource economy, federation, controlled evolution, and product surfaces
+- Verified: 179 tests passed
+
 ## pigenus-v0.2.33-guard-family-decision-log-surface
 
 - Added read-only `guard-decision-list` CLI command for logged guard governance decisions
