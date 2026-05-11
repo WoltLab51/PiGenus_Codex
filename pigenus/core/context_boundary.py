@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Any
 
 from pigenus.schemas.cells import CellSpec
 from pigenus.schemas.context import Context
+from pigenus.schemas.base import utc_now
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform_adapters import context_to_room
+from pigenus.storage.repositories import DecisionRepository
 
 
 @dataclass(frozen=True)
@@ -43,3 +46,36 @@ class ContextBoundaryEngine:
             raise PermissionError(
                 f"{decision.cell_id} cannot process context {decision.context}: {decision.reason}"
             )
+
+
+class ContextBoundaryDecisionLogger:
+    """Persists context boundary decisions through the durable decision log."""
+
+    def __init__(self, repository: DecisionRepository) -> None:
+        self.repository = repository
+
+    def add(self, decision: ContextBoundaryDecision) -> DecisionRecord:
+        record = context_boundary_decision_to_record(decision)
+        self.repository.add(record)
+        return record
+
+
+def context_boundary_decision_to_record(decision: ContextBoundaryDecision) -> DecisionRecord:
+    """Convert a context boundary decision to a durable prototype decision record."""
+
+    data = asdict(decision)
+    return DecisionRecord(
+        decision_type="context_boundary",
+        context={"name": decision.context},
+        subject_id=f"{decision.cell_id}:{decision.context}",
+        actor=decision.cell_id,
+        reason=decision.reason,
+        source="context_boundary_preview",
+        created_at=utc_now(),
+        details={
+            "context_boundary": data,
+            "allowed": decision.allowed,
+            "room_id": decision.room_id,
+            "protection_level": decision.protection_level,
+        },
+    )

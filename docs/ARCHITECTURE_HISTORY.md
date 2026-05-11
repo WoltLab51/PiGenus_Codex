@@ -522,3 +522,18 @@ The first context boundary only said whether a cell could process a context.
 Boundary decisions now also carry the Systemform room identity behind that
 context, which makes later logging, governance, and operator inspection easier
 without changing enforcement behavior.
+
+## Context Boundary Decision Logging Preview
+
+The system gained:
+
+- `ContextBoundaryDecisionLogger`
+- `context-boundary-check` CLI command
+- Optional `--log` persistence through the decision log
+- Tests for conversion, preview output, opt-in logging, and missing cells
+
+Why it mattered:
+
+Operators can now preview a cell/context boundary decision and choose whether to
+persist it. This keeps the default path read-only while giving governance work a
+durable trace shape before automatic orchestration logging is considered.

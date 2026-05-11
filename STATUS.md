@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.29-context-boundary-room-metadata`
+- Name: `pigenus-v0.2.30-context-boundary-decision-logging-preview`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `167 passed`
+- Last verified result: `172 passed`
 
 ## Current Runtime Shape
 
@@ -110,13 +110,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Runtime overview reports Meaning Store object count.
 - Changelog is split into explicit checkpoint sections through `pigenus-v0.2.27`.
 - Context boundary decisions expose Systemform room ID and protection level.
+- Context boundary decisions can be preview-logged through the decision log with explicit operator opt-in.
 
 ## Next Recommended Work
 
-Finish Context Boundary Room Metadata:
+Finish Context Boundary Decision Logging Preview:
 
-- Checkpoint Context Boundary Room Metadata.
-- Keep new context names, new enforcement policy, room-flow integration changes, and persistence changes out of scope.
+- Checkpoint Context Boundary Decision Logging Preview.
+- Keep automatic orchestrator logging, enforcement changes, new context policy, and dashboard inspection out of scope.
 
 ## Operator Note
 

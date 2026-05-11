@@ -488,3 +488,18 @@ Reason:
 Context boundaries are the runtime-facing form of room protection. Exposing room
 metadata in the decision gives later logging and governance work a stable shape
 without adding new policy or changing current orchestration behavior.
+
+## D-037: Context Boundary Logging Is Explicit Preview First
+
+Decision:
+
+Context boundary decisions can be persisted through `ContextBoundaryDecisionLogger`
+and the `context-boundary-check --log` CLI path. The default CLI check remains
+read-only, and the orchestrator does not automatically log boundary checks.
+
+Reason:
+
+Boundary decisions are useful governance evidence, but automatic logging would
+change runtime side effects across every orchestrated cell step. An explicit
+preview path proves the durable record shape while preserving current
+orchestration behavior.

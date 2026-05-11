@@ -40,6 +40,7 @@ python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 python -m pigenus.cli.main context-list
+python -m pigenus.cli.main context-boundary-check input_cell@0.1.0 --context developer/default --db pigenus.sqlite3
 python -m pigenus.cli.main permission-list
 ```
 
@@ -48,7 +49,10 @@ python -m pigenus.cli.main permission-list
 migrate, repair, or overwrite runtime storage.
 `meaning-ingest-memory` creates a meaning object from an existing memory object
 but does not alter memory lifecycle, guard enforcement, audit logs, or decision logs.
+`context-boundary-check` is read-only by default. With `--log`, it writes one
+preview decision record to the decision log.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `audit-list`, `cell-list`,
-`context-list`, and `permission-list` are read-only.
+`context-list`, `context-boundary-check` without `--log`, and `permission-list`
+are read-only.

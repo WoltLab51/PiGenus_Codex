@@ -373,7 +373,7 @@ Out of scope:
 - release tags
 - PR creation
 
-## Current
+## Completed
 
 ### pigenus-v0.2.29-context-boundary-room-metadata
 
@@ -394,12 +394,34 @@ Out of scope:
 - room-flow integration changes
 - persistence changes
 
-## Next
+## Current
 
-### Context Boundary Decision Logging Preview
+### pigenus-v0.2.30-context-boundary-decision-logging-preview
 
 Goal: optionally persist context boundary decisions for operator inspection
 without changing orchestration behavior.
+
+Implemented scope:
+
+- `ContextBoundaryDecisionLogger`
+- `context-boundary-check` CLI command
+- default read-only preview behavior
+- optional `--log` persistence into the decision log
+- tests for record conversion, CLI preview, CLI logging, and missing cells
+
+Out of scope:
+
+- automatic orchestrator logging
+- enforcement changes
+- new context policy
+- dashboard inspection
+
+## Next
+
+### Context Boundary Decision Inspection
+
+Goal: expose persisted context boundary decisions through a focused read-only
+inspection path without changing existing decision-list behavior.
 
 ## Later
 

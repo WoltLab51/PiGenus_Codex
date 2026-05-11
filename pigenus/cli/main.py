@@ -8,6 +8,7 @@ from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
 from pigenus.core.backup import SnapshotBackupService
+from pigenus.core.context_boundary import ContextBoundaryDecisionLogger, ContextBoundaryEngine
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.health import HealthChecker
 from pigenus.core.meaning_ingestion import MeaningIngestionPreview
@@ -133,6 +134,19 @@ def build_parser() -> argparse.ArgumentParser:
         "--show-cells",
         action="store_true",
         help="Show registered cells allowed in each context when --db is provided.",
+    )
+
+    context_check = subparsers.add_parser(
+        "context-boundary-check",
+        help="Preview-check one registered cell against a context.",
+    )
+    context_check.add_argument("cell_id", help="Registered cell ID to check.")
+    context_check.add_argument("--context", required=True, help="Context name to check.")
+    context_check.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    context_check.add_argument(
+        "--log",
+        action="store_true",
+        help="Persist the preview decision to the decision log.",
     )
 
     subparsers.add_parser("permission-list", help="List built-in permissions without modifying them.")
@@ -464,6 +478,33 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"{context.name} | allowed_cells={allowed_cells}")
             else:
                 print(context.name)
+        return 0
+
+    if args.command == "context-boundary-check":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            cell = CellRepository(database).get(args.cell_id)
+            if cell is None:
+                print(f"Cell not found: {args.cell_id}")
+                return 1
+
+            decision = ContextBoundaryEngine().check(
+                cell=cell,
+                context={"name": args.context},
+            )
+            if args.log:
+                ContextBoundaryDecisionLogger(DecisionRepository(database)).add(decision)
+        finally:
+            database.close()
+
+        print("Context Boundary Check")
+        print(f"Cell: {decision.cell_id}")
+        print(f"Context: {decision.context}")
+        print(f"Room: {decision.room_id}")
+        print(f"Protection level: {decision.protection_level}")
+        print(f"Allowed: {'yes' if decision.allowed else 'no'}")
+        print(f"Reason: {decision.reason}")
         return 0
 
     if args.command == "permission-list":

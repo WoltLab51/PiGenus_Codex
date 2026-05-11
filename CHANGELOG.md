@@ -2,8 +2,20 @@
 
 ## Unreleased
 
+No unreleased changes.
+
+## pigenus-v0.2.30-context-boundary-decision-logging-preview
+
+- Added `ContextBoundaryDecisionLogger` for optional boundary decision persistence
+- Added `context-boundary-check` CLI command with optional `--log`
+- Added context boundary logging tests for record conversion, CLI preview, CLI logging, and missing cells
+- Verified: 167 tests passed
+
+## pigenus-v0.2.29-context-boundary-room-metadata
+
 - Added Systemform room metadata to context boundary decisions
 - Added context boundary tests for room ID and protection level on allow/block decisions
+- Verified: 167 tests passed
 
 ## pigenus-v0.2.28-changelog-release-sections
 
