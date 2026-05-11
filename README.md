@@ -4,6 +4,11 @@ PiGenus Phase 1 is the local cognitive operating core for the GENUS system. It
 is intentionally small: a testable Python runtime for cells, structured events,
 memory objects, permissions, audit logging, and simple orchestration.
 
+The project philosophy is documented separately in
+[`docs/GENUS_PHILOSOPHY.md`](docs/GENUS_PHILOSOPHY.md). In short: GENUS is not
+a single AI agent. It is a structured environment for digital capabilities,
+memories, agents, and decisions.
+
 This repository does not include the broader GENUS system. There are no
 dashboards, trading systems, LLM providers, external APIs, graph databases,
 Redis, RabbitMQ, or autonomous evolution loops in Phase 1.

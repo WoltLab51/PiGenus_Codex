@@ -4,6 +4,13 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.35-genus-philosophy
+
+- Added `docs/GENUS_PHILOSOPHY.md` as a short system philosophy document
+- Added README reference to the GENUS philosophy
+- Documented `D-042: GENUS Philosophy Is Documented Separately`
+- Verified: 179 tests passed
+
 ## pigenus-v0.2.34-roadmap-structure
 
 - Restructured `BUILD_PLAN.md` into architecture tracks instead of repeated checkpoint headings

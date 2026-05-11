@@ -2,7 +2,7 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.34-roadmap-structure`
+- Name: `pigenus-v0.2.35-genus-philosophy`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
@@ -50,6 +50,7 @@ PiGenus is a small local cognitive core. It has:
 - Human approval stub with pending, approved, and rejected states
 - SQLite-backed Systemform Meaning Store for local `MeaningObject` persistence
 - GENUS Systemform hardening documents
+- GENUS philosophy document
 - Living project control documents
 - Build plan structured as architecture tracks from foundation runtime through
   controlled evolution
@@ -119,6 +120,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Guard pipeline results and trace steps expose stable decision families without changing policy outcomes.
 - `guard-decision-list` is read-only and filters logged governance decisions by final decision and family.
 - `BUILD_PLAN.md` is organized as an architecture map instead of repeated current checkpoint sections.
+- GENUS philosophy is documented separately from the build plan.
 
 ## Next Recommended Work
 

@@ -567,3 +567,20 @@ PiGenus has grown past a simple patch queue. The project still needs tiny,
 testable commits, but operators and contributors also need a readable map of
 why work happens in this order and which larger system concern each checkpoint
 serves.
+
+## D-042: GENUS Philosophy Is Documented Separately
+
+Decision:
+
+GENUS has a dedicated philosophy document at `docs/GENUS_PHILOSOPHY.md`. The
+build plan remains the technical map for how PiGenus is built; the philosophy
+document explains why GENUS favors structure, meaning, contracts, governance,
+and controlled evolution.
+
+Reason:
+
+The project now touches runtime architecture, meaning, governance, inspection,
+and future evolution. Those choices need a stable compass before worker,
+resource, federation, and mutation tracks become active. Keeping the philosophy
+short and separate prevents `BUILD_PLAN.md` from becoming a manifesto while
+still making the deeper system principles explicit.

@@ -598,3 +598,18 @@ Why it mattered:
 The checkpoint list had become accurate but hard to scan. Grouping it into
 tracks preserves the small-test discipline while restoring the larger map of
 what PiGenus is becoming and why the conservative order matters.
+
+## GENUS Philosophy
+
+The project gained:
+
+- `docs/GENUS_PHILOSOPHY.md`
+- A short statement of what GENUS is and is not
+- Explicit principles for cells, meaning, control, evolution, and governance
+- README reference to the philosophy document
+
+Why it mattered:
+
+The architecture now has enough internal shape that the "why" needs its own
+home. Keeping philosophy separate from the build plan lets the plan describe
+how PiGenus is built while the philosophy explains why it grows conservatively.
