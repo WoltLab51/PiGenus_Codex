@@ -54,6 +54,7 @@ def governance_decision_to_record(
         details={
             "governance_decision": decision_data,
             "decision": decision_data["decision"],
+            "family": decision_data.get("details", {}).get("family"),
             "room_id": decision.room_id,
             "requires_human": decision.requires_human,
             "trace": list(decision_data.get("details", {}).get("trace", [])),

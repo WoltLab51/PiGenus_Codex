@@ -120,6 +120,19 @@ def build_parser() -> argparse.ArgumentParser:
     decision_list = subparsers.add_parser("decision-list", help="List durable decision records.")
     decision_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
+    guard_decision_list = subparsers.add_parser(
+        "guard-decision-list",
+        help="List logged guard governance decisions without modifying them.",
+    )
+    guard_decision_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    guard_decision_list.add_argument("--family", default=None, help="Filter by guard decision family.")
+    guard_decision_list.add_argument(
+        "--decision",
+        choices=("allow", "block", "escalate"),
+        default=None,
+        help="Filter by final guard decision.",
+    )
+
     audit_list = subparsers.add_parser("audit-list", help="List audit log rows without modifying them.")
     audit_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     audit_list.add_argument("--actor", default=None, help="Filter by audit actor.")
@@ -430,6 +443,40 @@ def main(argv: list[str] | None = None) -> int:
             )
         return 0
 
+    if args.command == "guard-decision-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            decisions = [
+                decision
+                for decision in DecisionRepository(database).list()
+                if decision.decision_type == "governance_decision"
+            ]
+        finally:
+            database.close()
+
+        decisions = _filter_guard_decisions(
+            decisions,
+            family=args.family,
+            decision=args.decision,
+        )
+
+        if not decisions:
+            print("No guard decision records found.")
+            return 0
+
+        for decision in decisions:
+            details = decision.details
+            governance = _governance_decision_details(details)
+            guard_decision = str(details.get("decision") or governance.get("decision") or "")
+            family = _guard_decision_family(decision)
+            room_id = str(details.get("room_id") or governance.get("room_id") or "")
+            print(
+                f"{decision.decision_id} | {guard_decision} | family={family} | "
+                f"{decision.actor} | {room_id} | {decision.reason}"
+            )
+        return 0
+
     if args.command == "audit-list":
         database = Database(Path(args.db))
         database.initialize()
@@ -603,6 +650,59 @@ def _filter_context_boundary_decisions(
             continue
         filtered.append(decision)
     return filtered
+
+
+def _filter_guard_decisions(
+    decisions: list[DecisionRecord],
+    *,
+    family: str | None,
+    decision: str | None,
+) -> list[DecisionRecord]:
+    filtered: list[DecisionRecord] = []
+    for record in decisions:
+        details = record.details
+        governance = _governance_decision_details(details)
+        record_decision = str(details.get("decision") or governance.get("decision") or "")
+        if family is not None and _guard_decision_family(record) != family:
+            continue
+        if decision is not None and record_decision != decision:
+            continue
+        filtered.append(record)
+    return filtered
+
+
+def _guard_decision_family(decision: DecisionRecord) -> str:
+    details = decision.details
+    family = details.get("family")
+    if family:
+        return str(family)
+
+    governance = _governance_decision_details(details)
+    governance_details = governance.get("details", {})
+    family = governance_details.get("family") if isinstance(governance_details, dict) else None
+    if family:
+        return str(family)
+
+    trace = details.get("trace", [])
+    if not isinstance(trace, list):
+        return ""
+
+    for step in trace:
+        if not isinstance(step, dict):
+            continue
+        if step.get("decision") in {"block", "escalate"} and step.get("family"):
+            return str(step["family"])
+    for step in trace:
+        if isinstance(step, dict) and step.get("family"):
+            return str(step["family"])
+    return ""
+
+
+def _governance_decision_details(details: dict[str, object]) -> dict[str, object]:
+    governance = details.get("governance_decision", {})
+    if isinstance(governance, dict):
+        return governance
+    return {}
 
 
 if __name__ == "__main__":

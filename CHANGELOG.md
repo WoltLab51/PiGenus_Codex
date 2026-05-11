@@ -4,6 +4,14 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.33-guard-family-decision-log-surface
+
+- Added read-only `guard-decision-list` CLI command for logged guard governance decisions
+- Added guard decision filters for final decision and decision family
+- Persisted final guard family into governance decision records without a schema migration
+- Added guard decision inspection tests for output, filters, empty databases, and read-only behavior
+- Verified: 179 tests passed
+
 ## pigenus-v0.2.32-guard-families-minimal
 
 - Added stable `family` classification to guard pipeline results and trace steps

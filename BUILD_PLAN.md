@@ -436,7 +436,7 @@ Out of scope:
 - export behavior
 - dashboard inspection
 
-## Current
+## Completed
 
 ### pigenus-v0.2.32-guard-families-minimal
 
@@ -458,12 +458,34 @@ Out of scope:
 - decision-log schema changes
 - dashboard inspection
 
-## Next
+## Current
 
-### Guard Family Decision Log Surface
+### pigenus-v0.2.33-guard-family-decision-log-surface
 
 Goal: make guard-family information easy to inspect from stored governance
 decision records without changing guard policy or storage schema.
+
+Implemented scope:
+
+- `guard-decision-list` CLI command
+- filters for final guard decision and decision family
+- final family persisted in governance decision record details
+- fallback family extraction from existing trace details
+- tests for output, filters, empty databases, and read-only behavior
+
+Out of scope:
+
+- new guard policy
+- storage migration
+- aggregation
+- dashboard inspection
+
+## Next
+
+### Guard Family Summary Minimal
+
+Goal: provide a tiny local summary of stored guard decisions by decision and
+family without adding dashboards or analytics storage.
 
 ## Later
 

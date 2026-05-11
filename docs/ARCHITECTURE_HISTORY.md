@@ -567,3 +567,19 @@ Why it mattered:
 Guard output can now be scanned by policy family without parsing individual
 reason strings. This keeps the existing allow, escalate, and block behavior
 unchanged while giving later operator inspection a cleaner shape.
+
+## Guard Family Decision Log Surface
+
+The system gained:
+
+- `guard-decision-list` CLI command
+- Filters for final guard decision and decision family
+- Final family in governance decision record details
+- Fallback family extraction from existing trace details
+
+Why it mattered:
+
+Logged guard decisions now have a focused operator view that can answer
+"which family caused this?" without digging through serialized traces. This
+keeps the durable decision log schema unchanged while making guard behavior
+easier to inspect after demo or orchestrator runs.

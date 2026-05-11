@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import subprocess
+import sys
 from pathlib import Path
 from uuid import uuid4
 
@@ -122,6 +124,7 @@ def test_governance_decision_logger_persists_allow_decision():
     assert stored.reason == "allowed"
     assert stored.context == {"name": "developer/default"}
     assert stored.details["decision"] == "allow"
+    assert stored.details["family"] == "allowed"
     database.close()
 
 
@@ -134,6 +137,7 @@ def test_governance_decision_trace_order_survives_serialization():
         "contract_validation",
         "room_flow",
     ]
+    assert record.details["family"] == "allowed"
 
 
 def test_governance_decision_logger_persists_block_decision():
@@ -153,6 +157,7 @@ def test_governance_decision_logger_persists_block_decision():
     stored = repository.list()[0]
     assert stored.context == {"name": "private/default"}
     assert stored.details["decision"] == "block"
+    assert stored.details["family"] == "room_flow"
     assert stored.details["governance_decision"]["reason"] == "sensitive_meaning_public_export_blocked"
     database.close()
 
@@ -171,6 +176,106 @@ def test_governance_decision_logger_persists_escalate_decision():
 
     stored = repository.list()[0]
     assert stored.details["decision"] == "escalate"
+    assert stored.details["family"] == "approval"
     assert stored.details["requires_human"] is True
     assert stored.details["trace"][0]["reason"] == "human_approval_required"
     database.close()
+
+
+def test_guard_decision_list_cli_shows_family_and_is_read_only():
+    path = db_path("guard-list")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    GovernanceDecisionLogger(repository).add(pipeline_decision())
+    GovernanceDecisionLogger(repository).add(
+        pipeline_decision(
+            source_room_id="room_private",
+            target_room_id="room_public",
+            sensitivity=Sensitivity.PRIVATE,
+            contract_override={"room_scope": ["room_private"]},
+        ),
+        context={"name": "private/default"},
+    )
+    database.close()
+
+    result = subprocess.run(
+        [sys.executable, "-m", "pigenus.cli.main", "guard-decision-list", "--db", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    database = Database(path)
+    database.initialize()
+    assert "allow | family=allowed | cell_memory_writer_0_1_0 | room_developer | allowed" in result.stdout
+    assert (
+        "block | family=room_flow | cell_memory_writer_0_1_0 | "
+        "room_private | sensitive_meaning_public_export_blocked"
+    ) in result.stdout
+    assert DecisionRepository(database).count() == 2
+    database.close()
+
+
+def test_guard_decision_list_cli_filters_by_family_and_decision():
+    path = db_path("guard-list-filter")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    GovernanceDecisionLogger(repository).add(pipeline_decision())
+    GovernanceDecisionLogger(repository).add(
+        pipeline_decision(
+            target_room_id=None,
+            contract_override={"human_approval_required": ["memory_write"]},
+        )
+    )
+    database.close()
+
+    family_result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pigenus.cli.main",
+            "guard-decision-list",
+            "--db",
+            str(path),
+            "--family",
+            "approval",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    decision_result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pigenus.cli.main",
+            "guard-decision-list",
+            "--db",
+            str(path),
+            "--decision",
+            "allow",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "escalate | family=approval" in family_result.stdout
+    assert "allow | family=allowed" not in family_result.stdout
+    assert "allow | family=allowed" in decision_result.stdout
+    assert "escalate | family=approval" not in decision_result.stdout
+
+
+def test_guard_decision_list_cli_reports_empty_database():
+    path = db_path("guard-list-empty")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "pigenus.cli.main", "guard-decision-list", "--db", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "No guard decision records found." in result.stdout

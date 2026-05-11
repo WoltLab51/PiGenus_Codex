@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.32-guard-families-minimal`
+- Name: `pigenus-v0.2.33-guard-family-decision-log-surface`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `176 passed`
+- Last verified result: `179 passed`
 
 ## Current Runtime Shape
 
@@ -44,6 +44,7 @@ PiGenus is a small local cognitive core. It has:
 - Stable guard decision families on results and trace steps
 - Shadow-mode guard runtime preview against adapted runtime objects
 - Governance decision logging through the durable decision log
+- Read-only guard decision inspection by decision and family
 - Demo orchestrator guard preview in warning mode
 - Selective guard enforcement for hard block decisions only
 - Human approval stub with pending, approved, and rejected states
@@ -114,12 +115,13 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Context boundary decisions can be preview-logged through the decision log with explicit operator opt-in.
 - `context-boundary-list` is read-only and filters logged boundary decisions by cell, context, room, and allowed status.
 - Guard pipeline results and trace steps expose stable decision families without changing policy outcomes.
+- `guard-decision-list` is read-only and filters logged governance decisions by final decision and family.
 
 ## Next Recommended Work
 
-Finish Guard Family Decision Log Surface:
+Finish Guard Family Summary Minimal:
 
-- Make existing governance decision traces easier to inspect by family.
+- Summarize stored guard decisions by final decision and family.
 - Keep new policy, storage migrations, enforcement changes, and dashboard inspection out of scope.
 
 ## Operator Note

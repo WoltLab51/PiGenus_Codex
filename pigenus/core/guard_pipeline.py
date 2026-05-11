@@ -110,6 +110,7 @@ class GuardPipeline:
             rule_id=rule_id,
             requires_human=result.requires_human,
             details={
+                "family": result.family,
                 "trace": [step.model_dump(mode="json") for step in result.trace],
             },
         )

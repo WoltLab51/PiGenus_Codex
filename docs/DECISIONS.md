@@ -534,3 +534,19 @@ Operators and later inspection surfaces need a quick way to understand which
 class of policy produced a decision without parsing every low-level reason
 string. Adding the family at the guard boundary preserves current behavior and
 storage while making traces easier to scan and aggregate later.
+
+## D-040: Guard Decisions Get A Focused Read-Only Surface
+
+Decision:
+
+Logged governance decisions produced by the guard pipeline are exposed through
+`guard-decision-list`. The command filters by final decision and guard family,
+and reads existing decision records without writing, migrating, or changing
+enforcement.
+
+Reason:
+
+The generic `decision-list` should remain stable and compact. Guard decisions
+now carry enough structure to deserve a focused inspection path, especially as
+families become the primary operator-level explanation of why a guard allowed,
+blocked, or escalated work.
