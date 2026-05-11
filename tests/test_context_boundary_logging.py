@@ -38,6 +38,23 @@ def run_context_boundary_check(path: Path, cell_id: str, *args: str) -> subproce
     )
 
 
+def run_context_boundary_list(path: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pigenus.cli.main",
+            "context-boundary-list",
+            "--db",
+            str(path),
+            *args,
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+
 def register_input_cell(path: Path) -> str:
     database = Database(path)
     database.initialize()
@@ -129,3 +146,60 @@ def test_context_boundary_check_cli_returns_clean_error_for_unknown_cell():
     assert result.returncode == 1
     assert "Cell not found: cell_missing" in result.stdout
     assert result.stderr == ""
+
+
+def test_context_boundary_list_cli_reports_empty_database():
+    result = run_context_boundary_list(db_path("empty-list"))
+
+    assert result.returncode == 0
+    assert "No context boundary decisions found." in result.stdout
+
+
+def test_context_boundary_list_cli_prints_logged_decisions_without_modifying_data():
+    path = db_path("list")
+    cell_id = register_input_cell(path)
+    run_context_boundary_check(path, cell_id, "--context", "developer/default", "--log")
+
+    result = run_context_boundary_list(path)
+
+    database = Database(path)
+    database.initialize()
+    assert "input_cell@0.1.0 | developer/default | room_developer | allowed=yes" in result.stdout
+    assert "context_allowed" in result.stdout
+    assert DecisionRepository(database).count() == 1
+    database.close()
+
+
+def test_context_boundary_list_cli_filters_by_cell_context_room_and_allowed():
+    path = db_path("filters")
+    cell_id = register_input_cell(path)
+    run_context_boundary_check(path, cell_id, "--context", "developer/default", "--log")
+    run_context_boundary_check(path, cell_id, "--context", "trading/default", "--log")
+
+    result = run_context_boundary_list(
+        path,
+        "--cell",
+        "input_cell@0.1.0",
+        "--context",
+        "trading/default",
+        "--room",
+        "room_trading",
+        "--allowed",
+        "no",
+    )
+
+    assert "trading/default" in result.stdout
+    assert "allowed=no" in result.stdout
+    assert "developer/default" not in result.stdout
+
+
+def test_context_boundary_list_cli_allowed_filter_can_select_allowed_decisions():
+    path = db_path("allowed-filter")
+    cell_id = register_input_cell(path)
+    run_context_boundary_check(path, cell_id, "--context", "developer/default", "--log")
+    run_context_boundary_check(path, cell_id, "--context", "trading/default", "--log")
+
+    result = run_context_boundary_list(path, "--allowed", "yes")
+
+    assert "developer/default" in result.stdout
+    assert "trading/default" not in result.stdout

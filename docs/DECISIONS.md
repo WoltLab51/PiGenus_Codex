@@ -503,3 +503,18 @@ Boundary decisions are useful governance evidence, but automatic logging would
 change runtime side effects across every orchestrated cell step. An explicit
 preview path proves the durable record shape while preserving current
 orchestration behavior.
+
+## D-038: Boundary Decision Inspection Is Focused And Read-Only
+
+Decision:
+
+Logged context boundary decisions are exposed through a dedicated read-only
+`context-boundary-list` CLI command with filters for cell, context, room, and
+allowed status. The generic `decision-list` remains unchanged.
+
+Reason:
+
+Boundary decisions are operationally important enough to deserve focused
+inspection, but not enough to justify new storage or dashboard work yet. A
+filtered read-only command keeps review fast while preserving the existing
+decision log as the durable source.

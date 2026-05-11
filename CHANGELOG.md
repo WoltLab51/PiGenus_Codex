@@ -2,7 +2,10 @@
 
 ## Unreleased
 
-No unreleased changes.
+- Added read-only `context-boundary-list` CLI command
+- Added filters for cell, context, room, and allowed status
+- Added context boundary inspection tests for empty output, read-only behavior, and filters
+- Verified: 176 tests passed
 
 ## pigenus-v0.2.30-context-boundary-decision-logging-preview
 

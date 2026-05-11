@@ -394,7 +394,7 @@ Out of scope:
 - room-flow integration changes
 - persistence changes
 
-## Current
+## Completed
 
 ### pigenus-v0.2.30-context-boundary-decision-logging-preview
 
@@ -416,15 +416,34 @@ Out of scope:
 - new context policy
 - dashboard inspection
 
-## Next
+## Current
 
-### Context Boundary Decision Inspection
+### pigenus-v0.2.31-context-boundary-decision-inspection
 
 Goal: expose persisted context boundary decisions through a focused read-only
 inspection path without changing existing decision-list behavior.
 
+Implemented scope:
+
+- read-only `context-boundary-list` CLI command
+- filters for cell, context, room, and allowed status
+- tests for empty output, list output, filters, and read-only behavior
+
+Out of scope:
+
+- detail view
+- aggregation
+- export behavior
+- dashboard inspection
+
+## Next
+
+### Guard Families Minimal
+
+Goal: group guard decisions into stable families so policy output can be scanned
+without parsing individual reasons.
+
 ## Later
 
-- Guard families
 - Worker interface
 - Controlled cell evolution

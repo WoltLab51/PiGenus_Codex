@@ -537,3 +537,17 @@ Why it mattered:
 Operators can now preview a cell/context boundary decision and choose whether to
 persist it. This keeps the default path read-only while giving governance work a
 durable trace shape before automatic orchestration logging is considered.
+
+## Context Boundary Decision Inspection
+
+The system gained:
+
+- `context-boundary-list` CLI command
+- Filters for cell, context, room, and allowed status
+- Tests for empty output, list output, filters, and read-only behavior
+
+Why it mattered:
+
+Persisted boundary decisions now have a focused inspection path instead of
+being buried inside the general decision log. This keeps operator workflows
+simple while leaving aggregation, exports, and dashboards for later.

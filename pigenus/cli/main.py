@@ -16,6 +16,7 @@ from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.core.runtime_overview import RuntimeOverviewBuilder
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.registry import SchemaRegistry
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
@@ -33,6 +34,7 @@ EMPTY_CELL_LIST_MESSAGE = "No cells found."
 EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 EMPTY_EVENT_LIST_MESSAGE = "No events found."
 EMPTY_MEANING_LIST_MESSAGE = "No meaning objects found."
+EMPTY_CONTEXT_BOUNDARY_LIST_MESSAGE = "No context boundary decisions found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -147,6 +149,21 @@ def build_parser() -> argparse.ArgumentParser:
         "--log",
         action="store_true",
         help="Persist the preview decision to the decision log.",
+    )
+
+    context_boundary_list = subparsers.add_parser(
+        "context-boundary-list",
+        help="List logged context boundary decisions without modifying them.",
+    )
+    context_boundary_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    context_boundary_list.add_argument("--cell", default=None, help="Filter by cell ID.")
+    context_boundary_list.add_argument("--context", default=None, help="Filter by context name.")
+    context_boundary_list.add_argument("--room", default=None, help="Filter by room ID.")
+    context_boundary_list.add_argument(
+        "--allowed",
+        choices=("yes", "no"),
+        default=None,
+        help="Filter by allow/deny decision.",
     )
 
     subparsers.add_parser("permission-list", help="List built-in permissions without modifying them.")
@@ -507,6 +524,41 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Reason: {decision.reason}")
         return 0
 
+    if args.command == "context-boundary-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            decisions = [
+                decision
+                for decision in DecisionRepository(database).list()
+                if decision.decision_type == "context_boundary"
+            ]
+        finally:
+            database.close()
+
+        decisions = _filter_context_boundary_decisions(
+            decisions,
+            cell_id=args.cell,
+            context=args.context,
+            room_id=args.room,
+            allowed=args.allowed,
+        )
+
+        if not decisions:
+            print(EMPTY_CONTEXT_BOUNDARY_LIST_MESSAGE)
+            return 0
+
+        for decision in decisions:
+            details = decision.details
+            boundary = details.get("context_boundary", {})
+            allowed = "yes" if bool(details.get("allowed")) else "no"
+            print(
+                f"{decision.decision_id} | {decision.actor} | "
+                f"{boundary.get('context', '')} | {details.get('room_id', '')} | "
+                f"allowed={allowed} | {decision.reason}"
+            )
+        return 0
+
     if args.command == "permission-list":
         rules = PermissionRegistry().list_default_rules()
         if not rules:
@@ -527,6 +579,30 @@ def _meaning_summary(content: dict[str, object]) -> str:
         if value is not None:
             return str(value)
     return json.dumps(content, ensure_ascii=True, sort_keys=True)
+
+
+def _filter_context_boundary_decisions(
+    decisions: list[DecisionRecord],
+    *,
+    cell_id: str | None,
+    context: str | None,
+    room_id: str | None,
+    allowed: str | None,
+) -> list[DecisionRecord]:
+    filtered: list[DecisionRecord] = []
+    for decision in decisions:
+        details = decision.details
+        boundary = details.get("context_boundary", {})
+        if cell_id is not None and decision.actor != cell_id:
+            continue
+        if context is not None and boundary.get("context") != context:
+            continue
+        if room_id is not None and details.get("room_id") != room_id:
+            continue
+        if allowed is not None and bool(details.get("allowed")) != (allowed == "yes"):
+            continue
+        filtered.append(decision)
+    return filtered
 
 
 if __name__ == "__main__":
