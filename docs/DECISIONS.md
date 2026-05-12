@@ -666,3 +666,18 @@ Reason:
 The kernel has reached a coherent governed-runtime shape. Cutting v0.3.0 now
 creates a stable baseline before worker runtime, federation, LLM orchestration,
 dashboard surfaces, and controlled evolution introduce larger design pressure.
+
+## D-048: Liquid Runtime Is A Future Proposal Layer
+
+Decision:
+
+Liquid Runtime is documented as a future proposal and preview layer, not as a
+v0.3 runtime feature. No proposed form becomes real without validation, guard
+decision, and trace.
+
+Reason:
+
+Dynamic form formation may become important for flexible GENUS orchestration,
+but uncontrolled dynamism would undermine the governed runtime baseline. The
+concept stays useful only if it is constrained by known inventory, contracts,
+rooms, context stacks, resources, guards, and explicit traces.

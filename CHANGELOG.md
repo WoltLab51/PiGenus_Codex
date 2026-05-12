@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-No unreleased changes.
+- Added `docs/LIQUID_RUNTIME.md` as a future concept document
+- Added Liquid Runtime as a later architecture track in `BUILD_PLAN.md`
+- Recorded `D-048: Liquid Runtime Is A Future Proposal Layer`
 
 ## pigenus-v0.3.0-governed-runtime
 

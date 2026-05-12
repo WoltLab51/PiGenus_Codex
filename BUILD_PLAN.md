@@ -232,6 +232,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Human approval UI after approval records and guard summaries are stable
 - Visual system maps after the architecture vocabulary stops shifting rapidly
 
+### M. Liquid Runtime
+
+- Dynamic form proposals from known runtime inventory
+- Shape previews before execution
+- Guarded execution only after validation, guard decision, and trace
+- No arbitrary capability invention
+- No self-modification or hidden mutation
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior

@@ -697,3 +697,21 @@ Why it mattered:
 This release marks the shift from a long `0.2.x` kernel completion arc into a
 named governed runtime baseline. It is not a worker, federation, LLM, dashboard,
 or evolution release. It is a boring reliability cut for the local GENUS core.
+
+## Liquid Runtime Concept
+
+The project gained:
+
+- `docs/LIQUID_RUNTIME.md`
+- A future concept for dynamic form proposals
+- The rule that no proposed form becomes real without validation, guard
+  decision, and trace
+- Explicit non-goals around self-modification, arbitrary agent spawning, and
+  bypassing rooms, contracts, or guards
+
+Why it mattered:
+
+GENUS may eventually need more flexible task-specific runtime shapes, but that
+flexibility must sit above the v0.3 governed runtime instead of dissolving it.
+Documenting the concept now keeps the idea available without turning it into an
+immediate implementation commitment.
