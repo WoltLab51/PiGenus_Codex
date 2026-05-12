@@ -634,3 +634,19 @@ The runtime needs operator-level accountability before it needs analytics
 storage or dashboards. A derived summary gives immediate visibility into guard
 behavior without adding migrations, new policy, enforcement changes, or a
 second source of truth.
+
+## D-046: v0.3 Is A Governed Runtime Cut
+
+Decision:
+
+`pigenus-v0.3.0-governed-runtime` is defined as a semantic release cut for the
+local governed runtime. The cut should verify meaning, room/context governance,
+guard families, decision logging, approval stubs, backup, health checks, and
+operator inspection as one coherent local runtime.
+
+Reason:
+
+The project has enough kernel capability that continuing to add `0.2.x`
+features risks blurring the release boundary. A readiness document defines what
+is already ready, what remains, and what stays out of scope so v0.3 can be a
+boring reliability milestone instead of a feature grab.

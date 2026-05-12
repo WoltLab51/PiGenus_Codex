@@ -4,6 +4,14 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.39-v0-3-readiness-check
+
+- Added `docs/V0_3_GOVERNED_RUNTIME_READINESS.md`
+- Documented what is ready, what remains, and what is out of scope before `pigenus-v0.3.0-governed-runtime`
+- Documented migration limits and ContextStack runtime rules before the v0.3 cut
+- Recorded `D-046: v0.3 Is A Governed Runtime Cut`
+- Verified: 187 tests passed
+
 ## pigenus-v0.2.38-guard-family-summary-minimal
 
 - Added read-only `guard-decision-summary` CLI command

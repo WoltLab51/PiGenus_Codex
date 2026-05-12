@@ -663,3 +663,19 @@ Why it mattered:
 Guard families are now inspectable both as individual records and as a small
 operator summary. This improves accountability before scale without adding
 analytics storage, migrations, dashboards, or new enforcement policy.
+
+## v0.3 Governed Runtime Readiness
+
+The project gained:
+
+- `docs/V0_3_GOVERNED_RUNTIME_READINESS.md`
+- A readiness definition for `pigenus-v0.3.0-governed-runtime`
+- Explicit remaining work before the v0.3 tag
+- Out-of-scope boundaries for workers, LLMs, dashboards, federation, and evolution
+- Migration and ContextStack runtime rules before v0.3
+
+Why it mattered:
+
+The kernel completion arc is close enough to a semantic release that the next
+step should be verification, not more feature drift. The readiness document
+turns v0.3 into a governed release cut with explicit non-goals.

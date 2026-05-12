@@ -2,7 +2,7 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.38-guard-family-summary-minimal`
+- Name: `pigenus-v0.2.39-v0-3-readiness-check`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
@@ -58,6 +58,7 @@ PiGenus is a small local cognitive core. It has:
   controlled evolution
 - Release semantics that distinguish `0.2.x` kernel checkpoints from the
   planned `0.3.0` governed runtime cut
+- v0.3 governed runtime readiness document
 
 Current demo flow:
 
@@ -128,13 +129,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - GENUS philosophy is documented separately from the build plan.
 - Version numbers distinguish local checkpoints from larger release arcs.
 - Context frames are modeled as conditions around actions and do not replace rooms, actors, cells, organs, agents, or characters.
+- `ContextFrame` and `ContextStack` remain ontology-only until after v0.3 unless a separate migration and inspection plan exists.
 
 ## Next Recommended Work
 
-Finish v0.3 Governed Runtime Readiness Check:
+Finish v0.3 Governed Runtime Release Cut:
 
-- Document what is already v0.3-ready and what remains before `pigenus-v0.3.0-governed-runtime`.
-- Keep runtime rewrites, storage migrations, workers, LLMs, dashboard, and evolution out of scope.
+- Merge the current branch into the release branch.
+- Add a final `pigenus-v0.3.0-governed-runtime` changelog section.
+- Run full tests, tag, and push the release.
 
 ## Operator Note
 

@@ -180,13 +180,13 @@ Completed checkpoints:
 
 Current checkpoint:
 
-- `pigenus-v0.2.38-guard-family-summary-minimal`: summarize stored guard
-  decisions by final decision and family, read-only, no migration, no dashboard
+- `pigenus-v0.2.39-v0-3-readiness-check`: document what remains before
+  `pigenus-v0.3.0-governed-runtime`
 
 Next checkpoint:
 
-- `pigenus-v0.2.39-v0-3-readiness-check`: document what remains before
-  `pigenus-v0.3.0-governed-runtime`
+- `pigenus-v0.3.0-governed-runtime`: semantic release cut after final branch
+  verification, changelog section, and release tag
 
 ## Later Architecture Tracks
 
