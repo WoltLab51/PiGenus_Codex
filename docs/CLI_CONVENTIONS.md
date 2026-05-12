@@ -38,6 +38,7 @@ python -m pigenus.cli.main meaning-show bo_example --db pigenus.sqlite3
 python -m pigenus.cli.main meaning-ingest-memory mem_example --db pigenus.sqlite3
 python -m pigenus.cli.main decision-list --db pigenus.sqlite3
 python -m pigenus.cli.main guard-decision-list --db pigenus.sqlite3 --family room_flow
+python -m pigenus.cli.main guard-decision-summary --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 python -m pigenus.cli.main context-list
@@ -56,5 +57,6 @@ preview decision record to the decision log.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `guard-decision-list`,
-`audit-list`, `cell-list`, `context-list`, `context-boundary-check` without
-`--log`, `context-boundary-list`, and `permission-list` are read-only.
+`guard-decision-summary`, `audit-list`, `cell-list`, `context-list`,
+`context-boundary-check` without `--log`, `context-boundary-list`, and
+`permission-list` are read-only.

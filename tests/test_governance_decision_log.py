@@ -279,3 +279,90 @@ def test_guard_decision_list_cli_reports_empty_database():
     )
 
     assert "No guard decision records found." in result.stdout
+
+
+def test_guard_decision_summary_cli_groups_by_decision_and_family():
+    path = db_path("guard-summary")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    GovernanceDecisionLogger(repository).add(pipeline_decision())
+    GovernanceDecisionLogger(repository).add(pipeline_decision())
+    GovernanceDecisionLogger(repository).add(
+        pipeline_decision(
+            source_room_id="room_private",
+            target_room_id="room_public",
+            sensitivity=Sensitivity.PRIVATE,
+            contract_override={"room_scope": ["room_private"]},
+        ),
+        context={"name": "private/default"},
+    )
+    GovernanceDecisionLogger(repository).add(
+        pipeline_decision(
+            target_room_id=None,
+            contract_override={"human_approval_required": ["memory_write"]},
+        )
+    )
+    database.close()
+
+    result = subprocess.run(
+        [sys.executable, "-m", "pigenus.cli.main", "guard-decision-summary", "--db", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    database = Database(path)
+    database.initialize()
+    assert "allow | family=allowed | count=2" in result.stdout
+    assert "block | family=room_flow | count=1" in result.stdout
+    assert "escalate | family=approval | count=1" in result.stdout
+    assert DecisionRepository(database).count() == 4
+    database.close()
+
+
+def test_guard_decision_summary_cli_filters_before_counting():
+    path = db_path("guard-summary-filter")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    GovernanceDecisionLogger(repository).add(pipeline_decision())
+    GovernanceDecisionLogger(repository).add(
+        pipeline_decision(
+            target_room_id=None,
+            contract_override={"human_approval_required": ["memory_write"]},
+        )
+    )
+    database.close()
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pigenus.cli.main",
+            "guard-decision-summary",
+            "--db",
+            str(path),
+            "--family",
+            "approval",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "escalate | family=approval | count=1" in result.stdout
+    assert "allow | family=allowed" not in result.stdout
+
+
+def test_guard_decision_summary_cli_reports_empty_database():
+    path = db_path("guard-summary-empty")
+
+    result = subprocess.run(
+        [sys.executable, "-m", "pigenus.cli.main", "guard-decision-summary", "--db", str(path)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "No guard decision records found." in result.stdout

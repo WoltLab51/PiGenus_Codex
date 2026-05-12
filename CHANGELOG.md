@@ -4,6 +4,14 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.38-guard-family-summary-minimal
+
+- Added read-only `guard-decision-summary` CLI command
+- Added guard decision summary grouping by final decision and family
+- Added summary filters for final decision and family
+- Added tests for summary output, filters, empty databases, and read-only behavior
+- Verified: 187 tests passed
+
 ## pigenus-v0.2.37-context-stack-ontology
 
 - Added additive `ContextFrameType`, `ContextFrame`, and `ContextStack` Systemform models

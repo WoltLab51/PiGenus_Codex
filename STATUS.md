@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.37-context-stack-ontology`
+- Name: `pigenus-v0.2.38-guard-family-summary-minimal`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `184 passed`
+- Last verified result: `187 passed`
 
 ## Current Runtime Shape
 
@@ -46,6 +46,7 @@ PiGenus is a small local cognitive core. It has:
 - Shadow-mode guard runtime preview against adapted runtime objects
 - Governance decision logging through the durable decision log
 - Read-only guard decision inspection by decision and family
+- Read-only guard decision summaries by decision and family
 - Demo orchestrator guard preview in warning mode
 - Selective guard enforcement for hard block decisions only
 - Human approval stub with pending, approved, and rejected states
@@ -122,6 +123,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `context-boundary-list` is read-only and filters logged boundary decisions by cell, context, room, and allowed status.
 - Guard pipeline results and trace steps expose stable decision families without changing policy outcomes.
 - `guard-decision-list` is read-only and filters logged governance decisions by final decision and family.
+- `guard-decision-summary` is read-only and summarizes logged governance decisions by final decision and family.
 - `BUILD_PLAN.md` is organized as an architecture map instead of repeated current checkpoint sections.
 - GENUS philosophy is documented separately from the build plan.
 - Version numbers distinguish local checkpoints from larger release arcs.
@@ -129,10 +131,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 
 ## Next Recommended Work
 
-Finish Guard Family Summary Minimal:
+Finish v0.3 Governed Runtime Readiness Check:
 
-- Summarize stored guard decisions by final decision and family.
-- Keep new policy, storage migrations, enforcement changes, and dashboard inspection out of scope.
+- Document what is already v0.3-ready and what remains before `pigenus-v0.3.0-governed-runtime`.
+- Keep runtime rewrites, storage migrations, workers, LLMs, dashboard, and evolution out of scope.
 
 ## Operator Note
 

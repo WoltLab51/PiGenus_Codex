@@ -648,3 +648,18 @@ no longer need to carry every contextual meaning. Context frames now describe
 formal conditions around an action, and context stacks can later become the
 task-level operating envelope without replacing actors, cells, organs, agents,
 characters, or rooms.
+
+## Guard Family Summary Minimal
+
+The system gained:
+
+- `guard-decision-summary` CLI command
+- Summary counts grouped by final guard decision and family
+- Filters for final decision and family before summarization
+- Tests for output, filters, empty databases, and read-only behavior
+
+Why it mattered:
+
+Guard families are now inspectable both as individual records and as a small
+operator summary. This improves accountability before scale without adding
+analytics storage, migrations, dashboards, or new enforcement policy.

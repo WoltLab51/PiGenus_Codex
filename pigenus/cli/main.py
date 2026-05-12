@@ -133,6 +133,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="Filter by final guard decision.",
     )
 
+    guard_decision_summary = subparsers.add_parser(
+        "guard-decision-summary",
+        help="Summarize logged guard governance decisions without modifying them.",
+    )
+    guard_decision_summary.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    guard_decision_summary.add_argument("--family", default=None, help="Filter by guard decision family.")
+    guard_decision_summary.add_argument(
+        "--decision",
+        choices=("allow", "block", "escalate"),
+        default=None,
+        help="Filter by final guard decision.",
+    )
+
     audit_list = subparsers.add_parser("audit-list", help="List audit log rows without modifying them.")
     audit_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     audit_list.add_argument("--actor", default=None, help="Filter by audit actor.")
@@ -477,6 +490,32 @@ def main(argv: list[str] | None = None) -> int:
             )
         return 0
 
+    if args.command == "guard-decision-summary":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            decisions = [
+                decision
+                for decision in DecisionRepository(database).list()
+                if decision.decision_type == "governance_decision"
+            ]
+        finally:
+            database.close()
+
+        decisions = _filter_guard_decisions(
+            decisions,
+            family=args.family,
+            decision=args.decision,
+        )
+
+        if not decisions:
+            print("No guard decision records found.")
+            return 0
+
+        for decision_name, family, count in _summarize_guard_decisions(decisions):
+            print(f"{decision_name} | family={family} | count={count}")
+        return 0
+
     if args.command == "audit-list":
         database = Database(Path(args.db))
         database.initialize()
@@ -696,6 +735,23 @@ def _guard_decision_family(decision: DecisionRecord) -> str:
         if isinstance(step, dict) and step.get("family"):
             return str(step["family"])
     return ""
+
+
+def _guard_decision_name(decision: DecisionRecord) -> str:
+    details = decision.details
+    governance = _governance_decision_details(details)
+    return str(details.get("decision") or governance.get("decision") or "")
+
+
+def _summarize_guard_decisions(decisions: list[DecisionRecord]) -> list[tuple[str, str, int]]:
+    counts: dict[tuple[str, str], int] = {}
+    for decision in decisions:
+        key = (_guard_decision_name(decision), _guard_decision_family(decision))
+        counts[key] = counts.get(key, 0) + 1
+    return [
+        (decision_name, family, count)
+        for (decision_name, family), count in sorted(counts.items())
+    ]
 
 
 def _governance_decision_details(details: dict[str, object]) -> dict[str, object]:

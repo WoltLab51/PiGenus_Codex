@@ -619,3 +619,18 @@ cut. The system needs a way to describe task conditions without confusing them
 with actors, agents, characters, cells, organs, or rooms. Adding these concepts
 as models first keeps the ontology explicit while avoiding a risky runtime,
 storage, CLI, or migration rewrite.
+
+## D-045: Guard Summaries Stay Read-Only And Derived
+
+Decision:
+
+PiGenus exposes `guard-decision-summary` as a read-only CLI command derived
+from existing governance decision records. It groups decisions by final guard
+decision and family, and reuses the same filters as `guard-decision-list`.
+
+Reason:
+
+The runtime needs operator-level accountability before it needs analytics
+storage or dashboards. A derived summary gives immediate visibility into guard
+behavior without adding migrations, new policy, enforcement changes, or a
+second source of truth.

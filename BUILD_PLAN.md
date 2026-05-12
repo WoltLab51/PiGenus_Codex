@@ -173,18 +173,20 @@ Completed checkpoints:
   steps
 - `pigenus-v0.2.33-guard-family-decision-log-surface`: read-only
   `guard-decision-list` with decision and family filters
+- `pigenus-v0.2.38-guard-family-summary-minimal`: read-only
+  `guard-decision-summary` grouped by decision and family
 
 ## Current And Next
 
 Current checkpoint:
 
-- `pigenus-v0.2.37-context-stack-ontology`: introduce `ContextFrame` and
-  `ContextStack` as additive Systemform concepts without replacing `Room`
+- `pigenus-v0.2.38-guard-family-summary-minimal`: summarize stored guard
+  decisions by final decision and family, read-only, no migration, no dashboard
 
 Next checkpoint:
 
-- `pigenus-v0.2.38-guard-family-summary-minimal`: summarize stored guard
-  decisions by final decision and family, read-only, no migration, no dashboard
+- `pigenus-v0.2.39-v0-3-readiness-check`: document what remains before
+  `pigenus-v0.3.0-governed-runtime`
 
 ## Later Architecture Tracks
 
