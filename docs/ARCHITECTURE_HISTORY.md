@@ -679,3 +679,21 @@ Why it mattered:
 The kernel completion arc is close enough to a semantic release that the next
 step should be verification, not more feature drift. The readiness document
 turns v0.3 into a governed release cut with explicit non-goals.
+
+## v0.3 Governed Runtime
+
+The project reached:
+
+- `pigenus-v0.3.0-governed-runtime`
+- local governed runtime semantics
+- Meaning Store and meaning inspection
+- room/context governance and additive ContextStack ontology
+- guard pipeline, guard families, decision logging, and guard summaries
+- selective hard-block enforcement and human approval stub records
+- operator inspection, health checks, and local snapshot backups
+
+Why it mattered:
+
+This release marks the shift from a long `0.2.x` kernel completion arc into a
+named governed runtime baseline. It is not a worker, federation, LLM, dashboard,
+or evolution release. It is a boring reliability cut for the local GENUS core.

@@ -650,3 +650,19 @@ The project has enough kernel capability that continuing to add `0.2.x`
 features risks blurring the release boundary. A readiness document defines what
 is already ready, what remains, and what stays out of scope so v0.3 can be a
 boring reliability milestone instead of a feature grab.
+
+## D-047: v0.3.0 Freezes The Governed Runtime Baseline
+
+Decision:
+
+`pigenus-v0.3.0-governed-runtime` freezes the current local governed runtime
+baseline. The release includes meaning persistence, room/context governance,
+guard pipeline, guard families, decision logging, inspection surfaces, backup,
+health checks, human approval stubs, documented ontology, and release
+semantics.
+
+Reason:
+
+The kernel has reached a coherent governed-runtime shape. Cutting v0.3.0 now
+creates a stable baseline before worker runtime, federation, LLM orchestration,
+dashboard surfaces, and controlled evolution introduce larger design pressure.

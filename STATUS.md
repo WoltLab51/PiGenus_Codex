@@ -2,9 +2,9 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.39-v0-3-readiness-check`
-- Branch: `codex-context-boundary-room-metadata`
-- Status: ready to checkpoint
+- Name: `pigenus-v0.3.0-governed-runtime`
+- Branch: `main`
+- Status: release cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `187 passed`
 
@@ -59,6 +59,7 @@ PiGenus is a small local cognitive core. It has:
 - Release semantics that distinguish `0.2.x` kernel checkpoints from the
   planned `0.3.0` governed runtime cut
 - v0.3 governed runtime readiness document
+- v0.3 governed runtime changelog section
 
 Current demo flow:
 
@@ -133,11 +134,11 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 
 ## Next Recommended Work
 
-Finish v0.3 Governed Runtime Release Cut:
+Finish v0.3 Governed Runtime Release Tag:
 
-- Merge the current branch into the release branch.
-- Add a final `pigenus-v0.3.0-governed-runtime` changelog section.
-- Run full tests, tag, and push the release.
+- Run full tests on `main`.
+- Tag `pigenus-v0.3.0-governed-runtime`.
+- Push `main` and the release tag.
 
 ## Operator Note
 

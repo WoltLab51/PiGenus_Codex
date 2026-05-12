@@ -4,6 +4,18 @@
 
 No unreleased changes.
 
+## pigenus-v0.3.0-governed-runtime
+
+- Cut the first semantic governed runtime release
+- Includes Systemform models, adapters, contract validation, room-flow rules, guard pipeline, and selective hard-block enforcement
+- Includes Meaning Store, meaning inspection, explicit memory-to-meaning ingestion, and runtime overview meaning counts
+- Includes governance decision logging, guard decision family inspection, guard decision summaries, and human approval stub records
+- Includes context boundary room metadata, boundary decision logging preview, boundary decision inspection, and additive ContextFrame/ContextStack ontology
+- Includes operator safety surfaces for health checks, backups, event/audit/decision/cell/context/permission inspection, and runtime overview
+- Includes GENUS philosophy, release semantics, v0.3 readiness documentation, architecture history, and durable decisions
+- Explicitly excludes workers, LLM orchestration, autonomous agents, vector search, federation, dashboard, trading execution, and controlled evolution
+- Verified: 187 tests passed
+
 ## pigenus-v0.2.39-v0-3-readiness-check
 
 - Added `docs/V0_3_GOVERNED_RUNTIME_READINESS.md`

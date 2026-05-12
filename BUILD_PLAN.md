@@ -180,13 +180,13 @@ Completed checkpoints:
 
 Current checkpoint:
 
-- `pigenus-v0.2.39-v0-3-readiness-check`: document what remains before
-  `pigenus-v0.3.0-governed-runtime`
+- `pigenus-v0.3.0-governed-runtime`: semantic governed runtime release cut
 
 Next checkpoint:
 
-- `pigenus-v0.3.0-governed-runtime`: semantic release cut after final branch
-  verification, changelog section, and release tag
+- `pigenus-v0.3.1-post-release-stabilization`: verify the release tag,
+  inspect the release runtime, and keep new features out until the cut is
+  confirmed
 
 ## Later Architecture Tracks
 
