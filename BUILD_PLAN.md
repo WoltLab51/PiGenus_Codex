@@ -159,6 +159,8 @@ Completed checkpoints:
   `context-boundary-check --log`
 - `pigenus-v0.2.31-context-boundary-decision-inspection`: read-only
   `context-boundary-list`
+- `pigenus-v0.2.37-context-stack-ontology`: additive `ContextFrame` and
+  `ContextStack` models plus context model documentation
 
 ### G. Guard Families
 
@@ -172,15 +174,16 @@ Completed checkpoints:
 - `pigenus-v0.2.33-guard-family-decision-log-surface`: read-only
   `guard-decision-list` with decision and family filters
 
+## Current And Next
+
 Current checkpoint:
 
-- `pigenus-v0.2.36-release-semantics`: document the release arc from `0.2.x`
-  kernel completion to `0.3.0` governed runtime without renumbering existing
-  checkpoints
+- `pigenus-v0.2.37-context-stack-ontology`: introduce `ContextFrame` and
+  `ContextStack` as additive Systemform concepts without replacing `Room`
 
 Next checkpoint:
 
-- `pigenus-v0.2.37-guard-family-summary-minimal`: summarize stored guard
+- `pigenus-v0.2.38-guard-family-summary-minimal`: summarize stored guard
   decisions by final decision and family, read-only, no migration, no dashboard
 
 ## Later Architecture Tracks

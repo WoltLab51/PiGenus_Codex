@@ -4,7 +4,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from pigenus.schemas.base import new_id, utc_now
 
@@ -72,6 +72,18 @@ class RoomProtectionLevel(str, Enum):
     ISOLATED = "isolated"
 
 
+class ContextFrameType(str, Enum):
+    DOMAIN = "domain"
+    GOVERNANCE = "governance"
+    DATA = "data"
+    EXECUTION = "execution"
+    LEARNING = "learning"
+    CAPABILITY = "capability"
+    RESOURCE = "resource"
+    TIME = "time"
+    AUDIT = "audit"
+
+
 class ActorIdentity(BaseModel):
     """Stable identity for a human, cell, organ, agent, character, or system actor."""
 
@@ -98,6 +110,63 @@ class Room(BaseModel):
     created_at: datetime = Field(default_factory=utc_now)
 
 
+class ContextFrame(BaseModel):
+    """One formal condition around an action."""
+
+    id: str = Field(default_factory=lambda: new_id("cf"), min_length=1)
+    type: ContextFrameType
+    name: str = Field(min_length=1)
+    version: str = Field(default="1", min_length=1)
+    description: str | None = None
+    room_id: str | None = None
+    policy_ref: str | None = None
+    allowed_capabilities: list[str] = Field(default_factory=list)
+    denied_capabilities: list[str] = Field(default_factory=list)
+    allowed_sources: list[str] = Field(default_factory=list)
+    denied_sources: list[str] = Field(default_factory=list)
+    truth_requirement: TruthStatus | None = None
+    sensitivity_level: Sensitivity | None = None
+    risk_level: str | None = None
+    execution_mode: str | None = None
+    learning_mode: str | None = None
+    audit_level: str | None = None
+    created_at: datetime = Field(default_factory=utc_now)
+    updated_at: datetime = Field(default_factory=utc_now)
+
+    @model_validator(mode="after")
+    def reject_internal_conflicts(self) -> ContextFrame:
+        _reject_overlap(
+            self.allowed_capabilities,
+            self.denied_capabilities,
+            "capabilities",
+        )
+        _reject_overlap(self.allowed_sources, self.denied_sources, "sources")
+        return self
+
+
+class ContextStack(BaseModel):
+    """Concrete operating envelope assembled from context frames."""
+
+    id: str = Field(default_factory=lambda: new_id("cstack"), min_length=1)
+    name: str = Field(min_length=1)
+    frame_ids: list[str] = Field(min_length=1)
+    description: str | None = None
+    created_at: datetime = Field(default_factory=utc_now)
+    updated_at: datetime = Field(default_factory=utc_now)
+
+    @field_validator("frame_ids")
+    @classmethod
+    def dedupe_frame_ids(cls, frame_ids: list[str]) -> list[str]:
+        seen: set[str] = set()
+        deduped: list[str] = []
+        for frame_id in frame_ids:
+            if frame_id in seen:
+                continue
+            seen.add(frame_id)
+            deduped.append(frame_id)
+        return deduped
+
+
 class MeaningObject(BaseModel):
     """Primary semantic information object before durable memory."""
 
@@ -116,6 +185,13 @@ class MeaningObject(BaseModel):
     valid_until: datetime | None = None
     created_by: str = Field(min_length=1)
     created_at: datetime = Field(default_factory=utc_now)
+
+
+def _reject_overlap(allowed: list[str], denied: list[str], label: str) -> None:
+    overlap = set(allowed).intersection(denied)
+    if overlap:
+        values = ", ".join(sorted(overlap))
+        raise ValueError(f"ContextFrame has conflicting {label}: {values}")
 
 
 class CellContract(BaseModel):

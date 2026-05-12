@@ -601,3 +601,21 @@ The project has outgrown simple `0.2.x` patch semantics. Renumbering history
 would create churn, but leaving the meaning implicit would make future tags
 confusing. Explicit release arcs preserve the audit trail while making future
 versioning easier to understand.
+
+## D-044: Context Frames Are Conditions Around Actions
+
+Decision:
+
+PiGenus introduces additive `ContextFrameType`, `ContextFrame`, and
+`ContextStack` Systemform models. `Room` remains the existing governance,
+protection, and memory boundary. A context frame is one formal condition around
+an action, and a context stack is the concrete operating envelope assembled
+from frames.
+
+Reason:
+
+`Room` was becoming overloaded as the project approached the governed runtime
+cut. The system needs a way to describe task conditions without confusing them
+with actors, agents, characters, cells, organs, or rooms. Adding these concepts
+as models first keeps the ontology explicit while avoiding a risky runtime,
+storage, CLI, or migration rewrite.

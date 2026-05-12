@@ -2,11 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.2.36-release-semantics`
+- Name: `pigenus-v0.2.37-context-stack-ontology`
 - Branch: `codex-context-boundary-room-metadata`
 - Status: ready to checkpoint
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `179 passed`
+- Last verified result: `184 passed`
 
 ## Current Runtime Shape
 
@@ -37,6 +37,7 @@ PiGenus is a small local cognitive core. It has:
 - A minimal meaning inspection CLI
 - Additive Systemform schema models for actors, rooms, meaning objects, cell contracts,
   resource grants, and governance decisions
+- Additive ContextFrame and ContextStack Systemform concepts
 - Deterministic Systemform adapters for memory, cells, and contexts
 - Storage-free Systemform contract validator
 - Storage-free room flow rules for semantic movement between rooms
@@ -124,6 +125,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `BUILD_PLAN.md` is organized as an architecture map instead of repeated current checkpoint sections.
 - GENUS philosophy is documented separately from the build plan.
 - Version numbers distinguish local checkpoints from larger release arcs.
+- Context frames are modeled as conditions around actions and do not replace rooms, actors, cells, organs, agents, or characters.
 
 ## Next Recommended Work
 

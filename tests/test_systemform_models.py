@@ -8,6 +8,9 @@ from pigenus.schemas.systemform import (
     ActorType,
     CellContract,
     ContractStatus,
+    ContextFrame,
+    ContextFrameType,
+    ContextStack,
     GovernanceDecision,
     GuardDecisionType,
     MeaningObject,
@@ -48,6 +51,84 @@ def test_room_models_governed_boundary():
 
     assert data["id"] == "room_private"
     assert data["protection_level"] == "high"
+
+
+def test_context_frame_models_condition_around_action():
+    frame = ContextFrame(
+        type=ContextFrameType.GOVERNANCE,
+        name="live money protected",
+        room_id="room_trading",
+        policy_ref="policy_live_money_review",
+        denied_capabilities=["trade.execute"],
+        sensitivity_level=Sensitivity.FINANCIAL,
+        audit_level="full_trace",
+    )
+
+    data = frame.model_dump(mode="json")
+
+    assert frame.id.startswith("cf_")
+    assert data["type"] == "governance"
+    assert data["room_id"] == "room_trading"
+    assert data["sensitivity_level"] == "financial"
+
+
+def test_context_frame_rejects_capability_conflicts():
+    try:
+        ContextFrame(
+            type=ContextFrameType.CAPABILITY,
+            name="conflicting capability frame",
+            allowed_capabilities=["memory.write"],
+            denied_capabilities=["memory.write"],
+        )
+    except ValidationError as exc:
+        assert "conflicting capabilities" in str(exc)
+    else:
+        raise AssertionError("Expected conflicting capabilities to fail validation.")
+
+
+def test_context_frame_rejects_source_conflicts():
+    try:
+        ContextFrame(
+            type=ContextFrameType.DATA,
+            name="conflicting source frame",
+            allowed_sources=["memory"],
+            denied_sources=["memory"],
+        )
+    except ValidationError as exc:
+        assert "conflicting sources" in str(exc)
+    else:
+        raise AssertionError("Expected conflicting sources to fail validation.")
+
+
+def test_context_stack_models_operating_envelope():
+    stack = ContextStack(
+        name="robert crypto shadow stack",
+        frame_ids=[
+            "cf_domain_crypto",
+            "cf_execution_readonly",
+            "cf_governance_live_money_protected",
+            "cf_audit_full_trace",
+        ],
+    )
+
+    data = stack.model_dump(mode="json")
+
+    assert stack.id.startswith("cstack_")
+    assert data["frame_ids"] == [
+        "cf_domain_crypto",
+        "cf_execution_readonly",
+        "cf_governance_live_money_protected",
+        "cf_audit_full_trace",
+    ]
+
+
+def test_context_stack_deduplicates_frame_ids_deterministically():
+    stack = ContextStack(
+        name="deduped stack",
+        frame_ids=["cf_domain_crypto", "cf_domain_crypto", "cf_audit_full_trace"],
+    )
+
+    assert stack.frame_ids == ["cf_domain_crypto", "cf_audit_full_trace"]
 
 
 def test_meaning_object_requires_room_truth_and_creator():

@@ -4,6 +4,14 @@
 
 No unreleased changes.
 
+## pigenus-v0.2.37-context-stack-ontology
+
+- Added additive `ContextFrameType`, `ContextFrame`, and `ContextStack` Systemform models
+- Added deterministic validation for context frame allow/deny conflicts and stack duplicate frame IDs
+- Added `docs/CONTEXT_MODEL.md` to explain Room vs ContextFrame vs ContextStack
+- Documented `D-044: Context Frames Are Conditions Around Actions`
+- Verified: 184 tests passed
+
 ## pigenus-v0.2.36-release-semantics
 
 - Documented release semantics for `0.1.x` through `1.0`

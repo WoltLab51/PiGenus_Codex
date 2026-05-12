@@ -629,3 +629,22 @@ The `0.2.x` line had become a long sequence of useful checkpoints rather than
 a clean semantic release scale. Naming the arcs now avoids pretending that
 `0.2.35` and later tags are ordinary patch releases while preserving the
 existing checkpoint history.
+
+## Context Stack Ontology
+
+The system gained:
+
+- `ContextFrameType`
+- `ContextFrame`
+- `ContextStack`
+- `docs/CONTEXT_MODEL.md`
+- Tests for frame serialization, conflict rejection, stack composition, and
+  duplicate frame handling
+
+Why it mattered:
+
+Rooms remain the existing governance, protection, and memory boundary, but they
+no longer need to carry every contextual meaning. Context frames now describe
+formal conditions around an action, and context stacks can later become the
+task-level operating envelope without replacing actors, cells, organs, agents,
+characters, or rooms.
