@@ -958,3 +958,20 @@ layer before returning to runtime work. This checkpoint freezes the
 architecture memory and review process so future verification, workers, LLM
 gateways, federation, product surfaces, and evolution have to pass through the
 same vocabulary, lifecycle, threat, and governance boundaries.
+
+## Runtime Verification Migration Hardening
+
+The project gained:
+
+- `docs/RUNTIME_VERIFICATION.md`
+- a first post-v0.3.1 runtime verification pass
+- exclusive pending migration application inside `MigrationRunner.apply()`
+- documentation of a concurrent migration version race found during CLI
+  verification
+
+Why it mattered:
+
+The verification pass exercised real operator commands against the local
+runtime and found a race in migration application. Hardening the migration
+apply step keeps initialization idempotent even when multiple runtime commands
+start near the same time.

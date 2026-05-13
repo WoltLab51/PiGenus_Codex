@@ -9,6 +9,7 @@ intentional.
 - No silent destructive schema changes.
 - No automatic row deletion during migrations.
 - Migrations should be forward-only.
+- Applying pending migrations should happen under an exclusive apply step.
 - Schema changes must be documented in `CHANGELOG.md`.
 - Schema changes should include tests or a smoke test.
 - Existing local databases should remain readable whenever practical.
@@ -33,7 +34,9 @@ Current recorded migrations:
 ```
 
 `Database.initialize()` applies pending migrations. Running it more than once
-must be safe.
+must be safe. Pending migration application is protected by an immediate SQLite
+transaction so concurrent runtime commands do not both record the same
+migration version.
 
 For now:
 

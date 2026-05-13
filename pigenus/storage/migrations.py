@@ -146,19 +146,19 @@ class MigrationRunner:
 
     def applied_versions(self) -> set[str]:
         self.initialize()
-        rows = self.connection.execute("SELECT version FROM schema_migrations").fetchall()
-        return {str(row["version"]) for row in rows}
+        return self._applied_versions_unlocked()
 
     def apply(self) -> list[str]:
         self.initialize()
-        applied = self.applied_versions()
         newly_applied: list[str] = []
 
-        for migration in MIGRATIONS:
-            if migration.version in applied:
-                continue
-            with self.connection:
-                self.connection.executescript(migration.sql)
+        self.connection.execute("BEGIN IMMEDIATE")
+        try:
+            applied = self._applied_versions_unlocked()
+            for migration in MIGRATIONS:
+                if migration.version in applied:
+                    continue
+                self._execute_script_statements(migration.sql)
                 self.connection.execute(
                     """
                     INSERT INTO schema_migrations (version, applied_at)
@@ -169,5 +169,20 @@ class MigrationRunner:
                         utc_now().astimezone(timezone.utc).isoformat(),
                     ),
                 )
-            newly_applied.append(migration.version)
+                newly_applied.append(migration.version)
+            self.connection.commit()
+        except Exception:
+            self.connection.rollback()
+            raise
+
         return newly_applied
+
+    def _applied_versions_unlocked(self) -> set[str]:
+        rows = self.connection.execute("SELECT version FROM schema_migrations").fetchall()
+        return {str(row["version"]) for row in rows}
+
+    def _execute_script_statements(self, sql: str) -> None:
+        for statement in sql.split(";"):
+            stripped = statement.strip()
+            if stripped:
+                self.connection.execute(stripped)

@@ -24,6 +24,8 @@ PiGenus is a small local cognitive core. It has:
 - CLI conventions
 - Migration policy
 - A minimal SQLite migration runner
+- Exclusive pending migration application to avoid concurrent migration version
+  races
 - A minimal schema registry
 - A minimal decision log
 - A minimal cell lifecycle surface
@@ -101,6 +103,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Lifecycle status changes create audit logs.
 - `memory-list` is read-only.
 - `Database.initialize()` applies recorded migrations idempotently.
+- Pending migrations are applied under an immediate SQLite transaction.
 - Schema registry output matches runtime event validation constants.
 - Lifecycle status changes write durable decision records.
 - `decision-list` is read-only.
@@ -190,6 +193,7 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md`: next phase implementation contract
 - `docs/CLI_CONVENTIONS.md`: CLI behavior and exit-code conventions
 - `docs/MIGRATIONS.md`: SQLite migration policy
+- `docs/RUNTIME_VERIFICATION.md`: post-release runtime verification notes
 - `docs/DOCUMENTATION_MAINTENANCE.md`: documentation upkeep rules
 - `docs/ARCHITECTURE_CONTRACT.md`: non-breaking architecture rules
 - `docs/THREAT_MODEL.md`: security and governance risk map

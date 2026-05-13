@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Hardened migration application with an immediate SQLite transaction to avoid concurrent migration version races
+- Added `docs/RUNTIME_VERIFICATION.md` with the first post-v0.3.1 runtime verification pass and findings
+- Updated migration policy to require exclusive pending migration application
+- Verified: 187 tests passed
+
 ## pigenus-v0.3.1-architecture-control
 
 - Added `docs/LIQUID_RUNTIME.md` as a future concept document

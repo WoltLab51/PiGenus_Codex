@@ -896,3 +896,20 @@ One checklist for every change would either be too weak for releases or too
 heavy for small documentation edits. A layered check keeps the project
 disciplined without making ordinary work painful. External discussion is useful
 when bounded, but it must be translated back into the actual repository state.
+
+## D-062: Pending Migration Application Is Exclusive
+
+Decision:
+
+`MigrationRunner.apply()` performs pending migration application under an
+immediate SQLite transaction. Reading applied versions, executing pending
+migration statements, recording migration versions, and committing the result
+belong to one exclusive apply step.
+
+Reason:
+
+Runtime verification found that parallel CLI commands could attempt to apply a
+pending migration at the same time and both record the same
+`schema_migrations.version`. Exclusive migration application preserves
+idempotent initialization without changing the schema or adding a new
+migration.

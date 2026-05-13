@@ -37,6 +37,7 @@ Start here when orienting yourself:
 
 - `docs/CLI_CONVENTIONS.md` - CLI behavior and exit code conventions
 - `docs/MIGRATIONS.md` - SQLite migration policy
+- `docs/RUNTIME_VERIFICATION.md` - post-release runtime verification notes
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md` - memory lifecycle implementation contract
 - `docs/DOCUMENTATION_MAINTENANCE.md` - documentation upkeep rules
 - `docs/FULL_CHECK.md` - complete quality check levels for docs, runtime, releases, PRs, and ChatGPT review
