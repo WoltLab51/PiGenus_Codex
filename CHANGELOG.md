@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added storage-free `WorkerRegistry` for known worker profiles and latest heartbeats
+- Added worker registry tests for deterministic listing, filters, heartbeat freshness, and active-considerable status
+- Recorded `D-066: Worker Registry Starts Storage-Free`
+- Verified: 199 tests passed
 - Added model-only `WorkerProfile` and `WorkerHeartbeat` Systemform schemas
 - Added worker model tests without storage, CLI, scheduling, or execution behavior
 - Recorded `D-065: Worker Models Do Not Execute`

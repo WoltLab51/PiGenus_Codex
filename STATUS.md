@@ -6,7 +6,7 @@
 - Branch: `main`
 - Status: runtime verification checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `192 passed`
+- Last verified result: `199 passed`
 
 ## Current Runtime Shape
 
@@ -41,6 +41,7 @@ PiGenus is a small local cognitive core. It has:
   resource grants, and governance decisions
 - Additive ContextFrame and ContextStack Systemform concepts
 - Model-only WorkerProfile and WorkerHeartbeat Systemform concepts
+- Storage-free WorkerRegistry for known worker profiles and latest heartbeats
 - Deterministic Systemform adapters for memory, cells, and contexts
 - Storage-free Systemform contract validator
 - Storage-free room flow rules for semantic movement between rooms
@@ -159,6 +160,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `ContextFrame` and `ContextStack` remain ontology-only until after v0.3 unless a separate migration and inspection plan exists.
 - `WorkerProfile` and `WorkerHeartbeat` are model-only and do not add storage,
   scheduling, routing, provider calls, or execution.
+- `WorkerRegistry` is storage-free and does not add database persistence, CLI
+  inspection, scheduling, routing, provider calls, or execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -180,9 +183,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, plan storage-free WorkerRegistry behavior or read-only worker inspection
-  shape while preserving the architecture contract: workers carry execution,
-  cells carry capability, organs carry composition, and agents carry goals.
+- Next, add read-only worker inspection shape or CLI planning while preserving
+  the architecture contract: workers carry execution, cells carry capability,
+  organs carry composition, and agents carry goals.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
   out of scope until worker identity, heartbeat, capability profile, cost
   profile, privacy profile, and failure semantics are clear.

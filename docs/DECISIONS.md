@@ -967,3 +967,20 @@ Worker identity and heartbeat must become testable before workers can become
 runtime infrastructure. Keeping the first step model-only preserves the v0.3
 governed runtime while preparing a clear shape for future WorkerRegistry and
 inspection work.
+
+## D-066: Worker Registry Starts Storage-Free
+
+Decision:
+
+The first `WorkerRegistry` is storage-free. It registers `WorkerProfile`
+objects, records the latest known `WorkerHeartbeat` for known workers, provides
+deterministic list and filter behavior, and can say whether a worker is
+currently considerable. It does not persist workers, add CLI commands, schedule
+tasks, route capabilities, call providers, or execute work.
+
+Reason:
+
+Worker Registry is the bridge from worker ontology to operator inspection and
+later scheduling. Starting storage-free keeps the behavior easy to test and
+review before migrations, CLI surfaces, or execution placement create durable
+runtime obligations.

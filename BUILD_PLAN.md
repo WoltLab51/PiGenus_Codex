@@ -200,6 +200,8 @@ Next checkpoint:
 - Current implementation step: model-only `WorkerProfile` and
   `WorkerHeartbeat` schemas with tests, no storage, no CLI, no scheduling, and
   no execution
+- Current implementation step: storage-free `WorkerRegistry` with tests, no
+  database persistence, no CLI, no scheduling, no routing, and no execution
 
 Readiness source:
 
@@ -224,6 +226,8 @@ meaning, inspection, and backup surfaces remain stable.
   scheduling or execution exists
 - Model-only WorkerProfile and WorkerHeartbeat come before WorkerRegistry,
   worker inspection, scheduling, or execution routing
+- Storage-free WorkerRegistry comes before worker inspection, database
+  persistence, scheduling, or execution routing
 
 ### I. Resource Economy
 

@@ -186,11 +186,17 @@ WorkerProfile
 WorkerHeartbeat
 ```
 
-After the model-only layer is stable, the next implementation should be
-registration and inspection only:
+After the model-only layer is stable, the next implementation starts as a
+storage-free registry:
 
 ```text
 WorkerRegistry
+```
+
+After the storage-free registry is stable, the next implementation should be
+read-only inspection:
+
+```text
 worker-list
 worker-show
 ```
@@ -238,4 +244,6 @@ The next safe step is not to run work on workers.
 The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
-Inspection, storage, scheduling, and execution remain later steps.
+Read-only inspection is the next safe step.
+
+Storage, scheduling, and execution remain later steps.

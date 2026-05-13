@@ -1047,3 +1047,20 @@ Worker Runtime now has its first code shape without adding storage, CLI,
 scheduling, routing, provider calls, or execution. This keeps the v0.4 arc
 inside the same additive discipline used for Systemform hardening: define and
 test the ontology before it can affect runtime behavior.
+
+## Worker Registry Storage-Free
+
+The system gained:
+
+- `WorkerRegistry`
+- registration and lookup for `WorkerProfile`
+- latest-heartbeat tracking for known workers
+- deterministic profile and heartbeat listing
+- filters for worker status, worker type, and heartbeat status
+- `is_considerable()` for active profile plus active heartbeat checks
+
+Why it mattered:
+
+Worker Runtime now has an inspectable in-memory shape before storage or CLI
+exists. This keeps worker identity and liveness testable without introducing
+database migrations, scheduling decisions, provider routing, or execution.
