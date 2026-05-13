@@ -227,6 +227,7 @@ meaning, inspection, and backup surfaces remain stable.
 - Rollback and fossil records
 - Human approval before activation
 - No self-modification until traceability is boring and complete
+- Mutation is never activation
 
 ### L. Human Governance
 

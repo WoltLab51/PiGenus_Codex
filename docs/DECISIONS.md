@@ -728,3 +728,18 @@ Future workers, resource changes, liquid runtime shapes, federation, and
 evolution will create situations where automation must slow down. Approval
 semantics need to exist before a rich approval UI, otherwise the UI becomes a
 cosmetic confirmation layer over unclear policy.
+
+## D-052: Mutation Is Never Activation
+
+Decision:
+
+Evolution Sandbox treats mutation as proposal, not active behavior. Mutations
+must pass through shadow mode, explicit fitness comparison, trace, rollback
+planning, fossil records, guard checks, and human approval before activation.
+
+Reason:
+
+GENUS may eventually need adaptation, but uncontrolled adaptation would erase
+accountability. Keeping mutation separate from activation allows the system to
+compare, reject, preserve, or approve changes without turning experimentation
+into hidden self-modification.

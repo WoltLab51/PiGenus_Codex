@@ -765,3 +765,19 @@ PiGenus already has approval stub records, but future workers, resources,
 liquid runtime shapes, federation, and evolution need stronger approval
 semantics. Human Governance makes approval accountable before it becomes a
 button.
+
+## Evolution Sandbox Concept
+
+The project gained:
+
+- `docs/EVOLUTION_SANDBOX.md`
+- Mutation as proposal, not activation
+- Shadow mode and explicit fitness comparison
+- Fossil and rollback requirements
+- Human approval before activation
+
+Why it mattered:
+
+Evolution is the most dangerous later architecture track. Documenting it now
+keeps adaptation inside governance: proposals, traces, tests, approval, fossils,
+and rollback before anything becomes active behavior.

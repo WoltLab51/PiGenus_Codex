@@ -14,6 +14,9 @@
 - Added `docs/HUMAN_GOVERNANCE.md` as a future concept document
 - Clarified review, escalation, approval, authority, and required evidence
 - Recorded `D-051: Human Approval Is A Governance Decision`
+- Added `docs/EVOLUTION_SANDBOX.md` as a future concept document
+- Clarified proposal, shadow mode, fitness comparison, fossils, rollback, and approval before activation
+- Recorded `D-052: Mutation Is Never Activation`
 
 ## pigenus-v0.3.0-governed-runtime
 
