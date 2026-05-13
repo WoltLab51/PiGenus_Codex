@@ -48,6 +48,7 @@ These documents are future-facing. They define boundaries before
 implementation:
 
 - `docs/WORKER_RUNTIME.md` - workers as execution hosts
+- `docs/WORKER_RUNTIME_READINESS.md` - v0.4 worker identity, heartbeat, profile, and failure boundary
 - `docs/RESOURCE_ECONOMY.md` - accounting before resource markets
 - `docs/LIQUID_RUNTIME.md` - dynamic form proposals under governance
 - `docs/GITHUB_IDEA_HARVEST.md` - idea harvesting without architecture merge

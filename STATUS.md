@@ -79,6 +79,9 @@ PiGenus is a small local cognitive core. It has:
   decisions, decision traces, audit logs, fossils, and future mutation proposals
 - Full check process for documentation, concept, runtime, release, PR, and
   external ChatGPT review workflows
+- Worker Runtime readiness boundary for identity, heartbeat, capability
+  profile, cost profile, privacy profile, and failure semantics before
+  scheduling or execution
 
 Current demo flow:
 
@@ -172,9 +175,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Start with a small worker readiness document or model plan that preserves the
-  architecture contract: workers carry execution, cells carry capability,
-  organs carry composition, and agents carry goals.
+- Start with model-only WorkerProfile and WorkerHeartbeat concepts, tests, and
+  inspection planning that preserve the architecture contract: workers carry
+  execution, cells carry capability, organs carry composition, and agents carry
+  goals.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
   out of scope until worker identity, heartbeat, capability profile, cost
   profile, privacy profile, and failure semantics are clear.
@@ -200,3 +204,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/THREAT_MODEL.md`: security and governance risk map
 - `docs/DATA_LIFECYCLE.md`: data lifecycle map
 - `docs/FULL_CHECK.md`: complete quality check workflow
+- `docs/WORKER_RUNTIME_READINESS.md`: v0.4 worker readiness boundary

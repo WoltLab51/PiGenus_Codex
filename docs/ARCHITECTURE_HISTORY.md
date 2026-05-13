@@ -993,3 +993,21 @@ Why it mattered:
 This checkpoint proved the post-v0.3.1 runtime remained inspectable and stable
 after the architecture-control phase. It closed the verification loop before
 the project moves toward Worker Runtime preparation.
+
+## Worker Runtime Readiness
+
+The project gained:
+
+- `docs/WORKER_RUNTIME_READINESS.md`
+- a v0.4 readiness boundary for worker identity, heartbeat, capability profile,
+  cost profile, privacy profile, and failure semantics
+- an explicit rule that registration and inspection precede scheduling
+- an explicit rule that scheduling precedes execution
+
+Why it matters:
+
+Worker Runtime is the first post-v0.3 arc that can move governed work toward
+different machines, processes, or providers. Defining readiness first keeps
+workers accountable as execution hosts and prevents worker implementation from
+becoming remote execution, LLM routing, federation, or autonomous agent behavior
+by accident.

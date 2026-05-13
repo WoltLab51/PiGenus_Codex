@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added `docs/WORKER_RUNTIME_READINESS.md` to define the v0.4 worker readiness boundary
+- Clarified worker identity, heartbeat, capability profile, cost profile, privacy profile, and failure semantics before scheduling or execution
+- Recorded `D-063: Worker Runtime Starts With Readiness`
+
 ## pigenus-v0.3.2-post-release-runtime-verification
 
 - Hardened migration application with an immediate SQLite transaction to avoid concurrent migration version races

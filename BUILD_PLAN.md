@@ -196,6 +196,10 @@ Next checkpoint:
   heartbeat, capability profile, cost profile, privacy profile, and failure
   semantics without enabling remote execution or LLM orchestration
 
+Readiness source:
+
+- `docs/WORKER_RUNTIME_READINESS.md`
+
 ## Later Architecture Tracks
 
 These are intentionally not current work. They become safer after guard,
@@ -210,6 +214,9 @@ meaning, inspection, and backup surfaces remain stable.
 - Failure and timeout semantics
 - Worker means execution host, not agent intelligence
 - Cells carry capability, organs carry composition, agents carry goal direction
+- Readiness before implementation: identity, heartbeat, capability profile,
+  cost profile, privacy profile, and failure semantics must be modelable before
+  scheduling or execution exists
 
 ### I. Resource Economy
 

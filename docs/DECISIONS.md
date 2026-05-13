@@ -913,3 +913,22 @@ pending migration at the same time and both record the same
 `schema_migrations.version`. Exclusive migration application preserves
 idempotent initialization without changing the schema or adding a new
 migration.
+
+## D-063: Worker Runtime Starts With Readiness
+
+Decision:
+
+The `0.4.x` Worker Runtime arc starts with readiness semantics before runtime
+execution. PiGenus must define worker identity, heartbeat, capability profile,
+cost profile, privacy profile, and failure semantics before adding worker
+scheduling, remote execution, LLM provider routing, or autonomous agent
+spawning.
+
+Reason:
+
+Workers increase the runtime's execution power. If worker routing begins before
+identity, liveness, capability inventory, privacy limits, resource cost, and
+failure behavior are explicit, the governed runtime could lose traceability at
+the exact point where work leaves the simple local path. Readiness-first keeps
+workers as accountable execution hosts rather than hidden intelligence or
+unbounded capability.
