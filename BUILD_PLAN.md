@@ -252,6 +252,14 @@ meaning, inspection, and backup surfaces remain stable.
 - No arbitrary capability invention
 - No self-modification or hidden mutation
 
+### O. Idea Harvest
+
+- Harvest ideas from older or parallel WoltLab51 GENUS/PiGenus repositories
+- Treat harvested ideas as source memory, not direct implementation authority
+- Map each idea to a current architecture track before implementation
+- Do not merge old architecture around the governed runtime
+- Keep `docs/GITHUB_IDEA_HARVEST.md` as the quarantine and triage surface
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior

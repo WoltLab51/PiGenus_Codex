@@ -743,3 +743,20 @@ GENUS may eventually need adaptation, but uncontrolled adaptation would erase
 accountability. Keeping mutation separate from activation allows the system to
 compare, reject, preserve, or approve changes without turning experimentation
 into hidden self-modification.
+
+## D-053: Harvest Ideas, Do Not Merge Architectures
+
+Decision:
+
+Ideas from older or parallel WoltLab51 GENUS/PiGenus repositories may be
+harvested into documentation, decisions, and future work packages, but their
+architecture and code are not merged directly into the current PiGenus governed
+runtime.
+
+Reason:
+
+The older repositories preserve useful product, worker, operations, deployment,
+and assistant ideas. Directly importing them would risk bypassing the current
+Systemform vocabulary, room/context boundaries, guard pipeline, approval
+semantics, decision logs, and tests. Harvesting keeps the memory without
+weakening the kernel.

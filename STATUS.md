@@ -4,7 +4,7 @@
 
 - Name: `pigenus-v0.3.0-governed-runtime`
 - Branch: `main`
-- Status: release cut ready
+- Status: release cut complete; post-release concept documentation in progress
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `187 passed`
 
@@ -60,6 +60,8 @@ PiGenus is a small local cognitive core. It has:
   planned `0.3.0` governed runtime cut
 - v0.3 governed runtime readiness document
 - v0.3 governed runtime changelog section
+- Post-release concept documents for Liquid Runtime, Worker Runtime, Resource
+  Economy, Human Governance, Evolution Sandbox, and GitHub Idea Harvest
 
 Current demo flow:
 
@@ -134,11 +136,12 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 
 ## Next Recommended Work
 
-Finish v0.3 Governed Runtime Release Tag:
+Post-release stabilization:
 
-- Run full tests on `main`.
-- Tag `pigenus-v0.3.0-governed-runtime`.
-- Push `main` and the release tag.
+- Keep v0.3 runtime behavior frozen unless a bug is found.
+- Use concept documents to collect future ideas without implementation drift.
+- Turn the next selected concept into a small, tested work package only after
+  its boundaries are clear.
 
 ## Operator Note
 

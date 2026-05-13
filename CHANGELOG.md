@@ -17,6 +17,8 @@
 - Added `docs/EVOLUTION_SANDBOX.md` as a future concept document
 - Clarified proposal, shadow mode, fitness comparison, fossils, rollback, and approval before activation
 - Recorded `D-052: Mutation Is Never Activation`
+- Added `docs/GITHUB_IDEA_HARVEST.md` to capture ideas from older WoltLab51 GENUS/PiGenus repositories without merging architectures
+- Recorded `D-053: Harvest Ideas, Do Not Merge Architectures`
 
 ## pigenus-v0.3.0-governed-runtime
 

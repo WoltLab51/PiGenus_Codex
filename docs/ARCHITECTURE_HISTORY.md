@@ -781,3 +781,20 @@ Why it mattered:
 Evolution is the most dangerous later architecture track. Documenting it now
 keeps adaptation inside governance: proposals, traces, tests, approval, fossils,
 and rollback before anything becomes active behavior.
+
+## GitHub Idea Harvest
+
+The project gained:
+
+- `docs/GITHUB_IDEA_HARVEST.md`
+- A source list for older WoltLab51 GENUS/PiGenus repositories
+- A rule that ideas may be harvested but architectures are not merged directly
+- Initial mappings from `Genus`, `UrPi`, and `PiGenus_mistral` into future
+  architecture tracks
+
+Why it mattered:
+
+GENUS has useful history outside the current repository. Capturing that history
+keeps old ideas from being forgotten while protecting the governed runtime from
+unplanned feature import, old architecture drift, or code copied around the
+current contracts, guards, rooms, approvals, traces, and tests.
