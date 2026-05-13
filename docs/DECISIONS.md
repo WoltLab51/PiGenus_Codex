@@ -984,3 +984,19 @@ Worker Registry is the bridge from worker ontology to operator inspection and
 later scheduling. Starting storage-free keeps the behavior easy to test and
 review before migrations, CLI surfaces, or execution placement create durable
 runtime obligations.
+
+## D-067: Worker Inspection Is Read-Only
+
+Decision:
+
+Worker inspection starts as a read-only service over an existing
+`WorkerRegistry`. It produces inspectable rows for profile status, worker type,
+latest heartbeat status, last-seen time, considerable status, available cells,
+supported runtimes, and network access. It does not add persistence, CLI wiring,
+scheduling, routing, provider calls, health repair, or execution.
+
+Reason:
+
+The project needs a stable inspection shape before deciding how operators will
+load or view workers. A read-only service keeps the output testable without
+pretending worker data is durable or inventing default workers.

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added read-only `WorkerInspectionService` for storage-free worker inspection rows
+- Added worker inspection tests for listing, filters, show behavior, and missing heartbeat handling
+- Recorded `D-067: Worker Inspection Is Read-Only`
+- Verified: 204 tests passed
 - Added storage-free `WorkerRegistry` for known worker profiles and latest heartbeats
 - Added worker registry tests for deterministic listing, filters, heartbeat freshness, and active-considerable status
 - Recorded `D-066: Worker Registry Starts Storage-Free`

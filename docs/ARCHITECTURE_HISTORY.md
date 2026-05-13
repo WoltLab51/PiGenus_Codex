@@ -1064,3 +1064,21 @@ Why it mattered:
 Worker Runtime now has an inspectable in-memory shape before storage or CLI
 exists. This keeps worker identity and liveness testable without introducing
 database migrations, scheduling decisions, provider routing, or execution.
+
+## Worker Inspection Read-Only
+
+The system gained:
+
+- `WorkerInspection`
+- `WorkerInspectionService`
+- read-only worker rows combining profile and heartbeat state
+- filters for profile status, worker type, and considerable state
+- show behavior for one known worker
+- tests for missing heartbeat handling
+
+Why it mattered:
+
+Worker Runtime now has an operator-facing inspection shape before CLI or
+storage exists. This lets the project design future `worker-list` and
+`worker-show` commands around tested read-only semantics instead of wiring a
+command directly to improvised state.

@@ -194,7 +194,14 @@ WorkerRegistry
 ```
 
 After the storage-free registry is stable, the next implementation should be
-read-only inspection:
+read-only inspection service:
+
+```text
+WorkerInspection
+WorkerInspectionService
+```
+
+After the inspection service is stable, a CLI can be considered:
 
 ```text
 worker-list
@@ -244,6 +251,6 @@ The next safe step is not to run work on workers.
 The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
-Read-only inspection is the next safe step.
+Read-only CLI inspection is the next safe step.
 
 Storage, scheduling, and execution remain later steps.

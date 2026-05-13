@@ -202,6 +202,9 @@ Next checkpoint:
   no execution
 - Current implementation step: storage-free `WorkerRegistry` with tests, no
   database persistence, no CLI, no scheduling, no routing, and no execution
+- Current implementation step: read-only `WorkerInspectionService` with tests,
+  no storage, no CLI command wiring, no scheduling, no routing, and no
+  execution
 
 Readiness source:
 
@@ -227,6 +230,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Model-only WorkerProfile and WorkerHeartbeat come before WorkerRegistry,
   worker inspection, scheduling, or execution routing
 - Storage-free WorkerRegistry comes before worker inspection, database
+  persistence, scheduling, or execution routing
+- Read-only WorkerInspectionService comes before worker CLI, database
   persistence, scheduling, or execution routing
 
 ### I. Resource Economy
