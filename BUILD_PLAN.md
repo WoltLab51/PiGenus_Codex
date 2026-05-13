@@ -197,18 +197,15 @@ Next checkpoint:
 - `pigenus-v0.4.0-worker-runtime-preparation`: prepare worker identity,
   heartbeat, capability profile, cost profile, privacy profile, and failure
   semantics without enabling remote execution or LLM orchestration
-- Current implementation step: model-only `WorkerProfile` and
-  `WorkerHeartbeat` schemas with tests, no storage, no CLI, no scheduling, and
-  no execution
-- Current implementation step: storage-free `WorkerRegistry` with tests, no
-  database persistence, no CLI, no scheduling, no routing, and no execution
-- Current implementation step: read-only `WorkerInspectionService` with tests,
-  no storage, no CLI command wiring, no scheduling, no routing, and no
-  execution
+- Current cleanup step: data architecture and compact architecture summary
+  clarify storage roles, performance boundaries, and how current worker
+  preparation fits before any worker persistence or CLI is added
 
 Readiness source:
 
 - `docs/WORKER_RUNTIME_READINESS.md`
+- `docs/DATA_ARCHITECTURE.md`
+- `docs/GENUS_ARCHITECTURE_SUMMARY.md`
 
 ## Later Architecture Tracks
 
@@ -306,6 +303,18 @@ meaning, inspection, and backup surfaces remain stable.
 - Ensure new data objects answer source, room/context, truth, sensitivity,
   creator, guard, decision, storage, inspection, and aging questions
 - Do not add new storage surfaces without lifecycle and inspection clarity
+
+### P3. Data Architecture
+
+- Keep `docs/DATA_ARCHITECTURE.md` as the map for storage roles and
+  performance boundaries
+- Preserve SQLite as local governed runtime truth
+- Treat graph, vector, blob, and cache layers as explicitly classified storage
+  roles before implementation
+- Keep hot-path data small, indexed where needed, and separate from large
+  payloads
+- Do not add worker persistence, graph edges, vector search, or blob storage
+  before the source-of-truth boundary is documented
 
 ### Q. Vocabulary And Ontology Control
 

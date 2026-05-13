@@ -1,0 +1,292 @@
+# Data Architecture
+
+This document defines PiGenus storage roles and performance boundaries. It does
+not replace `docs/DATA_LIFECYCLE.md` or `docs/MIGRATIONS.md`.
+
+Relationship to existing documents:
+
+- `docs/DATA_LIFECYCLE.md` explains how data objects live, move, age, and become inspectable.
+- `docs/MIGRATIONS.md` explains how SQLite schema changes are applied.
+- This document explains which storage role should hold which kind of data and
+  how performance should be protected as GENUS grows.
+
+## Core Rule
+
+SQLite remains the local source of truth for the governed runtime.
+
+Other stores may appear later, but they must be classified as:
+
+```text
+source of truth
+append-only record
+index
+cache
+derived view
+blob payload
+external capability
+```
+
+GENUS should always know which category a storage surface belongs to.
+
+## Storage Roles
+
+### SQLite Core Store
+
+Purpose:
+
+Durable local truth for the governed runtime.
+
+Current examples:
+
+- events
+- memory objects
+- meaning objects
+- cells
+- audit logs
+- decision logs
+- schema migrations
+
+Future candidates:
+
+- worker profiles
+- worker heartbeats or heartbeat summaries
+- worker inspection records, if needed
+- resource usage records
+- agent shape proposals
+- graph edges, if kept simple enough
+
+Rule:
+
+SQLite is the first persistence choice when data must be local, inspectable,
+transactional, and part of the governed runtime.
+
+### Append-Only Logs
+
+Purpose:
+
+Preserve what happened and why.
+
+Current examples:
+
+- EventLog through `events`
+- AuditLog through audit storage
+- GovernanceDecision records through decision logs
+
+Rule:
+
+Append-only records should not be silently rewritten. Corrections should be new
+records or explicit lifecycle transitions.
+
+### Meaning Store
+
+Purpose:
+
+Persist structured meaning while keeping common filters fast.
+
+Current shape:
+
+- full `MeaningObject` JSON payload
+- indexed room, type, truth status, and sensitivity columns
+
+Rule:
+
+The full semantic object remains available even when additional indexed columns
+are added for performance.
+
+### Graph Layer
+
+Purpose:
+
+Represent relationships between meaning, actors, cells, rooms, workers,
+decisions, and future agent shapes.
+
+First safe shape:
+
+```text
+edges(source_id, edge_type, target_id, room_id, created_at, evidence_ref)
+```
+
+Rule:
+
+Start with explicit edge records before adding a graph database. A graph
+database may become useful later, but it should not become the source of truth
+for governed decisions.
+
+### Vector Or Embedding Store
+
+Purpose:
+
+Similarity search and semantic retrieval.
+
+Rule:
+
+Embeddings are indexes, not truth. A vector match may suggest relevant meaning,
+but it does not prove truth, permission, provenance, or room compatibility.
+
+Vector storage should wait until deterministic Meaning Store retrieval remains
+boring and inspectable.
+
+### Blob Or Object Store
+
+Purpose:
+
+Store large payloads outside core tables.
+
+Future examples:
+
+- images
+- audio
+- PDFs
+- long logs
+- model outputs
+- sensor captures
+
+First safe shape:
+
+```text
+blob_id
+sha256
+media_type
+path
+size_bytes
+sensitivity
+created_at
+```
+
+Rule:
+
+Large payloads should be referenced by hash and metadata. The meaning object
+should carry the governed interpretation or reference, not blindly become a
+large binary container.
+
+### Hot State And Cache
+
+Purpose:
+
+Speed up repeated runtime reads.
+
+Examples:
+
+- worker registry in memory
+- context and permission registries
+- loaded contracts
+- recent heartbeats
+- candidate form proposals
+
+Rule:
+
+Cache may improve read speed, but it must be rebuildable from truth sources or
+clearly marked as temporary runtime state.
+
+## Performance Boundaries
+
+### Hot Path
+
+The hot path is work needed frequently during task evaluation:
+
+- actor identity
+- room and context stack
+- cell contracts
+- worker profile and heartbeat
+- resource grants
+- guard policy inputs
+- meaning metadata
+
+Hot-path data should be:
+
+- small
+- indexed when persisted
+- cacheable when safe
+- deterministic to load
+- separate from large payloads
+
+### Cold Path
+
+Cold-path data is slower or larger:
+
+- full audit history
+- older events
+- fossils
+- large blobs
+- historical graph traversals
+- backup snapshots
+
+Cold-path data should remain inspectable, but it should not slow routine task
+checks.
+
+### Write Path
+
+The write path must be strict:
+
+- validate before persistence
+- preserve source, room, sensitivity, truth or confidence, creator, and time
+- record decisions and traces for meaningful actions
+- avoid hidden side effects in read-only commands
+- use migrations for schema changes
+
+### Read Path
+
+The read path may be optimized:
+
+- indexed columns
+- derived summaries
+- cache
+- rebuilt indexes
+- read-only inspection views
+
+But optimized reads must not become a second truth source.
+
+## Worker Runtime Storage Direction
+
+Current worker work is intentionally storage-free:
+
+- `WorkerProfile`
+- `WorkerHeartbeat`
+- `WorkerRegistry`
+- `WorkerInspectionService`
+
+Before adding `worker-list` or `worker-show` as durable CLI commands, PiGenus
+must decide the source of worker truth.
+
+Recommended direction:
+
+```text
+SQLite worker store -> read-only worker-list/show -> scheduling preview -> guarded scheduling
+```
+
+Not yet:
+
+- network discovery
+- remote execution
+- provider routing
+- LLM worker orchestration
+- federation
+
+## Database Design Principles
+
+1. Keep truth small and inspectable.
+2. Keep large payloads out of hot tables.
+3. Keep indexed metadata next to full JSON payloads when that preserves flexibility.
+4. Keep append-only records append-only.
+5. Keep derived indexes rebuildable.
+6. Keep vector search outside the truth boundary.
+7. Keep worker execution behind governance.
+8. Keep read-only commands read-only.
+9. Keep migrations forward-only.
+10. Keep performance decisions visible in documentation.
+
+## Current Conclusion
+
+The next storage decision should not be "which database is exciting?"
+
+It should be:
+
+```text
+Which data is truth?
+Which data is index?
+Which data is cache?
+Which data is payload?
+Which data is audit evidence?
+```
+
+GENUS can become dynamic only if its storage roles stay boring.

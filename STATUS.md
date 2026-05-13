@@ -80,6 +80,9 @@ PiGenus is a small local cognitive core. It has:
   federation, resource, and evolution risks
 - Data lifecycle map for events, meaning objects, memory objects, governance
   decisions, decision traces, audit logs, fossils, and future mutation proposals
+- Data architecture map for storage roles, performance boundaries, and
+  truth/index/cache/payload distinctions
+- Compact GENUS architecture summary for current runtime orientation
 - Full check process for documentation, concept, runtime, release, PR, and
   external ChatGPT review workflows
 - Worker Runtime readiness boundary for identity, heartbeat, capability
@@ -186,8 +189,11 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, add a minimal read-only `worker-list` CLI only after deciding how the
-  CLI receives a registry without pretending worker persistence exists.
+- Next, decide the worker source of truth before adding durable `worker-list`
+  or `worker-show` behavior.
+- Use `docs/DATA_ARCHITECTURE.md` to decide whether worker persistence belongs
+  in SQLite first, and keep discovery, remote workers, scheduling, and provider
+  routing out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
   out of scope until worker identity, heartbeat, capability profile, cost
   profile, privacy profile, and failure semantics are clear.
@@ -215,6 +221,8 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/ARCHITECTURE_CONTRACT.md`: non-breaking architecture rules
 - `docs/THREAT_MODEL.md`: security and governance risk map
 - `docs/DATA_LIFECYCLE.md`: data lifecycle map
+- `docs/DATA_ARCHITECTURE.md`: storage roles and performance boundary map
+- `docs/GENUS_ARCHITECTURE_SUMMARY.md`: compact architecture summary
 - `docs/FULL_CHECK.md`: complete quality check workflow
 - `docs/WORKER_RUNTIME_READINESS.md`: v0.4 worker readiness boundary
 - `docs/MULTIMODAL_SYSTEMFORM.md`: future multimodal meaning boundary

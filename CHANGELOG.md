@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added `docs/DATA_ARCHITECTURE.md` to clarify storage roles, performance boundaries, and truth/index/cache/payload distinctions
+- Added `docs/GENUS_ARCHITECTURE_SUMMARY.md` as a compact map of the current GENUS/PiGenus architecture
+- Cleaned the Build Plan current step so worker preparation points to data architecture before worker persistence or CLI
+- Recorded `D-068: Storage Roles Must Be Explicit`
 - Added read-only `WorkerInspectionService` for storage-free worker inspection rows
 - Added worker inspection tests for listing, filters, show behavior, and missing heartbeat handling
 - Recorded `D-067: Worker Inspection Is Read-Only`

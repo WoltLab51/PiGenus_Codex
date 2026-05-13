@@ -1000,3 +1000,19 @@ Reason:
 The project needs a stable inspection shape before deciding how operators will
 load or view workers. A read-only service keeps the output testable without
 pretending worker data is durable or inventing default workers.
+
+## D-068: Storage Roles Must Be Explicit
+
+Decision:
+
+PiGenus distinguishes storage roles before adding new persistence surfaces.
+SQLite remains the local governed runtime source of truth. Future graph,
+vector, blob, cache, derived view, or external capability stores must be named
+as such before implementation and must not silently become truth.
+
+Reason:
+
+Performance pressure will grow as GENUS adds workers, dynamic agent shapes,
+multimodal meaning, and richer retrieval. Without explicit storage roles, the
+runtime could confuse truth, indexes, caches, payloads, and audit evidence.
+That would make the system harder to optimize and harder to explain.

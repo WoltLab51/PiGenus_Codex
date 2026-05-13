@@ -1082,3 +1082,20 @@ Worker Runtime now has an operator-facing inspection shape before CLI or
 storage exists. This lets the project design future `worker-list` and
 `worker-show` commands around tested read-only semantics instead of wiring a
 command directly to improvised state.
+
+## Data Architecture And Summary Cleanup
+
+The project gained:
+
+- `docs/DATA_ARCHITECTURE.md`
+- `docs/GENUS_ARCHITECTURE_SUMMARY.md`
+- an explicit distinction between data lifecycle, migration policy, and storage
+  architecture
+- a cleaned Build Plan current step before worker persistence or CLI work
+
+Why it mattered:
+
+The project already had lifecycle and migration documents, but performance and
+database-design questions needed a separate storage-role map. This cleanup
+prevents duplicate documents while making the next worker source-of-truth
+decision easier to make.

@@ -12,7 +12,8 @@ Start here when orienting yourself:
 3. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
 4. `STATUS.md` - current repository truth and stable invariants
 5. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
-6. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+6. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
+7. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -23,6 +24,8 @@ Start here when orienting yourself:
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication
 - `docs/MULTIMODAL_SYSTEMFORM.md` - future language, graph, state, visual, and spatial meaning boundary
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
+- `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
+- `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary
 - `docs/V0_3_GOVERNED_RUNTIME_READINESS.md` - v0.3 release readiness scope
 
 ## Governance And Safety
