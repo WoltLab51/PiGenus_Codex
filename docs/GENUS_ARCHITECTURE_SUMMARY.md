@@ -72,10 +72,10 @@ Implemented:
 - `WorkerHeartbeat`
 - storage-free `WorkerRegistry`
 - read-only `WorkerInspectionService`
+- minimal SQLite worker store
 
 Not implemented:
 
-- worker persistence
 - `worker-list` / `worker-show` CLI
 - scheduling
 - execution routing

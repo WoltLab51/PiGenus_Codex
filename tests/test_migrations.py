@@ -37,7 +37,14 @@ def test_initialize_creates_schema_migrations_and_runtime_tables():
     assert "memory_objects" in table_names(database)
     assert "decision_logs" in table_names(database)
     assert "meaning_objects" in table_names(database)
+    assert "worker_profiles" in table_names(database)
+    assert "worker_heartbeats" in table_names(database)
     assert {"status", "fitness", "created_at", "last_used_at"} <= column_names(database, "cells")
+    assert {"worker_type", "status", "data"} <= column_names(database, "worker_profiles")
+    assert {"heartbeat_id", "status", "seen_at", "data"} <= column_names(
+        database,
+        "worker_heartbeats",
+    )
     assert migration_versions(database) == [migration.version for migration in MIGRATIONS]
     database.close()
 

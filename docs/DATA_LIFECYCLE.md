@@ -236,6 +236,50 @@ Boundary:
 
 Fossil is not deletion. It is preserved inactive history.
 
+### WorkerProfile
+
+Purpose:
+
+Durable local identity and capability envelope for a known execution host.
+
+Lifecycle:
+
+```text
+created -> validated -> stored -> inspected later -> suspended/retired later
+```
+
+Current storage:
+
+- `worker_profiles` table
+- `WorkerRepository`
+
+Boundary:
+
+A WorkerProfile describes where work may run later. It is not permission,
+scheduling, routing, or execution.
+
+### WorkerHeartbeat
+
+Purpose:
+
+Current liveness signal for a known worker.
+
+Lifecycle:
+
+```text
+observed -> validated against known worker -> stored as latest/current -> replaced by fresher heartbeat
+```
+
+Current storage:
+
+- `worker_heartbeats` table
+- `WorkerRepository`
+
+Boundary:
+
+The first heartbeat store keeps current state only. It is not heartbeat
+history, health repair, scheduling, or execution proof.
+
 ### MutationProposal
 
 Purpose:
@@ -284,6 +328,7 @@ The current runtime is intentionally minimal. Known lifecycle gaps:
 - HumanApproval is a stub and does not yet enforce approval transitions.
 - MutationProposal is documented but not implemented.
 - Worker output lifecycle is documented but not implemented.
+- Worker heartbeat history is not implemented.
 - LLM output lifecycle is not implemented because LLMGateway is not present.
 
 These are not bugs in v0.3. They are future work boundaries.

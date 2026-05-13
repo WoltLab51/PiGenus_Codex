@@ -31,6 +31,7 @@ Current recorded migrations:
 0002_decision_logs
 0003_cell_lifecycle
 0004_meaning_objects
+0005_worker_store
 ```
 
 `Database.initialize()` applies pending migrations. Running it more than once

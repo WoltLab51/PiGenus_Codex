@@ -238,15 +238,18 @@ But optimized reads must not become a second truth source.
 
 ## Worker Runtime Storage Direction
 
-Current worker work is intentionally storage-free:
+Worker work now has both storage-free runtime helpers and a minimal SQLite
+truth surface:
 
 - `WorkerProfile`
 - `WorkerHeartbeat`
 - `WorkerRegistry`
 - `WorkerInspectionService`
+- `worker_profiles`
+- `worker_heartbeats`
 
 Before adding `worker-list` or `worker-show` as durable CLI commands, PiGenus
-must decide the source of worker truth.
+must keep those commands read-only over the SQLite worker store.
 
 Worker source-of-truth decision:
 
@@ -272,7 +275,7 @@ Not yet:
 - LLM worker orchestration
 - federation
 
-The first worker store should be small:
+The first worker store is small:
 
 - `worker_profiles` for full `WorkerProfile` JSON plus indexed identity,
   worker type, status, owner, and home room columns

@@ -281,4 +281,5 @@ capability profile, cost profile, privacy profile, and failure semantics.
 
 Read-only CLI inspection is the next safe step.
 
-Storage, scheduling, and execution remain later steps.
+The minimal SQLite worker store is the next persistence step. Scheduling and
+execution remain later steps.

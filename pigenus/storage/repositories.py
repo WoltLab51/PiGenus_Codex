@@ -8,7 +8,15 @@ from pigenus.schemas.cells import CellSpec, CellState
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.events import Event
 from pigenus.schemas.memory import MemoryObject, MemoryStatus
-from pigenus.schemas.systemform import MeaningObject, Sensitivity, TruthStatus
+from pigenus.schemas.systemform import (
+    MeaningObject,
+    Sensitivity,
+    TruthStatus,
+    WorkerHeartbeat,
+    WorkerProfile,
+    WorkerStatus,
+    WorkerType,
+)
 from pigenus.storage.database import Database
 
 
@@ -242,6 +250,145 @@ class MeaningRepository:
     @staticmethod
     def _enum_value(value: TruthStatus | Sensitivity | str) -> str:
         if isinstance(value, TruthStatus | Sensitivity):
+            return value.value
+        return value
+
+
+class WorkerRepository:
+    """Persistence adapter for Worker Runtime profiles and current heartbeats."""
+
+    def __init__(self, database: Database) -> None:
+        self.database = database
+
+    def add_profile(self, profile: WorkerProfile) -> None:
+        data = profile.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT OR REPLACE INTO worker_profiles (
+                worker_id, worker_type, display_name, status, owner_actor_id,
+                home_room_id, max_sensitivity, network_access, created_at,
+                updated_at, data
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                profile.id,
+                profile.worker_type.value,
+                profile.display_name,
+                profile.status.value,
+                profile.owner_actor_id,
+                profile.home_room_id,
+                profile.max_sensitivity.value,
+                1 if profile.network_access else 0,
+                str(data["created_at"]),
+                str(data["updated_at"]),
+                _json(data),
+            ),
+        )
+
+    def get_profile(self, worker_id: str) -> WorkerProfile | None:
+        row = self.database.fetchone(
+            "SELECT data FROM worker_profiles WHERE worker_id = ?",
+            (worker_id,),
+        )
+        if row is None:
+            return None
+        return WorkerProfile.model_validate(json.loads(row["data"]))
+
+    def list_profiles(
+        self,
+        *,
+        status: WorkerStatus | str | None = None,
+        worker_type: WorkerType | str | None = None,
+        owner_actor_id: str | None = None,
+        home_room_id: str | None = None,
+    ) -> list[WorkerProfile]:
+        clauses: list[str] = []
+        parameters: list[str] = []
+
+        if status is not None:
+            clauses.append("status = ?")
+            parameters.append(self._enum_value(status))
+        if worker_type is not None:
+            clauses.append("worker_type = ?")
+            parameters.append(self._enum_value(worker_type))
+        if owner_actor_id is not None:
+            clauses.append("owner_actor_id = ?")
+            parameters.append(owner_actor_id)
+        if home_room_id is not None:
+            clauses.append("home_room_id = ?")
+            parameters.append(home_room_id)
+
+        where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+        rows = self.database.fetchall(
+            f"SELECT data FROM worker_profiles{where} ORDER BY created_at, worker_id",
+            tuple(parameters),
+        )
+        return [WorkerProfile.model_validate(json.loads(row["data"])) for row in rows]
+
+    def count_profiles(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM worker_profiles")
+        return int(row["count"]) if row else 0
+
+    def record_heartbeat(self, heartbeat: WorkerHeartbeat) -> None:
+        if self.get_profile(heartbeat.worker_id) is None:
+            raise ValueError(f"Unknown worker_id: {heartbeat.worker_id}")
+
+        current = self.get_heartbeat(heartbeat.worker_id)
+        if current is not None and current.seen_at > heartbeat.seen_at:
+            return
+
+        data = heartbeat.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT OR REPLACE INTO worker_heartbeats (
+                worker_id, heartbeat_id, status, seen_at, runtime_version, data
+            ) VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                heartbeat.worker_id,
+                heartbeat.id,
+                heartbeat.status.value,
+                str(data["seen_at"]),
+                heartbeat.runtime_version,
+                _json(data),
+            ),
+        )
+
+    def get_heartbeat(self, worker_id: str) -> WorkerHeartbeat | None:
+        row = self.database.fetchone(
+            "SELECT data FROM worker_heartbeats WHERE worker_id = ?",
+            (worker_id,),
+        )
+        if row is None:
+            return None
+        return WorkerHeartbeat.model_validate(json.loads(row["data"]))
+
+    def list_heartbeats(
+        self,
+        *,
+        status: WorkerStatus | str | None = None,
+    ) -> list[WorkerHeartbeat]:
+        clauses: list[str] = []
+        parameters: list[str] = []
+
+        if status is not None:
+            clauses.append("status = ?")
+            parameters.append(self._enum_value(status))
+
+        where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+        rows = self.database.fetchall(
+            f"SELECT data FROM worker_heartbeats{where} ORDER BY seen_at, worker_id",
+            tuple(parameters),
+        )
+        return [WorkerHeartbeat.model_validate(json.loads(row["data"])) for row in rows]
+
+    def count_heartbeats(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM worker_heartbeats")
+        return int(row["count"]) if row else 0
+
+    @staticmethod
+    def _enum_value(value: WorkerStatus | WorkerType | str) -> str:
+        if isinstance(value, WorkerStatus | WorkerType):
             return value.value
         return value
 

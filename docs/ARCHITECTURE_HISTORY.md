@@ -1117,3 +1117,22 @@ Worker CLI and persistence should not read from invented demo workers, hidden
 defaults, local config as truth, or network scans. Naming SQLite as the worker
 source of truth gives the next migration a clear target while keeping remote
 execution and discovery out of scope.
+
+## Worker Store Minimal
+
+The system gained:
+
+- migration `0005_worker_store`
+- `worker_profiles`
+- `worker_heartbeats`
+- `WorkerRepository`
+- tests for profile persistence, profile filters, current heartbeat freshness,
+  heartbeat filters, and unknown-worker heartbeat rejection
+- health-check coverage for worker store tables
+
+Why it mattered:
+
+Worker Runtime now has durable local truth for known execution hosts and their
+current liveness without adding CLI, scheduling, routing, discovery, heartbeat
+history, provider calls, or execution. This keeps worker persistence aligned
+with the v0.3 governed runtime contract.

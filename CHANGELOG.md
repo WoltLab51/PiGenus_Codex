@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added migration `0005_worker_store` with `worker_profiles` and `worker_heartbeats`
+- Added `WorkerRepository` for durable worker profiles and current worker heartbeats
+- Added worker store tests for roundtrip, filters, heartbeat freshness, and unknown-worker rejection
+- Updated health checks and migration tests for worker store tables
+- Recorded `D-070: Worker Store Persists Identity And Current Heartbeat Only`
+- Verified: 210 tests passed
 - Documented Worker Runtime source-of-truth policy: SQLite for durable worker profiles and current heartbeats
 - Clarified local worker files as bootstrap/import only and discovery as out of scope before federation/trust
 - Recorded `D-069: Worker Source Of Truth Is SQLite`

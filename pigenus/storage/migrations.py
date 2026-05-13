@@ -124,6 +124,47 @@ MIGRATIONS: tuple[Migration, ...] = (
             ON meaning_objects(sensitivity);
         """,
     ),
+    Migration(
+        version="0005_worker_store",
+        sql="""
+        CREATE TABLE IF NOT EXISTS worker_profiles (
+            worker_id TEXT PRIMARY KEY,
+            worker_type TEXT NOT NULL,
+            display_name TEXT NOT NULL,
+            status TEXT NOT NULL,
+            owner_actor_id TEXT,
+            home_room_id TEXT,
+            max_sensitivity TEXT NOT NULL,
+            network_access INTEGER NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL,
+            data TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_worker_profiles_type
+            ON worker_profiles(worker_type);
+        CREATE INDEX IF NOT EXISTS idx_worker_profiles_status
+            ON worker_profiles(status);
+        CREATE INDEX IF NOT EXISTS idx_worker_profiles_owner
+            ON worker_profiles(owner_actor_id);
+        CREATE INDEX IF NOT EXISTS idx_worker_profiles_home_room
+            ON worker_profiles(home_room_id);
+
+        CREATE TABLE IF NOT EXISTS worker_heartbeats (
+            worker_id TEXT PRIMARY KEY,
+            heartbeat_id TEXT NOT NULL,
+            status TEXT NOT NULL,
+            seen_at TEXT NOT NULL,
+            runtime_version TEXT,
+            data TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_worker_heartbeats_status
+            ON worker_heartbeats(status);
+        CREATE INDEX IF NOT EXISTS idx_worker_heartbeats_seen_at
+            ON worker_heartbeats(seen_at);
+        """,
+    ),
 )
 
 

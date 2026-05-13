@@ -6,7 +6,7 @@
 - Branch: `main`
 - Status: runtime verification checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `204 passed`
+- Last verified result: `210 passed`
 
 ## Current Runtime Shape
 
@@ -56,6 +56,8 @@ PiGenus is a small local cognitive core. It has:
 - Selective guard enforcement for hard block decisions only
 - Human approval stub with pending, approved, and rejected states
 - SQLite-backed Systemform Meaning Store for local `MeaningObject` persistence
+- SQLite-backed Worker Store for durable `WorkerProfile` records and current
+  `WorkerHeartbeat` records
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -171,6 +173,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   inspection, scheduling, routing, provider calls, or execution.
 - `WorkerInspectionService` is read-only and does not add storage, CLI command
   wiring, scheduling, routing, provider calls, or execution.
+- `WorkerRepository` persists worker identity and current heartbeat state only;
+  it does not add heartbeat history, CLI commands, scheduling, routing,
+  provider calls, remote discovery, or execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -192,8 +197,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, plan the minimal SQLite worker store migration for `worker_profiles`
-  and current `worker_heartbeats`.
+- Next, add read-only worker inspection CLI over the SQLite worker store.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

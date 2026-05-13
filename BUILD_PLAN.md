@@ -201,6 +201,9 @@ Next checkpoint:
   durable worker profiles and current heartbeats, treats local files as
   bootstrap/import only, and keeps discovery out of scope until federation and
   trust work
+- Current implementation step: minimal SQLite Worker Store persists
+  `worker_profiles` and current `worker_heartbeats` without CLI, scheduling,
+  routing, discovery, heartbeat history, or execution
 
 Readiness source:
 
@@ -234,6 +237,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Worker source of truth is SQLite for durable profiles and current heartbeats;
   local files are bootstrap/import only, and discovery waits for
   federation/trust
+- Minimal Worker Store comes before worker CLI, scheduling preview, routing,
+  heartbeat history, or execution
 
 ### I. Resource Economy
 

@@ -16,6 +16,8 @@ REQUIRED_TABLES: tuple[str, ...] = (
     "audit_logs",
     "decision_logs",
     "meaning_objects",
+    "worker_profiles",
+    "worker_heartbeats",
 )
 
 

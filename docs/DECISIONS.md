@@ -1034,3 +1034,21 @@ configuration or network-discovered fact would weaken governance before worker
 scheduling or execution even begins. SQLite matches the existing local governed
 runtime: inspectable, migratable, testable, and compatible with read-only CLI
 surfaces.
+
+## D-070: Worker Store Persists Identity And Current Heartbeat Only
+
+Decision:
+
+The first Worker Store migration adds `worker_profiles` and `worker_heartbeats`.
+`worker_profiles` persists full `WorkerProfile` JSON with indexed identity,
+type, status, owner, home room, sensitivity, network, and timestamps.
+`worker_heartbeats` persists only the latest/current `WorkerHeartbeat` per
+worker. It does not store heartbeat history, scheduling assignments, execution
+records, provider calls, discovery state, or remote worker state.
+
+Reason:
+
+Worker identity and current liveness need a durable local truth before
+read-only worker CLI or scheduling preview can be honest. Keeping the first
+store limited prevents persistence from quietly becoming execution
+infrastructure.
