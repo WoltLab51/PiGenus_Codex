@@ -812,3 +812,20 @@ future-track boundary set. If documentation drifts, future builders may rely on
 stale assumptions and accidentally weaken the governed runtime. Documentation
 upkeep preserves system memory without requiring every small cleanup to touch
 every document.
+
+## D-057: Capability Must Not Bypass Governance
+
+Decision:
+
+Future PiGenus capability growth must preserve the governed runtime contract.
+Meaningful extensions must pass through contracts, contexts, rooms, meaning,
+guards, decisions, traces, tests, and documentation maintenance instead of
+bypassing them through direct calls, prompt buses, undocumented storage changes,
+or hidden autonomy.
+
+Reason:
+
+The v0.3 governed runtime baseline exists to make intelligence-shaped work
+observable, bounded, testable, and accountable. Workers, LLMs, agents, product
+surfaces, federation, and evolution would weaken the system if they could route
+around contracts, rooms, guard decisions, approval, auditability, or tests.

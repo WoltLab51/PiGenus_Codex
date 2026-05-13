@@ -852,3 +852,21 @@ The project now has enough architecture memory that stale documentation would
 become a safety problem. Documentation maintenance turns project docs into a
 deliberate part of checkpoint quality instead of relying on memory or cleanup
 later.
+
+## Architecture Contract
+
+The project gained:
+
+- `docs/ARCHITECTURE_CONTRACT.md`
+- Non-breaking rules for storage, events, meaning, rooms, contexts, contracts,
+  guards, approval, workers, LLMs, evolution, and documentation
+- A contribution checklist for non-trivial future changes
+- The rule that capability must not bypass governance
+
+Why it mattered:
+
+The post-v0.3 phase will add pressure from workers, agents, LLM gateways,
+product surfaces, federation, and eventually controlled evolution. The
+architecture contract protects the governed runtime baseline so new capability
+must grow through contracts, meaning, rooms, guards, decisions, traces, and
+tests instead of around them.

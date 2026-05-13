@@ -18,6 +18,7 @@ Every checkpoint should leave the repository with:
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change
 - `docs/DOCUMENTATION_MAINTENANCE.md` followed for documentation upkeep
+- `docs/ARCHITECTURE_CONTRACT.md` preserved for non-trivial runtime changes
 - `docs/ARCHITECTURE_HISTORY.md` updated when the architecture changes
 - `docs/DECISIONS.md` updated when a durable decision is made
 - A Git commit
@@ -285,6 +286,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Update vocabulary when term meaning or implementation status changes
 - Update decisions only for durable architecture constraints
 - Keep documentation current without turning every commit into paperwork
+
+### S. Architecture Contract
+
+- Preserve the v0.3 governed runtime baseline during future work
+- Require contracts, rooms, meaning, guards, decisions, traces, and tests for
+  meaningful capability growth
+- Keep workers, LLMs, agents, and evolution behind governance boundaries
+- Use `docs/ARCHITECTURE_CONTRACT.md` as the contribution safety contract
 
 ## Non-Goals For The Current Kernel Phase
 

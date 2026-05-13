@@ -25,6 +25,8 @@
 - Recorded `D-055: Vocabulary Precedes Architecture Expansion`
 - Added `docs/DOCUMENTATION_MAINTENANCE.md` to define documentation upkeep rules for future changes
 - Recorded `D-056: Documentation Is Operational Memory`
+- Added `docs/ARCHITECTURE_CONTRACT.md` to define non-breaking rules for future PiGenus work
+- Recorded `D-057: Capability Must Not Bypass Governance`
 
 ## pigenus-v0.3.0-governed-runtime
 

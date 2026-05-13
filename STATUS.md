@@ -67,6 +67,8 @@ PiGenus is a small local cognitive core. It has:
   planned, and conceptual terms
 - Documentation maintenance rules for keeping project control files, vocabulary,
   decisions, and architecture history current
+- Architecture contract defining non-breaking rules for future runtime and
+  architecture work
 
 Current demo flow:
 
@@ -144,6 +146,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   expansion.
 - Documentation maintenance is part of the checkpoint process for non-trivial
   runtime and architecture changes.
+- Future capability growth must preserve contracts, rooms, meaning, guards,
+  decisions, traces, and tests.
 
 ## Next Recommended Work
 
@@ -169,3 +173,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/CLI_CONVENTIONS.md`: CLI behavior and exit-code conventions
 - `docs/MIGRATIONS.md`: SQLite migration policy
 - `docs/DOCUMENTATION_MAINTENANCE.md`: documentation upkeep rules
+- `docs/ARCHITECTURE_CONTRACT.md`: non-breaking architecture rules
