@@ -5,6 +5,8 @@
 - Added `docs/WORKER_RUNTIME_READINESS.md` to define the v0.4 worker readiness boundary
 - Clarified worker identity, heartbeat, capability profile, cost profile, privacy profile, and failure semantics before scheduling or execution
 - Recorded `D-063: Worker Runtime Starts With Readiness`
+- Added `docs/MULTIMODAL_SYSTEMFORM.md` to define future language, graph, state, visual, spatial, and action representations as governed meaning
+- Recorded `D-064: Multimodal Meaning Must Stay Governed`
 
 ## pigenus-v0.3.2-post-release-runtime-verification
 

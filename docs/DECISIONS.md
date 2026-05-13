@@ -932,3 +932,21 @@ failure behavior are explicit, the governed runtime could lose traceability at
 the exact point where work leaves the simple local path. Readiness-first keeps
 workers as accountable execution hosts rather than hidden intelligence or
 unbounded capability.
+
+## D-064: Multimodal Meaning Must Stay Governed
+
+Decision:
+
+GENUS may later use language models, meaning graphs, state fields, visual or
+spatial models, embeddings, sensor-like inputs, and action traces, but these
+representations must enter the runtime as governed meaning. Language is an
+interface and reasoning tool, not the whole GENUS kernel.
+
+Reason:
+
+Pure text systems can produce coherent narratives without enough grounding,
+while visual, spatial, and latent representations can become powerful but hard
+to audit. GENUS should be able to grow toward multimodal world modeling without
+creating hidden model state, prompt buses, or untraceable capability. Every
+future representation still needs provenance, room, sensitivity, confidence or
+truth status, guardability, decisions, and inspection.

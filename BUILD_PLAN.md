@@ -37,7 +37,9 @@ governable. The ordering is intentionally boring:
 5. Add guard, governance, and approval layers before autonomous behavior.
 6. Persist and inspect meaning before semantic search or LLM extraction.
 7. Treat internal communication as governed meaning flow, not loose prompts.
-8. Add workers, resources, federation, and evolution only after the kernel can
+8. Treat future multimodal representations as governed meaning, not hidden
+   model state.
+9. Add workers, resources, federation, and evolution only after the kernel can
    explain what happened and why.
 
 ## Release Semantics
@@ -324,6 +326,17 @@ meaning, inspection, and backup surfaces remain stable.
   memory, approval spoofing, log gaps, rogue workers, LLM trust, silent
   mutation, resource abuse, and documentation drift
 - Add threat notes before adding powerful runtime surfaces
+
+### U. Multimodal Systemform
+
+- Keep `docs/MULTIMODAL_SYSTEMFORM.md` as the concept boundary for language,
+  graph, state-field, visual, spatial, and action-based representations
+- Treat LLMs as governed capabilities, not as the GENUS kernel
+- Treat visual, spatial, embedding, or state-field content as meaning-bearing
+  only when provenance, room, sensitivity, confidence, and guardability are
+  explicit
+- Do not add LLM orchestration, vector search, vision models, or sensor
+  ingestion before Worker Runtime and meaning governance can host them safely
 
 ## Non-Goals For The Current Kernel Phase
 

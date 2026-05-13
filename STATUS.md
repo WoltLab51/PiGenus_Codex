@@ -82,6 +82,8 @@ PiGenus is a small local cognitive core. It has:
 - Worker Runtime readiness boundary for identity, heartbeat, capability
   profile, cost profile, privacy profile, and failure semantics before
   scheduling or execution
+- Multimodal Systemform concept boundary for future language, graph, state,
+  visual, spatial, and action representations as governed meaning
 
 Current demo flow:
 
@@ -182,6 +184,9 @@ Worker Runtime preparation:
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
   out of scope until worker identity, heartbeat, capability profile, cost
   profile, privacy profile, and failure semantics are clear.
+- Preserve the multimodal Systemform anchor: later LLM, vision, embedding, or
+  state-field capabilities should enter through workers, cells, contracts,
+  meaning, rooms, guards, decisions, and traces.
 
 ## Operator Note
 
@@ -205,3 +210,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/DATA_LIFECYCLE.md`: data lifecycle map
 - `docs/FULL_CHECK.md`: complete quality check workflow
 - `docs/WORKER_RUNTIME_READINESS.md`: v0.4 worker readiness boundary
+- `docs/MULTIMODAL_SYSTEMFORM.md`: future multimodal meaning boundary

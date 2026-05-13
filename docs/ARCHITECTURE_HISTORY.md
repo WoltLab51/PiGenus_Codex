@@ -1011,3 +1011,21 @@ different machines, processes, or providers. Defining readiness first keeps
 workers accountable as execution hosts and prevents worker implementation from
 becoming remote execution, LLM routing, federation, or autonomous agent behavior
 by accident.
+
+## Multimodal Systemform Concept
+
+The project gained:
+
+- `docs/MULTIMODAL_SYSTEMFORM.md`
+- a future boundary for language, meaning graphs, runtime state fields, visual
+  or spatial representations, embeddings, and action traces
+- an explicit rule that LLMs are governed capabilities, not the GENUS kernel
+- an explicit rule that multimodal content must preserve provenance, room,
+  sensitivity, confidence or truth status, guardability, and inspection
+
+Why it matters:
+
+GENUS should not accidentally become text-only just because early runtime work
+is textual and structured. The multimodal concept keeps the long-term direction
+open while protecting the governed runtime from opaque model state, loose
+prompt communication, or untraceable latent behavior.
