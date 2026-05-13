@@ -210,6 +210,7 @@ meaning, inspection, and backup surfaces remain stable.
 - Per-room quotas
 - Cost reporting before optimization
 - No market mechanics until accounting is reliable
+- Budgets and usage records before prices, credits, or markets
 
 ### J. Federation
 

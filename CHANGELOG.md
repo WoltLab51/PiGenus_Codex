@@ -8,6 +8,9 @@
 - Added `docs/WORKER_RUNTIME.md` as a future concept document
 - Clarified Worker, Cell, Organ, and Agent boundaries
 - Recorded `D-049: Workers Carry Execution, Not Intelligence`
+- Added `docs/RESOURCE_ECONOMY.md` as a future concept document
+- Clarified budgets and usage accounting before market mechanics
+- Recorded `D-050: Resource Economy Starts With Accounting`
 
 ## pigenus-v0.3.0-governed-runtime
 

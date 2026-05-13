@@ -731,3 +731,20 @@ Worker Runtime is likely the next large architecture pressure after v0.3. The
 concept needs clean language before implementation so machines, capabilities,
 compositions, and goal-directed actors do not collapse into one vague "agent"
 idea.
+
+## Resource Economy Concept
+
+The project gained:
+
+- `docs/RESOURCE_ECONOMY.md`
+- Resource Economy as accounting before markets
+- Room-scoped resource thinking
+- Worker/resource relationship boundaries
+- Attention, privacy, money, risk, and human review as possible resources
+
+Why it mattered:
+
+Workers and liquid runtime shapes will create pressure to spend compute,
+attention, privacy, and money. Documenting Resource Economy now keeps the first
+step boring: grants, usage records, and summaries before pricing, credits, or
+market allocation.

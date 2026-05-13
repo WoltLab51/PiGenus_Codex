@@ -697,3 +697,18 @@ The next architecture arc risks confusing machines, functions, compositions,
 and goal-directed actors. Separating worker, cell, organ, and agent semantics
 keeps future scheduling and execution routing governed by the v0.3 runtime
 instead of turning workers into unbounded autonomous agents.
+
+## D-050: Resource Economy Starts With Accounting
+
+Decision:
+
+Resource Economy starts with explicit grants, usage records, summaries, and
+room-scoped budgets. It does not start with internal markets, dynamic pricing,
+credits, or autonomous budget changes.
+
+Reason:
+
+Future workers, liquid runtime shapes, agents, federation, and evolution will
+all increase resource pressure. The first safety need is accountability: what
+was consumed, by whom, in which room, under which grant, and why. Optimization
+comes only after accounting is reliable.
