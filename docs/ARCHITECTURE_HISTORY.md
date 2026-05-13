@@ -1136,3 +1136,20 @@ Worker Runtime now has durable local truth for known execution hosts and their
 current liveness without adding CLI, scheduling, routing, discovery, heartbeat
 history, provider calls, or execution. This keeps worker persistence aligned
 with the v0.3 governed runtime contract.
+
+## Worker CLI Read-Only
+
+The system gained:
+
+- `worker-list`
+- `worker-show`
+- filters for worker status, type, owner, home room, and considerable state
+- stable JSON detail output for one worker
+- tests proving list/show behavior and read-only inspection
+
+Why it mattered:
+
+Worker Runtime now has a safe operator surface for known execution hosts. The
+commands read from the SQLite Worker Store and expose current heartbeat state
+without creating workers, recording heartbeats, scheduling work, discovering
+remote workers, or executing tasks.

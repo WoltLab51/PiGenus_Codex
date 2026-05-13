@@ -18,6 +18,7 @@ from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.core.runtime_overview import RuntimeOverviewBuilder
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.registry import SchemaRegistry
+from pigenus.schemas.systemform import WorkerHeartbeat, WorkerStatus, WorkerType
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
@@ -26,6 +27,7 @@ from pigenus.storage.repositories import (
     EventRepository,
     MeaningRepository,
     MemoryRepository,
+    WorkerRepository,
 )
 
 
@@ -35,6 +37,7 @@ EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 EMPTY_EVENT_LIST_MESSAGE = "No events found."
 EMPTY_MEANING_LIST_MESSAGE = "No meaning objects found."
 EMPTY_CONTEXT_BOUNDARY_LIST_MESSAGE = "No context boundary decisions found."
+EMPTY_WORKER_LIST_MESSAGE = "No workers found."
 
 
 def parse_datetime(value: str | None) -> datetime:
@@ -155,6 +158,39 @@ def build_parser() -> argparse.ArgumentParser:
     cell_list = subparsers.add_parser("cell-list", help="List registered cells without modifying them.")
     cell_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
     cell_list.add_argument("--status", default=None, help="Filter by cell lifecycle status.")
+
+    worker_list = subparsers.add_parser(
+        "worker-list",
+        help="List known workers without modifying them.",
+    )
+    worker_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+    worker_list.add_argument(
+        "--status",
+        choices=tuple(status.value for status in WorkerStatus),
+        default=None,
+        help="Filter by worker profile status.",
+    )
+    worker_list.add_argument(
+        "--type",
+        choices=tuple(worker_type.value for worker_type in WorkerType),
+        default=None,
+        help="Filter by worker type.",
+    )
+    worker_list.add_argument("--owner", default=None, help="Filter by owner actor ID.")
+    worker_list.add_argument("--room", default=None, help="Filter by home room ID.")
+    worker_list.add_argument(
+        "--considerable",
+        choices=("yes", "no"),
+        default=None,
+        help="Filter by active profile plus active heartbeat.",
+    )
+
+    worker_show = subparsers.add_parser(
+        "worker-show",
+        help="Show one worker by ID without modifying it.",
+    )
+    worker_show.add_argument("worker_id", help="Worker ID to inspect.")
+    worker_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
 
     context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
     context_list.add_argument("--db", default=None, help="Optional existing SQLite database path.")
@@ -563,6 +599,67 @@ def main(argv: list[str] | None = None) -> int:
             )
         return 0
 
+    if args.command == "worker-list":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            repository = WorkerRepository(database)
+            workers = repository.list_profiles(
+                status=args.status,
+                worker_type=args.type,
+                owner_actor_id=args.owner,
+                home_room_id=args.room,
+            )
+            rows = []
+            for worker in workers:
+                heartbeat = repository.get_heartbeat(worker.id)
+                rows.append((worker, heartbeat, _worker_is_considerable(worker.status, heartbeat)))
+        finally:
+            database.close()
+
+        if args.considerable is not None:
+            expected = args.considerable == "yes"
+            rows = [row for row in rows if row[2] is expected]
+
+        if not rows:
+            print(EMPTY_WORKER_LIST_MESSAGE)
+            return 0
+
+        for worker, heartbeat, considerable in rows:
+            heartbeat_status = heartbeat.status.value if heartbeat is not None else "-"
+            last_seen = heartbeat.seen_at.isoformat() if heartbeat is not None else "-"
+            print(
+                f"{worker.id} | {worker.worker_type.value} | {worker.status.value} | "
+                f"heartbeat={heartbeat_status} | last_seen_at={last_seen} | "
+                f"considerable={'yes' if considerable else 'no'} | {worker.display_name}"
+            )
+        return 0
+
+    if args.command == "worker-show":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            repository = WorkerRepository(database)
+            worker = repository.get_profile(args.worker_id)
+            heartbeat = repository.get_heartbeat(args.worker_id)
+        finally:
+            database.close()
+
+        if worker is None:
+            print(f"Worker not found: {args.worker_id}")
+            return 1
+
+        payload = {
+            "considerable": _worker_is_considerable(
+                worker.status,
+                heartbeat,
+            ),
+            "heartbeat": heartbeat.model_dump(mode="json") if heartbeat is not None else None,
+            "profile": worker.model_dump(mode="json"),
+        }
+        print(json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True))
+        return 0
+
     if args.command == "context-list":
         cells = []
         if args.show_cells and args.db is not None and Path(args.db).exists():
@@ -665,6 +762,17 @@ def _meaning_summary(content: dict[str, object]) -> str:
         if value is not None:
             return str(value)
     return json.dumps(content, ensure_ascii=True, sort_keys=True)
+
+
+def _worker_is_considerable(
+    profile_status: WorkerStatus,
+    heartbeat: WorkerHeartbeat | None,
+) -> bool:
+    return (
+        profile_status == WorkerStatus.ACTIVE
+        and heartbeat is not None
+        and heartbeat.status == WorkerStatus.ACTIVE
+    )
 
 
 def _filter_context_boundary_decisions(

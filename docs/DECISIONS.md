@@ -1052,3 +1052,20 @@ Worker identity and current liveness need a durable local truth before
 read-only worker CLI or scheduling preview can be honest. Keeping the first
 store limited prevents persistence from quietly becoming execution
 infrastructure.
+
+## D-071: Worker CLI Is Read-Only Inspection
+
+Decision:
+
+`worker-list` and `worker-show` are read-only inspection commands over the
+SQLite Worker Store. They can list and show known worker profiles, latest
+heartbeat state, and considerable status. They do not create workers, record
+heartbeats, schedule work, route capabilities, discover workers, call
+providers, or execute tasks.
+
+Reason:
+
+Operators need visibility into known worker state before the system can safely
+preview scheduling. Keeping the first CLI read-only preserves the source-of-
+truth boundary and avoids turning inspection into worker management or
+execution.

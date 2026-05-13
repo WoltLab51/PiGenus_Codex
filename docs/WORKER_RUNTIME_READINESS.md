@@ -229,7 +229,8 @@ WorkerInspection
 WorkerInspectionService
 ```
 
-After the inspection service is stable, a CLI can be considered:
+After the inspection service is stable, the first CLI reads from the SQLite
+Worker Store:
 
 ```text
 worker-list
@@ -279,7 +280,6 @@ The next safe step is not to run work on workers.
 The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
-Read-only CLI inspection is the next safe step.
+Read-only CLI inspection is now the current operator surface.
 
-The minimal SQLite worker store is the next persistence step. Scheduling and
-execution remain later steps.
+Scheduling and execution remain later steps.

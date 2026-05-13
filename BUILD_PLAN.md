@@ -204,6 +204,9 @@ Next checkpoint:
 - Current implementation step: minimal SQLite Worker Store persists
   `worker_profiles` and current `worker_heartbeats` without CLI, scheduling,
   routing, discovery, heartbeat history, or execution
+- Current implementation step: read-only `worker-list` and `worker-show` over
+  the SQLite Worker Store without worker creation, scheduling, routing,
+  discovery, heartbeat history, or execution
 
 Readiness source:
 
@@ -239,6 +242,8 @@ meaning, inspection, and backup surfaces remain stable.
   federation/trust
 - Minimal Worker Store comes before worker CLI, scheduling preview, routing,
   heartbeat history, or execution
+- Read-only worker CLI comes before scheduling preview, routing, heartbeat
+  history, discovery, or execution
 
 ### I. Resource Economy
 

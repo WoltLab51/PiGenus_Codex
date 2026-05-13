@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added read-only `worker-list` and `worker-show` CLI commands over the SQLite Worker Store
+- Added worker inspection CLI tests for empty output, filters, stable JSON detail output, and read-only behavior
+- Recorded `D-071: Worker CLI Is Read-Only Inspection`
+- Verified: 215 tests passed
 - Added migration `0005_worker_store` with `worker_profiles` and `worker_heartbeats`
 - Added `WorkerRepository` for durable worker profiles and current worker heartbeats
 - Added worker store tests for roundtrip, filters, heartbeat freshness, and unknown-worker rejection

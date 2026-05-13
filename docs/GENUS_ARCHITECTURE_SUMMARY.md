@@ -73,10 +73,10 @@ Implemented:
 - storage-free `WorkerRegistry`
 - read-only `WorkerInspectionService`
 - minimal SQLite worker store
+- read-only `worker-list` and `worker-show`
 
 Not implemented:
 
-- `worker-list` / `worker-show` CLI
 - scheduling
 - execution routing
 - remote workers

@@ -81,6 +81,13 @@ Inspect registered cells without modifying them:
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 ```
 
+Inspect known workers without modifying them:
+
+```powershell
+python -m pigenus.cli.main worker-list --db pigenus.sqlite3
+python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
+```
+
 Inspect known contexts without modifying storage:
 
 ```powershell

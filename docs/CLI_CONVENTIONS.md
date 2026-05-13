@@ -41,6 +41,8 @@ python -m pigenus.cli.main guard-decision-list --db pigenus.sqlite3 --family roo
 python -m pigenus.cli.main guard-decision-summary --db pigenus.sqlite3
 python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
+python -m pigenus.cli.main worker-list --db pigenus.sqlite3
+python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
 python -m pigenus.cli.main context-list
 python -m pigenus.cli.main context-boundary-check input_cell@0.1.0 --context developer/default --db pigenus.sqlite3
 python -m pigenus.cli.main context-boundary-list --db pigenus.sqlite3 --allowed no
@@ -57,6 +59,7 @@ preview decision record to the decision log.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `guard-decision-list`,
-`guard-decision-summary`, `audit-list`, `cell-list`, `context-list`,
+`guard-decision-summary`, `audit-list`, `cell-list`, `worker-list`,
+`worker-show`, `context-list`,
 `context-boundary-check` without `--log`, `context-boundary-list`, and
 `permission-list` are read-only.

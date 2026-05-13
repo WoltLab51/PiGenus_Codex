@@ -248,8 +248,8 @@ truth surface:
 - `worker_profiles`
 - `worker_heartbeats`
 
-Before adding `worker-list` or `worker-show` as durable CLI commands, PiGenus
-must keep those commands read-only over the SQLite worker store.
+`worker-list` and `worker-show` are read-only CLI commands over the SQLite
+worker store.
 
 Worker source-of-truth decision:
 
