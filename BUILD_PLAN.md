@@ -273,6 +273,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Separate events, meaning objects, governance decisions, and audit logs
 - Treat messages as conditions for action, not neutral data packets
 
+### P2. Data Lifecycle
+
+- Keep `docs/DATA_LIFECYCLE.md` as the map for event, meaning, memory,
+  decision, audit, fossil, and future mutation lifecycles
+- Ensure new data objects answer source, room/context, truth, sensitivity,
+  creator, guard, decision, storage, inspection, and aging questions
+- Do not add new storage surfaces without lifecycle and inspection clarity
+
 ### Q. Vocabulary And Ontology Control
 
 - Keep `docs/GENUS_VOCABULARY.md` as the central term map

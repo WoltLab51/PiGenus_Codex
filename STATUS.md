@@ -73,6 +73,8 @@ PiGenus is a small local cognitive core. It has:
   plan, status, architecture contract, and concept tracks
 - Threat model covering current governed runtime risks and future worker, LLM,
   federation, resource, and evolution risks
+- Data lifecycle map for events, meaning objects, memory objects, governance
+  decisions, decision traces, audit logs, fossils, and future mutation proposals
 
 Current demo flow:
 
@@ -155,6 +157,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `docs/INDEX.md` is the entry point for repository architecture documentation.
 - Threat modeling precedes powerful runtime surfaces such as workers, LLM
   gateways, federation, and controlled evolution.
+- Data objects should remain traceable from source through storage,
+  inspection, and aging.
 
 ## Next Recommended Work
 
@@ -183,3 +187,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/DOCUMENTATION_MAINTENANCE.md`: documentation upkeep rules
 - `docs/ARCHITECTURE_CONTRACT.md`: non-breaking architecture rules
 - `docs/THREAT_MODEL.md`: security and governance risk map
+- `docs/DATA_LIFECYCLE.md`: data lifecycle map

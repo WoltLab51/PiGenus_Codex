@@ -905,3 +905,19 @@ The next powerful surfaces will increase risk faster than the local v0.3 kernel
 does. Threat modeling now keeps future workers, LLM gateways, federation,
 resource policy, product surfaces, and evolution behind the same governance
 posture that made the runtime inspectable in the first place.
+
+## Data Lifecycle
+
+The project gained:
+
+- `docs/DATA_LIFECYCLE.md`
+- A map for Event, MeaningObject, MemoryObject, GovernanceDecision,
+  DecisionTrace, EventLog, AuditLog, Fossil, and future MutationProposal
+- A lifecycle question checklist for future data objects
+- Explicit gaps that are future work rather than v0.3 bugs
+
+Why it mattered:
+
+The runtime already persists events, memory, meaning, decisions, and audit
+records. The lifecycle map makes their roles and aging behavior explicit before
+more stores, workers, LLM outputs, and evolution proposals add new state.

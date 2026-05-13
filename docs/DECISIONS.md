@@ -862,3 +862,20 @@ increase risks around meaning injection, room boundary bypass, capability
 escalation, stale memory, approval spoofing, log gaps, rogue workers, unsafe
 LLM trust, silent mutation, and resource abuse. Naming threats early lets the
 project harden deliberately instead of reacting after capability expands.
+
+## D-060: Data Needs A Visible Lifecycle
+
+Decision:
+
+PiGenus keeps a data lifecycle map for events, meaning objects, memory objects,
+governance decisions, decision traces, event logs, audit logs, fossils, and
+future mutation proposals. New data objects should define source,
+room/context, truth or confidence, sensitivity, creator, guard, decision,
+storage, inspection, and aging behavior before becoming runtime surfaces.
+
+Reason:
+
+The governed runtime depends on being able to explain how information enters,
+moves, persists, ages, and stops being active truth. Without a visible data
+lifecycle, future stores, workers, LLM outputs, and evolution proposals could
+create hidden state that bypasses inspection and governance.

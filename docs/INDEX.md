@@ -21,6 +21,7 @@ Start here when orienting yourself:
 - `docs/SYSTEMFORM_GAP_ANALYSIS.md` - prototype-to-Systemform gap analysis
 - `docs/CONTEXT_MODEL.md` - Room, ContextFrame, and ContextStack boundaries
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication
+- `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/V0_3_GOVERNED_RUNTIME_READINESS.md` - v0.3 release readiness scope
 
 ## Governance And Safety

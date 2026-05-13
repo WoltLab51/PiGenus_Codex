@@ -31,6 +31,8 @@
 - Recorded `D-058: Documentation Needs A Stable Entry Point`
 - Added `docs/THREAT_MODEL.md` to capture current and future security/governance risks
 - Recorded `D-059: Threat Modeling Precedes Powerful Runtime Surfaces`
+- Added `docs/DATA_LIFECYCLE.md` to map event, meaning, memory, decision, audit, fossil, and future mutation lifecycles
+- Recorded `D-060: Data Needs A Visible Lifecycle`
 
 ## pigenus-v0.3.0-governed-runtime
 
