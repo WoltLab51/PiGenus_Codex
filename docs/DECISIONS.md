@@ -760,3 +760,21 @@ and assistant ideas. Directly importing them would risk bypassing the current
 Systemform vocabulary, room/context boundaries, guard pipeline, approval
 semantics, decision logs, and tests. Harvesting keeps the memory without
 weakening the kernel.
+
+## D-054: Internal Communication Uses Governed Meaning Objects
+
+Decision:
+
+GENUS internal communication is defined as governed meaning flow. Components
+communicate through typed events, `MeaningObject` records, decision traces, and
+persisted governance decisions instead of a free-form prompt bus. Natural
+language remains allowed only as payload inside structured, room-aware,
+guardable objects.
+
+Reason:
+
+Workers, organs, agents, characters, LLM gateways, and Liquid Runtime proposals
+will all increase internal communication pressure. Without a communication
+boundary, the runtime would drift toward hidden prompts and direct component
+calls. Meaning-based communication preserves source, room, truth status,
+sensitivity, provenance, time, guardability, and operator inspection.

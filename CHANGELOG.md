@@ -19,6 +19,8 @@
 - Recorded `D-052: Mutation Is Never Activation`
 - Added `docs/GITHUB_IDEA_HARVEST.md` to capture ideas from older WoltLab51 GENUS/PiGenus repositories without merging architectures
 - Recorded `D-053: Harvest Ideas, Do Not Merge Architectures`
+- Added `docs/INTERNAL_COMMUNICATION.md` as a core concept document for governed meaning-based communication
+- Recorded `D-054: Internal Communication Uses Governed Meaning Objects`
 
 ## pigenus-v0.3.0-governed-runtime
 

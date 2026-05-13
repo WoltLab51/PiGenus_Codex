@@ -61,7 +61,8 @@ PiGenus is a small local cognitive core. It has:
 - v0.3 governed runtime readiness document
 - v0.3 governed runtime changelog section
 - Post-release concept documents for Liquid Runtime, Worker Runtime, Resource
-  Economy, Human Governance, Evolution Sandbox, and GitHub Idea Harvest
+  Economy, Human Governance, Evolution Sandbox, GitHub Idea Harvest, and
+  Internal Communication
 
 Current demo flow:
 
@@ -133,6 +134,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Version numbers distinguish local checkpoints from larger release arcs.
 - Context frames are modeled as conditions around actions and do not replace rooms, actors, cells, organs, agents, or characters.
 - `ContextFrame` and `ContextStack` remain ontology-only until after v0.3 unless a separate migration and inspection plan exists.
+- Internal communication uses governed meaning objects, structured events,
+  decision traces, and persisted decisions instead of a free-form prompt bus.
 
 ## Next Recommended Work
 

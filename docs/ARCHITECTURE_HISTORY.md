@@ -798,3 +798,23 @@ GENUS has useful history outside the current repository. Capturing that history
 keeps old ideas from being forgotten while protecting the governed runtime from
 unplanned feature import, old architecture drift, or code copied around the
 current contracts, guards, rooms, approvals, traces, and tests.
+
+## Internal Communication Concept
+
+The project gained:
+
+- `docs/INTERNAL_COMMUNICATION.md`
+- Internal communication as governed meaning flow
+- A boundary between events, meaning objects, governance decisions, and audit
+  logs
+- A rule against free-form prompt buses between runtime components
+- Future communication fields documented as target concepts, not current
+  schema promises
+
+Why it mattered:
+
+The current runtime already has event flow, meaning objects, rooms, guards, and
+decision traces, but the communication concept was distributed across those
+pieces. Naming it explicitly protects future workers, organs, agents,
+characters, and LLM gateways from bypassing the governed runtime through loose
+text or hidden direct calls.

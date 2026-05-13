@@ -32,7 +32,8 @@ governable. The ordering is intentionally boring:
 4. Formalize Systemform models and adapters without replacing the prototype.
 5. Add guard, governance, and approval layers before autonomous behavior.
 6. Persist and inspect meaning before semantic search or LLM extraction.
-7. Add workers, resources, federation, and evolution only after the kernel can
+7. Treat internal communication as governed meaning flow, not loose prompts.
+8. Add workers, resources, federation, and evolution only after the kernel can
    explain what happened and why.
 
 ## Release Semantics
@@ -260,6 +261,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Do not merge old architecture around the governed runtime
 - Keep `docs/GITHUB_IDEA_HARVEST.md` as the quarantine and triage surface
 
+### P. Internal Communication
+
+- Communicate through typed, validatable meaning objects instead of loose prompts
+- Keep free text embedded in structured, room-aware, guardable objects
+- Preserve source, room, intent, truth status, sensitivity, and time reference
+- Separate events, meaning objects, governance decisions, and audit logs
+- Treat messages as conditions for action, not neutral data packets
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior
@@ -267,3 +276,4 @@ meaning, inspection, and backup surfaces remain stable.
 - No dashboard-driven architecture
 - No distributed execution before local governance is inspectable
 - No vector search before deterministic meaning storage and retrieval are stable
+- No free-form prompt bus between runtime components
