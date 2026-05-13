@@ -200,6 +200,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Cost and privacy profile
 - Local-first worker registry
 - Failure and timeout semantics
+- Worker means execution host, not agent intelligence
+- Cells carry capability, organs carry composition, agents carry goal direction
 
 ### I. Resource Economy
 

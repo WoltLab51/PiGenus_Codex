@@ -5,6 +5,9 @@
 - Added `docs/LIQUID_RUNTIME.md` as a future concept document
 - Added Liquid Runtime as a later architecture track in `BUILD_PLAN.md`
 - Recorded `D-048: Liquid Runtime Is A Future Proposal Layer`
+- Added `docs/WORKER_RUNTIME.md` as a future concept document
+- Clarified Worker, Cell, Organ, and Agent boundaries
+- Recorded `D-049: Workers Carry Execution, Not Intelligence`
 
 ## pigenus-v0.3.0-governed-runtime
 

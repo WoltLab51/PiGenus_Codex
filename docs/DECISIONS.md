@@ -681,3 +681,19 @@ Dynamic form formation may become important for flexible GENUS orchestration,
 but uncontrolled dynamism would undermine the governed runtime baseline. The
 concept stays useful only if it is constrained by known inventory, contracts,
 rooms, context stacks, resources, guards, and explicit traces.
+
+## D-049: Workers Carry Execution, Not Intelligence
+
+Decision:
+
+Worker Runtime treats workers as execution hosts with hardware, runtime,
+capability, cost, privacy, network, status, and heartbeat profiles. Cells carry
+capabilities, organs carry compositions of cells, and agents carry goal
+direction.
+
+Reason:
+
+The next architecture arc risks confusing machines, functions, compositions,
+and goal-directed actors. Separating worker, cell, organ, and agent semantics
+keeps future scheduling and execution routing governed by the v0.3 runtime
+instead of turning workers into unbounded autonomous agents.

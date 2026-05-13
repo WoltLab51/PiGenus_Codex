@@ -715,3 +715,19 @@ GENUS may eventually need more flexible task-specific runtime shapes, but that
 flexibility must sit above the v0.3 governed runtime instead of dissolving it.
 Documenting the concept now keeps the idea available without turning it into an
 immediate implementation commitment.
+
+## Worker Runtime Concept
+
+The project gained:
+
+- `docs/WORKER_RUNTIME.md`
+- A distinction between workers, cells, organs, and agents
+- Worker Runtime as a future execution-host layer, not a source of intelligence
+- A local-first and inspection-first implementation direction
+
+Why it mattered:
+
+Worker Runtime is likely the next large architecture pressure after v0.3. The
+concept needs clean language before implementation so machines, capabilities,
+compositions, and goal-directed actors do not collapse into one vague "agent"
+idea.
