@@ -297,6 +297,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Keep workers, LLMs, agents, and evolution behind governance boundaries
 - Use `docs/ARCHITECTURE_CONTRACT.md` as the contribution safety contract
 
+### T. Threat Model
+
+- Keep `docs/THREAT_MODEL.md` as the safety risk map
+- Review prompt/meaning injection, room bypass, capability escalation, stale
+  memory, approval spoofing, log gaps, rogue workers, LLM trust, silent
+  mutation, resource abuse, and documentation drift
+- Add threat notes before adding powerful runtime surfaces
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior

@@ -887,3 +887,21 @@ Why it mattered:
 The project now has enough documentation that discoverability matters. The
 index turns the documentation set into a navigable system instead of a folder
 of individually useful files.
+
+## Threat Model
+
+The project gained:
+
+- `docs/THREAT_MODEL.md`
+- A risk map for the current governed runtime and future architecture tracks
+- Threats for meaning injection, room bypass, capability escalation, stale
+  memory, approval spoofing, log gaps, rogue workers, unsafe LLM trust, silent
+  mutation, resource abuse, and documentation drift
+- A review checklist for future capability work
+
+Why it mattered:
+
+The next powerful surfaces will increase risk faster than the local v0.3 kernel
+does. Threat modeling now keeps future workers, LLM gateways, federation,
+resource policy, product surfaces, and evolution behind the same governance
+posture that made the runtime inspectable in the first place.

@@ -845,3 +845,20 @@ The documentation set has become large enough that correctness alone is not
 enough. Future builders need a predictable reading path so they can understand
 the governed runtime baseline, vocabulary, rules, and non-goals before making
 changes.
+
+## D-059: Threat Modeling Precedes Powerful Runtime Surfaces
+
+Decision:
+
+PiGenus keeps a threat model for current and future security and governance
+risks. Powerful runtime surfaces such as workers, LLM gateways, federation,
+resource allocation, product dashboards, and controlled evolution should be
+reviewed against this model before implementation.
+
+Reason:
+
+The governed runtime exists to make capability accountable. Future power will
+increase risks around meaning injection, room boundary bypass, capability
+escalation, stale memory, approval spoofing, log gaps, rogue workers, unsafe
+LLM trust, silent mutation, and resource abuse. Naming threats early lets the
+project harden deliberately instead of reacting after capability expands.

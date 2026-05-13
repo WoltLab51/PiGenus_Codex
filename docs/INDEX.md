@@ -28,6 +28,7 @@ Start here when orienting yourself:
 - `docs/DECISIONS.md` - durable architecture decisions
 - `docs/ARCHITECTURE_HISTORY.md` - narrative history of architecture changes
 - `docs/ARCHITECTURE_CONTRACT.md` - non-breaking rules for future work
+- `docs/THREAT_MODEL.md` - current and future security/governance threats
 - `docs/HUMAN_GOVERNANCE.md` - review, escalation, approval, and authority
 - `docs/EVOLUTION_SANDBOX.md` - mutation as proposal, not activation
 
