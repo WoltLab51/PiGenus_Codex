@@ -712,3 +712,19 @@ Future workers, liquid runtime shapes, agents, federation, and evolution will
 all increase resource pressure. The first safety need is accountability: what
 was consumed, by whom, in which room, under which grant, and why. Optimization
 comes only after accounting is reliable.
+
+## D-051: Human Approval Is A Governance Decision
+
+Decision:
+
+Human approval is treated as a governance decision, not a UI button. Review,
+escalation, and approval remain distinct states. Approval authority should be
+explicit, room-aware, and backed by evidence before any approve or reject action
+is allowed.
+
+Reason:
+
+Future workers, resource changes, liquid runtime shapes, federation, and
+evolution will create situations where automation must slow down. Approval
+semantics need to exist before a rich approval UI, otherwise the UI becomes a
+cosmetic confirmation layer over unclear policy.

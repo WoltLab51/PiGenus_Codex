@@ -228,14 +228,22 @@ meaning, inspection, and backup surfaces remain stable.
 - Human approval before activation
 - No self-modification until traceability is boring and complete
 
-### L. Product Surfaces
+### L. Human Governance
+
+- Approval records before approval UI
+- Review, escalation, and approval stay distinct
+- Room-aware approval authority
+- No agent self-approval
+- Required evidence before approve/reject actions
+
+### M. Product Surfaces
 
 - CLI remains the primary operator surface
 - Dashboard follows CLI semantics, not the other way around
 - Human approval UI after approval records and guard summaries are stable
 - Visual system maps after the architecture vocabulary stops shifting rapidly
 
-### M. Liquid Runtime
+### N. Liquid Runtime
 
 - Dynamic form proposals from known runtime inventory
 - Shape previews before execution

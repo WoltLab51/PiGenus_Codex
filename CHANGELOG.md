@@ -11,6 +11,9 @@
 - Added `docs/RESOURCE_ECONOMY.md` as a future concept document
 - Clarified budgets and usage accounting before market mechanics
 - Recorded `D-050: Resource Economy Starts With Accounting`
+- Added `docs/HUMAN_GOVERNANCE.md` as a future concept document
+- Clarified review, escalation, approval, authority, and required evidence
+- Recorded `D-051: Human Approval Is A Governance Decision`
 
 ## pigenus-v0.3.0-governed-runtime
 

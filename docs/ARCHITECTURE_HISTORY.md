@@ -748,3 +748,20 @@ Workers and liquid runtime shapes will create pressure to spend compute,
 attention, privacy, and money. Documenting Resource Economy now keeps the first
 step boring: grants, usage records, and summaries before pricing, credits, or
 market allocation.
+
+## Human Governance Concept
+
+The project gained:
+
+- `docs/HUMAN_GOVERNANCE.md`
+- Review, escalation, and approval distinctions
+- Room-aware approval authority
+- Required approval evidence
+- Human approval as governance semantics before UI
+
+Why it mattered:
+
+PiGenus already has approval stub records, but future workers, resources,
+liquid runtime shapes, federation, and evolution need stronger approval
+semantics. Human Governance makes approval accountable before it becomes a
+button.
