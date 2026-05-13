@@ -179,11 +179,17 @@ Before a worker can execute a task, the runtime should be able to prove:
 
 ## First Implementation Shape
 
-The first implementation should be registration and inspection only:
+The first implementation starts as model-only readiness:
 
 ```text
 WorkerProfile
 WorkerHeartbeat
+```
+
+After the model-only layer is stable, the next implementation should be
+registration and inspection only:
+
+```text
 WorkerRegistry
 worker-list
 worker-show
@@ -229,5 +235,7 @@ allowed to make execution less accountable.
 
 The next safe step is not to run work on workers.
 
-The next safe step is to define, test, and inspect worker identity, heartbeat,
+The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
+
+Inspection, storage, scheduling, and execution remain later steps.

@@ -84,6 +84,24 @@ class ContextFrameType(str, Enum):
     AUDIT = "audit"
 
 
+class WorkerType(str, Enum):
+    LOCAL_MACHINE = "local_machine"
+    LOCAL_PROCESS = "local_process"
+    RASPBERRY_PI = "raspberry_pi"
+    SERVER = "server"
+    GPU_MACHINE = "gpu_machine"
+    EXTERNAL_PROVIDER = "external_provider"
+
+
+class WorkerStatus(str, Enum):
+    DRAFT = "draft"
+    ACTIVE = "active"
+    DEGRADED = "degraded"
+    OFFLINE = "offline"
+    SUSPENDED = "suspended"
+    RETIRED = "retired"
+
+
 class ActorIdentity(BaseModel):
     """Stable identity for a human, cell, organ, agent, character, or system actor."""
 
@@ -167,6 +185,52 @@ class ContextStack(BaseModel):
         return deduped
 
 
+class WorkerProfile(BaseModel):
+    """Model-only execution host profile for future Worker Runtime."""
+
+    id: str = Field(default_factory=lambda: new_id("worker"), min_length=1)
+    worker_type: WorkerType
+    display_name: str = Field(min_length=1)
+    status: WorkerStatus = WorkerStatus.DRAFT
+    owner_actor_id: str | None = None
+    home_room_id: str | None = None
+    runtime_profile: dict[str, Any] = Field(default_factory=dict)
+    hardware_profile: dict[str, Any] = Field(default_factory=dict)
+    supported_runtimes: list[str] = Field(default_factory=list)
+    available_cells: list[str] = Field(default_factory=list)
+    available_tools: list[str] = Field(default_factory=list)
+    capability_limits: dict[str, Any] = Field(default_factory=dict)
+    cost_profile: dict[str, Any] = Field(default_factory=dict)
+    privacy_profile: dict[str, Any] = Field(default_factory=dict)
+    failure_semantics: dict[str, Any] = Field(default_factory=dict)
+    max_sensitivity: Sensitivity = Sensitivity.INTERNAL
+    network_access: bool = False
+    created_at: datetime = Field(default_factory=utc_now)
+    updated_at: datetime = Field(default_factory=utc_now)
+
+    @field_validator("supported_runtimes", "available_cells", "available_tools")
+    @classmethod
+    def dedupe_profile_lists(cls, values: list[str]) -> list[str]:
+        return _dedupe_ordered(values)
+
+
+class WorkerHeartbeat(BaseModel):
+    """Model-only liveness signal for a known execution host."""
+
+    id: str = Field(default_factory=lambda: new_id("whb"), min_length=1)
+    worker_id: str = Field(min_length=1)
+    status: WorkerStatus
+    seen_at: datetime = Field(default_factory=utc_now)
+    runtime_version: str | None = None
+    health_summary: dict[str, Any] = Field(default_factory=dict)
+    degraded_reasons: list[str] = Field(default_factory=list)
+
+    @field_validator("degraded_reasons")
+    @classmethod
+    def dedupe_degraded_reasons(cls, values: list[str]) -> list[str]:
+        return _dedupe_ordered(values)
+
+
 class MeaningObject(BaseModel):
     """Primary semantic information object before durable memory."""
 
@@ -192,6 +256,17 @@ def _reject_overlap(allowed: list[str], denied: list[str], label: str) -> None:
     if overlap:
         values = ", ".join(sorted(overlap))
         raise ValueError(f"ContextFrame has conflicting {label}: {values}")
+
+
+def _dedupe_ordered(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    deduped: list[str] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        deduped.append(value)
+    return deduped
 
 
 class CellContract(BaseModel):

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added model-only `WorkerProfile` and `WorkerHeartbeat` Systemform schemas
+- Added worker model tests without storage, CLI, scheduling, or execution behavior
+- Recorded `D-065: Worker Models Do Not Execute`
+- Verified: 192 tests passed
 - Added `docs/WORKER_RUNTIME_READINESS.md` to define the v0.4 worker readiness boundary
 - Clarified worker identity, heartbeat, capability profile, cost profile, privacy profile, and failure semantics before scheduling or execution
 - Recorded `D-063: Worker Runtime Starts With Readiness`

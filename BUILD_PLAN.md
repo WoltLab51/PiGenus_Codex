@@ -197,6 +197,9 @@ Next checkpoint:
 - `pigenus-v0.4.0-worker-runtime-preparation`: prepare worker identity,
   heartbeat, capability profile, cost profile, privacy profile, and failure
   semantics without enabling remote execution or LLM orchestration
+- Current implementation step: model-only `WorkerProfile` and
+  `WorkerHeartbeat` schemas with tests, no storage, no CLI, no scheduling, and
+  no execution
 
 Readiness source:
 
@@ -219,6 +222,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Readiness before implementation: identity, heartbeat, capability profile,
   cost profile, privacy profile, and failure semantics must be modelable before
   scheduling or execution exists
+- Model-only WorkerProfile and WorkerHeartbeat come before WorkerRegistry,
+  worker inspection, scheduling, or execution routing
 
 ### I. Resource Economy
 

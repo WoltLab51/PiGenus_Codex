@@ -19,6 +19,10 @@ from pigenus.schemas.systemform import (
     RoomProtectionLevel,
     Sensitivity,
     TruthStatus,
+    WorkerHeartbeat,
+    WorkerProfile,
+    WorkerStatus,
+    WorkerType,
 )
 
 
@@ -129,6 +133,19 @@ def test_context_stack_deduplicates_frame_ids_deterministically():
     )
 
     assert stack.frame_ids == ["cf_domain_crypto", "cf_audit_full_trace"]
+
+
+def test_worker_profile_and_heartbeat_are_systemform_models():
+    worker = WorkerProfile(
+        worker_type=WorkerType.LOCAL_PROCESS,
+        display_name="local preview process",
+        status=WorkerStatus.ACTIVE,
+        available_cells=["meaning_ingester"],
+    )
+    heartbeat = WorkerHeartbeat(worker_id=worker.id, status=WorkerStatus.ACTIVE)
+
+    assert worker.model_dump(mode="json")["worker_type"] == "local_process"
+    assert heartbeat.model_dump(mode="json")["worker_id"] == worker.id
 
 
 def test_meaning_object_requires_room_truth_and_creator():

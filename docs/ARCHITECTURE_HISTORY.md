@@ -1029,3 +1029,21 @@ GENUS should not accidentally become text-only just because early runtime work
 is textual and structured. The multimodal concept keeps the long-term direction
 open while protecting the governed runtime from opaque model state, loose
 prompt communication, or untraceable latent behavior.
+
+## Worker Model-Only Readiness
+
+The system gained:
+
+- `WorkerType`
+- `WorkerStatus`
+- `WorkerProfile`
+- `WorkerHeartbeat`
+- tests for profile serialization, liveness records, deterministic list
+  de-duplication, and required identity fields
+
+Why it mattered:
+
+Worker Runtime now has its first code shape without adding storage, CLI,
+scheduling, routing, provider calls, or execution. This keeps the v0.4 arc
+inside the same additive discipline used for Systemform hardening: define and
+test the ontology before it can affect runtime behavior.

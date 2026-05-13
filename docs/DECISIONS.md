@@ -950,3 +950,20 @@ to audit. GENUS should be able to grow toward multimodal world modeling without
 creating hidden model state, prompt buses, or untraceable capability. Every
 future representation still needs provenance, room, sensitivity, confidence or
 truth status, guardability, decisions, and inspection.
+
+## D-065: Worker Models Do Not Execute
+
+Decision:
+
+The first Worker Runtime implementation step adds only model-level
+`WorkerProfile` and `WorkerHeartbeat` Systemform schemas. These models describe
+execution hosts and liveness signals, but they do not create storage,
+inspection commands, scheduling, provider routing, remote execution, or task
+execution.
+
+Reason:
+
+Worker identity and heartbeat must become testable before workers can become
+runtime infrastructure. Keeping the first step model-only preserves the v0.3
+governed runtime while preparing a clear shape for future WorkerRegistry and
+inspection work.
