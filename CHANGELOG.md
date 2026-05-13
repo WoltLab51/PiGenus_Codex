@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## pigenus-v0.3.1-architecture-control
+
 - Added `docs/LIQUID_RUNTIME.md` as a future concept document
 - Added Liquid Runtime as a later architecture track in `BUILD_PLAN.md`
 - Recorded `D-048: Liquid Runtime Is A Future Proposal Layer`
@@ -35,6 +37,8 @@
 - Recorded `D-060: Data Needs A Visible Lifecycle`
 - Added `docs/FULL_CHECK.md` to define complete check levels for documentation, architecture, runtime, release, PR, and ChatGPT review workflows
 - Recorded `D-061: Full Checks Scale With Change Risk`
+- Cut an architecture-control checkpoint for post-v0.3 governance, documentation, safety, lifecycle, vocabulary, and review-process hardening
+- Verified: 187 tests passed
 
 ## pigenus-v0.3.0-governed-runtime
 

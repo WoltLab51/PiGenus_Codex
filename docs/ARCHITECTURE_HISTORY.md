@@ -938,3 +938,23 @@ PiGenus now has enough governance, documentation, and future architecture
 surface that quality checks need to scale with risk. The full check makes small
 work lightweight while keeping runtime, release, and baseline changes strongly
 verified.
+
+## v0.3.1 Architecture Control
+
+The project reached:
+
+- `pigenus-v0.3.1-architecture-control`
+- a documentation index
+- a GENUS vocabulary and ontology-control baseline
+- an architecture contract
+- internal communication, data lifecycle, and threat model documents
+- documentation maintenance and full-check workflow
+- explicit ChatGPT review boundaries
+
+Why it mattered:
+
+After `pigenus-v0.3.0-governed-runtime`, the project needed a stable control
+layer before returning to runtime work. This checkpoint freezes the
+architecture memory and review process so future verification, workers, LLM
+gateways, federation, product surfaces, and evolution have to pass through the
+same vocabulary, lifecycle, threat, and governance boundaries.

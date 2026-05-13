@@ -2,9 +2,9 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.3.0-governed-runtime`
+- Name: `pigenus-v0.3.1-architecture-control`
 - Branch: `main`
-- Status: release cut complete; post-release concept documentation in progress
+- Status: architecture-control checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `187 passed`
 
@@ -166,12 +166,14 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 
 ## Next Recommended Work
 
-Post-release stabilization:
+Post-release runtime verification:
 
-- Keep v0.3 runtime behavior frozen unless a bug is found.
-- Use concept documents to collect future ideas without implementation drift.
-- Turn the next selected concept into a small, tested work package only after
-  its boundaries are clear.
+- Verify health, runtime overview, migrations, inspection commands, backups,
+  meaning queries, guard summaries, and read-only behavior against the current
+  architecture-control baseline.
+- Keep new runtime features out until this verification pass is complete.
+- Use `docs/FULL_CHECK.md` Level 3 for verification changes and Level 4 for
+  any next checkpoint cut.
 
 ## Operator Note
 

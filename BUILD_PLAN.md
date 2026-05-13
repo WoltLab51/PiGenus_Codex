@@ -61,9 +61,9 @@ a standalone semantic product release.
 - `1.0`: boring reliability for a local GENUS runtime with stable APIs,
   recovery, governance, meaning, workers, inspection, and reliable boundaries
 
-The planned semantic cut is `pigenus-v0.3.0-governed-runtime`. It should happen
-after the current `0.2.x` kernel arc proves Guard Families, Meaning Runtime, and
-Context/Room Governance as one stable governed runtime.
+The first semantic governed-runtime cut was
+`pigenus-v0.3.0-governed-runtime`. The first post-release architecture-control
+checkpoint is `pigenus-v0.3.1-architecture-control`.
 
 ## Roadmap Map
 
@@ -185,13 +185,15 @@ Completed checkpoints:
 
 Current checkpoint:
 
-- `pigenus-v0.3.0-governed-runtime`: semantic governed runtime release cut
+- `pigenus-v0.3.1-architecture-control`: architecture-control checkpoint for
+  documentation, vocabulary, internal communication, lifecycle, threat model,
+  architecture contract, and full-check workflow
 
 Next checkpoint:
 
-- `pigenus-v0.3.1-post-release-stabilization`: verify the release tag,
-  inspect the release runtime, and keep new features out until the cut is
-  confirmed
+- `pigenus-v0.3.2-post-release-runtime-verification`: verify health, runtime
+  overview, migrations, inspection commands, backups, meaning queries, guard
+  summaries, and read-only behavior before new runtime features
 
 ## Later Architecture Tracks
 
