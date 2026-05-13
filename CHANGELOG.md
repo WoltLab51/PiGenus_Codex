@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added storage-free `WorkerSchedulingPreviewService` for worker candidate suitability reasoning
+- Added scheduling preview tests for suitable ordering, explainable rejection reasons, network requirement, sensitivity limit, and no mutation
+- Recorded `D-072: Scheduling Preview Does Not Schedule`
+- Verified: 220 tests passed
 - Added read-only `worker-list` and `worker-show` CLI commands over the SQLite Worker Store
 - Added worker inspection CLI tests for empty output, filters, stable JSON detail output, and read-only behavior
 - Recorded `D-071: Worker CLI Is Read-Only Inspection`

@@ -207,6 +207,9 @@ Next checkpoint:
 - Current implementation step: read-only `worker-list` and `worker-show` over
   the SQLite Worker Store without worker creation, scheduling, routing,
   discovery, heartbeat history, or execution
+- Current implementation step: storage-free Worker Scheduling Preview explains
+  candidate suitability without durable assignments, routing, provider calls,
+  reservations, or execution
 
 Readiness source:
 
@@ -244,6 +247,8 @@ meaning, inspection, and backup surfaces remain stable.
   heartbeat history, or execution
 - Read-only worker CLI comes before scheduling preview, routing, heartbeat
   history, discovery, or execution
+- Storage-free scheduling preview comes before durable scheduling, routing,
+  execution records, provider calls, or execution
 
 ### I. Resource Economy
 

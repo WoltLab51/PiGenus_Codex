@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from pigenus.core.worker_registry import WorkerRegistry
-from pigenus.schemas.systemform import WorkerStatus, WorkerType
+from pigenus.schemas.systemform import Sensitivity, WorkerStatus, WorkerType
 
 
 @dataclass(frozen=True)
@@ -20,6 +20,7 @@ class WorkerInspection:
     considerable: bool
     available_cells: tuple[str, ...]
     supported_runtimes: tuple[str, ...]
+    max_sensitivity: Sensitivity
     network_access: bool
 
 
@@ -49,6 +50,7 @@ class WorkerInspectionService:
                 considerable=self.registry.is_considerable(profile.id),
                 available_cells=tuple(profile.available_cells),
                 supported_runtimes=tuple(profile.supported_runtimes),
+                max_sensitivity=profile.max_sensitivity,
                 network_access=profile.network_access,
             )
             if considerable is not None and row.considerable is not considerable:

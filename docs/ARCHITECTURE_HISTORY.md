@@ -1153,3 +1153,22 @@ Worker Runtime now has a safe operator surface for known execution hosts. The
 commands read from the SQLite Worker Store and expose current heartbeat state
 without creating workers, recording heartbeats, scheduling work, discovering
 remote workers, or executing tasks.
+
+## Worker Scheduling Preview
+
+The system gained:
+
+- `WorkerSchedulingRequest`
+- `WorkerSchedulingPreview`
+- `WorkerSchedulingCandidate`
+- `WorkerSchedulingPreviewService`
+- suitability reasons for missing capability, missing runtime, missing active
+  heartbeat/profile, network unavailability, and sensitivity limits
+- tests proving preview ordering, explanations, and no registry mutation
+
+Why it mattered:
+
+GENUS can now ask "which worker could host this?" without scheduling anything.
+This creates the first explainable placement layer while preserving the strict
+boundary: preview is not assignment, routing, provider call, discovery, or
+execution.

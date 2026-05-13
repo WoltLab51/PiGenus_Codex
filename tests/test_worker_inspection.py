@@ -59,6 +59,7 @@ def test_worker_inspection_lists_registry_rows_without_mutation():
     assert rows[0].considerable is True
     assert rows[0].available_cells == ("meaning_ingester",)
     assert rows[0].supported_runtimes == ("python",)
+    assert rows[0].max_sensitivity.value == "internal"
     assert rows[0].network_access is False
 
 

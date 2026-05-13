@@ -74,10 +74,11 @@ Implemented:
 - read-only `WorkerInspectionService`
 - minimal SQLite worker store
 - read-only `worker-list` and `worker-show`
+- storage-free Worker Scheduling Preview
 
 Not implemented:
 
-- scheduling
+- durable scheduling
 - execution routing
 - remote workers
 - provider gateways
@@ -88,6 +89,9 @@ Next worker decision:
 Worker source of truth is planned as SQLite for durable profiles and current
 heartbeats. Local files may bootstrap/import worker data later, but should not
 be runtime truth. Discovery waits for federation and trust work.
+
+Scheduling preview can explain candidate workers, but it does not assign or
+execute work.
 
 ## Data Architecture Rule
 

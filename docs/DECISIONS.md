@@ -1069,3 +1069,20 @@ Operators need visibility into known worker state before the system can safely
 preview scheduling. Keeping the first CLI read-only preserves the source-of-
 truth boundary and avoids turning inspection into worker management or
 execution.
+
+## D-072: Scheduling Preview Does Not Schedule
+
+Decision:
+
+Worker Scheduling Preview is storage-free candidate suitability reasoning. It
+can explain whether known workers appear suitable for a requested capability
+under simple constraints such as active heartbeat, capability inventory,
+runtime support, sensitivity limit, and network availability. It does not
+reserve workers, persist assignments, route capabilities, call providers,
+discover workers, or execute tasks.
+
+Reason:
+
+GENUS needs to understand placement before it performs placement. A preview
+layer makes worker selection criteria testable and inspectable without creating
+durable scheduling semantics or execution side effects too early.

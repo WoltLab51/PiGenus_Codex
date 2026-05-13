@@ -285,6 +285,9 @@ The first worker store is small:
 It should not create scheduling tables, assignment tables, execution records,
 or remote discovery state.
 
+Scheduling preview is storage-free. It may rank or explain candidate workers,
+but it must not create durable assignments or execution records.
+
 ## Database Design Principles
 
 1. Keep truth small and inspectable.

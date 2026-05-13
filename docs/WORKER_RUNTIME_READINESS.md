@@ -239,6 +239,17 @@ worker-show
 
 No scheduling should be added until worker inspection is boring and tested.
 
+Before real scheduling, PiGenus may use storage-free scheduling preview:
+
+```text
+WorkerSchedulingRequest
+WorkerSchedulingPreview
+```
+
+Scheduling preview explains which known workers appear suitable for a requested
+capability under simple constraints. It does not reserve, assign, route, or
+execute work.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -280,6 +291,7 @@ The next safe step is not to run work on workers.
 The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
-Read-only CLI inspection is now the current operator surface.
+Read-only CLI inspection is now the current operator surface. Storage-free
+scheduling preview is the current preparation surface.
 
 Scheduling and execution remain later steps.
