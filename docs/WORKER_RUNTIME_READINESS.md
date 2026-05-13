@@ -177,6 +177,34 @@ Before a worker can execute a task, the runtime should be able to prove:
 - guard pipeline allows execution
 - the decision is traceable
 
+## Source Of Truth Policy
+
+Worker data must not come from hidden defaults or network discovery.
+
+The planned source of truth for durable worker identity is SQLite:
+
+```text
+worker_profiles
+```
+
+The planned source of truth for current worker liveness is also SQLite-backed,
+but heartbeats have different semantics:
+
+```text
+worker_heartbeats = latest/current liveness signal
+worker_heartbeat_history = optional later audit or telemetry history
+```
+
+A local file may be used later as an import or bootstrap format, but it should
+not be treated as runtime truth after import.
+
+Discovery is explicitly out of scope until federation, trust, signatures,
+remote rooms, and privacy boundaries exist.
+
+This means `worker-list` and `worker-show` should eventually read from a
+governed SQLite worker store, not from invented demo workers, ad hoc config, or
+network scans.
+
 ## First Implementation Shape
 
 The first implementation starts as model-only readiness:

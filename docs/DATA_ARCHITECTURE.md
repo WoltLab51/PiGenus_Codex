@@ -248,6 +248,16 @@ Current worker work is intentionally storage-free:
 Before adding `worker-list` or `worker-show` as durable CLI commands, PiGenus
 must decide the source of worker truth.
 
+Worker source-of-truth decision:
+
+```text
+Durable worker identity -> SQLite
+Current worker heartbeat -> SQLite-backed current state
+Heartbeat history -> optional append-only/audit-style later surface
+Local file -> bootstrap/import only
+Discovery -> later federation/trust feature, not local runtime truth
+```
+
 Recommended direction:
 
 ```text
@@ -261,6 +271,16 @@ Not yet:
 - provider routing
 - LLM worker orchestration
 - federation
+
+The first worker store should be small:
+
+- `worker_profiles` for full `WorkerProfile` JSON plus indexed identity,
+  worker type, status, owner, and home room columns
+- `worker_heartbeats` for latest `WorkerHeartbeat` JSON plus indexed worker ID,
+  status, and seen-at columns
+
+It should not create scheduling tables, assignment tables, execution records,
+or remote discovery state.
 
 ## Database Design Principles
 

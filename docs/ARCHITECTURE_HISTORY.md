@@ -1099,3 +1099,21 @@ The project already had lifecycle and migration documents, but performance and
 database-design questions needed a separate storage-role map. This cleanup
 prevents duplicate documents while making the next worker source-of-truth
 decision easier to make.
+
+## Worker Source Of Truth Policy
+
+The project decided:
+
+- durable worker profiles belong in SQLite
+- current worker heartbeat state belongs in SQLite-backed storage
+- heartbeat history may become append-only/audit-style later
+- local worker files are bootstrap/import only
+- discovery waits for federation, trust, signatures, remote rooms, and privacy
+  boundaries
+
+Why it mattered:
+
+Worker CLI and persistence should not read from invented demo workers, hidden
+defaults, local config as truth, or network scans. Naming SQLite as the worker
+source of truth gives the next migration a clear target while keeping remote
+execution and discovery out of scope.

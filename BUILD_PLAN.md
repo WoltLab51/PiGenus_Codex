@@ -197,9 +197,10 @@ Next checkpoint:
 - `pigenus-v0.4.0-worker-runtime-preparation`: prepare worker identity,
   heartbeat, capability profile, cost profile, privacy profile, and failure
   semantics without enabling remote execution or LLM orchestration
-- Current cleanup step: data architecture and compact architecture summary
-  clarify storage roles, performance boundaries, and how current worker
-  preparation fits before any worker persistence or CLI is added
+- Current decision step: worker source-of-truth policy chooses SQLite for
+  durable worker profiles and current heartbeats, treats local files as
+  bootstrap/import only, and keeps discovery out of scope until federation and
+  trust work
 
 Readiness source:
 
@@ -230,6 +231,9 @@ meaning, inspection, and backup surfaces remain stable.
   persistence, scheduling, or execution routing
 - Read-only WorkerInspectionService comes before worker CLI, database
   persistence, scheduling, or execution routing
+- Worker source of truth is SQLite for durable profiles and current heartbeats;
+  local files are bootstrap/import only, and discovery waits for
+  federation/trust
 
 ### I. Resource Economy
 

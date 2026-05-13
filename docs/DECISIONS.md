@@ -1016,3 +1016,21 @@ Performance pressure will grow as GENUS adds workers, dynamic agent shapes,
 multimodal meaning, and richer retrieval. Without explicit storage roles, the
 runtime could confuse truth, indexes, caches, payloads, and audit evidence.
 That would make the system harder to optimize and harder to explain.
+
+## D-069: Worker Source Of Truth Is SQLite
+
+Decision:
+
+Durable Worker Runtime identity belongs in SQLite. The planned worker store
+uses SQLite for `WorkerProfile` records and SQLite-backed current
+`WorkerHeartbeat` state. Local files may be used later for bootstrap or import,
+but not as runtime truth after import. Worker discovery is out of scope until
+federation, trust, signatures, remote rooms, and privacy boundaries exist.
+
+Reason:
+
+Workers are security-relevant execution hosts. Treating worker data as ad hoc
+configuration or network-discovered fact would weaken governance before worker
+scheduling or execution even begins. SQLite matches the existing local governed
+runtime: inspectable, migratable, testable, and compatible with read-only CLI
+surfaces.

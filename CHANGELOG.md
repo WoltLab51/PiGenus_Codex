@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Documented Worker Runtime source-of-truth policy: SQLite for durable worker profiles and current heartbeats
+- Clarified local worker files as bootstrap/import only and discovery as out of scope before federation/trust
+- Recorded `D-069: Worker Source Of Truth Is SQLite`
 - Added `docs/DATA_ARCHITECTURE.md` to clarify storage roles, performance boundaries, and truth/index/cache/payload distinctions
 - Added `docs/GENUS_ARCHITECTURE_SUMMARY.md` as a compact map of the current GENUS/PiGenus architecture
 - Cleaned the Build Plan current step so worker preparation points to data architecture before worker persistence or CLI

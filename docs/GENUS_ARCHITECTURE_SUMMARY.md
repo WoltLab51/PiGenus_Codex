@@ -85,7 +85,9 @@ Not implemented:
 
 Next worker decision:
 
-Define worker source of truth before durable worker CLI or scheduling.
+Worker source of truth is planned as SQLite for durable profiles and current
+heartbeats. Local files may bootstrap/import worker data later, but should not
+be runtime truth. Discovery waits for federation and trust work.
 
 ## Data Architecture Rule
 

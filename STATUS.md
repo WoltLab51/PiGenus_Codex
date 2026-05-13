@@ -83,6 +83,9 @@ PiGenus is a small local cognitive core. It has:
 - Data architecture map for storage roles, performance boundaries, and
   truth/index/cache/payload distinctions
 - Compact GENUS architecture summary for current runtime orientation
+- Worker source-of-truth policy: SQLite for durable profiles and current
+  heartbeats, local files as bootstrap/import only, no discovery before
+  federation and trust
 - Full check process for documentation, concept, runtime, release, PR, and
   external ChatGPT review workflows
 - Worker Runtime readiness boundary for identity, heartbeat, capability
@@ -189,11 +192,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide the worker source of truth before adding durable `worker-list`
-  or `worker-show` behavior.
-- Use `docs/DATA_ARCHITECTURE.md` to decide whether worker persistence belongs
-  in SQLite first, and keep discovery, remote workers, scheduling, and provider
-  routing out of scope.
+- Next, plan the minimal SQLite worker store migration for `worker_profiles`
+  and current `worker_heartbeats`.
+- Keep discovery, remote workers, scheduling, execution, and provider routing
+  out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
   out of scope until worker identity, heartbeat, capability profile, cost
   profile, privacy profile, and failure semantics are clear.
