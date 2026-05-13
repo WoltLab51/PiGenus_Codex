@@ -818,3 +818,20 @@ decision traces, but the communication concept was distributed across those
 pieces. Naming it explicitly protects future workers, organs, agents,
 characters, and LLM gateways from bypassing the governed runtime through loose
 text or hidden direct calls.
+
+## GENUS Vocabulary
+
+The project gained:
+
+- `docs/GENUS_VOCABULARY.md`
+- A central glossary for implemented, documented, planned, and conceptual terms
+- Explicit boundaries for MeaningObject, Event, DecisionTrace, Cell, Organ,
+  Agent, Character, Worker, LLMGateway, EvolutionSandbox, and related terms
+- A rule that vocabulary can be valid before it is implemented
+
+Why it mattered:
+
+GENUS now has enough ontology that future builders need a shared dictionary.
+The glossary prevents planned concepts from being mistaken for missing ideas,
+while also preventing premature schema expansion just because a term exists in
+the architecture vocabulary.

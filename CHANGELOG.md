@@ -21,6 +21,8 @@
 - Recorded `D-053: Harvest Ideas, Do Not Merge Architectures`
 - Added `docs/INTERNAL_COMMUNICATION.md` as a core concept document for governed meaning-based communication
 - Recorded `D-054: Internal Communication Uses Governed Meaning Objects`
+- Added `docs/GENUS_VOCABULARY.md` as the central GENUS term and implementation-status glossary
+- Recorded `D-055: Vocabulary Precedes Architecture Expansion`
 
 ## pigenus-v0.3.0-governed-runtime
 

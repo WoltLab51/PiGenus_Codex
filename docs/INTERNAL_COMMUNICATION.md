@@ -114,6 +114,11 @@ schema and migration plan. Candidate concepts include:
 
 These are target concepts, not implicit fields in the current runtime.
 
+The central vocabulary for current and future terms lives in
+`docs/GENUS_VOCABULARY.md`. Some communication fields are intentionally
+target-model vocabulary, not immediate schema changes. The goal is conceptual
+stability before technical expansion.
+
 ## Events, Meanings, And Decisions
 
 Internal communication uses distinct surfaces:

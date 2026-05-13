@@ -63,6 +63,8 @@ PiGenus is a small local cognitive core. It has:
 - Post-release concept documents for Liquid Runtime, Worker Runtime, Resource
   Economy, Human Governance, Evolution Sandbox, GitHub Idea Harvest, and
   Internal Communication
+- Central GENUS vocabulary glossary that distinguishes implemented, documented,
+  planned, and conceptual terms
 
 Current demo flow:
 
@@ -136,6 +138,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `ContextFrame` and `ContextStack` remain ontology-only until after v0.3 unless a separate migration and inspection plan exists.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
+- GENUS vocabulary is centralized before future schema, storage, or runtime
+  expansion.
 
 ## Next Recommended Work
 

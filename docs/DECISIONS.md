@@ -778,3 +778,20 @@ will all increase internal communication pressure. Without a communication
 boundary, the runtime would drift toward hidden prompts and direct component
 calls. Meaning-based communication preserves source, room, truth status,
 sensitivity, provenance, time, guardability, and operator inspection.
+
+## D-055: Vocabulary Precedes Architecture Expansion
+
+Decision:
+
+GENUS keeps a central vocabulary glossary that distinguishes implemented,
+documented, planned, and conceptual terms. Future work should use the glossary
+to preserve term meanings before adding schema, storage, runtime behavior, or
+renames.
+
+Reason:
+
+Several GENUS concepts are valid architecture vocabulary before they exist as
+runtime classes. Without a glossary, later implementation work may either treat
+planned concepts as absent or prematurely force them into code. Vocabulary
+control lets the project grow without confusing current runtime contracts with
+future ontology.

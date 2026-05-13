@@ -269,6 +269,13 @@ meaning, inspection, and backup surfaces remain stable.
 - Separate events, meaning objects, governance decisions, and audit logs
 - Treat messages as conditions for action, not neutral data packets
 
+### Q. Vocabulary And Ontology Control
+
+- Keep `docs/GENUS_VOCABULARY.md` as the central term map
+- Distinguish implemented, documented, planned, and conceptual terms
+- Stabilize language before adding schema, storage, or runtime behavior
+- Update the glossary when a term's architecture boundary changes
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior
