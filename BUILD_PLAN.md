@@ -185,15 +185,16 @@ Completed checkpoints:
 
 Current checkpoint:
 
-- `pigenus-v0.3.1-architecture-control`: architecture-control checkpoint for
-  documentation, vocabulary, internal communication, lifecycle, threat model,
-  architecture contract, and full-check workflow
+- `pigenus-v0.3.2-post-release-runtime-verification`: verified migrations,
+  health, runtime overview, inspection commands, backups, meaning queries,
+  guard summaries, and read-only behavior after the architecture-control
+  checkpoint
 
 Next checkpoint:
 
-- `pigenus-v0.3.2-post-release-runtime-verification`: verify health, runtime
-  overview, migrations, inspection commands, backups, meaning queries, guard
-  summaries, and read-only behavior before new runtime features
+- `pigenus-v0.4.0-worker-runtime-preparation`: prepare worker identity,
+  heartbeat, capability profile, cost profile, privacy profile, and failure
+  semantics without enabling remote execution or LLM orchestration
 
 ## Later Architecture Tracks
 

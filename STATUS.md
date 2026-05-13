@@ -2,9 +2,9 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.3.1-architecture-control`
+- Name: `pigenus-v0.3.2-post-release-runtime-verification`
 - Branch: `main`
-- Status: architecture-control checkpoint cut ready
+- Status: runtime verification checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `187 passed`
 
@@ -169,14 +169,15 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 
 ## Next Recommended Work
 
-Post-release runtime verification:
+Worker Runtime preparation:
 
-- Verify health, runtime overview, migrations, inspection commands, backups,
-  meaning queries, guard summaries, and read-only behavior against the current
-  architecture-control baseline.
-- Keep new runtime features out until this verification pass is complete.
-- Use `docs/FULL_CHECK.md` Level 3 for verification changes and Level 4 for
-  any next checkpoint cut.
+- Prepare the v0.4 Worker Runtime arc without implementing execution yet.
+- Start with a small worker readiness document or model plan that preserves the
+  architecture contract: workers carry execution, cells carry capability,
+  organs carry composition, and agents carry goals.
+- Keep LLM gateways, remote execution, federation, dashboards, and evolution
+  out of scope until worker identity, heartbeat, capability profile, cost
+  profile, privacy profile, and failure semantics are clear.
 
 ## Operator Note
 

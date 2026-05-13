@@ -86,6 +86,18 @@ This is a runtime hardening fix, not a schema change.
 
 ## Test Results
 
+Read-only hash verification:
+
+```text
+Before: CAC9FB4E09D4246F5365B4AD3DC68C6B01B9B0A0FFA7C41B6AE1349D2CA0D9DD
+After:  CAC9FB4E09D4246F5365B4AD3DC68C6B01B9B0A0FFA7C41B6AE1349D2CA0D9DD
+Read-only verification: unchanged
+```
+
+Commands included memory, meaning, event, audit, decision, guard summary, cell,
+context, context-boundary, permission, schema, runtime-overview, and
+health-check surfaces on a copied local database.
+
 Targeted tests:
 
 ```text
@@ -105,9 +117,9 @@ Full suite:
 
 ## Current Conclusion
 
-The first runtime verification pass found one real hardening issue in migration
+The runtime verification pass found one real hardening issue in migration
 application. The issue was fixed without adding a migration or changing the
 runtime schema.
 
-The next verification step should continue to avoid new features and focus on
-operator surfaces, read-only guarantees, and predictable local behavior.
+Read-only inspection surfaces were verified against a copied local database by
+comparing the database hash before and after the command pass.

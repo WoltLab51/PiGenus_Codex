@@ -2,9 +2,12 @@
 
 ## Unreleased
 
+## pigenus-v0.3.2-post-release-runtime-verification
+
 - Hardened migration application with an immediate SQLite transaction to avoid concurrent migration version races
 - Added `docs/RUNTIME_VERIFICATION.md` with the first post-v0.3.1 runtime verification pass and findings
 - Updated migration policy to require exclusive pending migration application
+- Verified read-only inspection surfaces with unchanged database hash before and after command execution
 - Verified: 187 tests passed
 
 ## pigenus-v0.3.1-architecture-control

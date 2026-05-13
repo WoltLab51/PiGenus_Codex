@@ -975,3 +975,21 @@ The verification pass exercised real operator commands against the local
 runtime and found a race in migration application. Hardening the migration
 apply step keeps initialization idempotent even when multiple runtime commands
 start near the same time.
+
+## v0.3.2 Runtime Verification
+
+The project reached:
+
+- `pigenus-v0.3.2-post-release-runtime-verification`
+- migration apply hardening
+- documented runtime verification
+- health and runtime overview verification
+- backup integrity verification
+- read-only inspection verification with unchanged database hash
+- full test suite verification with 187 passing tests
+
+Why it mattered:
+
+This checkpoint proved the post-v0.3.1 runtime remained inspectable and stable
+after the architecture-control phase. It closed the verification loop before
+the project moves toward Worker Runtime preparation.
