@@ -75,6 +75,8 @@ PiGenus is a small local cognitive core. It has:
   federation, resource, and evolution risks
 - Data lifecycle map for events, meaning objects, memory objects, governance
   decisions, decision traces, audit logs, fossils, and future mutation proposals
+- Full check process for documentation, concept, runtime, release, PR, and
+  external ChatGPT review workflows
 
 Current demo flow:
 
@@ -159,6 +161,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   gateways, federation, and controlled evolution.
 - Data objects should remain traceable from source through storage,
   inspection, and aging.
+- Full checks scale with change risk; ChatGPT may review concepts, but Codex
+  remains responsible for repository truth.
 
 ## Next Recommended Work
 
@@ -188,3 +192,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/ARCHITECTURE_CONTRACT.md`: non-breaking architecture rules
 - `docs/THREAT_MODEL.md`: security and governance risk map
 - `docs/DATA_LIFECYCLE.md`: data lifecycle map
+- `docs/FULL_CHECK.md`: complete quality check workflow

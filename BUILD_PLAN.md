@@ -293,6 +293,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Treat documentation as operational memory
 - Check project control documents before every non-trivial commit
 - Keep `docs/INDEX.md` as the entry point for architecture documentation
+- Use `docs/FULL_CHECK.md` for complete change, release, PR, and external
+  review checks
 - Update vocabulary when term meaning or implementation status changes
 - Update decisions only for durable architecture constraints
 - Keep documentation current without turning every commit into paperwork

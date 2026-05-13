@@ -921,3 +921,20 @@ Why it mattered:
 The runtime already persists events, memory, meaning, decisions, and audit
 records. The lifecycle map makes their roles and aging behavior explicit before
 more stores, workers, LLM outputs, and evolution proposals add new state.
+
+## Full Check
+
+The project gained:
+
+- `docs/FULL_CHECK.md`
+- Check levels for small documentation, concept/architecture, runtime, and
+  release/checkpoint changes
+- A bounded ChatGPT review role for conceptual review
+- PR and merge review questions
+
+Why it mattered:
+
+PiGenus now has enough governance, documentation, and future architecture
+surface that quality checks need to scale with risk. The full check makes small
+work lightweight while keeping runtime, release, and baseline changes strongly
+verified.

@@ -39,6 +39,7 @@ Start here when orienting yourself:
 - `docs/MIGRATIONS.md` - SQLite migration policy
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md` - memory lifecycle implementation contract
 - `docs/DOCUMENTATION_MAINTENANCE.md` - documentation upkeep rules
+- `docs/FULL_CHECK.md` - complete quality check levels for docs, runtime, releases, PRs, and ChatGPT review
 
 ## Future Concept Tracks
 
@@ -70,7 +71,8 @@ For non-trivial work, read or check:
 3. docs/GENUS_VOCABULARY.md
 4. docs/ARCHITECTURE_CONTRACT.md
 5. docs/DOCUMENTATION_MAINTENANCE.md
-6. the topic-specific document for the area being changed
+6. docs/FULL_CHECK.md when the change is non-trivial
+7. the topic-specific document for the area being changed
 ```
 
 Then update the relevant documentation before commit.

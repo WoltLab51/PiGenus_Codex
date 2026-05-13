@@ -33,6 +33,8 @@
 - Recorded `D-059: Threat Modeling Precedes Powerful Runtime Surfaces`
 - Added `docs/DATA_LIFECYCLE.md` to map event, meaning, memory, decision, audit, fossil, and future mutation lifecycles
 - Recorded `D-060: Data Needs A Visible Lifecycle`
+- Added `docs/FULL_CHECK.md` to define complete check levels for documentation, architecture, runtime, release, PR, and ChatGPT review workflows
+- Recorded `D-061: Full Checks Scale With Change Risk`
 
 ## pigenus-v0.3.0-governed-runtime
 

@@ -879,3 +879,20 @@ The governed runtime depends on being able to explain how information enters,
 moves, persists, ages, and stops being active truth. Without a visible data
 lifecycle, future stores, workers, LLM outputs, and evolution proposals could
 create hidden state that bypasses inspection and governance.
+
+## D-061: Full Checks Scale With Change Risk
+
+Decision:
+
+PiGenus uses a layered full-check process. Small documentation changes require
+light checks, while concept, runtime, release, PR, and baseline changes require
+progressively deeper documentation, architecture, threat, lifecycle, test, and
+repository checks. ChatGPT may be used for bounded conceptual review, but Codex
+remains responsible for repository truth and implementation.
+
+Reason:
+
+One checklist for every change would either be too weak for releases or too
+heavy for small documentation edits. A layered check keeps the project
+disciplined without making ordinary work painful. External discussion is useful
+when bounded, but it must be translated back into the actual repository state.
