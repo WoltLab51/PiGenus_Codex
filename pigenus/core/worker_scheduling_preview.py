@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from pigenus.core.worker_inspection import WorkerInspection, WorkerInspectionService
-from pigenus.schemas.systemform import Sensitivity
+from pigenus.schemas.systemform import GovernanceDecision, GuardDecisionType, Sensitivity
 
 
 SENSITIVITY_RANK: dict[Sensitivity, int] = {
@@ -46,6 +46,52 @@ class WorkerSchedulingPreview:
     @property
     def suitable_workers(self) -> tuple[str, ...]:
         return tuple(candidate.worker_id for candidate in self.candidates if candidate.suitable)
+
+    def to_governance_decision(
+        self,
+        *,
+        actor_id: str,
+        room_id: str,
+        event_id: str | None = None,
+        rule_id: str = "worker_scheduling_preview",
+    ) -> GovernanceDecision:
+        suitable_workers = self.suitable_workers
+        decision = GuardDecisionType.ALLOW if suitable_workers else GuardDecisionType.BLOCK
+        reason = "worker_candidates_available" if suitable_workers else "no_suitable_worker"
+        return GovernanceDecision(
+            decision=decision,
+            reason=reason,
+            actor_id=actor_id,
+            room_id=room_id,
+            event_id=event_id,
+            rule_id=rule_id,
+            details={
+                "family": "worker_scheduling",
+                "recommended_worker_id": suitable_workers[0] if suitable_workers else None,
+                "request": _request_details(self.request),
+                "candidates": [
+                    {
+                        "worker_id": candidate.worker_id,
+                        "suitable": candidate.suitable,
+                        "reasons": list(candidate.reasons),
+                    }
+                    for candidate in self.candidates
+                ],
+                "trace": [
+                    {
+                        "name": "worker_candidate",
+                        "family": "worker_scheduling",
+                        "decision": "allow" if candidate.suitable else "block",
+                        "reason": candidate.reasons[0],
+                        "details": {
+                            "worker_id": candidate.worker_id,
+                            "reasons": ",".join(candidate.reasons),
+                        },
+                    }
+                    for candidate in self.candidates
+                ],
+            },
+        )
 
 
 class WorkerSchedulingPreviewService:
@@ -102,3 +148,12 @@ class WorkerSchedulingPreviewService:
             suitable=suitable,
             reasons=tuple(reasons),
         )
+
+
+def _request_details(request: WorkerSchedulingRequest) -> dict[str, str | bool | None]:
+    return {
+        "capability": request.capability,
+        "required_runtime": request.required_runtime,
+        "sensitivity": request.sensitivity.value if request.sensitivity is not None else None,
+        "network_required": request.network_required,
+    }

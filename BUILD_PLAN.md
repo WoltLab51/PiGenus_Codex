@@ -210,6 +210,9 @@ Next checkpoint:
 - Current implementation step: storage-free Worker Scheduling Preview explains
   candidate suitability without durable assignments, routing, provider calls,
   reservations, or execution
+- Current implementation step: Scheduling Preview can convert to a
+  log-compatible `GovernanceDecision` without persisting, assigning, routing, or
+  executing
 
 Readiness source:
 
@@ -249,6 +252,8 @@ meaning, inspection, and backup surfaces remain stable.
   history, discovery, or execution
 - Storage-free scheduling preview comes before durable scheduling, routing,
   execution records, provider calls, or execution
+- GovernanceDecision conversion comes before preview logging, durable
+  assignments, scheduling enforcement, routing, or execution
 
 ### I. Resource Economy
 

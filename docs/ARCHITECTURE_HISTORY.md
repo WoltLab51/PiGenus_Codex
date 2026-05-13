@@ -1172,3 +1172,22 @@ GENUS can now ask "which worker could host this?" without scheduling anything.
 This creates the first explainable placement layer while preserving the strict
 boundary: preview is not assignment, routing, provider call, discovery, or
 execution.
+
+## Worker Scheduling Preview Governance Conversion
+
+The system gained:
+
+- conversion from `WorkerSchedulingPreview` to `GovernanceDecision`
+- allow decisions when candidate workers are available
+- block decisions when no suitable worker exists
+- worker-scheduling family details
+- request metadata, candidate details, recommended worker ID, and trace-like
+  candidate steps
+- tests proving decision-log compatibility without persistence
+
+Why it mattered:
+
+Worker placement reasoning now has the same governance shape as other policy
+surfaces. The conversion is intentionally storage-free, so the runtime can
+review and test scheduling reasoning before deciding whether previews should be
+logged.

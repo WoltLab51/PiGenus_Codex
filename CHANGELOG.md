@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added GovernanceDecision conversion for Worker Scheduling Preview without persistence
+- Added tests for allow/block scheduling preview decisions and decision-log compatibility
+- Recorded `D-073: Scheduling Preview Governance Conversion Is Not Persistence`
+- Verified: 223 tests passed
 - Added storage-free `WorkerSchedulingPreviewService` for worker candidate suitability reasoning
 - Added scheduling preview tests for suitable ordering, explainable rejection reasons, network requirement, sensitivity limit, and no mutation
 - Recorded `D-072: Scheduling Preview Does Not Schedule`

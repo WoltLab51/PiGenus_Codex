@@ -1086,3 +1086,19 @@ Reason:
 GENUS needs to understand placement before it performs placement. A preview
 layer makes worker selection criteria testable and inspectable without creating
 durable scheduling semantics or execution side effects too early.
+
+## D-073: Scheduling Preview Governance Conversion Is Not Persistence
+
+Decision:
+
+Worker Scheduling Preview may convert a preview result into a
+`GovernanceDecision` with worker-scheduling family details, request metadata,
+candidate suitability, and trace-like candidate steps. This conversion is
+storage-free and does not persist the decision by itself.
+
+Reason:
+
+The project needs governance-shaped placement reasoning before it starts
+logging, assigning, or executing worker tasks. Keeping conversion separate from
+persistence allows later preview logging to reuse the existing decision-log
+path without making every preview a durable runtime event too early.

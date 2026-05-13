@@ -75,6 +75,7 @@ Implemented:
 - minimal SQLite worker store
 - read-only `worker-list` and `worker-show`
 - storage-free Worker Scheduling Preview
+- Scheduling Preview to GovernanceDecision conversion
 
 Not implemented:
 
@@ -91,7 +92,8 @@ heartbeats. Local files may bootstrap/import worker data later, but should not
 be runtime truth. Discovery waits for federation and trust work.
 
 Scheduling preview can explain candidate workers, but it does not assign or
-execute work.
+execute work. Its governance conversion is log-compatible, but not persisted by
+default.
 
 ## Data Architecture Rule
 

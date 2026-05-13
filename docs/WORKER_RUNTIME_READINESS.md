@@ -250,6 +250,10 @@ Scheduling preview explains which known workers appear suitable for a requested
 capability under simple constraints. It does not reserve, assign, route, or
 execute work.
 
+Scheduling preview may convert its result into a `GovernanceDecision` so the
+reasoning shape is compatible with later decision logging. This conversion does
+not persist by itself.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -292,6 +296,7 @@ The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
 Read-only CLI inspection is now the current operator surface. Storage-free
-scheduling preview is the current preparation surface.
+scheduling preview plus governance-decision conversion is the current
+preparation surface.
 
 Scheduling and execution remain later steps.

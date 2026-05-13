@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pigenus.core.worker_inspection import WorkerInspectionService
+from pigenus.core.governance_decision_log import governance_decision_to_record
 from pigenus.core.worker_registry import WorkerRegistry
 from pigenus.core.worker_scheduling_preview import (
     WorkerSchedulingPreviewService,
@@ -114,3 +115,65 @@ def test_worker_scheduling_preview_does_not_mutate_registry():
     after = service.inspection.list_workers()
 
     assert after == before
+
+
+def test_worker_scheduling_preview_converts_to_allow_governance_decision():
+    result = preview_service().preview(
+        WorkerSchedulingRequest(capability="meaning_ingester", required_runtime="python")
+    )
+
+    decision = result.to_governance_decision(
+        actor_id="agent_preview",
+        room_id="room_developer",
+        event_id="evt_task",
+    )
+
+    assert decision.decision.value == "allow"
+    assert decision.reason == "worker_candidates_available"
+    assert decision.actor_id == "agent_preview"
+    assert decision.room_id == "room_developer"
+    assert decision.details["family"] == "worker_scheduling"
+    assert decision.details["recommended_worker_id"] == "worker_good"
+    assert decision.details["request"]["capability"] == "meaning_ingester"
+    assert decision.details["trace"][0]["decision"] == "allow"
+
+
+def test_worker_scheduling_preview_converts_to_block_governance_decision():
+    result = preview_service().preview(
+        WorkerSchedulingRequest(
+            capability="meaning_ingester",
+            required_runtime="python",
+            sensitivity=Sensitivity.SECRET,
+        )
+    )
+
+    decision = result.to_governance_decision(
+        actor_id="agent_preview",
+        room_id="room_private",
+    )
+
+    assert decision.decision.value == "block"
+    assert decision.reason == "no_suitable_worker"
+    assert decision.details["recommended_worker_id"] is None
+    assert decision.details["trace"][0]["family"] == "worker_scheduling"
+
+
+def test_worker_scheduling_preview_governance_decision_is_log_compatible_without_persisting():
+    result = preview_service().preview(
+        WorkerSchedulingRequest(capability="meaning_ingester", required_runtime="python")
+    )
+    decision = result.to_governance_decision(
+        actor_id="agent_preview",
+        room_id="room_developer",
+    )
+
+    record = governance_decision_to_record(
+        decision,
+        source="worker_scheduling_preview",
+    )
+
+    assert record.decision_type == "governance_decision"
+    assert record.source == "worker_scheduling_preview"
+    assert record.details["decision"] == "allow"
+    assert record.details["family"] == "worker_scheduling"
+    assert record.details["trace"][0]["name"] == "worker_candidate"
