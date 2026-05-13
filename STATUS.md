@@ -69,6 +69,8 @@ PiGenus is a small local cognitive core. It has:
   decisions, and architecture history current
 - Architecture contract defining non-breaking rules for future runtime and
   architecture work
+- Documentation index for orientation across philosophy, vocabulary, build
+  plan, status, architecture contract, and concept tracks
 
 Current demo flow:
 
@@ -148,6 +150,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   runtime and architecture changes.
 - Future capability growth must preserve contracts, rooms, meaning, guards,
   decisions, traces, and tests.
+- `docs/INDEX.md` is the entry point for repository architecture documentation.
 
 ## Next Recommended Work
 
@@ -165,6 +168,7 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 
 ## Project Control Files
 
+- `docs/INDEX.md`: documentation entry point
 - `BUILD_PLAN.md`: current phase map and next work
 - `CHANGELOG.md`: versioned changes
 - `docs/ARCHITECTURE_HISTORY.md`: narrative system evolution

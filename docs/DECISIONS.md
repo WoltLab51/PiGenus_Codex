@@ -829,3 +829,19 @@ The v0.3 governed runtime baseline exists to make intelligence-shaped work
 observable, bounded, testable, and accountable. Workers, LLMs, agents, product
 surfaces, federation, and evolution would weaken the system if they could route
 around contracts, rooms, guard decisions, approval, auditability, or tests.
+
+## D-058: Documentation Needs A Stable Entry Point
+
+Decision:
+
+PiGenus keeps `docs/INDEX.md` as the stable entry point for architecture
+documentation. It should point readers toward philosophy, vocabulary, build
+plan, status, architecture contract, documentation maintenance, and the main
+topic-specific concept documents.
+
+Reason:
+
+The documentation set has become large enough that correctness alone is not
+enough. Future builders need a predictable reading path so they can understand
+the governed runtime baseline, vocabulary, rules, and non-goals before making
+changes.

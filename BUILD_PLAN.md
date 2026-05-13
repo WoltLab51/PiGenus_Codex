@@ -15,6 +15,7 @@ Every checkpoint should leave the repository with:
 - Passing tests
 - Updated `CHANGELOG.md`
 - Updated `STATUS.md`
+- `docs/INDEX.md` kept useful as the documentation entry point
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change
 - `docs/DOCUMENTATION_MAINTENANCE.md` followed for documentation upkeep
@@ -283,6 +284,7 @@ meaning, inspection, and backup surfaces remain stable.
 
 - Treat documentation as operational memory
 - Check project control documents before every non-trivial commit
+- Keep `docs/INDEX.md` as the entry point for architecture documentation
 - Update vocabulary when term meaning or implementation status changes
 - Update decisions only for durable architecture constraints
 - Keep documentation current without turning every commit into paperwork

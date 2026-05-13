@@ -870,3 +870,20 @@ product surfaces, federation, and eventually controlled evolution. The
 architecture contract protects the governed runtime baseline so new capability
 must grow through contracts, meaning, rooms, guards, decisions, traces, and
 tests instead of around them.
+
+## Documentation Index
+
+The project gained:
+
+- `docs/INDEX.md`
+- A recommended reading order for new contributors and future Codex sessions
+- A grouped map of core architecture, governance, operations, and future
+  concept documents
+- A before-building checklist that points to status, build plan, vocabulary,
+  architecture contract, and documentation maintenance
+
+Why it mattered:
+
+The project now has enough documentation that discoverability matters. The
+index turns the documentation set into a navigable system instead of a folder
+of individually useful files.

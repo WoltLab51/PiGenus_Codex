@@ -27,6 +27,8 @@
 - Recorded `D-056: Documentation Is Operational Memory`
 - Added `docs/ARCHITECTURE_CONTRACT.md` to define non-breaking rules for future PiGenus work
 - Recorded `D-057: Capability Must Not Bypass Governance`
+- Added `docs/INDEX.md` as the central documentation entry point
+- Recorded `D-058: Documentation Needs A Stable Entry Point`
 
 ## pigenus-v0.3.0-governed-runtime
 
