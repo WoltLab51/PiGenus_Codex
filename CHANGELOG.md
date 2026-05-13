@@ -23,6 +23,8 @@
 - Recorded `D-054: Internal Communication Uses Governed Meaning Objects`
 - Added `docs/GENUS_VOCABULARY.md` as the central GENUS term and implementation-status glossary
 - Recorded `D-055: Vocabulary Precedes Architecture Expansion`
+- Added `docs/DOCUMENTATION_MAINTENANCE.md` to define documentation upkeep rules for future changes
+- Recorded `D-056: Documentation Is Operational Memory`
 
 ## pigenus-v0.3.0-governed-runtime
 

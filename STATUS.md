@@ -65,6 +65,8 @@ PiGenus is a small local cognitive core. It has:
   Internal Communication
 - Central GENUS vocabulary glossary that distinguishes implemented, documented,
   planned, and conceptual terms
+- Documentation maintenance rules for keeping project control files, vocabulary,
+  decisions, and architecture history current
 
 Current demo flow:
 
@@ -140,6 +142,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
   expansion.
+- Documentation maintenance is part of the checkpoint process for non-trivial
+  runtime and architecture changes.
 
 ## Next Recommended Work
 
@@ -164,3 +168,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/PHASE_2_MEMORY_LIFECYCLE.md`: next phase implementation contract
 - `docs/CLI_CONVENTIONS.md`: CLI behavior and exit-code conventions
 - `docs/MIGRATIONS.md`: SQLite migration policy
+- `docs/DOCUMENTATION_MAINTENANCE.md`: documentation upkeep rules

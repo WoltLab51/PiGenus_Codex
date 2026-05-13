@@ -16,6 +16,8 @@ Every checkpoint should leave the repository with:
 - Updated `CHANGELOG.md`
 - Updated `STATUS.md`
 - This build plan adjusted when the next step changes
+- `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change
+- `docs/DOCUMENTATION_MAINTENANCE.md` followed for documentation upkeep
 - `docs/ARCHITECTURE_HISTORY.md` updated when the architecture changes
 - `docs/DECISIONS.md` updated when a durable decision is made
 - A Git commit
@@ -275,6 +277,14 @@ meaning, inspection, and backup surfaces remain stable.
 - Distinguish implemented, documented, planned, and conceptual terms
 - Stabilize language before adding schema, storage, or runtime behavior
 - Update the glossary when a term's architecture boundary changes
+
+### R. Documentation Maintenance
+
+- Treat documentation as operational memory
+- Check project control documents before every non-trivial commit
+- Update vocabulary when term meaning or implementation status changes
+- Update decisions only for durable architecture constraints
+- Keep documentation current without turning every commit into paperwork
 
 ## Non-Goals For The Current Kernel Phase
 

@@ -795,3 +795,20 @@ runtime classes. Without a glossary, later implementation work may either treat
 planned concepts as absent or prematurely force them into code. Vocabulary
 control lets the project grow without confusing current runtime contracts with
 future ontology.
+
+## D-056: Documentation Is Operational Memory
+
+Decision:
+
+PiGenus treats documentation maintenance as part of the checkpoint process.
+Non-trivial runtime or architecture changes must check the relevant project
+control documents, especially changelog, status, build plan, vocabulary,
+decisions, architecture history, and topic-specific concept documents.
+
+Reason:
+
+GENUS now depends on a growing ontology, release map, governance posture, and
+future-track boundary set. If documentation drifts, future builders may rely on
+stale assumptions and accidentally weaken the governed runtime. Documentation
+upkeep preserves system memory without requiring every small cleanup to touch
+every document.

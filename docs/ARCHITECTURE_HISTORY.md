@@ -835,3 +835,20 @@ GENUS now has enough ontology that future builders need a shared dictionary.
 The glossary prevents planned concepts from being mistaken for missing ideas,
 while also preventing premature schema expansion just because a term exists in
 the architecture vocabulary.
+
+## Documentation Maintenance
+
+The project gained:
+
+- `docs/DOCUMENTATION_MAINTENANCE.md`
+- A required documentation check for non-trivial changes
+- Update triggers for vocabulary, decisions, status, changelog, build plan, and
+  architecture history
+- A minimal commit checklist for keeping docs current without over-updating
+
+Why it mattered:
+
+The project now has enough architecture memory that stale documentation would
+become a safety problem. Documentation maintenance turns project docs into a
+deliberate part of checkpoint quality instead of relying on memory or cleanup
+later.
