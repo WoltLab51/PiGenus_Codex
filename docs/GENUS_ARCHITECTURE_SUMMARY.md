@@ -78,6 +78,7 @@ Implemented:
 - Scheduling Preview to GovernanceDecision conversion
 - opt-in Scheduling Preview decision logging
 - read-only `worker-scheduling-preview`
+- explicit `worker-scheduling-preview --log`
 
 Not implemented:
 
@@ -96,7 +97,8 @@ be runtime truth. Discovery waits for federation and trust work.
 Scheduling preview can explain candidate workers, but it does not assign or
 execute work. Its governance conversion is log-compatible and can be persisted
 through explicit preview logging, but it is not persisted by default. The
-`worker-scheduling-preview` CLI exposes the explanation without logging.
+`worker-scheduling-preview` CLI exposes the explanation without logging unless
+`--log` is provided.
 
 ## Data Architecture Rule
 

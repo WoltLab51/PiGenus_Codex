@@ -219,6 +219,9 @@ Next checkpoint:
 - Current implementation step: read-only `worker-scheduling-preview` exposes
   placement reasoning from the CLI without logging, assigning, routing,
   reserving, or executing
+- Current implementation step: `worker-scheduling-preview --log` explicitly
+  persists one preview governance decision with actor, room, and optional event
+  metadata, but still does not assign, route, reserve, or execute
 
 Readiness source:
 
@@ -260,9 +263,11 @@ meaning, inspection, and backup surfaces remain stable.
   execution records, provider calls, or execution
 - GovernanceDecision conversion comes before preview logging, durable
   assignments, scheduling enforcement, routing, or execution
-- Opt-in preview logging comes before any read-only scheduling preview CLI,
+- Opt-in preview logging has preceded the read-only scheduling preview CLI,
   durable assignments, scheduling enforcement, routing, or execution
-- Read-only scheduling preview CLI comes before a CLI `--log` option, durable
+- Read-only scheduling preview CLI has preceded a CLI `--log` option, durable
+  assignments, scheduling enforcement, routing, or execution
+- CLI preview logging comes before worker execution preflight, durable
   assignments, scheduling enforcement, routing, or execution
 
 ### I. Resource Economy

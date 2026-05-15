@@ -267,7 +267,11 @@ worker-scheduling-preview
 
 It reads worker profiles and current heartbeats from SQLite, builds temporary
 in-memory preview state, prints candidate suitability, and does not expose
-`--log` yet.
+logging unless `--log` is provided.
+
+With `--log`, the command writes exactly one governance decision record through
+`WorkerSchedulingPreviewLogger`. The logged record requires explicit actor and
+room metadata and may include an event ID. This is still not scheduling.
 
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
@@ -313,6 +317,7 @@ capability profile, cost profile, privacy profile, and failure semantics.
 Read-only CLI inspection is now the current operator surface. Storage-free
 scheduling preview, governance-decision conversion, and opt-in preview logging
 are the current preparation surfaces. `worker-scheduling-preview` exposes that
-reasoning to operators without creating decisions or assignments.
+reasoning to operators. With `--log`, it may create a decision record, but it
+still does not create assignments.
 
 Scheduling and execution remain later steps.

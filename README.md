@@ -94,6 +94,12 @@ Preview worker suitability without scheduling or logging:
 python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python
 ```
 
+Log one worker scheduling preview decision explicitly:
+
+```powershell
+python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python --log --actor agent_preview --room room_developer
+```
+
 Inspect known contexts without modifying storage:
 
 ```powershell

@@ -19,6 +19,7 @@ from pigenus.core.runtime_overview import RuntimeOverviewBuilder
 from pigenus.core.worker_inspection import WorkerInspectionService
 from pigenus.core.worker_registry import WorkerRegistry
 from pigenus.core.worker_scheduling_preview import (
+    WorkerSchedulingPreviewLogger,
     WorkerSchedulingPreviewService,
     WorkerSchedulingRequest,
 )
@@ -219,6 +220,26 @@ def build_parser() -> argparse.ArgumentParser:
         "--network-required",
         action="store_true",
         help="Require worker network access.",
+    )
+    worker_scheduling_preview.add_argument(
+        "--log",
+        action="store_true",
+        help="Persist the preview decision to the decision log.",
+    )
+    worker_scheduling_preview.add_argument(
+        "--actor",
+        default="worker_scheduling_preview_cli",
+        help="Actor ID for the preview governance decision.",
+    )
+    worker_scheduling_preview.add_argument(
+        "--room",
+        default="room_developer",
+        help="Room ID for the preview governance decision.",
+    )
+    worker_scheduling_preview.add_argument(
+        "--event-id",
+        default=None,
+        help="Optional event ID for the logged preview decision.",
     )
 
     context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
@@ -692,6 +713,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "worker-scheduling-preview":
         database = Database(Path(args.db))
         database.initialize()
+        logged_record = None
         try:
             repository = WorkerRepository(database)
             registry = _worker_registry_from_repository(repository)
@@ -709,12 +731,22 @@ def main(argv: list[str] | None = None) -> int:
                     network_required=args.network_required,
                 )
             )
+            if args.log:
+                logged_record = WorkerSchedulingPreviewLogger(
+                    DecisionRepository(database)
+                ).add(
+                    preview,
+                    actor_id=args.actor,
+                    room_id=args.room,
+                    event_id=args.event_id,
+                )
         finally:
             database.close()
 
         decision = preview.to_governance_decision(
-            actor_id="worker_scheduling_preview_cli",
-            room_id="room_developer",
+            actor_id=args.actor,
+            room_id=args.room,
+            event_id=args.event_id,
         )
         recommended_worker = preview.suitable_workers[0] if preview.suitable_workers else "-"
 
@@ -727,6 +759,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Decision: {decision.decision.value}")
         print(f"Reason: {decision.reason}")
         print(f"Recommended worker: {recommended_worker}")
+        if logged_record is not None:
+            print(f"Logged decision: {logged_record.decision_id}")
         print("Candidates:")
         if not preview.candidates:
             print("-")

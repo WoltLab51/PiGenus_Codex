@@ -251,8 +251,9 @@ truth surface:
 `worker-list` and `worker-show` are read-only CLI commands over the SQLite
 worker store. `worker-scheduling-preview` is also read-only: it reads stored
 worker profiles and current heartbeats, builds temporary in-memory preview
-state, and does not persist decisions unless a future explicit logging option
-is added.
+state, and does not persist decisions unless `--log` is provided. With
+`--log`, it writes one governance decision record through the existing decision
+log and does not create scheduling tables or execution records.
 
 Worker source-of-truth decision:
 

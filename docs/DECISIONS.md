@@ -1128,8 +1128,8 @@ Decision:
 `worker-scheduling-preview` is a read-only CLI surface over the SQLite Worker
 Store. It builds an in-memory worker registry from stored profiles and current
 heartbeats, runs `WorkerSchedulingPreviewService`, and prints the resulting
-allow/block preview, recommendation, and candidate reasons. It does not expose
-`--log` yet and does not persist decisions by default.
+allow/block preview, recommendation, and candidate reasons. Its default path
+does not persist decisions.
 
 Reason:
 
@@ -1137,3 +1137,19 @@ Operators should be able to inspect placement reasoning before the runtime has
 durable scheduling, assignments, or execution. Keeping the first CLI read-only
 preserves the distinction between seeing a possible placement and creating a
 runtime action or governance record.
+
+## D-076: Scheduling Preview CLI Logging Is Explicit
+
+Decision:
+
+`worker-scheduling-preview` may persist one preview decision only when `--log`
+is provided. Logged previews use `WorkerSchedulingPreviewLogger`, the existing
+decision log, and explicit metadata from `--actor`, `--room`, and optional
+`--event-id`. Without `--log`, the command remains read-only.
+
+Reason:
+
+Preview logging is useful evidence, but it is still a write. Requiring an
+explicit flag and governance metadata keeps operator inspection separate from
+durable accountability records while avoiding new scheduling, assignment,
+reservation, routing, provider, or execution behavior.

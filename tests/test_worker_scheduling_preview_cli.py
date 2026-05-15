@@ -114,6 +114,39 @@ def test_worker_scheduling_preview_cli_prints_candidate_reasons_without_mutating
     database.close()
 
 
+def test_worker_scheduling_preview_cli_logs_decision_only_with_explicit_flag():
+    path = db_path("log")
+    seed_workers(path)
+
+    result = run_preview(
+        path,
+        "--runtime",
+        "python",
+        "--log",
+        "--actor",
+        "agent_preview",
+        "--room",
+        "room_private",
+        "--event-id",
+        "evt_worker_preview",
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 1
+    assert decisions[0].decision_type == "governance_decision"
+    assert decisions[0].source == "worker_scheduling_preview"
+    assert decisions[0].subject_id == "evt_worker_preview"
+    assert decisions[0].actor == "agent_preview"
+    assert decisions[0].context == {"name": "private/default"}
+    assert decisions[0].details["decision"] == "allow"
+    assert decisions[0].details["family"] == "worker_scheduling"
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
 def test_worker_scheduling_preview_cli_applies_runtime_sensitivity_and_network_constraints():
     path = db_path("constraints")
     seed_workers(path)

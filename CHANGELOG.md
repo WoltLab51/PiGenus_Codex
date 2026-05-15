@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added explicit `--log` support to `worker-scheduling-preview`
+- Added CLI logging metadata options for actor, room, and optional event ID
+- Added tests proving preview CLI logging persists one governance decision only
+  when requested
+- Recorded `D-076: Scheduling Preview CLI Logging Is Explicit`
+- Verified: 230 tests passed
 - Added read-only `worker-scheduling-preview` CLI for worker suitability
   previews over the SQLite Worker Store
 - Added CLI tests for empty output, candidate reasons, constraints, and no

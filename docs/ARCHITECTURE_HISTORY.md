@@ -1225,3 +1225,19 @@ Operators can now inspect worker placement reasoning from the command line
 without creating a scheduling assignment or durable decision. The command reads
 from the SQLite Worker Store, builds only temporary in-memory preview state, and
 does not expose preview logging yet.
+
+## Worker Scheduling Preview CLI Logging
+
+The system gained:
+
+- `worker-scheduling-preview --log`
+- `--actor`, `--room`, and optional `--event-id` metadata for logged previews
+- decision-log persistence through `WorkerSchedulingPreviewLogger`
+- tests proving no logging without the flag and exactly one governance decision
+  with the flag
+
+Why it mattered:
+
+The operator can now turn a placement preview into durable governance evidence
+without creating scheduling assignments or execution records. This keeps the
+transition from inspection to accountability explicit and reviewable.

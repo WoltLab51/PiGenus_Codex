@@ -6,7 +6,7 @@
 - Branch: `main`
 - Status: runtime verification checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `229 passed`
+- Last verified result: `230 passed`
 
 ## Current Runtime Shape
 
@@ -64,6 +64,8 @@ PiGenus is a small local cognitive core. It has:
   persistence
 - Opt-in Worker Scheduling Preview logging through the durable decision log
 - Read-only `worker-scheduling-preview` CLI for candidate suitability previews
+- Explicit `worker-scheduling-preview --log` support for one preview decision
+  record with actor, room, and optional event metadata
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -193,9 +195,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerSchedulingPreviewLogger` can persist preview decisions through the
   existing decision log only when called explicitly; it does not schedule,
   assign, route providers, reserve workers, or execute tasks.
-- `worker-scheduling-preview` is read-only and does not expose preview logging,
-  create decisions, write audit logs, schedule, assign, reserve, route
-  providers, or execute tasks.
+- `worker-scheduling-preview` is read-only unless `--log` is provided; with
+  `--log`, it writes one governance decision record and still does not write
+  audit logs, schedule, assign, reserve, route providers, or execute tasks.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -217,8 +219,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide whether scheduling preview should gain an explicit `--log`
-  option or whether worker execution preflight checks need more modeling first.
+- Next, model worker execution preflight checks before any durable assignment
+  or execution path exists.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
