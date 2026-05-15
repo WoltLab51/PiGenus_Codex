@@ -1275,3 +1275,20 @@ Why it mattered:
 Operators can now inspect execution eligibility for one worker from the command
 line before logging, assignment, routing, or execution exists. This gives the
 Worker Runtime a visible safety check without making workers active executors.
+
+## GitHub Actions CI
+
+The system gained:
+
+- `.github/workflows/ci.yml`
+- CI runs on push and pull requests to `main`
+- manual `workflow_dispatch`
+- Python 3.12 setup
+- editable install with development dependencies
+- `python -m pytest`
+
+Why it mattered:
+
+The test suite is now large enough that local verification should not be the
+only safety signal. CI gives pushed changes and future pull requests an
+external repeatable test run without changing runtime behavior.

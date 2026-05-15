@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added GitHub Actions CI workflow for Python 3.12 test runs on push, pull
+  request, and manual dispatch
+- Updated full-check guidance to include CI verification for PRs and release
+  checkpoints
+- Recorded `D-080: GitHub Actions Runs The Test Suite`
 - Added read-only `worker-execution-preflight` CLI for checking one worker
   before execution
 - Added CLI tests for allow, unknown worker, ordered block checks, and no

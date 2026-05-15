@@ -8,6 +8,7 @@
 - Branch: `main`
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
+- CI command: `python -m pytest` on GitHub Actions / Python 3.12
 - Last verified result: `238 passed`
 
 ## Current Runtime Shape
@@ -104,6 +105,8 @@ PiGenus is a small local cognitive core. It has:
   federation and trust
 - Full check process for documentation, concept, runtime, release, PR, and
   external ChatGPT review workflows
+- GitHub Actions CI for running the Python test suite on push, pull request,
+  and manual dispatch
 - Worker Runtime readiness boundary for identity, heartbeat, capability
   profile, cost profile, privacy profile, and failure semantics before
   scheduling or execution
@@ -224,6 +227,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   inspection, and aging.
 - Full checks scale with change risk; ChatGPT may review concepts, but Codex
   remains responsible for repository truth.
+- GitHub Actions CI runs the test suite on push and pull request, but local
+  checks still remain required before commits.
 
 ## Next Recommended Work
 
@@ -231,7 +236,8 @@ Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
 - Next, decide whether Worker Execution Preflight should gain explicit `--log`
-  support before any durable assignment or execution path exists.
+  support before any durable assignment or execution path exists, after the
+  first CI run has been observed on GitHub.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

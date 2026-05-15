@@ -193,6 +193,8 @@ in the current working directory.
 pytest
 ```
 
+GitHub Actions also runs the test suite on pushes and pull requests to `main`.
+
 ## Project Control
 
 - `BUILD_PLAN.md` defines completed phases, the current phase, and the next build step.

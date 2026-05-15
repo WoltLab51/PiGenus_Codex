@@ -67,6 +67,7 @@ Required:
 git status --short
 git diff --check
 .venv\Scripts\python.exe -m pytest
+CI expected to pass after push
 docs/ARCHITECTURE_CONTRACT.md checked
 docs/THREAT_MODEL.md checked
 docs/DATA_LIFECYCLE.md checked if data/storage changes
@@ -106,6 +107,7 @@ CHANGELOG.md release/checkpoint section prepared
 git log --oneline -5 reviewed
 tag created for stable checkpoint if appropriate
 push branch and tag when appropriate
+GitHub Actions CI checked after push
 ```
 
 ## Architecture Review Questions
@@ -193,6 +195,7 @@ Before a PR or merge:
 8. Does data lifecycle need an update?
 9. Is the working tree clean after commit?
 10. Is the pushed branch current?
+11. Has GitHub Actions CI passed or been noted as pending?
 ```
 
 ## Current Conclusion

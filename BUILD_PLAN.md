@@ -224,6 +224,8 @@ Current development arc:
 - Current implementation step: read-only `worker-execution-preflight` exposes
   one-worker execution eligibility without logging, assignment, routing,
   reservation, provider calls, or execution
+- Current quality step: GitHub Actions runs the Python test suite on push,
+  pull request, and manual dispatch
 
 Readiness source:
 
@@ -275,6 +277,8 @@ meaning, inspection, and backup surfaces remain stable.
   scheduling enforcement, routing, provider calls, or execution
 - Read-only preflight CLI comes before preflight logging, durable assignments,
   scheduling enforcement, routing, provider calls, or execution
+- CI is established before continuing Worker Runtime logging, assignment,
+  routing, provider, or execution work
 
 ### I. Resource Economy
 

@@ -1200,3 +1200,18 @@ Reason:
 Operators need to inspect execution eligibility before any execution path
 exists. Keeping the first preflight CLI read-only preserves the distinction
 between eligibility, durable governance evidence, assignment, and actual work.
+
+## D-080: GitHub Actions Runs The Test Suite
+
+Decision:
+
+PiGenus uses GitHub Actions CI to run the Python test suite on push and pull
+request events for `main`, plus manual dispatch. The first CI workflow uses
+Python 3.12, installs the package with development dependencies, and runs
+`python -m pytest`.
+
+Reason:
+
+The repository has grown beyond a purely local prototype. Local test runs remain
+required before commits, but CI gives every pushed change a repeatable external
+verification path and makes future PRs safer to review.
