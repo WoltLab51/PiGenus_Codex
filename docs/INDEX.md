@@ -13,7 +13,8 @@ Start here when orienting yourself:
 4. `STATUS.md` - current repository truth and stable invariants
 5. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
 6. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-7. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+7. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+8. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -27,6 +28,7 @@ Start here when orienting yourself:
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary
 - `docs/V0_3_GOVERNED_RUNTIME_READINESS.md` - v0.3 release readiness scope
+- `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current CLI/repository slicing review
 
 ## Governance And Safety
 

@@ -226,12 +226,18 @@ Current development arc:
   reservation, provider calls, or execution
 - Current quality step: GitHub Actions runs the Python test suite on push,
   pull request, and manual dispatch
+- Current quality step: architecture fitness review identifies CLI and
+  repository hotspots before behavior-preserving structural refactors
+- Next structural step: extract worker CLI command handling into a dedicated
+  module boundary without changing commands, output, storage, scheduling, or
+  execution behavior
 
 Readiness source:
 
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md`
+- `docs/ARCHITECTURE_FITNESS_REVIEW.md`
 
 ## Later Architecture Tracks
 
@@ -320,6 +326,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Dashboard follows CLI semantics, not the other way around
 - Human approval UI after approval records and guard summaries are stable
 - Visual system maps after the architecture vocabulary stops shifting rapidly
+- CLI command modules should be extracted as static structural boundaries
+  before any dynamic command-cell routing exists
 
 ### N. Liquid Runtime
 

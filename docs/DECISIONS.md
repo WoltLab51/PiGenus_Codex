@@ -1215,3 +1215,20 @@ Reason:
 The repository has grown beyond a purely local prototype. Local test runs remain
 required before commits, but CI gives every pushed change a repeatable external
 verification path and makes future PRs safer to review.
+
+## D-081: Architecture Fitness Review Precedes Structural Refactor
+
+Decision:
+
+PiGenus records an architecture fitness review before slicing large runtime
+coordination files such as the CLI entry point or storage repository module.
+The first review identifies `pigenus/cli/main.py` as the next structural
+extraction target and recommends a worker CLI command module boundary before
+dynamic cell routing or repository splitting.
+
+Reason:
+
+PiGenus should move toward cell-like structure deliberately. Measuring hotspots,
+responsibilities, and test coupling first keeps refactors behavior-preserving
+and prevents a conceptual "cell architecture" discussion from turning into an
+unsafe runtime rewrite.

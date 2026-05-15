@@ -112,6 +112,8 @@ PiGenus is a small local cognitive core. It has:
   scheduling or execution
 - Multimodal Systemform concept boundary for future language, graph, state,
   visual, spatial, and action representations as governed meaning
+- Architecture fitness review for CLI, repository, and test-coupling hotspots
+  before structural refactors
 
 Current demo flow:
 
@@ -229,15 +231,18 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   remains responsible for repository truth.
 - GitHub Actions CI runs the test suite on push and pull request, but local
   checks still remain required before commits.
+- Architecture fitness review precedes structural refactors so cell-like module
+  boundaries are introduced without changing runtime behavior.
 
 ## Next Recommended Work
 
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide whether Worker Execution Preflight should gain explicit `--log`
-  support before any durable assignment or execution path exists, after the
-  first CI run has been observed on GitHub.
+- Next, extract worker CLI command handling into a small module boundary before
+  adding more Worker Runtime behavior.
+- Keep Worker Execution Preflight `--log` support as a later decision after the
+  CLI boundary is easier to review.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
@@ -272,3 +277,4 @@ contracts, not inside ambiguous storage, context, or guard behavior.
 - `docs/FULL_CHECK.md`: complete quality check workflow
 - `docs/WORKER_RUNTIME_READINESS.md`: v0.4 worker readiness boundary
 - `docs/MULTIMODAL_SYSTEMFORM.md`: future multimodal meaning boundary
+- `docs/ARCHITECTURE_FITNESS_REVIEW.md`: CLI/repository structural hotspot review

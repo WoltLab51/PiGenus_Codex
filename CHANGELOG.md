@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added `docs/ARCHITECTURE_FITNESS_REVIEW.md` to analyze CLI, repository, and
+  test-coupling hotspots before structural refactors
+- Recorded `D-081: Architecture Fitness Review Precedes Structural Refactor`
 - Added GitHub Actions CI workflow for Python 3.12 test runs on push, pull
   request, and manual dispatch
 - Updated full-check guidance to include CI verification for PRs and release

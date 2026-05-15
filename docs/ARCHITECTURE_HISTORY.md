@@ -1292,3 +1292,23 @@ Why it mattered:
 The test suite is now large enough that local verification should not be the
 only safety signal. CI gives pushed changes and future pull requests an
 external repeatable test run without changing runtime behavior.
+
+## Architecture Fitness Review
+
+The project gained:
+
+- `docs/ARCHITECTURE_FITNESS_REVIEW.md`
+- measured CLI and repository hotspots
+- a responsibility map for `pigenus/cli/main.py` and
+  `pigenus/storage/repositories.py`
+- a test-coupling review for CLI subprocess, SQLite, audit, decision, and
+  worker-store interactions
+- a recommended first structural cut: worker CLI command module extraction
+
+Why it mattered:
+
+PiGenus has reached the point where the next quality improvement is not more
+policy, more worker behavior, or more documentation volume. The next risk is
+operator-surface coordination accumulating inside one CLI file. The fitness
+review lets the project move toward cell-like module boundaries without
+turning that into dynamic runtime routing or a risky rewrite.
