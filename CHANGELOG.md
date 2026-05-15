@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` as a repeatable review
+  protocol for philosophy, governance, cellular, RuntimeShape, documentation,
+  verification, monolith, and overengineering fit
+- Recorded
+  `D-087: Philosophy Alignment Reviews Gate Non-Trivial Changes`
 - Integrated stable-core / variable-runtime-shape architecture language across
   philosophy, convergence review, vocabulary, build plan, status, and history
 - Recorded

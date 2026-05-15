@@ -44,6 +44,7 @@ git diff --check
 docs/INDEX.md checked
 docs/GENUS_VOCABULARY.md checked
 docs/ARCHITECTURE_CONTRACT.md checked
+docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md checked for architecture fit
 docs/DOCUMENTATION_MAINTENANCE.md checked
 docs/DECISIONS.md updated if durable
 docs/ARCHITECTURE_HISTORY.md updated if architecture shape changed
@@ -70,6 +71,7 @@ git diff --check
 CI expected to pass after push
 docs/ARCHITECTURE_CONTRACT.md checked
 docs/THREAT_MODEL.md checked
+docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md checked for governed path and maturity fit
 docs/DATA_LIFECYCLE.md checked if data/storage changes
 docs/GENUS_VOCABULARY.md updated if terms/status changed
 docs/DECISIONS.md updated if durable rule changed
@@ -97,6 +99,7 @@ docs/GENUS_PHILOSOPHY.md checked
 docs/GENUS_VOCABULARY.md checked
 docs/ARCHITECTURE_CONTRACT.md checked
 docs/THREAT_MODEL.md checked
+docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md checked
 docs/DATA_LIFECYCLE.md checked
 docs/DOCUMENTATION_MAINTENANCE.md checked
 docs/DECISIONS.md checked
@@ -123,6 +126,7 @@ For concept, runtime, or release work:
 6. Does it weaken hard block, approval, audit, or decision behavior?
 7. Does it introduce LLM, worker, federation, dashboard, vector search, or evolution behavior too early?
 8. Does the documentation still tell the truth after the change?
+9. Does it pass the Philosophy Alignment Review at the right depth?
 ```
 
 ## ChatGPT Review Role

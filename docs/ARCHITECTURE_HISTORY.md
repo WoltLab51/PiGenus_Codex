@@ -1413,3 +1413,21 @@ GENUS can move toward device- and function-specific forms without losing kernel
 accountability. This connects Cellular Systemform, Liquid Runtime, Worker
 Runtime, and the Architecture Convergence Review into one map instead of
 letting each concept drift independently.
+
+## Philosophy Alignment Review Protocol
+
+The project gained:
+
+- `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md`
+- a full review template for non-trivial changes
+- quick-review questions for smaller architecture checks
+- fit ratings for philosophy, governance, cellular maturity, and RuntimeShape
+  boundaries
+- risk checks for monolith drift, documentation drift, premature dynamics, and
+  overengineering
+
+Why it mattered:
+
+GENUS now has a repeatable way to test whether future changes still match its
+philosophy. This keeps the growing architecture map useful without turning every
+change into either intuition-only work or excessive documentation ceremony.

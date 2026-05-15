@@ -43,6 +43,8 @@ For every non-trivial change, check this list before commit:
   migration rule, or non-goal changed
 - `docs/ARCHITECTURE_HISTORY.md`: architecture shape changed in a way future
   readers need to understand
+- `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md`: non-trivial changes need a
+  philosophy, governance, cellular, and RuntimeShape fit check
 - Specific concept docs: update the relevant document when a change touches its
   topic
 

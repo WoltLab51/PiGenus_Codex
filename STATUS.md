@@ -127,6 +127,9 @@ PiGenus is a small local GENUS runtime core. It has:
   and static module boundaries as temporary cell boundaries
 - Architecture convergence now defines stable core vs variable runtime shapes
   as a future direction, not current dynamic behavior
+- Philosophy Alignment Review Protocol defines a repeatable fit check for
+  philosophy, governance, cellular maturity, RuntimeShape risk, and
+  overengineering risk
 
 Current demo flow:
 
@@ -262,6 +265,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   monoliths.
 - Runtime shapes remain documented/planned only; any future shape behavior must
   begin with preview, validation, guard decision, trace, and inspection.
+- Non-trivial changes should pass a proportional Philosophy Alignment Review
+  before they become code, storage, RuntimeShape, worker, cell, or governance
+  behavior.
 
 ## Next Recommended Work
 
@@ -276,6 +282,9 @@ Worker Runtime preparation:
   smallest governable capability, not smallest possible function.
 - Before implementing RuntimeShape or DeviceProfile behavior, keep shape
   formation preview-only and preserve the stable Systemform Kernel.
+- Use the Philosophy Alignment Review Protocol before the next Meaning CLI
+  extraction, WorkerAssignment storage decision, service-to-cell promotion, or
+  RuntimeShape implementation.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

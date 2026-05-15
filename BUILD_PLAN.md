@@ -23,6 +23,8 @@ Every checkpoint should leave the repository with:
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change
 - `docs/DOCUMENTATION_MAINTENANCE.md` followed for documentation upkeep
+- `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` used for non-trivial
+  philosophy, governance, cellular, worker, or RuntimeShape changes
 - `docs/ARCHITECTURE_CONTRACT.md` preserved for non-trivial runtime changes
 - `docs/ARCHITECTURE_HISTORY.md` updated when the architecture changes
 - `docs/DECISIONS.md` updated when a durable decision is made
@@ -411,6 +413,9 @@ meaning, inspection, and backup surfaces remain stable.
 - Keep `docs/INDEX.md` as the entry point for architecture documentation
 - Use `docs/FULL_CHECK.md` for complete change, release, PR, and external
   review checks
+- Use `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` to classify fit,
+  maturity, governance path, RuntimeShape risk, and overengineering risk before
+  larger changes
 - Update vocabulary when term meaning or implementation status changes
 - Update decisions only for durable architecture constraints
 - Keep documentation current without turning every commit into paperwork

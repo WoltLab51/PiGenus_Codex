@@ -15,7 +15,8 @@ Start here when orienting yourself:
 6. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
 7. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
 8. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-9. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+9. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+10. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -38,6 +39,7 @@ Start here when orienting yourself:
 - `docs/DECISIONS.md` - durable architecture decisions
 - `docs/ARCHITECTURE_HISTORY.md` - narrative history of architecture changes
 - `docs/ARCHITECTURE_CONTRACT.md` - non-breaking rules for future work
+- `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - review protocol for keeping changes aligned with GENUS philosophy
 - `docs/THREAT_MODEL.md` - current and future security/governance threats
 - `docs/HUMAN_GOVERNANCE.md` - review, escalation, approval, and authority
 - `docs/EVOLUTION_SANDBOX.md` - mutation as proposal, not activation

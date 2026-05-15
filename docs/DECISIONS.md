@@ -1324,3 +1324,21 @@ runtime, privacy runtime, diagnostic runtime, or future character/agent runtime
 without rewriting the core or bypassing governance. Variable form is useful
 only if it stays downstream of identity, rooms, meaning, contracts, guards,
 decisions, traces, inspection, and tests.
+
+## D-087: Philosophy Alignment Reviews Gate Non-Trivial Changes
+
+Decision:
+
+PiGenus uses `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` as the repeatable
+fit check for non-trivial changes. Larger work should classify philosophy fit,
+governance fit, cellular maturity, RuntimeShape impact, hot-path versus
+governed-path behavior, worker boundaries, documentation drift, monolith risk,
+verification needs, and overengineering risk before implementation or commit.
+
+Reason:
+
+GENUS now has enough philosophy, ontology, governance, worker, cellular, and
+runtime-shape language that informal judgement alone can drift. A repeatable
+protocol keeps new work aligned with the stable core while avoiding both early
+dynamic behavior and architecture ceremony that does not improve inspection,
+tests, reuse, or governance.
