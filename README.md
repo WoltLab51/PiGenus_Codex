@@ -1,172 +1,91 @@
 # PiGenus
 
-PiGenus Phase 1 is the local cognitive operating core for the GENUS system. It
-is intentionally small: a testable Python runtime for cells, structured events,
-memory objects, permissions, audit logging, and simple orchestration.
+PiGenus is the local governed runtime core for GENUS.
 
-The project philosophy is documented separately in
-[`docs/GENUS_PHILOSOPHY.md`](docs/GENUS_PHILOSOPHY.md). In short: GENUS is not
-a single AI agent. It is a structured environment for digital capabilities,
-memories, agents, and decisions.
+It is not a single AI agent. It is a small, testable Python runtime for
+structured events, cells, memory, meaning, rooms, guards, governance decisions,
+auditability, and worker-readiness.
 
-This repository does not include the broader GENUS system. There are no
-dashboards, trading systems, LLM providers, external APIs, graph databases,
-Redis, RabbitMQ, or autonomous evolution loops in Phase 1.
-
-## What Phase 1 Includes
-
-- Pydantic schemas for events, memory objects, cell specs, and cell state
-- A SQLite-backed event, memory, cell, cell-state, and audit store
-- A cell registry
-- A local event bus
-- A minimal context boundary engine
-- A deterministic memory lifecycle engine
-- A simple permission engine
-- MVP cells for input, rule guarding, memory proposal, memory writing, and explanation
-- A deterministic demo orchestrator
-- Pytest coverage for the core flow
-
-## Phase 1.5 Core Contracts
-
-PiGenus keeps durable memory under core control. Cells may propose memory through
-structured `MemoryProposal` events, but only guarded proposals can become
-`MemoryStored` events and persisted `MemoryObject` rows.
-
-Cell-local state is stored separately from core memory. It is intended for
-operational data such as caches, cursors, counters, and telemetry, not for
-canonical facts about the user, world, or projects.
-
-## Phase 1.6 Context Boundaries
-
-Events and memory objects carry a structured context. The core currently knows
-`developer/default`, `private/default`, `family/default`, and `trading/default`.
-Cells declare `allowed_contexts`, and the orchestrator checks that boundary
-before a cell can process an event. No cell may silently move work from one
-context to another.
-
-## Phase 2 Memory Lifecycle
-
-Memory does not get deleted automatically. The lifecycle engine applies
-deterministic review and expiry rules, updates memory status, and records audit
-logs for status changes. Canonical memory is protected from automatic
-downgrade, expiry, deletion, or fossilization.
-
-Run lifecycle review with:
-
-```powershell
-python -m pigenus.cli.main memory-review --db pigenus.sqlite3
-```
-
-Inspect memory without modifying it:
-
-```powershell
-python -m pigenus.cli.main memory-list --db pigenus.sqlite3
-```
-
-Inspect known schema contracts:
-
-```powershell
-python -m pigenus.cli.main schema-list
-```
-
-Inspect durable decision records:
-
-```powershell
-python -m pigenus.cli.main decision-list --db pigenus.sqlite3
-```
-
-Inspect registered cells without modifying them:
-
-```powershell
-python -m pigenus.cli.main cell-list --db pigenus.sqlite3
-```
-
-Inspect known workers without modifying them:
-
-```powershell
-python -m pigenus.cli.main worker-list --db pigenus.sqlite3
-python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
-```
-
-Preview worker suitability without scheduling or logging:
-
-```powershell
-python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python
-```
-
-Log one worker scheduling preview decision explicitly:
-
-```powershell
-python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python --log --actor agent_preview --room room_developer
-```
-
-Inspect one worker before execution without modifying storage:
-
-```powershell
-python -m pigenus.cli.main worker-execution-preflight worker_local meaning_ingester --db pigenus.sqlite3 --runtime python
-```
-
-Inspect known contexts without modifying storage:
-
-```powershell
-python -m pigenus.cli.main context-list
-```
-
-Include registered cells allowed in each context from an existing database:
-
-```powershell
-python -m pigenus.cli.main context-list --db pigenus.sqlite3 --show-cells
-```
-
-Inspect built-in default permissions:
-
-```powershell
-python -m pigenus.cli.main permission-list
-```
-
-Inspect audit logs without modifying them:
-
-```powershell
-python -m pigenus.cli.main audit-list --db pigenus.sqlite3
-```
-
-Inspect stored events without modifying them:
-
-```powershell
-python -m pigenus.cli.main event-list --db pigenus.sqlite3
-python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
-```
-
-Show a compact runtime overview:
-
-```powershell
-python -m pigenus.cli.main runtime-overview --db pigenus.sqlite3
-```
-
-Check local runtime storage health:
-
-```powershell
-python -m pigenus.cli.main health-check --db pigenus.sqlite3
-```
-
-## Demo Flow
-
-The demo input is:
+The current development arc is:
 
 ```text
-Merke dir: PiGenus ist der Zellkern.
+pigenus-v0.4.0-worker-runtime-preparation-dev
 ```
 
-The runtime executes:
+The latest stable checkpoint is:
 
 ```text
-InputCell -> RuleGuardCell -> MemoryProposerCell -> MemoryWriterCell -> ExplainCell
+pigenus-v0.3.2-post-release-runtime-verification
 ```
 
-Expected response:
+Current package version:
 
 ```text
-Gespeichert: PiGenus ist der Zellkern.
+0.4.0.dev0
+```
+
+## Read First
+
+The documentation entry point is:
+
+- [`docs/INDEX.md`](docs/INDEX.md)
+
+The short orientation set is:
+
+- [`docs/GENUS_PHILOSOPHY.md`](docs/GENUS_PHILOSOPHY.md) - why GENUS is built this way
+- [`docs/GENUS_ARCHITECTURE_SUMMARY.md`](docs/GENUS_ARCHITECTURE_SUMMARY.md) - compact architecture map
+- [`docs/GENUS_VOCABULARY.md`](docs/GENUS_VOCABULARY.md) - shared terms and implementation status
+- [`STATUS.md`](STATUS.md) - current repository truth
+- [`BUILD_PLAN.md`](BUILD_PLAN.md) - roadmap and current work
+- [`docs/ARCHITECTURE_CONTRACT.md`](docs/ARCHITECTURE_CONTRACT.md) - what future work must not break
+
+## Current Runtime Shape
+
+PiGenus currently includes:
+
+- structured event contracts and event persistence
+- SQLite-backed memory, meaning, worker, cell, audit, and decision surfaces
+- memory lifecycle with review, expiry, canonical protection, and fossils
+- Systemform models for actors, rooms, meaning objects, cell contracts,
+  resource grants, governance decisions, context frames, context stacks, and
+  worker-readiness concepts
+- deterministic adapters from current runtime concepts into Systemform concepts
+- contract validation, room flow rules, guard pipeline, and guard families
+- governance decision logging and focused guard-decision inspection
+- human approval stub records
+- Meaning Store with read-only inspection and explicit memory-to-meaning ingestion
+- health checks, backups, runtime overview, and read-only inspection CLI commands
+- Worker Runtime preparation through worker profiles, heartbeats, worker store,
+  worker inspection, scheduling preview, execution preflight, and model-only
+  assignment shape
+- GitHub Actions CI for the Python test suite
+
+Current verified local test result:
+
+```text
+246 passed
+```
+
+## What Is Intentionally Not Included
+
+PiGenus does not currently include:
+
+- worker execution
+- worker assignment creation
+- provider routing
+- remote worker discovery
+- LLM orchestration
+- vector search
+- dashboards
+- trading execution
+- federation
+- autonomous agents
+- self-modification or evolution loops
+
+The core rule is:
+
+```text
+capability must not bypass governance
 ```
 
 ## Setup
@@ -177,89 +96,164 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
+## Run Tests
+
+```powershell
+.venv\Scripts\python.exe -m pytest
+```
+
+GitHub Actions also runs the test suite on pushes and pull requests to `main`.
+
 ## Run The Demo
 
 ```powershell
 python -m pigenus.cli.main run-demo
 ```
 
-The command prints the final response, the created memory object ID, and the
-number of events stored. By default it writes SQLite data to `pigenus.sqlite3`
-in the current working directory.
+The demo writes local SQLite data to `pigenus.sqlite3` by default.
 
-## Run Tests
+The demo flow is:
 
-```powershell
-pytest
+```text
+TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 ```
 
-GitHub Actions also runs the test suite on pushes and pull requests to `main`.
+## Useful CLI Commands
 
-## Project Control
+Most inspection commands are read-only.
 
-- `BUILD_PLAN.md` defines completed phases, the current phase, and the next build step.
-- `STATUS.md` records the current checkpoint, runtime shape, invariants, and next work.
-- `CHANGELOG.md` records versioned changes.
-- `docs/ARCHITECTURE_HISTORY.md` explains the architectural evolution.
-- `docs/DECISIONS.md` records durable design decisions.
-- `docs/CLI_CONVENTIONS.md` defines CLI behavior and exit codes.
-- `docs/MIGRATIONS.md` defines the early SQLite migration policy.
+Runtime overview and health:
 
-Update these files before every checkpoint commit.
+```powershell
+python -m pigenus.cli.main runtime-overview --db pigenus.sqlite3
+python -m pigenus.cli.main health-check --db pigenus.sqlite3
+```
+
+Memory, meaning, and events:
+
+```powershell
+python -m pigenus.cli.main memory-list --db pigenus.sqlite3
+python -m pigenus.cli.main memory-review --db pigenus.sqlite3
+python -m pigenus.cli.main meaning-list --db pigenus.sqlite3
+python -m pigenus.cli.main meaning-show bo_example --db pigenus.sqlite3
+python -m pigenus.cli.main meaning-ingest-memory mem_example --db pigenus.sqlite3
+python -m pigenus.cli.main event-list --db pigenus.sqlite3
+python -m pigenus.cli.main event-show evt_example --db pigenus.sqlite3
+```
+
+Decisions, guards, audit, context, and permissions:
+
+```powershell
+python -m pigenus.cli.main decision-list --db pigenus.sqlite3
+python -m pigenus.cli.main guard-decision-list --db pigenus.sqlite3
+python -m pigenus.cli.main guard-decision-summary --db pigenus.sqlite3
+python -m pigenus.cli.main audit-list --db pigenus.sqlite3
+python -m pigenus.cli.main context-list
+python -m pigenus.cli.main permission-list
+```
+
+Cells and workers:
+
+```powershell
+python -m pigenus.cli.main cell-list --db pigenus.sqlite3
+python -m pigenus.cli.main worker-list --db pigenus.sqlite3
+python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
+```
+
+Worker scheduling preview:
+
+```powershell
+python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python
+```
+
+Log one scheduling preview explicitly:
+
+```powershell
+python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python --log --actor agent_preview --room room_developer
+```
+
+Worker execution preflight:
+
+```powershell
+python -m pigenus.cli.main worker-execution-preflight worker_local meaning_ingester --db pigenus.sqlite3 --runtime python
+```
+
+Log one execution preflight explicitly:
+
+```powershell
+python -m pigenus.cli.main worker-execution-preflight worker_local meaning_ingester --db pigenus.sqlite3 --runtime python --log --actor agent_preflight --room room_developer
+```
+
+These worker commands still do not assign, reserve, route, call providers, or
+execute work.
+
+## Worker Runtime Boundary
+
+Current worker work is preparation, not execution.
+
+Implemented worker surfaces:
+
+- `WorkerProfile`
+- `WorkerHeartbeat`
+- `WorkerRegistry`
+- `WorkerInspectionService`
+- SQLite Worker Store for durable profiles and current heartbeats
+- `worker-list` and `worker-show`
+- Worker Scheduling Preview and explicit preview logging
+- Worker Execution Preflight and explicit preflight logging
+- model-only `WorkerAssignment` and `WorkerAssignmentStatus`
+- static worker CLI command module boundary
+
+Not implemented:
+
+- assignment storage
+- assignment creation CLI
+- scheduling enforcement
+- reservation
+- provider routing
+- execution records
+- execution
 
 ## Database Migrations
 
-`Database.initialize()` applies recorded SQLite migrations. The current runner
-creates `schema_migrations` and records forward-only migrations including the
-initial schema, decision logs, and cell lifecycle columns.
+`Database.initialize()` applies recorded SQLite migrations. Migrations are
+forward-only and recorded in `schema_migrations`.
 
-## Phase 1 Boundary
+Current local SQLite storage includes tables for:
 
-PiGenus Phase 1 is only the nucleus: cells, meaning objects, permissions,
-memory, and auditability. Future phases can add richer orchestration,
-interfaces, providers, or distributed infrastructure without changing this
-core contract.
+- events
+- memory objects
+- cells and cell state
+- audit logs
+- decision logs
+- meaning objects
+- worker profiles
+- current worker heartbeats
 
-## Systemform Hardening
+Assignment storage does not exist yet.
 
-Phase 0 is now treated as hardening of the existing runtime prototype, not a
-rewrite. The GENUS Systemform documents live in `docs/`, and
-`docs/SYSTEMFORM_GAP_ANALYSIS.md` tracks how current prototype concepts map to
-the stricter kernel vocabulary: actors, rooms, meaning objects, cell contracts,
-resource grants, and governance decisions.
+## Project Control
 
-The current bridge is intentionally additive: `pigenus.schemas.systemform`
-defines the target vocabulary, while `pigenus.schemas.systemform_adapters`
-maps existing `MemoryObject`, `CellSpec`, and `Context` contracts into that
-vocabulary without changing storage or CLI behavior.
+Important project-control files:
 
-`pigenus.core.contract_validator` is the first executable Systemform hardening
-rule. It validates actors, rooms, cell contracts, capabilities, permissions,
-resource grants, and human-approval requirements without changing the current
-orchestrator.
+- [`STATUS.md`](STATUS.md)
+- [`BUILD_PLAN.md`](BUILD_PLAN.md)
+- [`CHANGELOG.md`](CHANGELOG.md)
+- [`docs/DECISIONS.md`](docs/DECISIONS.md)
+- [`docs/ARCHITECTURE_HISTORY.md`](docs/ARCHITECTURE_HISTORY.md)
+- [`docs/DOCUMENTATION_MAINTENANCE.md`](docs/DOCUMENTATION_MAINTENANCE.md)
+- [`docs/FULL_CHECK.md`](docs/FULL_CHECK.md)
 
-`pigenus.core.room_flow` adds the first semantic flow policy. It decides whether
-meaning may move between rooms using a fixed matrix plus conservative
-sensitivity and truth-status overrides. It is storage-free and not wired into
-orchestration yet.
+For non-trivial changes, update only the documentation whose truth changed.
+Documentation should stay current, not maximal.
 
-`pigenus.core.guard_pipeline` composes the storage-free contract validator and
-room flow rules into an ordered decision trace. It keeps final decision
-precedence explicit: block beats escalation, and escalation beats allow.
+## Development Rule
 
-`pigenus.core.guard_runtime_preview` runs that pipeline against adapted runtime
-objects in shadow mode. It returns a decision trace but does not persist,
-publish, block, or otherwise alter the current orchestrator flow.
+Before adding capability, preserve:
 
-`pigenus.core.governance_decision_log` persists `GovernanceDecision` results and
-their ordered traces through the existing durable decision log.
+```text
+contract + context + room + meaning + guard + decision + trace + test
+```
 
-The demo orchestrator now runs the guard preview in warning mode before memory
-writes. Preview decisions are logged, but the current task flow still runs.
-Selective enforcement is intentionally narrow: only hard `block` decisions stop
-execution. `review` and `escalate` remain logged warning states until a human
-approval workflow exists.
-
-`pigenus.core.human_approval` adds a minimal approval placeholder with
-`pending`, `approved`, and `rejected` states, persisted through the existing
-decision log.
+The project should remain boring at the core. New intelligence belongs on top
+of stable contracts, not inside ambiguous storage, context, or guard behavior.

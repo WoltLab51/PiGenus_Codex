@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Updated `README.md` to reflect the current v0.4 Worker Runtime preparation
+  arc, current CLI surfaces, CI, and non-goals
 - Added model-only `WorkerAssignment` and `WorkerAssignmentStatus` schemas for
   later governed worker assignment records
 - Added tests proving worker assignments require governance evidence and do not
