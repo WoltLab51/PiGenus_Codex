@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Aligned package version to `0.4.0.dev0` for the active Worker Runtime
+  preparation arc
+- Clarified current status as v0.4 development with v0.3.2 as the latest stable
+  checkpoint
+- Added minimum-sufficient documentation rule to avoid both stale docs and
+  unnecessary documentation sprawl
+- Recorded `D-077: Package Version Tracks Active Development Arc`
 - Added explicit `--log` support to `worker-scheduling-preview`
 - Added CLI logging metadata options for actor, room, and optional event ID
 - Added tests proving preview CLI logging persists one governance decision only

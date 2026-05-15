@@ -185,18 +185,14 @@ Completed checkpoints:
 
 ## Current And Next
 
-Current checkpoint:
-
-- `pigenus-v0.3.2-post-release-runtime-verification`: verified migrations,
-  health, runtime overview, inspection commands, backups, meaning queries,
-  guard summaries, and read-only behavior after the architecture-control
-  checkpoint
-
-Next checkpoint:
+Current development arc:
 
 - `pigenus-v0.4.0-worker-runtime-preparation`: prepare worker identity,
   heartbeat, capability profile, cost profile, privacy profile, and failure
   semantics without enabling remote execution or LLM orchestration
+- Package version during this arc: `0.4.0.dev0`
+- Latest stable release checkpoint remains
+  `pigenus-v0.3.2-post-release-runtime-verification`
 - Current decision step: worker source-of-truth policy chooses SQLite for
   durable worker profiles and current heartbeats, treats local files as
   bootstrap/import only, and keeps discovery out of scope until federation and

@@ -1,6 +1,6 @@
 [project]
 name = "pigenus"
-version = "0.2.0"
+version = "0.4.0.dev0"
 description = "Minimal local cognitive core runtime and memory lifecycle for the GENUS system."
 readme = "README.md"
 requires-python = ">=3.11"

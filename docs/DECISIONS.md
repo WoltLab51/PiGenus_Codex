@@ -1153,3 +1153,19 @@ Preview logging is useful evidence, but it is still a write. Requiring an
 explicit flag and governance metadata keeps operator inspection separate from
 durable accountability records while avoiding new scheduling, assignment,
 reservation, routing, provider, or execution behavior.
+
+## D-077: Package Version Tracks Active Development Arc
+
+Decision:
+
+`pyproject.toml` uses the active package-development version. After the
+`pigenus-v0.3.2-post-release-runtime-verification` checkpoint, mainline Worker
+Runtime preparation uses package version `0.4.0.dev0` until a future stable
+v0.4 release is cut.
+
+Reason:
+
+Keeping the package version at `0.2.0` while the repository status and build
+plan describe v0.3/v0.4 work creates avoidable confusion. A PEP 440 dev
+version makes the distinction explicit: v0.3.2 is the latest stable checkpoint;
+v0.4.0 is the current preparation arc; worker execution is still not enabled.

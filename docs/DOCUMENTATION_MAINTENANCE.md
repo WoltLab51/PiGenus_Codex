@@ -11,6 +11,22 @@ documentation has been checked.
 Documentation is part of the system boundary. Outdated docs can create unsafe
 architecture assumptions just as surely as outdated code.
 
+## Minimum Sufficient Documentation
+
+Documentation should be current, not maximal.
+
+Update only the documents whose truth changed:
+
+- `STATUS.md` for current repository truth
+- `CHANGELOG.md` for what changed
+- `BUILD_PLAN.md` for roadmap or work-order changes
+- `docs/DECISIONS.md` for durable rules
+- `docs/GENUS_VOCABULARY.md` for term boundaries
+- a focused concept document when its topic changed
+
+Do not duplicate the same explanation across every document. Prefer one
+authoritative place and short references elsewhere.
+
 ## Required Documentation Check
 
 For every non-trivial change, check this list before commit:

@@ -2,9 +2,11 @@
 
 ## Current Checkpoint
 
-- Name: `pigenus-v0.3.2-post-release-runtime-verification`
+- Name: `pigenus-v0.4.0-worker-runtime-preparation-dev`
+- Latest stable release checkpoint: `pigenus-v0.3.2-post-release-runtime-verification`
+- Package version: `0.4.0.dev0`
 - Branch: `main`
-- Status: runtime verification checkpoint cut ready
+- Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - Last verified result: `230 passed`
 
