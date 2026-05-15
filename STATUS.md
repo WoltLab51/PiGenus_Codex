@@ -73,6 +73,8 @@ PiGenus is a small local cognitive core. It has:
   assignment, routing, or execution
 - Read-only `worker-execution-preflight` CLI for inspecting execution
   eligibility for one worker
+- Dedicated worker CLI command module for worker inspection, scheduling
+  preview, and execution preflight command handling
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -233,16 +235,18 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   checks still remain required before commits.
 - Architecture fitness review precedes structural refactors so cell-like module
   boundaries are introduced without changing runtime behavior.
+- Worker CLI command handling is structurally separated from the main CLI entry
+  point without changing command behavior.
 
 ## Next Recommended Work
 
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, extract worker CLI command handling into a small module boundary before
-  adding more Worker Runtime behavior.
-- Keep Worker Execution Preflight `--log` support as a later decision after the
-  CLI boundary is easier to review.
+- Next, decide whether Worker Execution Preflight should gain explicit `--log`
+  support before any durable assignment or execution path exists.
+- Keep further CLI slicing focused and behavior-preserving; the next structural
+  refactor candidate is the Meaning CLI command module boundary.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

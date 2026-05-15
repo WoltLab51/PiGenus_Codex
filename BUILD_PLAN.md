@@ -228,9 +228,12 @@ Current development arc:
   pull request, and manual dispatch
 - Current quality step: architecture fitness review identifies CLI and
   repository hotspots before behavior-preserving structural refactors
-- Next structural step: extract worker CLI command handling into a dedicated
+- Current structural step: worker CLI command handling lives in a dedicated
   module boundary without changing commands, output, storage, scheduling, or
   execution behavior
+- Next implementation decision: whether Worker Execution Preflight should gain
+  explicit `--log` support before any durable assignment or execution path
+  exists
 
 Readiness source:
 
@@ -328,6 +331,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Visual system maps after the architecture vocabulary stops shifting rapidly
 - CLI command modules should be extracted as static structural boundaries
   before any dynamic command-cell routing exists
+- The first static module boundary is `pigenus/cli/worker_commands.py`; the
+  next structural candidate is meaning CLI extraction
 
 ### N. Liquid Runtime
 

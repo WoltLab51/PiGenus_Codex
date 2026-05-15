@@ -1312,3 +1312,20 @@ policy, more worker behavior, or more documentation volume. The next risk is
 operator-surface coordination accumulating inside one CLI file. The fitness
 review lets the project move toward cell-like module boundaries without
 turning that into dynamic runtime routing or a risky rewrite.
+
+## Worker CLI Module Boundary
+
+The system gained:
+
+- `pigenus/cli/worker_commands.py`
+- worker CLI parser registration outside `pigenus/cli/main.py`
+- worker-list, worker-show, worker-scheduling-preview, and
+  worker-execution-preflight command handling outside the main CLI entry point
+- preservation of existing worker CLI behavior, output, and side-effect rules
+
+Why it mattered:
+
+This is the first static module boundary produced from the architecture fitness
+review. It moves PiGenus a little closer to cell-like structure while staying
+fully deterministic: no dynamic routing, no new commands, no worker execution,
+and no storage changes.

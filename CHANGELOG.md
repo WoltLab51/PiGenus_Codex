@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Extracted worker CLI parser and command handling into
+  `pigenus/cli/worker_commands.py`
+- Kept `pigenus/cli/main.py` as the deterministic CLI entry point and
+  dispatcher
+- Verified: 238 tests passed
 - Added `docs/ARCHITECTURE_FITNESS_REVIEW.md` to analyze CLI, repository, and
   test-coupling hotspots before structural refactors
 - Recorded `D-081: Architecture Fitness Review Precedes Structural Refactor`

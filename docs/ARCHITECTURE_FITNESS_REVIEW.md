@@ -35,7 +35,7 @@ The review used a small Architecture Fitness pass:
 4. Cell-boundary mapping for future module slices.
 5. Refactor risk classification before any behavior-preserving extraction.
 
-Current measured hotspots:
+Initial measured hotspots before the worker CLI extraction:
 
 | Area | Size / Count | Fitness Signal |
 | --- | ---: | --- |
@@ -47,6 +47,13 @@ Current measured hotspots:
 | `tests/test_worker_scheduling_preview.py` | 212 lines | Rich worker placement rules with durable-decision compatibility |
 | `pigenus/schemas/systemform.py` | 256 lines | Many ontology models, but still a coherent schema surface |
 | `pigenus/core/worker_execution_preflight.py` | 230 lines | Single-purpose service with explicit checks |
+
+First extraction result:
+
+| Area | Size / Count | Fitness Signal |
+| --- | ---: | --- |
+| `pigenus/cli/main.py` | 658 lines | Main CLI remains deterministic entry point and dispatcher |
+| `pigenus/cli/worker_commands.py` | 307 lines | Worker parser and command handling now have a dedicated static module boundary |
 
 ## Findings
 
@@ -142,7 +149,7 @@ did not create hidden side effects.
 The next cuts should use cell thinking as module boundaries, not as dynamic
 runtime behavior yet.
 
-Recommended first boundary:
+Implemented first boundary:
 
 ```text
 pigenus/cli/main.py
@@ -199,9 +206,9 @@ by subprocess tests.
 
 | Candidate | Benefit | Risk | Timing |
 | --- | --- | --- | --- |
-| Extract worker CLI handlers into `pigenus/cli/worker_commands.py` | High | Medium | Next |
-| Move worker parser registration into the worker CLI module | Medium | Medium | After handler extraction, or together only if the patch stays small |
-| Extract meaning CLI handlers | Medium | Low-medium | After worker CLI extraction |
+| Extract worker CLI handlers into `pigenus/cli/worker_commands.py` | High | Medium | Done |
+| Move worker parser registration into the worker CLI module | Medium | Medium | Done |
+| Extract meaning CLI handlers | Medium | Low-medium | Next structural refactor |
 | Extract decision/guard CLI handlers | Medium | Medium | After worker and meaning extraction |
 | Split `repositories.py` by domain | Medium | Medium-high | Later, before new execution/resource stores |
 | Introduce dynamic cell routing for CLI commands | Conceptually high | High | Not now |
@@ -209,15 +216,15 @@ by subprocess tests.
 
 ## Recommended Next Step
 
-Next checkpoint:
+Next structural checkpoint:
 
 ```text
-Add worker CLI command module boundary
+Add meaning CLI command module boundary
 ```
 
 Acceptance criteria:
 
-- Move worker command handling out of `pigenus/cli/main.py`.
+- Move meaning command handling out of `pigenus/cli/main.py`.
 - Preserve all current command names, arguments, output shape, exit codes, and
   side-effect behavior.
 - Do not add new commands.
@@ -249,5 +256,6 @@ too much operator-surface coordination in one CLI file
 too many persistence domains in one repository file
 ```
 
-The right move is a small structural extraction, starting with worker CLI
-commands, while keeping the runtime deterministic and boring.
+The right move is a sequence of small structural extractions. The first worker
+CLI boundary is complete; the next structural slice should be meaning CLI
+commands when refactor work resumes.
