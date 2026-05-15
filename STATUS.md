@@ -123,6 +123,8 @@ PiGenus is a small local GENUS runtime core. It has:
   visual, spatial, and action representations as governed meaning
 - Architecture fitness review for CLI, repository, and test-coupling hotspots
   before structural refactors
+- Cellular Systemform concept defining GENUS cells as governed capability units
+  and static module boundaries as temporary cell boundaries
 
 Current demo flow:
 
@@ -253,6 +255,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   point without changing command behavior.
 - PiGenus is a GENUS runtime distribution, not the entire GENUS system and not
   limited to Raspberry Pi hardware.
+- Static CLI modules are temporary cell boundaries; modules above roughly 250
+  lines should trigger a follow-up slicing decision before becoming new small
+  monoliths.
 
 ## Next Recommended Work
 
@@ -263,6 +268,8 @@ Worker Runtime preparation:
   minimal SQLite repository before any CLI assignment creation exists.
 - Keep further CLI slicing focused and behavior-preserving; the next structural
   refactor candidate remains the Meaning CLI command module boundary.
+- Use the Cellular Systemform rule when slicing future CLI or service modules:
+  smallest governable capability, not smallest possible function.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

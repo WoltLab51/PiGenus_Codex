@@ -1288,3 +1288,20 @@ At the same time, the current codebase, tests, migrations, CLI, and checkpoint
 history already use PiGenus as the local runtime identity. Clarifying the
 relationship preserves stable engineering surfaces while making room for GENUS
 to run on different devices or future runtime distributions.
+
+## D-085: Cells Are Governed Capability Units
+
+Decision:
+
+GENUS defines a cell as the smallest responsible capability unit with identity,
+boundary, contract, allowed effects, observable output, lifecycle, and tests.
+Static CLI or service modules may act as temporary cell boundaries while the
+runtime remains deterministic. Operator command modules that grow beyond
+roughly 250 lines should trigger a follow-up slicing decision.
+
+Reason:
+
+The project should become more cellular without jumping into dynamic cell
+routing too early. Treating cells as governed capability units preserves the
+GENUS philosophy of cells before agents, while the static boundary rule keeps
+ordinary software modules from becoming new small monoliths.

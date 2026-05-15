@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added `docs/CELLULAR_SYSTEMFORM.md` to define GENUS cells as governed
+  capability units and static modules as temporary cell boundaries
+- Added Cellular Systemform vocabulary and recorded
+  `D-085: Cells Are Governed Capability Units`
 - Clarified GENUS as the broader systemform and PiGenus as the local Python
   reference runtime distribution
 - Recorded `D-084: PiGenus Is A GENUS Runtime Distribution`

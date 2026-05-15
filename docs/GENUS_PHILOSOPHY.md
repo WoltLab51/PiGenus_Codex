@@ -50,6 +50,10 @@ They have contracts, permissions, contexts, lifecycle state, and responsibility.
 Agents can later be composed from cells, organs, workers, and policies. Starting
 with agents would hide too much behavior too early.
 
+The deeper cell philosophy lives in `docs/CELLULAR_SYSTEMFORM.md`. In short, a
+GENUS cell is not merely a small function. It is the smallest governable
+capability unit with identity, membrane, contract, lifecycle, trace, and tests.
+
 ## Meaning Before Raw Text
 
 Raw text is useful, but it is not enough for a governed runtime. GENUS needs

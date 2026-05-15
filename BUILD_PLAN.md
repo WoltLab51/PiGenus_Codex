@@ -26,6 +26,8 @@ Every checkpoint should leave the repository with:
 - `docs/ARCHITECTURE_CONTRACT.md` preserved for non-trivial runtime changes
 - `docs/ARCHITECTURE_HISTORY.md` updated when the architecture changes
 - `docs/DECISIONS.md` updated when a durable decision is made
+- `docs/CELLULAR_SYSTEMFORM.md` checked when code is sliced toward cell-like
+  module boundaries
 - A Git commit
 - A version tag for stable phase checkpoints
 
@@ -420,6 +422,19 @@ meaning, inspection, and backup surfaces remain stable.
   meaningful capability growth
 - Keep workers, LLMs, agents, and evolution behind governance boundaries
 - Use `docs/ARCHITECTURE_CONTRACT.md` as the contribution safety contract
+
+### S2. Cellular Systemform
+
+- Treat cells as smallest governable capability units, not merely small
+  functions
+- Use static module boundaries as temporary cell boundaries before dynamic
+  runtime cells exist
+- Keep CLI command modules small enough to become future command cells or
+  organs
+- Treat command modules above roughly 250 lines as a slicing review signal, not
+  an automatic failure
+- Do not introduce autonomous cell routing before contracts, membranes,
+  traces, tests, and inspection are explicit
 
 ### T. Threat Model
 

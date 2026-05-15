@@ -20,6 +20,7 @@ Start here when orienting yourself:
 
 - `docs/GENUS_SYSTEMFORM_v0.1.md` - original Systemform framing
 - `docs/PIGENUS_PHASE_0_CORE_KERNEL_SPEC_v0.1.md` - Phase 0 kernel spec
+- `docs/CELLULAR_SYSTEMFORM.md` - GENUS cell philosophy and static cell boundary rules
 - `docs/SYSTEMFORM_GAP_ANALYSIS.md` - prototype-to-Systemform gap analysis
 - `docs/CONTEXT_MODEL.md` - Room, ContextFrame, and ContextStack boundaries
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication

@@ -1377,3 +1377,21 @@ Why it mattered:
 The project is now clearly building GENUS while preserving PiGenus as the
 working runtime implementation. This avoids a risky rename while keeping the
 architecture open for other device classes and future runtime distributions.
+
+## Cellular Systemform
+
+The project gained:
+
+- `docs/CELLULAR_SYSTEMFORM.md`
+- a formal definition of GENUS cells as governed capability units
+- Cell DNA, membrane, nucleus, metabolism, organ, immune-system, and
+  nervous-system framing
+- a static cell boundary rule for CLI and service slicing
+- a 250-line fitness signal for operator command modules
+
+Why it mattered:
+
+The cell idea is now a first-class architecture philosophy instead of only a
+metaphor. This lets PiGenus keep refactoring toward cell-like structure without
+turning every function into a cell or introducing dynamic runtime routing too
+early.

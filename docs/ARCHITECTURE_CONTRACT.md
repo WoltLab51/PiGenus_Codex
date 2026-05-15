@@ -83,6 +83,10 @@ replacement decision is recorded.
 - Contract validation must remain deterministic and inspectable.
 - Cells carry capabilities, organs carry compositions, agents carry goals, and
   workers carry execution.
+- A GENUS cell is the smallest responsible capability unit, not merely a small
+  function.
+- New static cell boundaries should keep identity, input/output, allowed
+  effects, lifecycle, and tests visible.
 
 ### Guards And Decisions
 
