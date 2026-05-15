@@ -603,8 +603,8 @@ These are deliberately unresolved.
 
 1. Should `WorkerAssignment` gain a minimal SQLite repository before any CLI
    creation command exists?
-2. Should Meaning CLI be extracted next as a StaticCellBoundary, or should
-   Worker command internals be sliced further first?
+2. Meaning CLI extraction has been chosen and implemented as the next
+   StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
    cell-worthy service?
 4. Should `repositories.py` split by storage domain before adding assignment
@@ -633,19 +633,24 @@ This convergence review does not approve:
 
 ## Practical Next Step
 
+The first Philosophy Alignment Review chose the Meaning CLI extraction over
+WorkerAssignment storage because it reduced operator-surface monolith risk
+without changing storage, runtime behavior, assignments, routing, or execution.
+
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Extract Meaning CLI as a StaticCellBoundary.
+Option A: Decide WorkerAssignment storage before assignment creation.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
-Option C: Decide WorkerAssignment storage before assignment creation.
+Option C: Extract decision/guard CLI as a StaticCellBoundary.
 ```
 
 Recommended order:
 
-1. Keep WorkerAssignment storage decision separate from CLI slicing.
-2. Apply this convergence review to the Meaning CLI extraction.
+1. Keep WorkerAssignment storage decision separate from additional CLI slicing.
+2. Apply the Philosophy Alignment Review before choosing storage or more
+   operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.
 4. Run the full test suite after any code movement.
 

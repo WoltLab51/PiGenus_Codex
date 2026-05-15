@@ -258,6 +258,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   boundaries are introduced without changing runtime behavior.
 - Worker CLI command handling is structurally separated from the main CLI entry
   point without changing command behavior.
+- Meaning CLI command handling is structurally separated from the main CLI
+  entry point without changing command behavior, storage behavior, meaning
+  ingestion behavior, or side-effect rules.
 - PiGenus is a GENUS runtime distribution, not the entire GENUS system and not
   limited to Raspberry Pi hardware.
 - Static CLI modules are temporary cell boundaries; modules above roughly 250
@@ -276,8 +279,9 @@ Worker Runtime preparation:
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
 - Next, decide whether the model-only WorkerAssignment shape should gain a
   minimal SQLite repository before any CLI assignment creation exists.
-- Keep further CLI slicing focused and behavior-preserving; the next structural
-  refactor candidate remains the Meaning CLI command module boundary.
+- Keep further CLI slicing focused and behavior-preserving; worker and meaning
+  CLI command module boundaries are now separated from the main CLI entry
+  point.
 - Use the Cellular Systemform rule when slicing future CLI or service modules:
   smallest governable capability, not smallest possible function.
 - Before implementing RuntimeShape or DeviceProfile behavior, keep shape

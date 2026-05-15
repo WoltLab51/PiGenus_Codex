@@ -248,6 +248,9 @@ Current development arc:
 - Current structural step: worker CLI command handling lives in a dedicated
   module boundary without changing commands, output, storage, scheduling, or
   execution behavior
+- Current structural step: meaning CLI command handling lives in a dedicated
+  module boundary without changing commands, output, storage, meaning
+  ingestion behavior, or side-effect rules
 - Next implementation decision: whether WorkerAssignment should gain a minimal
   SQLite repository before any CLI assignment creation or runtime execution
   path exists
@@ -352,8 +355,9 @@ meaning, inspection, and backup surfaces remain stable.
 - Visual system maps after the architecture vocabulary stops shifting rapidly
 - CLI command modules should be extracted as static structural boundaries
   before any dynamic command-cell routing exists
-- The first static module boundary is `pigenus/cli/worker_commands.py`; the
-  next structural candidate is meaning CLI extraction
+- The first static module boundaries are `pigenus/cli/worker_commands.py` and
+  `pigenus/cli/meaning_commands.py`; later extraction candidates should be
+  reviewed with the Philosophy Alignment Review before code movement
 
 ### N. Liquid Runtime
 

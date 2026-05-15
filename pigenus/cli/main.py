@@ -6,6 +6,11 @@ import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
+from pigenus.cli.meaning_commands import (
+    add_meaning_commands,
+    handle_meaning_command,
+    is_meaning_command,
+)
 from pigenus.cli.worker_commands import (
     add_worker_commands,
     handle_worker_command,
@@ -16,7 +21,6 @@ from pigenus.core.backup import SnapshotBackupService
 from pigenus.core.context_boundary import ContextBoundaryDecisionLogger, ContextBoundaryEngine
 from pigenus.core.context_registry import ContextRegistry
 from pigenus.core.health import HealthChecker
-from pigenus.core.meaning_ingestion import MeaningIngestionPreview
 from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
@@ -38,7 +42,6 @@ EMPTY_MEMORY_LIST_MESSAGE = "No memory objects found."
 EMPTY_CELL_LIST_MESSAGE = "No cells found."
 EMPTY_AUDIT_LIST_MESSAGE = "No audit log rows found."
 EMPTY_EVENT_LIST_MESSAGE = "No events found."
-EMPTY_MEANING_LIST_MESSAGE = "No meaning objects found."
 EMPTY_CONTEXT_BOUNDARY_LIST_MESSAGE = "No context boundary decisions found."
 
 
@@ -80,34 +83,7 @@ def build_parser() -> argparse.ArgumentParser:
     memory_list.add_argument("--status", default=None, help="Filter by memory status.")
     memory_list.add_argument("--context", default=None, help="Filter by context name.")
 
-    meaning_list = subparsers.add_parser(
-        "meaning-list",
-        help="List Systemform meaning objects without modifying them.",
-    )
-    meaning_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
-    meaning_list.add_argument("--room", default=None, help="Filter by room ID.")
-    meaning_list.add_argument("--type", default=None, help="Filter by meaning type.")
-    meaning_list.add_argument("--truth-status", default=None, help="Filter by truth status.")
-    meaning_list.add_argument("--sensitivity", default=None, help="Filter by sensitivity.")
-
-    meaning_show = subparsers.add_parser(
-        "meaning-show",
-        help="Show one Systemform meaning object by ID without modifying it.",
-    )
-    meaning_show.add_argument("meaning_id", help="Meaning object ID to inspect.")
-    meaning_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
-
-    meaning_ingest = subparsers.add_parser(
-        "meaning-ingest-memory",
-        help="Preview-ingest one stored memory object into the Meaning Store.",
-    )
-    meaning_ingest.add_argument("memory_id", help="Memory object ID to ingest.")
-    meaning_ingest.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
-    meaning_ingest.add_argument(
-        "--created-by",
-        default="meaning_ingestion_preview",
-        help="Actor ID recorded on the created meaning object.",
-    )
+    add_meaning_commands(subparsers)
 
     event_list = subparsers.add_parser("event-list", help="List events without modifying them.")
     event_list.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
@@ -210,6 +186,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if is_worker_command(args.command):
         return handle_worker_command(args)
+    if is_meaning_command(args.command):
+        return handle_meaning_command(args)
 
     if args.command == "run-demo":
         orchestrator = SimpleOrchestrator(Path(args.db))
@@ -320,67 +298,6 @@ def main(argv: list[str] | None = None) -> int:
                 f"{memory.memory_id} | {memory.status} | "
                 f"{context_name} | {memory.human_summary}"
             )
-        return 0
-
-    if args.command == "meaning-list":
-        database = Database(Path(args.db))
-        database.initialize()
-        try:
-            meanings = MeaningRepository(database).list(
-                room_id=args.room,
-                type=args.type,
-                truth_status=args.truth_status,
-                sensitivity=args.sensitivity,
-            )
-        finally:
-            database.close()
-
-        if not meanings:
-            print(EMPTY_MEANING_LIST_MESSAGE)
-            return 0
-
-        for meaning in meanings:
-            print(
-                f"{meaning.id} | {meaning.type} | {meaning.room_id} | "
-                f"{meaning.truth_status.value} | {meaning.sensitivity.value} | "
-                f"{_meaning_summary(meaning.content)}"
-            )
-        return 0
-
-    if args.command == "meaning-show":
-        database = Database(Path(args.db))
-        database.initialize()
-        try:
-            meaning = MeaningRepository(database).get(args.meaning_id)
-        finally:
-            database.close()
-
-        if meaning is None:
-            print(f"Meaning object not found: {args.meaning_id}")
-            return 1
-
-        print(json.dumps(meaning.model_dump(mode="json"), ensure_ascii=True, indent=2, sort_keys=True))
-        return 0
-
-    if args.command == "meaning-ingest-memory":
-        database = Database(Path(args.db))
-        database.initialize()
-        try:
-            result = MeaningIngestionPreview(
-                memory_repository=MemoryRepository(database),
-                meaning_repository=MeaningRepository(database),
-            ).ingest_memory_by_id(args.memory_id, created_by=args.created_by)
-        finally:
-            database.close()
-
-        if result is None:
-            print(f"Memory object not found: {args.memory_id}")
-            return 1
-
-        status = "created" if result.created else "already_exists"
-        print(f"Meaning ingestion: {status}")
-        print(f"Memory: {result.source_memory_id}")
-        print(f"Meaning: {result.meaning.id}")
         return 0
 
     if args.command == "event-list":
@@ -667,14 +584,6 @@ def main(argv: list[str] | None = None) -> int:
 
     parser.error(f"Unknown command: {args.command}")
     return 2
-
-
-def _meaning_summary(content: dict[str, object]) -> str:
-    for key in ("claim", "text", "summary"):
-        value = content.get(key)
-        if value is not None:
-            return str(value)
-    return json.dumps(content, ensure_ascii=True, sort_keys=True)
 
 
 def _filter_context_boundary_decisions(

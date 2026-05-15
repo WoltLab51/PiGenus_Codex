@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Extracted meaning CLI parser and command handling into
+  `pigenus/cli/meaning_commands.py`
+- Kept `pigenus/cli/main.py` as the deterministic CLI entry point and
+  dispatcher
+- Recorded `D-088: Meaning CLI Boundary Follows Alignment Review`
+- Verified: 246 tests passed
 - Added `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` as a repeatable review
   protocol for philosophy, governance, cellular, RuntimeShape, documentation,
   verification, monolith, and overengineering fit

@@ -1431,3 +1431,20 @@ Why it mattered:
 GENUS now has a repeatable way to test whether future changes still match its
 philosophy. This keeps the growing architecture map useful without turning every
 change into either intuition-only work or excessive documentation ceremony.
+
+## Meaning CLI Module Boundary
+
+The system gained:
+
+- `pigenus/cli/meaning_commands.py`
+- meaning-list, meaning-show, and meaning-ingest-memory parser registration
+  outside `pigenus/cli/main.py`
+- meaning command handling outside the main CLI entry point
+- preservation of existing meaning CLI behavior, output, and side-effect rules
+
+Why it mattered:
+
+This was the first code move selected through the Philosophy Alignment Review
+Protocol. It reduced operator-surface monolith risk without changing meaning
+storage, ingestion semantics, governed paths, assignments, routing, or
+execution.

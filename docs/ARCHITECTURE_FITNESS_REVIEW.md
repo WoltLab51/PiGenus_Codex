@@ -208,31 +208,35 @@ by subprocess tests.
 | --- | --- | --- | --- |
 | Extract worker CLI handlers into `pigenus/cli/worker_commands.py` | High | Medium | Done |
 | Move worker parser registration into the worker CLI module | Medium | Medium | Done |
-| Extract meaning CLI handlers | Medium | Low-medium | Next structural refactor |
+| Extract meaning CLI handlers | Medium | Low-medium | Done |
 | Extract decision/guard CLI handlers | Medium | Medium | After worker and meaning extraction |
 | Split `repositories.py` by domain | Medium | Medium-high | Later, before new execution/resource stores |
 | Introduce dynamic cell routing for CLI commands | Conceptually high | High | Not now |
 | Add runtime command cells or self-routing CLI organs | Future high | High | Only after static module boundaries are stable |
 
-## Recommended Next Step
+## Meaning CLI Boundary Result
 
-Next structural checkpoint:
+Completed structural checkpoint:
 
 ```text
 Add meaning CLI command module boundary
 ```
 
-Acceptance criteria:
+Result:
 
-- Move meaning command handling out of `pigenus/cli/main.py`.
-- Preserve all current command names, arguments, output shape, exit codes, and
+- `pigenus/cli/meaning_commands.py` now owns meaning parser registration and
+  meaning command handling.
+- `pigenus/cli/main.py` remains the deterministic parser and dispatcher.
+- Current command names, arguments, output shape, exit codes, and
   side-effect behavior.
-- Do not add new commands.
-- Do not add storage, migrations, scheduling assignments, provider routing, or
-  execution.
-- Keep `main.py` as the deterministic parser and dispatcher unless parser
-  registration can move without increasing patch size.
-- Run the full test suite after extraction.
+- No new commands, storage, migrations, assignments, provider routing, or
+  execution were added.
+
+Next structural candidates:
+
+- decision/guard CLI module boundary
+- repository domain split before new execution/resource stores
+- no dynamic command-cell routing yet
 
 ## Non-Goals For The Next Refactor
 
@@ -256,6 +260,6 @@ too much operator-surface coordination in one CLI file
 too many persistence domains in one repository file
 ```
 
-The right move is a sequence of small structural extractions. The first worker
-CLI boundary is complete; the next structural slice should be meaning CLI
-commands when refactor work resumes.
+The right move is a sequence of small structural extractions. The worker and
+meaning CLI boundaries are complete; future slices should keep using the
+Philosophy Alignment Review before code movement.

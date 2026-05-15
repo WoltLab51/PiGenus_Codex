@@ -1342,3 +1342,22 @@ runtime-shape language that informal judgement alone can drift. A repeatable
 protocol keeps new work aligned with the stable core while avoiding both early
 dynamic behavior and architecture ceremony that does not improve inspection,
 tests, reuse, or governance.
+
+## D-088: Meaning CLI Boundary Follows Alignment Review
+
+Decision:
+
+The first applied Philosophy Alignment Review chooses Meaning CLI extraction as
+the next structural step before WorkerAssignment storage. The extraction creates
+`pigenus/cli/meaning_commands.py` as a StaticCellBoundary for meaning-list,
+meaning-show, and meaning-ingest-memory command handling. It does not promote
+MeaningIngestionPreview to a GovernedCell or RuntimeCell, and it does not add
+new commands, storage, migrations, assignments, routing, provider calls, or
+execution.
+
+Reason:
+
+Meaning CLI extraction reduces operator-surface monolith risk while preserving
+the stable core. WorkerAssignment storage remains important, but it touches
+storage, migrations, and governed worker intent, so it should stay a separate
+decision after this behavior-preserving CLI boundary.
