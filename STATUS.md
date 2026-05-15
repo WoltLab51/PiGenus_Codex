@@ -10,10 +10,12 @@
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
 - Last verified result: `246 passed`
+- Naming: GENUS is the broader systemform; PiGenus is the local Python
+  reference runtime distribution
 
 ## Current Runtime Shape
 
-PiGenus is a small local cognitive core. It has:
+PiGenus is a small local GENUS runtime core. It has:
 
 - Pydantic contracts for events, memory, cells, cell state, and context
 - SQLite persistence for events, memory objects, cells, cell state, and audit logs
@@ -249,6 +251,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   boundaries are introduced without changing runtime behavior.
 - Worker CLI command handling is structurally separated from the main CLI entry
   point without changing command behavior.
+- PiGenus is a GENUS runtime distribution, not the entire GENUS system and not
+  limited to Raspberry Pi hardware.
 
 ## Next Recommended Work
 

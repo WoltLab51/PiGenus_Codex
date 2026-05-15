@@ -1,10 +1,15 @@
-# PiGenus
+# GENUS / PiGenus
 
-PiGenus is the local governed runtime core for GENUS.
+GENUS is the broader governed systemform for digital capabilities, meaning,
+memory, workers, agents, characters, and decisions.
 
-It is not a single AI agent. It is a small, testable Python runtime for
-structured events, cells, memory, meaning, rooms, guards, governance decisions,
-auditability, and worker-readiness.
+PiGenus is the local reference runtime for GENUS. It is the Python
+implementation in this repository and is intended to remain edge-friendly:
+small enough for local machines and Raspberry Pi style deployments, but not
+limited to Raspberry Pi hardware.
+
+GENUS is not a single AI agent. PiGenus is not the whole GENUS system. PiGenus
+is one governed runtime distribution of GENUS.
 
 The current development arc is:
 

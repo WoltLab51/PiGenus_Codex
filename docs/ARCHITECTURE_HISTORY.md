@@ -1361,3 +1361,19 @@ Worker assignment is the first future step where placement can become durable
 runtime intent. Defining the shape before storage or CLI creation keeps the
 worker arc governed: assignment must be downstream of evidence, and assignment
 still remains separate from execution.
+
+## GENUS And PiGenus Naming Boundary
+
+The project clarified:
+
+- GENUS is the broader governed systemform and architecture
+- PiGenus is the local Python reference runtime distribution for GENUS
+- PiGenus is edge-friendly but not Raspberry-Pi-only
+- the `pigenus` package, repository history, CLI, migrations, and checkpoint
+  names remain stable for the current arc
+
+Why it mattered:
+
+The project is now clearly building GENUS while preserving PiGenus as the
+working runtime implementation. This avoids a risky rename while keeping the
+architecture open for other device classes and future runtime distributions.

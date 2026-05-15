@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Clarified GENUS as the broader systemform and PiGenus as the local Python
+  reference runtime distribution
+- Recorded `D-084: PiGenus Is A GENUS Runtime Distribution`
 - Updated `README.md` to reflect the current v0.4 Worker Runtime preparation
   arc, current CLI surfaces, CI, and non-goals
 - Added model-only `WorkerAssignment` and `WorkerAssignmentStatus` schemas for

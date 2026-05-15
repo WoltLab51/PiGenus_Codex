@@ -1270,3 +1270,21 @@ assignments. Requiring governance evidence keeps assignment downstream of
 scheduling and preflight decisions, while excluding execution fields preserves
 the boundary between "this worker is assigned" and "this worker is running
 work."
+
+## D-084: PiGenus Is A GENUS Runtime Distribution
+
+Decision:
+
+GENUS is the broader governed systemform and architecture. PiGenus is the local
+Python reference runtime distribution for GENUS. The current repository and
+package keep the `pigenus` name during the Worker Runtime preparation arc, and
+no repo, package, import, CLI, migration, or checkpoint rename is performed as
+part of this naming clarification.
+
+Reason:
+
+The project is conceptually building GENUS, not a Raspberry-Pi-only product.
+At the same time, the current codebase, tests, migrations, CLI, and checkpoint
+history already use PiGenus as the local runtime identity. Clarifying the
+relationship preserves stable engineering surfaces while making room for GENUS
+to run on different devices or future runtime distributions.

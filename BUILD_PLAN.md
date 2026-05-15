@@ -8,6 +8,10 @@ The guiding philosophy lives in `docs/GENUS_PHILOSOPHY.md`. This build plan
 describes how PiGenus grows; the philosophy explains why it grows in this
 order.
 
+Naming rule: GENUS is the broader systemform and architecture. PiGenus is the
+local Python reference runtime distribution for GENUS. The `pigenus` package
+name remains stable during the current runtime arc.
+
 ## Build Rule
 
 Every checkpoint should leave the repository with:

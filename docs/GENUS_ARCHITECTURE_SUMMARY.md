@@ -1,6 +1,6 @@
 # GENUS Architecture Summary
 
-This is the compact map of the current PiGenus/GENUS architecture. It points to
+This is the compact map of the current GENUS/PiGenus architecture. It points to
 the detailed documents instead of replacing them.
 
 ## What GENUS Is
@@ -12,6 +12,10 @@ workers, agents, characters, and decisions.
 
 Its first duty is to make intelligence-shaped work observable, bounded,
 testable, and accountable.
+
+PiGenus is the local reference runtime for GENUS. It is the current Python
+implementation and edge-friendly runtime distribution, not the entire GENUS
+system and not a Raspberry-Pi-only product.
 
 ## Current PiGenus Baseline
 
