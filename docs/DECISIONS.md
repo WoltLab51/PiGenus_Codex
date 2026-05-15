@@ -1232,3 +1232,22 @@ PiGenus should move toward cell-like structure deliberately. Measuring hotspots,
 responsibilities, and test coupling first keeps refactors behavior-preserving
 and prevents a conceptual "cell architecture" discussion from turning into an
 unsafe runtime rewrite.
+
+## D-082: Worker Execution Preflight Logging Is Explicit
+
+Decision:
+
+`worker-execution-preflight` may persist one governance decision only when
+`--log` is provided. Logged preflights use `WorkerExecutionPreflightLogger`,
+the existing decision log, and explicit metadata from `--actor`, `--room`, and
+optional `--event-id`. Without `--log`, the command remains read-only. This
+supersedes the initial no-logging limit recorded in D-079 while preserving the
+same no-execution boundary.
+
+Reason:
+
+Execution preflight is closer to future worker execution than scheduling
+preview. Operators need an explicit way to make eligibility evidence durable
+before assignments or execution exist, but implicit logging would blur
+inspection and persistence. Requiring `--log` keeps the transition from
+read-only eligibility check to durable governance record visible and auditable.

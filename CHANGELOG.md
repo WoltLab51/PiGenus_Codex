@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Added opt-in `WorkerExecutionPreflightLogger` for persisting one preflight
+  governance decision through the existing decision log
+- Added explicit `worker-execution-preflight --log` support with actor, room,
+  and optional event metadata
+- Added tests for allow logging, block logging, and no implicit preflight
+  persistence
+- Recorded `D-082: Worker Execution Preflight Logging Is Explicit`
 - Extracted worker CLI parser and command handling into
   `pigenus/cli/worker_commands.py`
 - Kept `pigenus/cli/main.py` as the deterministic CLI entry point and

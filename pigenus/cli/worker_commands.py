@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from pigenus.core.worker_execution_preflight import (
+    WorkerExecutionPreflightLogger,
     WorkerExecutionPreflightRequest,
     WorkerExecutionPreflightService,
 )
@@ -128,6 +129,26 @@ def add_worker_commands(subparsers: argparse._SubParsersAction[argparse.Argument
         "--network-required",
         action="store_true",
         help="Require worker network access.",
+    )
+    worker_execution_preflight.add_argument(
+        "--log",
+        action="store_true",
+        help="Persist the preflight decision to the decision log.",
+    )
+    worker_execution_preflight.add_argument(
+        "--actor",
+        default="worker_execution_preflight_cli",
+        help="Actor ID for the preflight governance decision.",
+    )
+    worker_execution_preflight.add_argument(
+        "--room",
+        default="room_developer",
+        help="Room ID for the preflight governance decision.",
+    )
+    worker_execution_preflight.add_argument(
+        "--event-id",
+        default=None,
+        help="Optional event ID for the logged preflight decision.",
     )
 
 
@@ -276,6 +297,7 @@ def _handle_worker_scheduling_preview(args: argparse.Namespace) -> int:
 def _handle_worker_execution_preflight(args: argparse.Namespace) -> int:
     database = Database(Path(args.db))
     database.initialize()
+    logged_record = None
     try:
         repository = WorkerRepository(database)
         registry = _worker_registry_from_repository(repository)
@@ -294,12 +316,22 @@ def _handle_worker_execution_preflight(args: argparse.Namespace) -> int:
                 network_required=args.network_required,
             )
         )
+        if args.log:
+            logged_record = WorkerExecutionPreflightLogger(
+                DecisionRepository(database)
+            ).add(
+                result,
+                actor_id=args.actor,
+                room_id=args.room,
+                event_id=args.event_id,
+            )
     finally:
         database.close()
 
     decision = result.to_governance_decision(
-        actor_id="worker_execution_preflight_cli",
-        room_id="room_developer",
+        actor_id=args.actor,
+        room_id=args.room,
+        event_id=args.event_id,
     )
 
     print("Worker Execution Preflight")
@@ -311,6 +343,8 @@ def _handle_worker_execution_preflight(args: argparse.Namespace) -> int:
     print(f"Network required: {'yes' if result.request.network_required else 'no'}")
     print(f"Decision: {decision.decision.value}")
     print(f"Reason: {decision.reason}")
+    if logged_record is not None:
+        print(f"Logged decision: {logged_record.decision_id}")
     print("Checks:")
     for check in result.checks:
         print(

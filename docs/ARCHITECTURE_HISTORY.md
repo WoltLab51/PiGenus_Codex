@@ -1329,3 +1329,19 @@ This is the first static module boundary produced from the architecture fitness
 review. It moves PiGenus a little closer to cell-like structure while staying
 fully deterministic: no dynamic routing, no new commands, no worker execution,
 and no storage changes.
+
+## Worker Execution Preflight Logging
+
+The system gained:
+
+- `WorkerExecutionPreflightLogger`
+- explicit `worker-execution-preflight --log`
+- actor, room, and optional event metadata for logged preflights
+- tests proving allow logging, block logging, and no implicit persistence
+
+Why it mattered:
+
+Execution preflight is the closest current Worker Runtime surface to future
+execution. Making it optionally durable creates governance evidence before
+assignments or execution exist, while the explicit `--log` boundary preserves
+read-only inspection as the default.

@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `238 passed`
+- Last verified result: `243 passed`
 
 ## Current Runtime Shape
 
@@ -73,6 +73,9 @@ PiGenus is a small local cognitive core. It has:
   assignment, routing, or execution
 - Read-only `worker-execution-preflight` CLI for inspecting execution
   eligibility for one worker
+- Opt-in Worker Execution Preflight logging through the durable decision log
+- Explicit `worker-execution-preflight --log` support for one preflight
+  decision record with actor, room, and optional event metadata
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -214,7 +217,11 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerExecutionPreflightService` checks one worker and produces a trace plus
   log-compatible governance decision; it does not assign, reserve, route
   providers, persist, or execute tasks.
-- `worker-execution-preflight` is read-only and does not log decisions, write
+- `WorkerExecutionPreflightLogger` can persist preflight decisions through the
+  existing decision log only when called explicitly; it does not assign,
+  reserve, route providers, or execute tasks.
+- `worker-execution-preflight` is read-only unless `--log` is provided; with
+  `--log`, it writes one governance decision record and still does not write
   audit logs, assign, reserve, route providers, or execute tasks.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
@@ -243,10 +250,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide whether Worker Execution Preflight should gain explicit `--log`
-  support before any durable assignment or execution path exists.
+- Next, define the first durable worker assignment record shape without
+  enabling assignment creation from CLI or runtime execution.
 - Keep further CLI slicing focused and behavior-preserving; the next structural
-  refactor candidate is the Meaning CLI command module boundary.
+  refactor candidate remains the Meaning CLI command module boundary.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

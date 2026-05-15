@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
+from pigenus.core.governance_decision_log import GovernanceDecisionLogger
 from pigenus.core.worker_inspection import WorkerInspection, WorkerInspectionService
 from pigenus.core.worker_scheduling_preview import SENSITIVITY_RANK
+from pigenus.schemas.context import Context
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import GovernanceDecision, GuardDecisionType, Sensitivity
+from pigenus.storage.repositories import DecisionRepository
 
 
 @dataclass(frozen=True)
@@ -229,6 +234,35 @@ class WorkerExecutionPreflightService:
             GuardDecisionType.BLOCK,
             "network_unavailable",
             worker_id=worker.worker_id,
+        )
+
+
+class WorkerExecutionPreflightLogger:
+    """Opt-in persistence for worker execution preflight decisions."""
+
+    def __init__(self, repository: DecisionRepository) -> None:
+        self.governance_logger = GovernanceDecisionLogger(repository)
+
+    def add(
+        self,
+        result: WorkerExecutionPreflightResult,
+        *,
+        actor_id: str,
+        room_id: str,
+        event_id: str | None = None,
+        rule_id: str = "worker_execution_preflight",
+        context: Context | dict[str, Any] | None = None,
+    ) -> DecisionRecord:
+        decision = result.to_governance_decision(
+            actor_id=actor_id,
+            room_id=room_id,
+            event_id=event_id,
+            rule_id=rule_id,
+        )
+        return self.governance_logger.add(
+            decision,
+            context=context,
+            source="worker_execution_preflight",
         )
 
 

@@ -286,6 +286,11 @@ considerable status, capability, runtime, sensitivity, and network constraints.
 It may produce a log-compatible `GovernanceDecision`, but it does not assign,
 reserve, route, call providers, persist by itself, or execute work.
 
+Execution preflight may be logged explicitly through
+`WorkerExecutionPreflightLogger`, which writes the governance-shaped preflight
+result to the existing decision log with source `worker_execution_preflight`.
+Logging is opt-in; plain preflight and conversion remain non-persistent.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -336,13 +341,16 @@ still does not create assignments.
 Storage-free Worker Execution Preflight is now the current execution-readiness
 surface. It checks eligibility, not execution.
 
-The first preflight CLI is read-only:
+The first preflight CLI is read-only unless `--log` is provided:
 
 ```text
 worker-execution-preflight
 ```
 
-It exposes ordered execution eligibility checks for one worker. It does not log
-decisions, assign work, reserve workers, route providers, or execute tasks.
+It exposes ordered execution eligibility checks for one worker. With `--log`,
+the command writes exactly one governance decision record through
+`WorkerExecutionPreflightLogger`. The logged record requires explicit actor and
+room metadata and may include an event ID. This is still not assignment,
+reservation, routing, provider access, or execution.
 
 Scheduling and execution remain later steps.

@@ -135,3 +135,63 @@ def test_worker_execution_preflight_cli_prints_ordered_block_checks():
     assert "worker_considerable | decision=allow | reason=worker_considerable" in result.stdout
     assert "capability_available | decision=block | reason=capability_missing" in result.stdout
     assert "runtime_supported | decision=block | reason=runtime_missing" in result.stdout
+
+
+def test_worker_execution_preflight_cli_logs_allow_decision_only_with_explicit_flag():
+    path = db_path("log-allow")
+    seed_workers(path)
+
+    result = run_preflight(
+        path,
+        "worker_active",
+        "--runtime",
+        "python",
+        "--log",
+        "--actor",
+        "agent_preflight",
+        "--room",
+        "room_private",
+        "--event-id",
+        "evt_worker_preflight",
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 1
+    assert decisions[0].decision_type == "governance_decision"
+    assert decisions[0].source == "worker_execution_preflight"
+    assert decisions[0].subject_id == "evt_worker_preflight"
+    assert decisions[0].actor == "agent_preflight"
+    assert decisions[0].context == {"name": "private/default"}
+    assert decisions[0].details["decision"] == "allow"
+    assert decisions[0].details["family"] == "worker_execution_preflight"
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_execution_preflight_cli_logs_block_decision_with_explicit_flag():
+    path = db_path("log-block")
+
+    result = run_preflight(
+        path,
+        "missing_worker",
+        "--log",
+        "--actor",
+        "agent_preflight",
+        "--room",
+        "room_private",
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 1
+    assert decisions[0].source == "worker_execution_preflight"
+    assert decisions[0].details["decision"] == "block"
+    assert decisions[0].details["family"] == "worker_execution_preflight"
+    assert decisions[0].reason == "worker_unknown"
+    assert AuditRepository(database).count() == 0
+    database.close()
