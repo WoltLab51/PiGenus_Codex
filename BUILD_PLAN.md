@@ -221,6 +221,9 @@ Current development arc:
 - Current implementation step: storage-free Worker Execution Preflight checks
   one worker before assignment, routing, reservation, provider calls, or
   execution
+- Current implementation step: read-only `worker-execution-preflight` exposes
+  one-worker execution eligibility without logging, assignment, routing,
+  reservation, provider calls, or execution
 
 Readiness source:
 
@@ -269,6 +272,8 @@ meaning, inspection, and backup surfaces remain stable.
 - CLI preview logging comes before worker execution preflight, durable
   assignments, scheduling enforcement, routing, or execution
 - Worker Execution Preflight comes before a preflight CLI, durable assignments,
+  scheduling enforcement, routing, provider calls, or execution
+- Read-only preflight CLI comes before preflight logging, durable assignments,
   scheduling enforcement, routing, provider calls, or execution
 
 ### I. Resource Economy

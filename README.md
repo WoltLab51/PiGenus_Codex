@@ -100,6 +100,12 @@ Log one worker scheduling preview decision explicitly:
 python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python --log --actor agent_preview --room room_developer
 ```
 
+Inspect one worker before execution without modifying storage:
+
+```powershell
+python -m pigenus.cli.main worker-execution-preflight worker_local meaning_ingester --db pigenus.sqlite3 --runtime python
+```
+
 Inspect known contexts without modifying storage:
 
 ```powershell

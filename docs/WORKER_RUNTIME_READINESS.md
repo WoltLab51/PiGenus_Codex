@@ -336,4 +336,13 @@ still does not create assignments.
 Storage-free Worker Execution Preflight is now the current execution-readiness
 surface. It checks eligibility, not execution.
 
+The first preflight CLI is read-only:
+
+```text
+worker-execution-preflight
+```
+
+It exposes ordered execution eligibility checks for one worker. It does not log
+decisions, assign work, reserve workers, route providers, or execute tasks.
+
 Scheduling and execution remain later steps.

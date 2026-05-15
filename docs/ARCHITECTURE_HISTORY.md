@@ -1260,3 +1260,18 @@ PiGenus can now ask whether one specific worker appears eligible for a proposed
 execution before assignment or execution exists. This makes execution
 eligibility governable without adding scheduling tables, reservations, provider
 routing, or task execution.
+
+## Worker Execution Preflight CLI
+
+The system gained:
+
+- read-only `worker-execution-preflight`
+- worker ID, capability, runtime, sensitivity, and network requirement inputs
+- printed allow/block decision and ordered preflight checks
+- tests proving no decision or audit persistence
+
+Why it mattered:
+
+Operators can now inspect execution eligibility for one worker from the command
+line before logging, assignment, routing, or execution exists. This gives the
+Worker Runtime a visible safety check without making workers active executors.

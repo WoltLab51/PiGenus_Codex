@@ -16,6 +16,10 @@ from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.core.runtime_overview import RuntimeOverviewBuilder
+from pigenus.core.worker_execution_preflight import (
+    WorkerExecutionPreflightRequest,
+    WorkerExecutionPreflightService,
+)
 from pigenus.core.worker_inspection import WorkerInspectionService
 from pigenus.core.worker_registry import WorkerRegistry
 from pigenus.core.worker_scheduling_preview import (
@@ -240,6 +244,30 @@ def build_parser() -> argparse.ArgumentParser:
         "--event-id",
         default=None,
         help="Optional event ID for the logged preview decision.",
+    )
+
+    worker_execution_preflight = subparsers.add_parser(
+        "worker-execution-preflight",
+        help="Preview-check one worker before execution without modifying storage.",
+    )
+    worker_execution_preflight.add_argument("worker_id", help="Worker ID to check.")
+    worker_execution_preflight.add_argument("capability", help="Required cell or capability ID.")
+    worker_execution_preflight.add_argument(
+        "--db",
+        default="pigenus.sqlite3",
+        help="SQLite database path.",
+    )
+    worker_execution_preflight.add_argument("--runtime", default=None, help="Required runtime.")
+    worker_execution_preflight.add_argument(
+        "--sensitivity",
+        choices=tuple(sensitivity.value for sensitivity in Sensitivity),
+        default=None,
+        help="Required sensitivity ceiling.",
+    )
+    worker_execution_preflight.add_argument(
+        "--network-required",
+        action="store_true",
+        help="Require worker network access.",
     )
 
     context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
@@ -769,6 +797,52 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 f"{candidate.worker_id} | suitable={'yes' if candidate.suitable else 'no'} | "
                 f"reasons={','.join(candidate.reasons)}"
+            )
+        return 0
+
+    if args.command == "worker-execution-preflight":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            repository = WorkerRepository(database)
+            registry = _worker_registry_from_repository(repository)
+            result = WorkerExecutionPreflightService(
+                WorkerInspectionService(registry)
+            ).check(
+                WorkerExecutionPreflightRequest(
+                    worker_id=args.worker_id,
+                    capability=args.capability,
+                    required_runtime=args.runtime,
+                    sensitivity=(
+                        Sensitivity(args.sensitivity)
+                        if args.sensitivity is not None
+                        else None
+                    ),
+                    network_required=args.network_required,
+                )
+            )
+        finally:
+            database.close()
+
+        decision = result.to_governance_decision(
+            actor_id="worker_execution_preflight_cli",
+            room_id="room_developer",
+        )
+
+        print("Worker Execution Preflight")
+        print(f"Worker: {result.request.worker_id}")
+        print(f"Capability: {result.request.capability}")
+        print(f"Runtime: {result.request.required_runtime or '-'}")
+        sensitivity = result.request.sensitivity.value if result.request.sensitivity else "-"
+        print(f"Sensitivity: {sensitivity}")
+        print(f"Network required: {'yes' if result.request.network_required else 'no'}")
+        print(f"Decision: {decision.decision.value}")
+        print(f"Reason: {decision.reason}")
+        print("Checks:")
+        for check in result.checks:
+            print(
+                f"{check.name} | decision={check.decision.value} | "
+                f"reason={check.reason}"
             )
         return 0
 

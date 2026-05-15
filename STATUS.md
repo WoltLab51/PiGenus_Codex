@@ -8,7 +8,7 @@
 - Branch: `main`
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `235 passed`
+- Last verified result: `238 passed`
 
 ## Current Runtime Shape
 
@@ -70,6 +70,8 @@ PiGenus is a small local cognitive core. It has:
   record with actor, room, and optional event metadata
 - Storage-free Worker Execution Preflight for checking one worker before
   assignment, routing, or execution
+- Read-only `worker-execution-preflight` CLI for inspecting execution
+  eligibility for one worker
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -205,6 +207,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerExecutionPreflightService` checks one worker and produces a trace plus
   log-compatible governance decision; it does not assign, reserve, route
   providers, persist, or execute tasks.
+- `worker-execution-preflight` is read-only and does not log decisions, write
+  audit logs, assign, reserve, route providers, or execute tasks.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -226,8 +230,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide whether Worker Execution Preflight needs a read-only CLI surface
-  before any durable assignment or execution path exists.
+- Next, decide whether Worker Execution Preflight should gain explicit `--log`
+  support before any durable assignment or execution path exists.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

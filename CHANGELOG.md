@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added read-only `worker-execution-preflight` CLI for checking one worker
+  before execution
+- Added CLI tests for allow, unknown worker, ordered block checks, and no
+  decision/audit persistence
+- Recorded `D-079: Worker Execution Preflight CLI Is Read-Only`
+- Verified: 238 tests passed
 - Added storage-free `WorkerExecutionPreflightService` for checking one worker
   before assignment, routing, or execution
 - Added preflight tests for allow, unknown worker, not-considerable worker,

@@ -80,6 +80,7 @@ Implemented:
 - read-only `worker-scheduling-preview`
 - explicit `worker-scheduling-preview --log`
 - storage-free Worker Execution Preflight
+- read-only `worker-execution-preflight`
 
 Not implemented:
 
@@ -103,7 +104,8 @@ through explicit preview logging, but it is not persisted by default. The
 
 Worker Execution Preflight checks one specific worker before any assignment or
 execution path exists. It produces ordered eligibility checks and a
-governance-shaped result, but it does not execute.
+governance-shaped result, but it does not execute. The
+`worker-execution-preflight` CLI exposes that check without logging.
 
 ## Data Architecture Rule
 

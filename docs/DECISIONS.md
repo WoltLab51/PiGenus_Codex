@@ -1185,3 +1185,18 @@ GENUS needs to make execution eligibility inspectable before it makes execution
 possible. Preflight separates "this worker appears allowed for these
 conditions" from "this worker has been assigned work" or "this worker is
 running work", preserving the governance-first Worker Runtime boundary.
+
+## D-079: Worker Execution Preflight CLI Is Read-Only
+
+Decision:
+
+`worker-execution-preflight` is a read-only CLI surface for checking one worker
+against a proposed capability, runtime, sensitivity, and network requirement.
+It reads the SQLite Worker Store, builds temporary in-memory preview state, and
+prints ordered preflight checks. It does not expose logging yet.
+
+Reason:
+
+Operators need to inspect execution eligibility before any execution path
+exists. Keeping the first preflight CLI read-only preserves the distinction
+between eligibility, durable governance evidence, assignment, and actual work.
