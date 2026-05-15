@@ -285,9 +285,12 @@ The first worker store is small:
 It should not create scheduling tables, assignment tables, execution records,
 or remote discovery state.
 
-Scheduling preview is storage-free. It may rank or explain candidate workers,
-and it may produce a log-compatible `GovernanceDecision`, but it must not
-create durable assignments, execution records, or provider calls by itself.
+Scheduling preview is storage-free unless an explicit preview logger is called.
+It may rank or explain candidate workers, and it may produce a log-compatible
+`GovernanceDecision`. `WorkerSchedulingPreviewLogger` may store that decision
+through the existing decision log as append-only governance evidence, but it
+must not create durable assignments, execution records, reservations, routes,
+or provider calls.
 
 ## Database Design Principles
 

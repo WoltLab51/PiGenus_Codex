@@ -1191,3 +1191,20 @@ Worker placement reasoning now has the same governance shape as other policy
 surfaces. The conversion is intentionally storage-free, so the runtime can
 review and test scheduling reasoning before deciding whether previews should be
 logged.
+
+## Worker Scheduling Preview Logging
+
+The system gained:
+
+- `WorkerSchedulingPreviewLogger`
+- opt-in persistence through the existing decision log
+- source `worker_scheduling_preview` for logged preview decisions
+- allow/block preview logging tests
+- proof that previewing remains non-persistent unless the logger is called
+
+Why it mattered:
+
+Worker placement reasoning can now be made durable when an operator or future
+runtime surface explicitly asks for it. The logger does not introduce
+scheduling tables, assignments, reservations, provider calls, routing, or
+execution; it only preserves the governance-shaped explanation.

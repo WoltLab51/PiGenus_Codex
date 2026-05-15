@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from pathlib import Path
+from uuid import uuid4
+
 from pigenus.core.worker_inspection import WorkerInspectionService
 from pigenus.core.governance_decision_log import governance_decision_to_record
 from pigenus.core.worker_registry import WorkerRegistry
 from pigenus.core.worker_scheduling_preview import (
+    WorkerSchedulingPreviewLogger,
     WorkerSchedulingPreviewService,
     WorkerSchedulingRequest,
 )
@@ -14,6 +18,14 @@ from pigenus.schemas.systemform import (
     WorkerStatus,
     WorkerType,
 )
+from pigenus.storage.database import Database
+from pigenus.storage.repositories import DecisionRepository
+
+
+def db_path(name: str) -> Path:
+    root = Path(".testdata") / "worker-scheduling-preview-tests"
+    root.mkdir(parents=True, exist_ok=True)
+    return root / f"{name}-{uuid4().hex}.sqlite3"
 
 
 def profile(
@@ -177,3 +189,72 @@ def test_worker_scheduling_preview_governance_decision_is_log_compatible_without
     assert record.details["decision"] == "allow"
     assert record.details["family"] == "worker_scheduling"
     assert record.details["trace"][0]["name"] == "worker_candidate"
+
+
+def test_worker_scheduling_preview_logger_persists_allow_decision_when_called():
+    path = db_path("allow-log")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    result = preview_service().preview(
+        WorkerSchedulingRequest(capability="meaning_ingester", required_runtime="python")
+    )
+
+    record = WorkerSchedulingPreviewLogger(repository).add(
+        result,
+        actor_id="agent_preview",
+        room_id="room_developer",
+        event_id="evt_task",
+    )
+
+    stored = repository.list()[0]
+    assert repository.count() == 1
+    assert stored == record
+    assert stored.source == "worker_scheduling_preview"
+    assert stored.subject_id == "evt_task"
+    assert stored.details["decision"] == "allow"
+    assert stored.details["family"] == "worker_scheduling"
+    governance_details = stored.details["governance_decision"]["details"]
+    assert governance_details["recommended_worker_id"] == "worker_good"
+    database.close()
+
+
+def test_worker_scheduling_preview_logger_persists_block_decision_when_called():
+    path = db_path("block-log")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+    result = preview_service().preview(
+        WorkerSchedulingRequest(
+            capability="meaning_ingester",
+            required_runtime="python",
+            sensitivity=Sensitivity.SECRET,
+        )
+    )
+
+    record = WorkerSchedulingPreviewLogger(repository).add(
+        result,
+        actor_id="agent_preview",
+        room_id="room_private",
+    )
+
+    assert repository.count() == 1
+    assert record.reason == "no_suitable_worker"
+    assert record.details["decision"] == "block"
+    assert record.details["governance_decision"]["details"]["recommended_worker_id"] is None
+    assert record.context == {"name": "private/default"}
+    database.close()
+
+
+def test_worker_scheduling_preview_logging_is_not_implicit():
+    path = db_path("not-implicit")
+    database = Database(path)
+    database.initialize()
+    repository = DecisionRepository(database)
+
+    preview_service().preview(
+        WorkerSchedulingRequest(capability="meaning_ingester", required_runtime="python")
+    )
+
+    assert repository.count() == 0
+    database.close()

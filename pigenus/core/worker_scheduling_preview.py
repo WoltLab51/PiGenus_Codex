@@ -1,9 +1,14 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
+from pigenus.core.governance_decision_log import GovernanceDecisionLogger
 from pigenus.core.worker_inspection import WorkerInspection, WorkerInspectionService
+from pigenus.schemas.context import Context
+from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import GovernanceDecision, GuardDecisionType, Sensitivity
+from pigenus.storage.repositories import DecisionRepository
 
 
 SENSITIVITY_RANK: dict[Sensitivity, int] = {
@@ -147,6 +152,35 @@ class WorkerSchedulingPreviewService:
             worker_id=row.worker_id,
             suitable=suitable,
             reasons=tuple(reasons),
+        )
+
+
+class WorkerSchedulingPreviewLogger:
+    """Opt-in persistence for worker scheduling previews via the decision log."""
+
+    def __init__(self, repository: DecisionRepository) -> None:
+        self.governance_logger = GovernanceDecisionLogger(repository)
+
+    def add(
+        self,
+        preview: WorkerSchedulingPreview,
+        *,
+        actor_id: str,
+        room_id: str,
+        event_id: str | None = None,
+        rule_id: str = "worker_scheduling_preview",
+        context: Context | dict[str, Any] | None = None,
+    ) -> DecisionRecord:
+        decision = preview.to_governance_decision(
+            actor_id=actor_id,
+            room_id=room_id,
+            event_id=event_id,
+            rule_id=rule_id,
+        )
+        return self.governance_logger.add(
+            decision,
+            context=context,
+            source="worker_scheduling_preview",
         )
 
 

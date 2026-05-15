@@ -213,6 +213,9 @@ Next checkpoint:
 - Current implementation step: Scheduling Preview can convert to a
   log-compatible `GovernanceDecision` without persisting, assigning, routing, or
   executing
+- Current implementation step: Scheduling Preview can be logged explicitly
+  through `WorkerSchedulingPreviewLogger` and the existing decision log without
+  assigning, routing, reserving, or executing
 
 Readiness source:
 
@@ -254,6 +257,8 @@ meaning, inspection, and backup surfaces remain stable.
   execution records, provider calls, or execution
 - GovernanceDecision conversion comes before preview logging, durable
   assignments, scheduling enforcement, routing, or execution
+- Opt-in preview logging comes before any read-only scheduling preview CLI,
+  durable assignments, scheduling enforcement, routing, or execution
 
 ### I. Resource Economy
 

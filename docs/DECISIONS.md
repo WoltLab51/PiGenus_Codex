@@ -1102,3 +1102,21 @@ The project needs governance-shaped placement reasoning before it starts
 logging, assigning, or executing worker tasks. Keeping conversion separate from
 persistence allows later preview logging to reuse the existing decision-log
 path without making every preview a durable runtime event too early.
+
+## D-074: Scheduling Preview Logging Is Opt-In
+
+Decision:
+
+Worker Scheduling Preview may be persisted through a
+`WorkerSchedulingPreviewLogger`, which converts the preview to a
+`GovernanceDecision` and stores it through the existing decision log with
+source `worker_scheduling_preview`. This persistence is explicit opt-in only.
+Previewing or converting a preview still does not write by itself.
+
+Reason:
+
+Operators need a durable explanation path for placement reasoning before real
+scheduling exists, but making every preview automatically durable would blur
+inspection, reasoning, and runtime action. Opt-in logging keeps preview
+accountable without creating assignments, reservations, provider routing, or
+execution semantics.

@@ -254,6 +254,11 @@ Scheduling preview may convert its result into a `GovernanceDecision` so the
 reasoning shape is compatible with later decision logging. This conversion does
 not persist by itself.
 
+Scheduling preview may be logged explicitly through
+`WorkerSchedulingPreviewLogger`, which writes the governance-shaped preview to
+the existing decision log with source `worker_scheduling_preview`. Logging is
+opt-in; plain preview and conversion remain non-persistent.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -296,7 +301,7 @@ The current safe step is to define and test worker identity, heartbeat,
 capability profile, cost profile, privacy profile, and failure semantics.
 
 Read-only CLI inspection is now the current operator surface. Storage-free
-scheduling preview plus governance-decision conversion is the current
-preparation surface.
+scheduling preview, governance-decision conversion, and opt-in preview logging
+are the current preparation surfaces.
 
 Scheduling and execution remain later steps.

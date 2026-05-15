@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added opt-in `WorkerSchedulingPreviewLogger` for persisting preview decisions
+  through the existing decision log
+- Added tests for allow/block preview logging and no implicit persistence
+- Recorded `D-074: Scheduling Preview Logging Is Opt-In`
+- Verified: 226 tests passed
 - Added GovernanceDecision conversion for Worker Scheduling Preview without persistence
 - Added tests for allow/block scheduling preview decisions and decision-log compatibility
 - Recorded `D-073: Scheduling Preview Governance Conversion Is Not Persistence`

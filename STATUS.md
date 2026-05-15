@@ -6,7 +6,7 @@
 - Branch: `main`
 - Status: runtime verification checkpoint cut ready
 - Test command: `.venv\Scripts\python.exe -m pytest`
-- Last verified result: `223 passed`
+- Last verified result: `226 passed`
 
 ## Current Runtime Shape
 
@@ -62,6 +62,7 @@ PiGenus is a small local cognitive core. It has:
 - Storage-free Worker Scheduling Preview for candidate suitability reasoning
 - Worker Scheduling Preview to GovernanceDecision conversion without
   persistence
+- Opt-in Worker Scheduling Preview logging through the durable decision log
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -188,6 +189,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   execute tasks.
 - Worker scheduling preview governance conversion is log-compatible but does
   not persist by itself.
+- `WorkerSchedulingPreviewLogger` can persist preview decisions through the
+  existing decision log only when called explicitly; it does not schedule,
+  assign, route providers, reserve workers, or execute tasks.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -209,8 +213,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, decide whether scheduling preview needs explicit preview logging before
-  durable scheduling exists.
+- Next, decide whether scheduling preview needs a read-only CLI inspection
+  surface before durable scheduling exists.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution
