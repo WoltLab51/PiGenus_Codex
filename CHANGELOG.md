@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Integrated stable-core / variable-runtime-shape architecture language across
+  philosophy, convergence review, vocabulary, build plan, status, and history
+- Recorded
+  `D-086: GENUS Uses Stable Core And Variable Runtime Shapes`
 - Added `docs/CELLULAR_SYSTEMFORM.md` to define GENUS cells as governed
   capability units and static modules as temporary cell boundaries
 - Added Cellular Systemform vocabulary and recorded

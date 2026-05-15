@@ -1395,3 +1395,21 @@ The cell idea is now a first-class architecture philosophy instead of only a
 metaphor. This lets PiGenus keep refactoring toward cell-like structure without
 turning every function into a cell or introducing dynamic runtime routing too
 early.
+
+## Stable Core And Variable Runtime Shapes
+
+The project clarified:
+
+- the Systemform Kernel remains stable across future runtime forms
+- RuntimeShape is a checked composition, not spontaneous dynamic behavior
+- DeploymentProfile, DeviceProfile, ShapePreview, ShapeValidator, and
+  ShapeTrace are documented/planned terms
+- shape activation remains out of scope until preview, validation, guard
+  decision, trace, inspection, and tests exist
+
+Why it mattered:
+
+GENUS can move toward device- and function-specific forms without losing kernel
+accountability. This connects Cellular Systemform, Liquid Runtime, Worker
+Runtime, and the Architecture Convergence Review into one map instead of
+letting each concept drift independently.

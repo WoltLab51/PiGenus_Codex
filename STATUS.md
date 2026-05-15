@@ -125,6 +125,8 @@ PiGenus is a small local GENUS runtime core. It has:
   before structural refactors
 - Cellular Systemform concept defining GENUS cells as governed capability units
   and static module boundaries as temporary cell boundaries
+- Architecture convergence now defines stable core vs variable runtime shapes
+  as a future direction, not current dynamic behavior
 
 Current demo flow:
 
@@ -258,6 +260,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Static CLI modules are temporary cell boundaries; modules above roughly 250
   lines should trigger a follow-up slicing decision before becoming new small
   monoliths.
+- Runtime shapes remain documented/planned only; any future shape behavior must
+  begin with preview, validation, guard decision, trace, and inspection.
 
 ## Next Recommended Work
 
@@ -270,6 +274,8 @@ Worker Runtime preparation:
   refactor candidate remains the Meaning CLI command module boundary.
 - Use the Cellular Systemform rule when slicing future CLI or service modules:
   smallest governable capability, not smallest possible function.
+- Before implementing RuntimeShape or DeviceProfile behavior, keep shape
+  formation preview-only and preserve the stable Systemform Kernel.
 - Keep discovery, remote workers, scheduling, execution, and provider routing
   out of scope.
 - Keep LLM gateways, remote execution, federation, dashboards, and evolution

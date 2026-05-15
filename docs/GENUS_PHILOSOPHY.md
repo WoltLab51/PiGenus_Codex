@@ -22,6 +22,23 @@ GENUS is built for gradual capability. The kernel should know what happened,
 where it happened, why it was allowed, and which boundary was involved before it
 is asked to plan, delegate, mutate, or optimize.
 
+## Stable Core, Variable Form
+
+GENUS keeps a stable governed core while allowing future runtime forms to vary
+by device, resources, room policy, task, available cells, workers, and output
+surface.
+
+The stable core is:
+
+```text
+identity + rooms + meaning + contracts + guards + decisions + traces
+```
+
+The variable form may later include different cells, organs, workers, device
+profiles, resource policies, and interfaces. A variable form is not spontaneous
+autonomy. It must be previewed, validated, governed, and traceable before it can
+affect runtime behavior.
+
 ## What GENUS Is Not
 
 GENUS is not a chatbot wrapper, an autonomous agent swarm, a dashboard-first

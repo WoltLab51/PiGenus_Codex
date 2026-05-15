@@ -455,6 +455,19 @@ meaning, inspection, and backup surfaces remain stable.
 - Do not add LLM orchestration, vector search, vision models, or sensor
   ingestion before Worker Runtime and meaning governance can host them safely
 
+### V. Runtime Shapes
+
+- Keep the Systemform Kernel stable while allowing future task-, device-, and
+  deployment-specific runtime forms
+- Start with documented RuntimeShape, DeploymentProfile, DeviceProfile,
+  ShapePreview, ShapeValidator, and ShapeTrace concepts before implementation
+- Treat ShapePreview as explanation only until validation, guard decision, and
+  trace surfaces are explicit
+- Do not activate dynamic runtime shapes without contracts, room/context
+  boundary, resource policy, guard decision, inspection path, and tests
+- Keep DeviceProfile and RuntimeShape planned until Worker Runtime can provide
+  trustworthy worker, resource, privacy, and failure inputs
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior

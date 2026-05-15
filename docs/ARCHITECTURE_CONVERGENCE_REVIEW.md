@@ -20,6 +20,7 @@ This review covers:
 - current repository mapping
 - runtime flow boundaries
 - hot path vs governed path
+- runtime shape / deployment shape boundary
 - static vs dynamic boundary rules
 - open decisions before further cell-oriented refactors
 
@@ -42,6 +43,9 @@ GENUS is converging toward this shape:
 Systemform Kernel
   identity + rooms + meaning + contracts + guards + decisions
 
+Stable Core / Variable Runtime Shape
+  the governed core remains stable while deployment-specific shape varies
+
 Cellular Runtime Direction
   governable capabilities that can later become runtime cells and organs
 
@@ -56,6 +60,74 @@ The current codebase should not be restarted. It should be re-differentiated:
 large coordination surfaces become static boundaries, static boundaries become
 smaller capability units, and only mature capability units may later become
 runtime cells.
+
+## Runtime Shape / Deployment Shape
+
+A RuntimeShape is a checked composition of available runtime surfaces for a
+specific task, device, room, resource profile, and output surface.
+
+It may include:
+
+- available cells
+- active organs
+- workers
+- device profile
+- deployment profile
+- room policy
+- context stack
+- resource policy
+- meaning scope
+- output surface
+
+A RuntimeShape is not automatic dynamic behavior. It is a proposed or selected
+form that must remain downstream of the stable core:
+
+```text
+identity
+room/context boundary
+meaning scope
+contracts
+guards
+decision trace
+governance decision
+inspection path
+```
+
+Example future shapes:
+
+- Pi Local Shape
+- Developer Shape
+- Server Shape
+- Family Privacy Shape
+- Sherlook Diagnostic Shape
+- Learning Character Shape
+
+### ShapePreview
+
+A ShapePreview explains what form GENUS would take for a task before activating
+that form. It may compare available cells, workers, resources, room policy, and
+meaning scope, but it must not execute, assign, reserve, route providers, or
+mutate state by itself.
+
+### ShapeValidator
+
+A ShapeValidator checks that a proposed shape preserves the stable core. It
+should verify required cells, worker eligibility, context stack, room policy,
+resource policy, output surface, and inspection path before any future
+activation.
+
+### ShapeTrace
+
+A ShapeTrace records why a shape was considered acceptable, blocked, or
+escalated. It is the trace surface that prevents variable form from becoming
+hidden runtime improvisation.
+
+Rule:
+
+```text
+No runtime shape activation without preview, validation, guard decision, and
+trace.
+```
 
 ## Core Anatomy
 

@@ -1305,3 +1305,22 @@ The project should become more cellular without jumping into dynamic cell
 routing too early. Treating cells as governed capability units preserves the
 GENUS philosophy of cells before agents, while the static boundary rule keeps
 ordinary software modules from becoming new small monoliths.
+
+## D-086: GENUS Uses Stable Core And Variable Runtime Shapes
+
+Decision:
+
+GENUS keeps the Systemform Kernel stable while allowing future runtime shapes to
+vary by device, function, resource profile, room policy, worker availability,
+capability set, context stack, meaning scope, and output surface. RuntimeShape,
+DeploymentProfile, DeviceProfile, ShapePreview, ShapeValidator, and ShapeTrace
+are documented/planned concepts only until separate implementation decisions
+add schemas, storage, CLI, or runtime behavior.
+
+Reason:
+
+This lets GENUS run as a local Pi-style runtime, developer runtime, server
+runtime, privacy runtime, diagnostic runtime, or future character/agent runtime
+without rewriting the core or bypassing governance. Variable form is useful
+only if it stays downstream of identity, rooms, meaning, contracts, guards,
+decisions, traces, inspection, and tests.
