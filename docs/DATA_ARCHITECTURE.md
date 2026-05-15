@@ -296,6 +296,12 @@ through the existing decision log as append-only governance evidence, but it
 must not create durable assignments, execution records, reservations, routes,
 or provider calls.
 
+WorkerAssignment currently exists as a model-only record shape. It identifies
+the future truth boundary for assignment records but does not add an assignment
+table yet. The first future assignment store should remain small, link to
+governance decision evidence, and still avoid execution records, provider
+routes, reservations, and tool-call state.
+
 ## Database Design Principles
 
 1. Keep truth small and inspectable.

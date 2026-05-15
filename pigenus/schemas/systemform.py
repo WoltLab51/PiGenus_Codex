@@ -102,6 +102,14 @@ class WorkerStatus(str, Enum):
     RETIRED = "retired"
 
 
+class WorkerAssignmentStatus(str, Enum):
+    PENDING = "pending"
+    ASSIGNED = "assigned"
+    REJECTED = "rejected"
+    CANCELLED = "cancelled"
+    EXPIRED = "expired"
+
+
 class ActorIdentity(BaseModel):
     """Stable identity for a human, cell, organ, agent, character, or system actor."""
 
@@ -229,6 +237,28 @@ class WorkerHeartbeat(BaseModel):
     @classmethod
     def dedupe_degraded_reasons(cls, values: list[str]) -> list[str]:
         return _dedupe_ordered(values)
+
+
+class WorkerAssignment(BaseModel):
+    """Model-only record shape for later governed worker assignment."""
+
+    id: str = Field(default_factory=lambda: new_id("wasg"), min_length=1)
+    worker_id: str = Field(min_length=1)
+    capability: str = Field(min_length=1)
+    room_id: str = Field(min_length=1)
+    governance_decision_id: str = Field(min_length=1)
+    created_by_actor_id: str = Field(min_length=1)
+    status: WorkerAssignmentStatus = WorkerAssignmentStatus.PENDING
+    event_id: str | None = None
+    context_stack_id: str | None = None
+    required_runtime: str | None = None
+    sensitivity: Sensitivity | None = None
+    network_required: bool = False
+    reason: str | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=utc_now)
+    updated_at: datetime = Field(default_factory=utc_now)
+    expires_at: datetime | None = None
 
 
 class MeaningObject(BaseModel):

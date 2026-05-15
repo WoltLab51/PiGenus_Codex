@@ -230,6 +230,9 @@ Current development arc:
 - Current implementation step: `worker-execution-preflight --log` explicitly
   persists one preflight governance decision with actor, room, and optional
   event metadata, but still does not assign, route, reserve, or execute
+- Current implementation step: model-only WorkerAssignment defines the first
+  governed assignment record shape and requires governance decision evidence,
+  without adding storage, CLI creation, routing, reservation, or execution
 - Current quality step: GitHub Actions runs the Python test suite on push,
   pull request, and manual dispatch
 - Current quality step: architecture fitness review identifies CLI and
@@ -237,9 +240,9 @@ Current development arc:
 - Current structural step: worker CLI command handling lives in a dedicated
   module boundary without changing commands, output, storage, scheduling, or
   execution behavior
-- Next implementation decision: define the first durable worker assignment
-  record shape without enabling assignment creation from CLI or runtime
-  execution
+- Next implementation decision: whether WorkerAssignment should gain a minimal
+  SQLite repository before any CLI assignment creation or runtime execution
+  path exists
 
 Readiness source:
 
@@ -294,6 +297,8 @@ meaning, inspection, and backup surfaces remain stable.
   scheduling enforcement, routing, provider calls, or execution
 - Explicit preflight logging comes before durable assignment records,
   scheduling enforcement, routing, provider calls, or execution
+- Model-only WorkerAssignment comes before assignment storage, CLI assignment
+  creation, scheduling enforcement, routing, provider calls, or execution
 - CI is established before continuing Worker Runtime logging, assignment,
   routing, provider, or execution work
 

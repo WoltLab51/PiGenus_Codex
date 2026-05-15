@@ -80,11 +80,13 @@ Implemented:
 - read-only `worker-scheduling-preview`
 - explicit `worker-scheduling-preview --log`
 - storage-free Worker Execution Preflight
-- read-only `worker-execution-preflight`
+- `worker-execution-preflight` with explicit `--log`
+- model-only WorkerAssignment
 
 Not implemented:
 
 - durable scheduling
+- assignment storage or assignment creation
 - execution routing
 - remote workers
 - provider gateways
@@ -105,7 +107,11 @@ through explicit preview logging, but it is not persisted by default. The
 Worker Execution Preflight checks one specific worker before any assignment or
 execution path exists. It produces ordered eligibility checks and a
 governance-shaped result, but it does not execute. The
-`worker-execution-preflight` CLI exposes that check without logging.
+`worker-execution-preflight` CLI exposes that check and may log one decision
+only with explicit `--log`.
+
+WorkerAssignment now defines the future record shape for governed assignment,
+but it is still model-only. No storage table or assignment creation path exists.
 
 ## Data Architecture Rule
 

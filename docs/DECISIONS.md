@@ -1251,3 +1251,22 @@ preview. Operators need an explicit way to make eligibility evidence durable
 before assignments or execution exist, but implicit logging would blur
 inspection and persistence. Requiring `--log` keeps the transition from
 read-only eligibility check to durable governance record visible and auditable.
+
+## D-083: Worker Assignment Shape Precedes Assignment Creation
+
+Decision:
+
+PiGenus defines `WorkerAssignment` and `WorkerAssignmentStatus` as model-only
+Systemform schemas before adding worker assignment storage, CLI creation,
+scheduling enforcement, routing, provider calls, or execution. A worker
+assignment must reference a governance decision ID, but it does not contain
+execution start time, completion time, or execution result fields.
+
+Reason:
+
+Assignment is the first point where worker placement can become durable runtime
+intent. Its record shape must be clear before the system can create
+assignments. Requiring governance evidence keeps assignment downstream of
+scheduling and preflight decisions, while excluding execution fields preserves
+the boundary between "this worker is assigned" and "this worker is running
+work."

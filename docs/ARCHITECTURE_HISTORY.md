@@ -1345,3 +1345,19 @@ Execution preflight is the closest current Worker Runtime surface to future
 execution. Making it optionally durable creates governance evidence before
 assignments or execution exist, while the explicit `--log` boundary preserves
 read-only inspection as the default.
+
+## Worker Assignment Model Shape
+
+The system gained:
+
+- `WorkerAssignment`
+- `WorkerAssignmentStatus`
+- model tests proving governance evidence is required
+- model tests proving assignment does not contain execution result fields
+
+Why it mattered:
+
+Worker assignment is the first future step where placement can become durable
+runtime intent. Defining the shape before storage or CLI creation keeps the
+worker arc governed: assignment must be downstream of evidence, and assignment
+still remains separate from execution.

@@ -280,6 +280,28 @@ Boundary:
 The first heartbeat store keeps current state only. It is not heartbeat
 history, health repair, scheduling, or execution proof.
 
+### WorkerAssignment
+
+Purpose:
+
+Future durable intent that one governed capability is assigned to one worker.
+
+Lifecycle:
+
+```text
+governance evidence -> pending assignment -> assigned/rejected/cancelled/expired -> retained for inspection
+```
+
+Current storage:
+
+- no storage table yet
+- model-only `WorkerAssignment`
+
+Boundary:
+
+WorkerAssignment is not execution. It does not store start time, completion
+time, execution result, provider route, reservation, or tool call state.
+
 ### MutationProposal
 
 Purpose:

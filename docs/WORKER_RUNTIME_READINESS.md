@@ -294,11 +294,26 @@ Logging is opt-in; plain preflight and conversion remain non-persistent.
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
+After preflight logging is explicit, PiGenus may define the first model-only
+assignment shape:
+
+```text
+WorkerAssignment
+WorkerAssignmentStatus
+```
+
+A worker assignment is durable intent to place a capability on a worker later.
+It must reference governance decision evidence, but it does not start work,
+reserve capacity, route providers, call tools, or store execution results.
+Assignment creation remains out of scope until a separate storage and
+inspection plan exists.
+
 ## Non-Goals
 
 The readiness step must not introduce:
 
 - remote code execution
+- assignment creation from CLI or runtime paths
 - provider routing
 - LLM gateway behavior
 - autonomous agent spawning
@@ -353,4 +368,7 @@ the command writes exactly one governance decision record through
 room metadata and may include an event ID. This is still not assignment,
 reservation, routing, provider access, or execution.
 
-Scheduling and execution remain later steps.
+Model-only WorkerAssignment now defines the later assignment record shape. It
+does not create assignment storage or assignment commands.
+
+Assignment storage, scheduling, and execution remain later steps.

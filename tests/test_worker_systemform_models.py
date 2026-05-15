@@ -4,6 +4,8 @@ from pydantic import ValidationError
 
 from pigenus.schemas.systemform import (
     Sensitivity,
+    WorkerAssignment,
+    WorkerAssignmentStatus,
     WorkerHeartbeat,
     WorkerProfile,
     WorkerStatus,
@@ -74,3 +76,58 @@ def test_worker_heartbeat_requires_worker_id():
         assert "worker_id" in str(exc)
     else:
         raise AssertionError("Expected empty worker_id to fail validation.")
+
+
+def test_worker_assignment_models_assignment_without_execution():
+    assignment = WorkerAssignment(
+        worker_id="worker_pi_001",
+        capability="meaning_ingester",
+        room_id="room_developer",
+        governance_decision_id="dec_preflight_001",
+        created_by_actor_id="agent_scheduler_preview",
+        required_runtime="python",
+        sensitivity=Sensitivity.PRIVATE,
+        network_required=False,
+        reason="preflight_allowed",
+        metadata={"source": "worker_execution_preflight"},
+    )
+
+    data = assignment.model_dump(mode="json")
+
+    assert assignment.id.startswith("wasg_")
+    assert data["status"] == "pending"
+    assert data["worker_id"] == "worker_pi_001"
+    assert data["capability"] == "meaning_ingester"
+    assert data["governance_decision_id"] == "dec_preflight_001"
+    assert data["sensitivity"] == "private"
+    assert "started_at" not in data
+    assert "completed_at" not in data
+    assert "execution_result" not in data
+
+
+def test_worker_assignment_requires_governance_evidence():
+    try:
+        WorkerAssignment(
+            worker_id="worker_pi_001",
+            capability="meaning_ingester",
+            room_id="room_developer",
+            governance_decision_id="",
+            created_by_actor_id="agent_scheduler_preview",
+        )
+    except ValidationError as exc:
+        assert "governance_decision_id" in str(exc)
+    else:
+        raise AssertionError("Expected empty governance_decision_id to fail validation.")
+
+
+def test_worker_assignment_status_serializes_as_stable_value():
+    assignment = WorkerAssignment(
+        worker_id="worker_pi_001",
+        capability="meaning_ingester",
+        room_id="room_developer",
+        governance_decision_id="dec_preflight_001",
+        created_by_actor_id="agent_scheduler_preview",
+        status=WorkerAssignmentStatus.ASSIGNED,
+    )
+
+    assert assignment.model_dump(mode="json")["status"] == "assigned"

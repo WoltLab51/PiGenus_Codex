@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `243 passed`
+- Last verified result: `246 passed`
 
 ## Current Runtime Shape
 
@@ -76,6 +76,8 @@ PiGenus is a small local cognitive core. It has:
 - Opt-in Worker Execution Preflight logging through the durable decision log
 - Explicit `worker-execution-preflight --log` support for one preflight
   decision record with actor, room, and optional event metadata
+- Model-only WorkerAssignment and WorkerAssignmentStatus Systemform concepts
+  for later governed assignment records
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -223,6 +225,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-execution-preflight` is read-only unless `--log` is provided; with
   `--log`, it writes one governance decision record and still does not write
   audit logs, assign, reserve, route providers, or execute tasks.
+- `WorkerAssignment` is model-only and requires governance decision evidence;
+  it does not add storage, CLI creation, scheduling enforcement, reservation,
+  routing, provider calls, execution logs, or execution result fields.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -250,8 +255,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- Next, define the first durable worker assignment record shape without
-  enabling assignment creation from CLI or runtime execution.
+- Next, decide whether the model-only WorkerAssignment shape should gain a
+  minimal SQLite repository before any CLI assignment creation exists.
 - Keep further CLI slicing focused and behavior-preserving; the next structural
   refactor candidate remains the Meaning CLI command module boundary.
 - Keep discovery, remote workers, scheduling, execution, and provider routing

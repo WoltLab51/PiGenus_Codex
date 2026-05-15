@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added model-only `WorkerAssignment` and `WorkerAssignmentStatus` schemas for
+  later governed worker assignment records
+- Added tests proving worker assignments require governance evidence and do not
+  model execution results
+- Recorded `D-083: Worker Assignment Shape Precedes Assignment Creation`
 - Added opt-in `WorkerExecutionPreflightLogger` for persisting one preflight
   governance decision through the existing decision log
 - Added explicit `worker-execution-preflight --log` support with actor, room,
