@@ -13,14 +13,16 @@ Start here when orienting yourself:
 4. `STATUS.md` - current repository truth and stable invariants
 5. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
 6. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-7. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-8. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+7. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
+8. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+9. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
 - `docs/GENUS_SYSTEMFORM_v0.1.md` - original Systemform framing
 - `docs/PIGENUS_PHASE_0_CORE_KERNEL_SPEC_v0.1.md` - Phase 0 kernel spec
 - `docs/CELLULAR_SYSTEMFORM.md` - GENUS cell philosophy and static cell boundary rules
+- `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - GENUS anatomy, maturity ladder, transition rules, and runtime flow boundaries
 - `docs/SYSTEMFORM_GAP_ANALYSIS.md` - prototype-to-Systemform gap analysis
 - `docs/CONTEXT_MODEL.md` - Room, ContextFrame, and ContextStack boundaries
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication
