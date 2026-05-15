@@ -1208,3 +1208,20 @@ Worker placement reasoning can now be made durable when an operator or future
 runtime surface explicitly asks for it. The logger does not introduce
 scheduling tables, assignments, reservations, provider calls, routing, or
 execution; it only preserves the governance-shaped explanation.
+
+## Worker Scheduling Preview CLI
+
+The system gained:
+
+- read-only `worker-scheduling-preview`
+- capability, runtime, sensitivity, and network requirement inputs
+- printed preview decision, reason, recommended worker, and candidate reasons
+- tests for empty databases, constrained previews, and unchanged decision/audit
+  logs
+
+Why it mattered:
+
+Operators can now inspect worker placement reasoning from the command line
+without creating a scheduling assignment or durable decision. The command reads
+from the SQLite Worker Store, builds only temporary in-memory preview state, and
+does not expose preview logging yet.

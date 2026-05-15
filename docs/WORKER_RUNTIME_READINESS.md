@@ -259,6 +259,16 @@ Scheduling preview may be logged explicitly through
 the existing decision log with source `worker_scheduling_preview`. Logging is
 opt-in; plain preview and conversion remain non-persistent.
 
+The first scheduling preview CLI is read-only:
+
+```text
+worker-scheduling-preview
+```
+
+It reads worker profiles and current heartbeats from SQLite, builds temporary
+in-memory preview state, prints candidate suitability, and does not expose
+`--log` yet.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -302,6 +312,7 @@ capability profile, cost profile, privacy profile, and failure semantics.
 
 Read-only CLI inspection is now the current operator surface. Storage-free
 scheduling preview, governance-decision conversion, and opt-in preview logging
-are the current preparation surfaces.
+are the current preparation surfaces. `worker-scheduling-preview` exposes that
+reasoning to operators without creating decisions or assignments.
 
 Scheduling and execution remain later steps.

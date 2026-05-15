@@ -216,6 +216,9 @@ Next checkpoint:
 - Current implementation step: Scheduling Preview can be logged explicitly
   through `WorkerSchedulingPreviewLogger` and the existing decision log without
   assigning, routing, reserving, or executing
+- Current implementation step: read-only `worker-scheduling-preview` exposes
+  placement reasoning from the CLI without logging, assigning, routing,
+  reserving, or executing
 
 Readiness source:
 
@@ -259,6 +262,8 @@ meaning, inspection, and backup surfaces remain stable.
   assignments, scheduling enforcement, routing, or execution
 - Opt-in preview logging comes before any read-only scheduling preview CLI,
   durable assignments, scheduling enforcement, routing, or execution
+- Read-only scheduling preview CLI comes before a CLI `--log` option, durable
+  assignments, scheduling enforcement, routing, or execution
 
 ### I. Resource Economy
 

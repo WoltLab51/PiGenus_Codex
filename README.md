@@ -88,6 +88,12 @@ python -m pigenus.cli.main worker-list --db pigenus.sqlite3
 python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
 ```
 
+Preview worker suitability without scheduling or logging:
+
+```powershell
+python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python
+```
+
 Inspect known contexts without modifying storage:
 
 ```powershell

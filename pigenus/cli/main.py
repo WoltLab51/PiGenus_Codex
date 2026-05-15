@@ -16,9 +16,15 @@ from pigenus.core.memory_lifecycle_service import MemoryLifecycleService
 from pigenus.core.orchestrator import DEMO_TEXT, SimpleOrchestrator
 from pigenus.core.permission_registry import PermissionRegistry
 from pigenus.core.runtime_overview import RuntimeOverviewBuilder
+from pigenus.core.worker_inspection import WorkerInspectionService
+from pigenus.core.worker_registry import WorkerRegistry
+from pigenus.core.worker_scheduling_preview import (
+    WorkerSchedulingPreviewService,
+    WorkerSchedulingRequest,
+)
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.registry import SchemaRegistry
-from pigenus.schemas.systemform import WorkerHeartbeat, WorkerStatus, WorkerType
+from pigenus.schemas.systemform import Sensitivity, WorkerHeartbeat, WorkerStatus, WorkerType
 from pigenus.storage.database import Database
 from pigenus.storage.repositories import (
     AuditRepository,
@@ -191,6 +197,29 @@ def build_parser() -> argparse.ArgumentParser:
     )
     worker_show.add_argument("worker_id", help="Worker ID to inspect.")
     worker_show.add_argument("--db", default="pigenus.sqlite3", help="SQLite database path.")
+
+    worker_scheduling_preview = subparsers.add_parser(
+        "worker-scheduling-preview",
+        help="Preview worker suitability for a capability without modifying storage.",
+    )
+    worker_scheduling_preview.add_argument("capability", help="Required cell or capability ID.")
+    worker_scheduling_preview.add_argument(
+        "--db",
+        default="pigenus.sqlite3",
+        help="SQLite database path.",
+    )
+    worker_scheduling_preview.add_argument("--runtime", default=None, help="Required runtime.")
+    worker_scheduling_preview.add_argument(
+        "--sensitivity",
+        choices=tuple(sensitivity.value for sensitivity in Sensitivity),
+        default=None,
+        help="Required sensitivity ceiling.",
+    )
+    worker_scheduling_preview.add_argument(
+        "--network-required",
+        action="store_true",
+        help="Require worker network access.",
+    )
 
     context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
     context_list.add_argument("--db", default=None, help="Optional existing SQLite database path.")
@@ -660,6 +689,55 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(payload, ensure_ascii=True, indent=2, sort_keys=True))
         return 0
 
+    if args.command == "worker-scheduling-preview":
+        database = Database(Path(args.db))
+        database.initialize()
+        try:
+            repository = WorkerRepository(database)
+            registry = _worker_registry_from_repository(repository)
+            preview = WorkerSchedulingPreviewService(
+                WorkerInspectionService(registry)
+            ).preview(
+                WorkerSchedulingRequest(
+                    capability=args.capability,
+                    required_runtime=args.runtime,
+                    sensitivity=(
+                        Sensitivity(args.sensitivity)
+                        if args.sensitivity is not None
+                        else None
+                    ),
+                    network_required=args.network_required,
+                )
+            )
+        finally:
+            database.close()
+
+        decision = preview.to_governance_decision(
+            actor_id="worker_scheduling_preview_cli",
+            room_id="room_developer",
+        )
+        recommended_worker = preview.suitable_workers[0] if preview.suitable_workers else "-"
+
+        print("Worker Scheduling Preview")
+        print(f"Capability: {preview.request.capability}")
+        print(f"Runtime: {preview.request.required_runtime or '-'}")
+        sensitivity = preview.request.sensitivity.value if preview.request.sensitivity else "-"
+        print(f"Sensitivity: {sensitivity}")
+        print(f"Network required: {'yes' if preview.request.network_required else 'no'}")
+        print(f"Decision: {decision.decision.value}")
+        print(f"Reason: {decision.reason}")
+        print(f"Recommended worker: {recommended_worker}")
+        print("Candidates:")
+        if not preview.candidates:
+            print("-")
+            return 0
+        for candidate in preview.candidates:
+            print(
+                f"{candidate.worker_id} | suitable={'yes' if candidate.suitable else 'no'} | "
+                f"reasons={','.join(candidate.reasons)}"
+            )
+        return 0
+
     if args.command == "context-list":
         cells = []
         if args.show_cells and args.db is not None and Path(args.db).exists():
@@ -773,6 +851,16 @@ def _worker_is_considerable(
         and heartbeat is not None
         and heartbeat.status == WorkerStatus.ACTIVE
     )
+
+
+def _worker_registry_from_repository(repository: WorkerRepository) -> WorkerRegistry:
+    registry = WorkerRegistry()
+    for profile in repository.list_profiles():
+        registry.register(profile)
+    for heartbeat in repository.list_heartbeats():
+        if registry.get(heartbeat.worker_id) is not None:
+            registry.record_heartbeat(heartbeat)
+    return registry
 
 
 def _filter_context_boundary_decisions(

@@ -43,6 +43,7 @@ python -m pigenus.cli.main audit-list --db pigenus.sqlite3
 python -m pigenus.cli.main cell-list --db pigenus.sqlite3
 python -m pigenus.cli.main worker-list --db pigenus.sqlite3
 python -m pigenus.cli.main worker-show worker_local --db pigenus.sqlite3
+python -m pigenus.cli.main worker-scheduling-preview meaning_ingester --db pigenus.sqlite3 --runtime python
 python -m pigenus.cli.main context-list
 python -m pigenus.cli.main context-boundary-check input_cell@0.1.0 --context developer/default --db pigenus.sqlite3
 python -m pigenus.cli.main context-boundary-list --db pigenus.sqlite3 --allowed no
@@ -56,10 +57,11 @@ migrate, repair, or overwrite runtime storage.
 but does not alter memory lifecycle, guard enforcement, audit logs, or decision logs.
 `context-boundary-check` is read-only by default. With `--log`, it writes one
 preview decision record to the decision log.
+`worker-scheduling-preview` is read-only and does not expose `--log` yet.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `guard-decision-list`,
 `guard-decision-summary`, `audit-list`, `cell-list`, `worker-list`,
-`worker-show`, `context-list`,
+`worker-show`, `worker-scheduling-preview`, `context-list`,
 `context-boundary-check` without `--log`, `context-boundary-list`, and
 `permission-list` are read-only.

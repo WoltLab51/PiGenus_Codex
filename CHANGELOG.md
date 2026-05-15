@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added read-only `worker-scheduling-preview` CLI for worker suitability
+  previews over the SQLite Worker Store
+- Added CLI tests for empty output, candidate reasons, constraints, and no
+  decision/audit persistence
+- Recorded `D-075: Scheduling Preview CLI Is Read-Only`
+- Verified: 229 tests passed
 - Added opt-in `WorkerSchedulingPreviewLogger` for persisting preview decisions
   through the existing decision log
 - Added tests for allow/block preview logging and no implicit persistence
