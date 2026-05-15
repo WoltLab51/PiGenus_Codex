@@ -273,6 +273,19 @@ With `--log`, the command writes exactly one governance decision record through
 `WorkerSchedulingPreviewLogger`. The logged record requires explicit actor and
 room metadata and may include an event ID. This is still not scheduling.
 
+After scheduling preview is inspectable, PiGenus may use storage-free execution
+preflight:
+
+```text
+WorkerExecutionPreflightRequest
+WorkerExecutionPreflightResult
+```
+
+Execution preflight checks one specific worker against known-worker state,
+considerable status, capability, runtime, sensitivity, and network constraints.
+It may produce a log-compatible `GovernanceDecision`, but it does not assign,
+reserve, route, call providers, persist by itself, or execute work.
+
 No execution should be added until scheduling decisions are guardable,
 persisted, and inspectable.
 
@@ -319,5 +332,8 @@ scheduling preview, governance-decision conversion, and opt-in preview logging
 are the current preparation surfaces. `worker-scheduling-preview` exposes that
 reasoning to operators. With `--log`, it may create a decision record, but it
 still does not create assignments.
+
+Storage-free Worker Execution Preflight is now the current execution-readiness
+surface. It checks eligibility, not execution.
 
 Scheduling and execution remain later steps.

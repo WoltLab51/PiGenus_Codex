@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added storage-free `WorkerExecutionPreflightService` for checking one worker
+  before assignment, routing, or execution
+- Added preflight tests for allow, unknown worker, not-considerable worker,
+  ordered block reasons, and governance decision compatibility
+- Recorded `D-078: Worker Execution Preflight Is Not Execution`
+- Verified: 235 tests passed
 - Aligned package version to `0.4.0.dev0` for the active Worker Runtime
   preparation arc
 - Clarified current status as v0.4 development with v0.3.2 as the latest stable

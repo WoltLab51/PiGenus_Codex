@@ -1241,3 +1241,22 @@ Why it mattered:
 The operator can now turn a placement preview into durable governance evidence
 without creating scheduling assignments or execution records. This keeps the
 transition from inspection to accountability explicit and reviewable.
+
+## Worker Execution Preflight
+
+The system gained:
+
+- `WorkerExecutionPreflightRequest`
+- `WorkerExecutionPreflightCheck`
+- `WorkerExecutionPreflightResult`
+- `WorkerExecutionPreflightService`
+- ordered checks for known worker, considerable state, capability, runtime,
+  sensitivity, and network access
+- conversion to a log-compatible `GovernanceDecision`
+
+Why it mattered:
+
+PiGenus can now ask whether one specific worker appears eligible for a proposed
+execution before assignment or execution exists. This makes execution
+eligibility governable without adding scheduling tables, reservations, provider
+routing, or task execution.

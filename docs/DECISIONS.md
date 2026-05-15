@@ -1169,3 +1169,19 @@ Keeping the package version at `0.2.0` while the repository status and build
 plan describe v0.3/v0.4 work creates avoidable confusion. A PEP 440 dev
 version makes the distinction explicit: v0.3.2 is the latest stable checkpoint;
 v0.4.0 is the current preparation arc; worker execution is still not enabled.
+
+## D-078: Worker Execution Preflight Is Not Execution
+
+Decision:
+
+Worker Execution Preflight checks one known worker against a proposed execution
+request before any assignment, reservation, routing, provider call, or task
+execution exists. The first implementation is storage-free and produces an
+ordered check trace plus a log-compatible `GovernanceDecision`.
+
+Reason:
+
+GENUS needs to make execution eligibility inspectable before it makes execution
+possible. Preflight separates "this worker appears allowed for these
+conditions" from "this worker has been assigned work" or "this worker is
+running work", preserving the governance-first Worker Runtime boundary.

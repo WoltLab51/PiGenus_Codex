@@ -79,6 +79,7 @@ Implemented:
 - opt-in Scheduling Preview decision logging
 - read-only `worker-scheduling-preview`
 - explicit `worker-scheduling-preview --log`
+- storage-free Worker Execution Preflight
 
 Not implemented:
 
@@ -99,6 +100,10 @@ execute work. Its governance conversion is log-compatible and can be persisted
 through explicit preview logging, but it is not persisted by default. The
 `worker-scheduling-preview` CLI exposes the explanation without logging unless
 `--log` is provided.
+
+Worker Execution Preflight checks one specific worker before any assignment or
+execution path exists. It produces ordered eligibility checks and a
+governance-shaped result, but it does not execute.
 
 ## Data Architecture Rule
 

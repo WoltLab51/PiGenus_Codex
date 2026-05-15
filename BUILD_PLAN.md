@@ -218,6 +218,9 @@ Current development arc:
 - Current implementation step: `worker-scheduling-preview --log` explicitly
   persists one preview governance decision with actor, room, and optional event
   metadata, but still does not assign, route, reserve, or execute
+- Current implementation step: storage-free Worker Execution Preflight checks
+  one worker before assignment, routing, reservation, provider calls, or
+  execution
 
 Readiness source:
 
@@ -265,6 +268,8 @@ meaning, inspection, and backup surfaces remain stable.
   assignments, scheduling enforcement, routing, or execution
 - CLI preview logging comes before worker execution preflight, durable
   assignments, scheduling enforcement, routing, or execution
+- Worker Execution Preflight comes before a preflight CLI, durable assignments,
+  scheduling enforcement, routing, provider calls, or execution
 
 ### I. Resource Economy
 
