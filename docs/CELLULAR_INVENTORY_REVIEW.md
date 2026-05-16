@@ -221,6 +221,13 @@ The first application target is now documented in:
 docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md
 ```
 
+The second application target validates the protocol beyond assignment
+creation evidence:
+
+```text
+docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md
+```
+
 The protocol source is:
 
 ```text

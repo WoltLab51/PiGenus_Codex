@@ -137,6 +137,7 @@ Source:
 
 - `docs/CELL_DNA_PROTOCOL.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md`
 
 Define a lightweight implementation template for new responsible capabilities.
 

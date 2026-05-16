@@ -240,13 +240,14 @@ To promote a capability, a later change must explicitly add the missing pieces:
 RuntimeCell promotion additionally requires explicit RuntimeCell infrastructure
 and is out of scope for the current Worker Runtime preparation arc.
 
-## First Application
+## Applied Frames
 
-The first applied Cell-DNA frame is:
+Current applied Cell-DNA frames:
 
 ```text
 docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md
+docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md
 ```
 
-It describes `WorkerAssignmentValidator`, the first candidate identified by
+They describe the first candidates identified by
 `docs/CELLULAR_INVENTORY_REVIEW.md`.

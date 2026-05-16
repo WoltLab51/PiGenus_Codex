@@ -12,18 +12,19 @@ Start here when orienting yourself:
 3. `docs/CELLULAR_INVENTORY_REVIEW.md` - code-checked inventory for first Cell-DNA candidates
 4. `docs/CELL_DNA_PROTOCOL.md` - lightweight frame for responsible capabilities
 5. `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md` - first applied Cell-DNA frame
-6. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
-7. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
-8. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
-9. `STATUS.md` - current repository truth and stable invariants
-10. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
-11. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-12. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
-13. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
-14. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-15. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
-16. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
-17. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+6. `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md` - second applied Cell-DNA frame
+7. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
+8. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
+9. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
+10. `STATUS.md` - current repository truth and stable invariants
+11. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
+12. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
+13. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
+14. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
+15. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+16. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
+17. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+18. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -32,6 +33,7 @@ Start here when orienting yourself:
 - `docs/CELLULAR_INVENTORY_REVIEW.md` - code-checked inventory review and first Cell-DNA candidates
 - `docs/CELL_DNA_PROTOCOL.md` - lightweight Cell-DNA protocol for responsible capabilities
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md` - first applied Cell-DNA frame
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md` - second applied Cell-DNA frame
 - `docs/CANONICAL_ALIGNMENT_PLAN.md` - alignment map for current docs and runtime surfaces
 - `docs/GENUS_METABOLIC_STATE_GRAPH.md` - derived graph view for metabolism, dependencies, state, resources, and diagnosis
 - `docs/GENUS_SYSTEMFORM_v0.1.md` - original Systemform framing

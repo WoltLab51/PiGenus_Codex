@@ -24,8 +24,8 @@
   the initial inventory and recommends Cell-DNA framing before new worker
   behavior.
 - Cell-DNA protocol: `docs/CELL_DNA_PROTOCOL.md` defines the lightweight
-  non-runtime frame, with `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md` as
-  the first applied candidate.
+  non-runtime frame, with applied frames for `WorkerAssignmentValidator` and
+  `WorkerAssignmentSchedulingEligibilityValidator`.
 
 ## Current Cycle
 
@@ -405,10 +405,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, use the WorkerAssignmentValidator Cell-DNA frame as the template for
-  the next responsible capability before deciding whether opt-in scheduling
-  eligibility decision logging is mature enough. Do not add real scheduling,
-  reservation, routing, provider, or execution behavior.
+- Next, use the first two Cell-DNA frames as templates for the next responsible
+  capability before deciding whether opt-in scheduling eligibility decision
+  logging is mature enough. Do not add real scheduling, reservation, routing,
+  provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
