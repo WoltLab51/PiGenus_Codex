@@ -9,9 +9,22 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `281 passed`
+- Last verified result: `288 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
+
+## Current Cycle
+
+Worker Runtime / scheduling eligibility:
+
+- Frame: check whether assigned WorkerAssignment intent may be considered by
+  future scheduling.
+- Current step: `WorkerAssignmentSchedulingEligibilityValidator` as a read-only
+  eligibility check.
+- Explicitly not now: no scheduling enforcement, reservation, routing,
+  provider calls, execution logs, execution, or CLI.
+- Consolidation target: confirm no-write proof and decide whether CLI
+  inspection, opt-in logging, or another pause is next.
 
 ## Current Runtime Shape
 
@@ -104,6 +117,8 @@ PiGenus is a small local GENUS runtime core. It has:
   WorkerAssignmentStatusTransitionService
 - Worker Scheduling Enforcement boundary documented before real scheduling,
   reservation, routing, provider calls, execution logs, or execution
+- WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
+  scheduling eligibility checks without writes
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -298,6 +313,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   `assigned` is necessary for future scheduling consideration, but it is not
   sufficient for scheduling, reservation, routing, provider calls, execution
   logs, or execution.
+- `WorkerAssignmentSchedulingEligibilityValidator` checks whether assigned
+  intent is eligible for future scheduling consideration; it does not write
+  decisions, audits, assignments, reservations, routes, execution logs, or
+  execution results.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -357,9 +376,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, implement a read-only WorkerSchedulingEnforcement validator/service
-  before any real scheduling, reservation, routing, provider, or execution
-  behavior.
+- Next, consolidate the scheduling eligibility step before adding CLI
+  inspection, opt-in logging, real scheduling, reservation, routing, provider,
+  or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

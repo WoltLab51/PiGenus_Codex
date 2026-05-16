@@ -214,6 +214,8 @@ Completed worker surfaces in this arc:
 - validated pending assignment creation through `worker-assignment-create`
 - validated lifecycle status transitions through
   `worker-assignment-transition`
+- read-only assigned-intent scheduling eligibility through
+  `WorkerAssignmentSchedulingEligibilityValidator`
 - dedicated worker CLI and worker storage module boundaries
 - GitHub Actions CI for push, pull request, and manual dispatch
 
@@ -221,6 +223,7 @@ Current stop lines:
 
 - no worker execution
 - no scheduling enforcement yet
+- no scheduling eligibility CLI yet
 - no reservation
 - no provider routing
 - no remote worker discovery
@@ -231,10 +234,10 @@ Current stop lines:
 
 Next decision:
 
-- Decide the minimal read-only `WorkerSchedulingEnforcement` validator/service
-  contract: inputs, outcomes, reason codes, no-write proof, and boundary to
-  real scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+- Consolidate the scheduling eligibility validator result and decide whether
+  the next step is CLI inspection, opt-in decision logging, or another pause
+  before any real scheduling, reservation, routing, provider calls, execution
+  logs, or execution.
 
 Readiness source:
 

@@ -70,7 +70,10 @@ A future enforcement check should be able to inspect:
 - optional human approval evidence, when risk requires it
 - freshness limits for evidence and heartbeat state
 
-The first implementation should keep this read-only.
+The first implementation is intentionally named
+`WorkerAssignmentSchedulingEligibilityValidator` rather than
+`WorkerSchedulingEnforcementValidator` because it only checks eligibility. It
+does not enforce scheduling.
 
 ## Minimum Rules
 
@@ -112,17 +115,26 @@ not_considered
 Candidate reasons:
 
 ```text
+assignment_scheduling_eligible
 assignment_unknown
 assignment_status_not_assigned
 assignment_status_terminal
 governance_evidence_missing
 governance_evidence_not_preflight_allow
+evidence_worker_mismatch
+evidence_capability_mismatch
+evidence_runtime_mismatch
+evidence_sensitivity_mismatch
+evidence_network_requirement_mismatch
+evidence_room_mismatch
 worker_unknown
 worker_not_considerable
+worker_degraded
 worker_capability_missing
 runtime_mismatch
 sensitivity_exceeded
 network_not_allowed
+heartbeat_missing
 heartbeat_stale
 room_policy_blocked
 guard_blocked
@@ -187,17 +199,18 @@ Execution
   Future work run. Not implemented.
 ```
 
-## First Future Code Step
+## Implemented First Check
 
-The next safe code step is a read-only validator or service, not a scheduler:
+The first code step is a read-only validator, not a scheduler:
 
 ```text
-WorkerSchedulingEnforcementValidator
+WorkerAssignmentSchedulingEligibilityValidator
 ```
 
-It should:
+It:
 
-- accept an assignment ID or assignment object plus current worker state
+- accepts an assignment ID and reads current assignment, worker, heartbeat, and
+  governance evidence state
 - return stable allow, deny, review, or not-considered outcomes
 - explain every reason in order
 - write no decisions, audits, assignments, reservations, routes, or execution
