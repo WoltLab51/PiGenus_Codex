@@ -16,6 +16,11 @@ from pigenus.cli.worker_commands import (
     handle_worker_command,
     is_worker_command,
 )
+from pigenus.cli.worker_assignment_commands import (
+    add_worker_assignment_commands,
+    handle_worker_assignment_command,
+    is_worker_assignment_command,
+)
 from pigenus.core.audit import AuditLogger
 from pigenus.core.backup import SnapshotBackupService
 from pigenus.core.context_boundary import ContextBoundaryDecisionLogger, ContextBoundaryEngine
@@ -138,6 +143,7 @@ def build_parser() -> argparse.ArgumentParser:
     cell_list.add_argument("--status", default=None, help="Filter by cell lifecycle status.")
 
     add_worker_commands(subparsers)
+    add_worker_assignment_commands(subparsers)
 
     context_list = subparsers.add_parser("context-list", help="List known contexts without modifying them.")
     context_list.add_argument("--db", default=None, help="Optional existing SQLite database path.")
@@ -186,6 +192,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if is_worker_command(args.command):
         return handle_worker_command(args)
+    if is_worker_assignment_command(args.command):
+        return handle_worker_assignment_command(args)
     if is_meaning_command(args.command):
         return handle_meaning_command(args)
 

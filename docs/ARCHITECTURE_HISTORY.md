@@ -1481,3 +1481,20 @@ The WorkerAssignment Store was the right feature boundary, but it increased
 storage-module density. Splitting worker repositories into their own storage
 domain keeps Worker Runtime growth reviewable before assignment inspection,
 scheduling enforcement, routing, or execution appears.
+
+## Worker Assignment Inspection CLI
+
+The system gained:
+
+- `pigenus/cli/worker_assignment_commands.py`
+- `worker-assignment-list`
+- filters by worker, status, room, capability, and governance decision
+- read-only tests proving assignment inspection does not create decisions or
+  audit logs
+
+Why it mattered:
+
+Assignment intent became inspectable before assignment creation, scheduling
+enforcement, routing, provider calls, or execution. Keeping this command in its
+own static CLI boundary avoids growing the existing worker command module while
+preserving the current no-execution Worker Runtime boundary.

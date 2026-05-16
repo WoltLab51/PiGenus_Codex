@@ -304,6 +304,9 @@ WorkerAssignment now has a minimal local truth table:
 This store remains assignment intent only. It requires a known worker and an
 existing governance decision record before persistence. It still avoids
 execution records, provider routes, reservations, and tool-call state.
+`worker-assignment-list` exposes those records as a read-only inspection
+surface without creating assignments, decisions, audit logs, routing, or
+execution.
 
 Worker storage adapters now live in a dedicated module:
 
@@ -311,7 +314,7 @@ Worker storage adapters now live in a dedicated module:
 
 The legacy `pigenus.storage.repositories` import surface remains compatible.
 This is a structural domain split only; it does not change SQL, migrations,
-assignment behavior, inspection behavior, routing, or execution.
+assignment behavior, routing, or execution.
 
 ## Database Design Principles
 

@@ -373,4 +373,7 @@ store requires a known worker and existing governance decision evidence. It
 does not create assignment commands, scheduling enforcement, reservations,
 routes, provider calls, execution logs, or execution results.
 
-Assignment inspection, scheduling, and execution remain later steps.
+`worker-assignment-list` exposes stored assignment intent for read-only
+operator inspection. Assignment creation, scheduling enforcement, reservations,
+routes, provider calls, execution logs, and execution results remain later
+steps.

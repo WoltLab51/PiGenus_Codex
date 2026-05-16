@@ -1396,3 +1396,20 @@ Adding WorkerAssignment persistence made the shared repository module a storage
 hotspot. Splitting the worker storage domain reduces monolith pressure before
 read-only assignment inspection or further Worker Runtime behavior is added,
 while keeping compatibility for existing callers and tests.
+
+## D-091: Worker Assignment Inspection Is Read-Only
+
+Decision:
+
+PiGenus adds `worker-assignment-list` as a read-only CLI inspection surface for
+stored `WorkerAssignment` records. The command supports filtering by worker,
+status, room, capability, and governance decision. It does not create
+assignments, decisions, audit logs, scheduling enforcement, reservations,
+routing, provider calls, execution logs, or execution results.
+
+Reason:
+
+WorkerAssignment persistence should become inspectable before assignment
+creation exists. This keeps worker intent observable while preserving the
+current boundary: assignment records are durable governed intent, not execution
+or routing.

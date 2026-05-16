@@ -258,8 +258,11 @@ Current development arc:
 - Current structural step: worker storage repositories live in
   `pigenus/storage/worker_repositories.py` while the legacy
   `pigenus.storage.repositories` import surface remains compatible
-- Next implementation decision: whether WorkerAssignment should gain read-only
-  inspection before any CLI assignment creation or runtime execution path exists
+- Current implementation step: read-only `worker-assignment-list` inspects
+  assignment intent records without assignment creation, scheduling
+  enforcement, routing, reservation, provider calls, or execution
+- Next implementation decision: define assignment creation semantics before any
+  CLI assignment creation or runtime execution path exists
 
 Readiness source:
 
@@ -319,6 +322,8 @@ meaning, inspection, and backup surfaces remain stable.
 - Minimal WorkerAssignment Store comes before read-only assignment inspection,
   CLI assignment creation, scheduling enforcement, routing, provider calls, or
   execution
+- Read-only WorkerAssignment inspection comes before CLI assignment creation,
+  scheduling enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

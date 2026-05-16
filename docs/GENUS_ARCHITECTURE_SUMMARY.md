@@ -86,6 +86,7 @@ Implemented:
 - storage-free Worker Execution Preflight
 - `worker-execution-preflight` with explicit `--log`
 - minimal WorkerAssignment Store for governed assignment intent
+- read-only `worker-assignment-list`
 
 Not implemented:
 
@@ -116,7 +117,9 @@ only with explicit `--log`.
 
 WorkerAssignment now has a minimal SQLite store for governed assignment intent.
 It requires a known worker and governance decision evidence, but no assignment
-creation command or execution path exists.
+creation command or execution path exists. `worker-assignment-list` makes those
+records inspectable without creating assignments, scheduling, routing, or
+executing.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

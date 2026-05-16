@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added read-only `worker-assignment-list` CLI inspection for governed worker
+  assignment intent records
+- Kept assignment inspection separate from assignment creation, scheduling,
+  routing, provider calls, and execution
+- Recorded `D-091: Worker Assignment Inspection Is Read-Only`
+- Verified: 254 tests passed
 - Extracted worker storage repositories into
   `pigenus/storage/worker_repositories.py` while preserving the existing
   `pigenus.storage.repositories` import surface

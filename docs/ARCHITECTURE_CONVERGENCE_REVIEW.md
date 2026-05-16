@@ -494,6 +494,7 @@ Do not promote when:
 | --- | --- | --- |
 | `pigenus/cli/main.py` | Operator dispatcher | Deterministic entry point; should shrink through static boundaries, not become dynamic router yet. |
 | `pigenus/cli/worker_commands.py` | StaticCellBoundary | First static cell boundary; useful but not yet a runtime cell or organ. |
+| `pigenus/cli/worker_assignment_commands.py` | StaticCellBoundary | Read-only assignment inspection boundary; not assignment creation, routing, or execution. |
 | `WorkerExecutionPreflightService` | Service / governed-cell candidate | Cell-worthy because it checks capability, sensitivity, network, and worker state, but should not be treated as final cell architecture yet. |
 | `WorkerExecutionPreflightLogger` | Service / governed-cell candidate | Persists one explicit governance decision; candidate for later logging cell. |
 | `WorkerSchedulingPreviewService` | Service / governed-cell candidate | Explains candidate suitability but does not schedule. |
@@ -603,15 +604,14 @@ Later dynamic behavior may be allowed only after:
 
 These are deliberately unresolved.
 
-1. WorkerAssignment has gained a minimal SQLite repository before any CLI
-   creation command exists; the next open question is read-only inspection
-   before any assignment creation path.
+1. WorkerAssignment has gained a minimal SQLite repository and read-only
+   `worker-assignment-list` inspection before any CLI creation command exists.
 2. Meaning CLI extraction has been chosen and implemented as the next
    StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
    cell-worthy service?
 4. Should the remaining non-worker repositories split by storage domain before
-   adding further execution, resource, or assignment inspection stores?
+   adding further execution or resource stores?
 5. What is the first true Organ candidate: WorkerReadinessOrgan,
    MeaningIngestionOrgan, or SherlookLightOrgan?
 6. What minimal CellSpec/CellContract additions are needed before general
@@ -643,7 +643,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Add read-only WorkerAssignment inspection before assignment creation.
+Option A: Define assignment creation semantics before any creation command.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -651,7 +651,7 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment inspection separate from assignment creation.
+1. Keep WorkerAssignment creation separate from execution.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

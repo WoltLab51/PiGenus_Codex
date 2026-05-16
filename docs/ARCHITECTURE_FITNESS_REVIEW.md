@@ -162,6 +162,11 @@ pigenus/cli/worker_commands.py
   owns worker-execution-preflight
   owns worker CLI formatting helpers
   owns worker registry construction from WorkerRepository
+
+pigenus/cli/worker_assignment_commands.py
+  owns worker-assignment-list
+  keeps assignment inspection separate from worker scheduling/preflight commands
+  avoids assignment creation, routing, provider calls, or execution
 ```
 
 Why worker CLI first:
@@ -211,6 +216,7 @@ by subprocess tests.
 | Extract meaning CLI handlers | Medium | Low-medium | Done |
 | Extract decision/guard CLI handlers | Medium | Medium | After worker and meaning extraction |
 | Split worker repositories by domain | Medium | Medium | Done |
+| Extract worker assignment CLI inspection | Medium | Low-medium | Done |
 | Split remaining `repositories.py` domains | Medium | Medium-high | Later, before new execution/resource stores |
 | Introduce dynamic cell routing for CLI commands | Conceptually high | High | Not now |
 | Add runtime command cells or self-routing CLI organs | Future high | High | Only after static module boundaries are stable |
