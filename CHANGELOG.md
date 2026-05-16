@@ -37,13 +37,16 @@
 
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-102: Assigned WorkerAssignments Require Scheduling Enforcement`.
+  `D-103: Project Control Documents Have Explicit Roles`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.
 - Defined the Worker Scheduling Enforcement boundary before any real
   scheduling, reservation, routing, provider calls, execution logs, or
   execution.
+- Clarified project-control document roles and slimmed `BUILD_PLAN.md`
+  `Current And Next` to a roadmap summary with detailed worker lifecycle
+  semantics referenced from topic documents.
 
 ### Verified
 

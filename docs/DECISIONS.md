@@ -1625,3 +1625,23 @@ Reason:
 risk is treating lifecycle status as runtime permission. A separate scheduling
 enforcement boundary keeps assignment intent, scheduling consideration,
 reservation, routing, and execution distinct and inspectable.
+
+## D-103: Project Control Documents Have Explicit Roles
+
+Decision:
+
+PiGenus keeps project-control documents role-specific to reduce documentation
+drift. `BUILD_PLAN.md` is the roadmap and sequencing map, `STATUS.md` is the
+current repository truth, `CHANGELOG.md` records what changed,
+`docs/DECISIONS.md` records durable rules, `docs/GENUS_VOCABULARY.md` owns
+term boundaries, `docs/ARCHITECTURE_HISTORY.md` explains why the architecture
+changed, and topic documents own detailed semantics for their area. Detailed
+lifecycle rules should live in focused topic documents and be referenced from
+broader maps instead of repeated in full.
+
+Reason:
+
+The v0.4 Worker Runtime preparation arc made the same worker lifecycle details
+appear in multiple control documents. Explicit roles keep documentation useful
+without turning roadmap, status, changelog, and topic documents into competing
+sources of truth.

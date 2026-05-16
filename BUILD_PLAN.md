@@ -202,99 +202,39 @@ Current development arc:
 - Package version during this arc: `0.4.0.dev0`
 - Latest stable release checkpoint remains
   `pigenus-v0.3.2-post-release-runtime-verification`
-- Current decision step: worker source-of-truth policy chooses SQLite for
-  durable worker profiles and current heartbeats, treats local files as
-  bootstrap/import only, and keeps discovery out of scope until federation and
-  trust work
-- Current implementation step: minimal SQLite Worker Store persists
-  `worker_profiles` and current `worker_heartbeats` beneath CLI inspection,
-  but still without scheduling, routing, discovery, heartbeat history, or
-  execution
-- Current implementation step: read-only `worker-list` and `worker-show` over
-  the SQLite Worker Store without worker creation, scheduling, routing,
-  discovery, heartbeat history, or execution
-- Current implementation step: storage-free Worker Scheduling Preview explains
-  candidate suitability without durable assignments, routing, provider calls,
-  reservations, or execution
-- Current implementation step: Scheduling Preview can convert to a
-  log-compatible `GovernanceDecision` without persisting, assigning, routing, or
-  executing
-- Current implementation step: Scheduling Preview can be logged explicitly
-  through `WorkerSchedulingPreviewLogger` and the existing decision log without
-  assigning, routing, reserving, or executing
-- Current implementation step: read-only `worker-scheduling-preview` exposes
-  placement reasoning from the CLI without logging, assigning, routing,
-  reserving, or executing
-- Current implementation step: `worker-scheduling-preview --log` explicitly
-  persists one preview governance decision with actor, room, and optional event
-  metadata, but still does not assign, route, reserve, or execute
-- Current implementation step: storage-free Worker Execution Preflight checks
-  one worker before assignment, routing, reservation, provider calls, or
-  execution
-- Current implementation step: read-only `worker-execution-preflight` exposes
-  one-worker execution eligibility without logging, assignment, routing,
-  reservation, provider calls, or execution
-- Current implementation step: Worker Execution Preflight can be logged
-  explicitly through `WorkerExecutionPreflightLogger` and the existing decision
-  log without assigning, routing, reserving, or executing
-- Current implementation step: `worker-execution-preflight --log` explicitly
-  persists one preflight governance decision with actor, room, and optional
-  event metadata, but still does not assign, route, reserve, or execute
-- Current implementation step: WorkerAssignment defines the first governed
-  assignment record shape and requires governance decision evidence, without
-  adding CLI creation, routing, reservation, or execution
-- Current implementation step: minimal SQLite WorkerAssignment Store persists
-  governed assignment intent only when a worker profile and governance decision
-  record already exist; the store itself still avoids scheduling enforcement,
-  routing, reservation, provider calls, or execution
-- Current quality step: GitHub Actions runs the Python test suite on push,
-  pull request, and manual dispatch
-- Current quality step: architecture fitness review identifies CLI and
-  repository hotspots before behavior-preserving structural refactors
-- Current structural step: worker CLI command handling lives in a dedicated
-  module boundary without changing commands, output, storage, scheduling, or
-  execution behavior
-- Current structural step: meaning CLI command handling lives in a dedicated
-  module boundary without changing commands, output, storage, meaning
-  ingestion behavior, or side-effect rules
-- Current structural step: worker storage repositories live in
-  `pigenus/storage/worker_repositories.py` while the legacy
-  `pigenus.storage.repositories` import surface remains compatible
-- Current implementation step: read-only `worker-assignment-list` inspects
-  assignment intent records without assignment creation, scheduling
-  enforcement, routing, reservation, provider calls, or execution
-- Current decision step: assignment creation semantics require matching
-  `worker_execution_preflight` allow evidence and initial `pending` status
-  before assignment activation or runtime execution exists
-- Current implementation step: `WorkerAssignmentValidator` checks matching
-  preflight allow evidence before assignment intent can be created
-- Current decision step: successful WorkerAssignment creation must write one
-  pending assignment and one `worker_assignment_created` audit row, without
-  creating decisions, routing, reservation, provider calls, or execution
-- Current implementation step: `WorkerAssignmentCreator` validates, persists
-  one pending assignment, and writes one audit row without creating decisions,
-  routing, reservation, provider calls, or execution
-- Current implementation step: `worker-assignment-create` is a small CLI
-  wrapper around WorkerAssignmentCreator, without scheduling, reservation,
-  routing, provider calls, or execution
-- Current decision step: WorkerAssignment status transition semantics define
-  allowed intent lifecycle changes before activation, cancellation, expiry, or
-  rejection commands
-- Current implementation step: `WorkerAssignmentStatusTransitionValidator`
-  checks documented status graph transitions without persistence, audit,
-  scheduling, routing, provider calls, or execution
-- Current implementation step: `WorkerAssignmentStatusTransitionService`
-  applies validated status transitions and writes one audit row without CLI,
-  scheduling, reservation, routing, provider calls, or execution
-- Current implementation step: `worker-assignment-transition` exposes validated
-  assignment status transitions through a small CLI wrapper without scheduling,
-  reservation, routing, provider calls, or execution
-- Current decision step: Worker Scheduling Enforcement boundary defines why
-  `assigned` is necessary but not sufficient for future scheduling
-  consideration
-- Next implementation step: add a read-only WorkerSchedulingEnforcement
-  validator/service before any real scheduling, reservation, routing, provider
-  calls, or execution
+
+Completed worker surfaces in this arc:
+
+- Worker identity and current heartbeat source of truth in SQLite
+- read-only worker inspection through `worker-list` and `worker-show`
+- storage-free `worker-scheduling-preview` with explicit `--log`
+- storage-free `worker-execution-preflight` with explicit `--log`
+- governed WorkerAssignment intent store and read-only
+  `worker-assignment-list`
+- validated pending assignment creation through `worker-assignment-create`
+- validated lifecycle status transitions through
+  `worker-assignment-transition`
+- dedicated worker CLI and worker storage module boundaries
+- GitHub Actions CI for push, pull request, and manual dispatch
+
+Current stop lines:
+
+- no worker execution
+- no scheduling enforcement yet
+- no reservation
+- no provider routing
+- no remote worker discovery
+- no heartbeat history
+- no implicit decision logging
+- no assignment status change as execution proof
+- no LLM orchestration, federation, dashboard, or autonomous agents
+
+Next decision:
+
+- Decide the minimal read-only `WorkerSchedulingEnforcement` validator/service
+  contract: inputs, outcomes, reason codes, no-write proof, and boundary to
+  real scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 
 Readiness source:
 
@@ -302,6 +242,8 @@ Readiness source:
 - `docs/DATA_ARCHITECTURE.md`
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md`
 - `docs/ARCHITECTURE_FITNESS_REVIEW.md`
+- `docs/WORKER_ASSIGNMENT_SEMANTICS.md`
+- `docs/WORKER_SCHEDULING_ENFORCEMENT.md`
 
 ## Later Architecture Tracks
 

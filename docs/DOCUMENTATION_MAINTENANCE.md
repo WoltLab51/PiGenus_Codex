@@ -27,6 +27,45 @@ Update only the documents whose truth changed:
 Do not duplicate the same explanation across every document. Prefer one
 authoritative place and short references elsewhere.
 
+## Project Control Map
+
+Project-control documents have distinct roles. Keep detailed truth in the
+smallest authoritative document and reference it from broader maps.
+
+| File | Primary role | Update trigger | Should contain | Should not contain |
+| --- | --- | --- | --- | --- |
+| `README.md` | Repository orientation | Project identity, install/use path, or audience changes | Short overview, how to run, where to read next | Detailed architecture history, full roadmap, release diary |
+| `STATUS.md` | Current repository truth | Current capability, invariant, verification result, or next recommended work changes | Active state, stable invariants, latest verified checks, immediate next step | Long history, repeated roadmap detail, speculative concepts |
+| `BUILD_PLAN.md` | Roadmap and sequencing map | Arc goal, work order, release semantics, stop line, or next decision changes | Current arc goal, completed surface summary, stop lines, next decision, later tracks | Full implementation history, detailed lifecycle semantics, test logs |
+| `CHANGELOG.md` | Human-readable change summary | User-visible behavior, architecture boundary, concept document, verification, or release changes | Grouped `Unreleased` summary and release sections | Detailed decision rationale, every micro-commit, architecture essays |
+| `docs/INDEX.md` | Documentation entry point | New important document or changed reading path | Read order and topic map | Design rationale already owned elsewhere |
+| `docs/DOCUMENTATION_MAINTENANCE.md` | Documentation rules and control-document ownership | Control-document role, update policy, or drift-prevention rule changes | Role map, update triggers, minimal checklist | Runtime feature design, release notes |
+| `docs/GENUS_VOCABULARY.md` | Term and status glossary | Term added, renamed, promoted, implemented, or narrowed | Term status, definition, relationship, repo equivalent, exclusion | Long design narrative, roadmap detail |
+| `docs/DECISIONS.md` | Durable architecture decisions | A rule constrains future work or prevents a plausible wrong design | Decision, reason, durable boundary | Ordinary refactors, local wording cleanup, raw implementation diary |
+| `docs/ARCHITECTURE_HISTORY.md` | Narrative architecture evolution | A new layer, named track, release shape, or system understanding appears | What changed and why it mattered | Every small bugfix, exhaustive implementation detail |
+| `docs/ARCHITECTURE_CONTRACT.md` | Non-breaking architecture contract | Fundamental safety, governance, or compatibility rule changes | Rules future work must preserve | Current progress status, task lists |
+| `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` | Review protocol | Fit-check process or risk categories change | Philosophy, governance, cellular, RuntimeShape, worker, and documentation checks | Topic-specific implementation semantics |
+| `docs/FULL_CHECK.md` | Verification levels | Quality gate, release check, or PR review process changes | Check levels and when to run them | Architecture roadmap or feature specs |
+| Topic docs | Authoritative detail for one area | That area's semantics or boundary changes | Detailed model, lifecycle, invariants, examples, stop lines | Global roadmap repetition |
+
+Examples of topic docs:
+
+- `docs/WORKER_RUNTIME_READINESS.md`
+- `docs/WORKER_ASSIGNMENT_SEMANTICS.md`
+- `docs/WORKER_SCHEDULING_ENFORCEMENT.md`
+- `docs/DATA_ARCHITECTURE.md`
+- `docs/DATA_LIFECYCLE.md`
+
+Rule of thumb:
+
+```text
+BUILD_PLAN.md says what track comes next.
+STATUS.md says what is true now.
+CHANGELOG.md says what changed.
+DECISIONS.md says what rule must survive.
+Topic docs say how a specific boundary works.
+```
+
 ## Required Documentation Check
 
 For every non-trivial change, check this list before commit:
