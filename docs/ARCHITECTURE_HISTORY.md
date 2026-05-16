@@ -1498,3 +1498,20 @@ Assignment intent became inspectable before assignment creation, scheduling
 enforcement, routing, provider calls, or execution. Keeping this command in its
 own static CLI boundary avoids growing the existing worker command module while
 preserving the current no-execution Worker Runtime boundary.
+
+## Worker Assignment Semantics
+
+The system gained:
+
+- `docs/WORKER_ASSIGNMENT_SEMANTICS.md`
+- a matching-evidence rule for future assignment creation
+- the requirement that only `worker_execution_preflight` allow decisions may
+  create assignment intent
+- the rule that initial assignment creation may create only `pending` records
+
+Why it mattered:
+
+WorkerAssignment moved from inspectable storage toward a future creation path
+without opening that path yet. The semantics now make clear that assignment is
+durable governed intent, not scheduling enforcement, reservation, routing, or
+execution.

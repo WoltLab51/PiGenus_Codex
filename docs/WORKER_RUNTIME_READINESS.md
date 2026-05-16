@@ -305,8 +305,8 @@ WorkerAssignmentStatus
 A worker assignment is durable intent to place a capability on a worker later.
 It must reference governance decision evidence, but it does not start work,
 reserve capacity, route providers, call tools, or store execution results.
-Assignment creation remains out of scope until a separate storage and
-inspection plan exists.
+Assignment creation remains out of scope until the matching-evidence semantics
+are enforced by a validator and a separate creation plan exists.
 
 ## Non-Goals
 
@@ -377,3 +377,8 @@ routes, provider calls, execution logs, or execution results.
 operator inspection. Assignment creation, scheduling enforcement, reservations,
 routes, provider calls, execution logs, and execution results remain later
 steps.
+
+`docs/WORKER_ASSIGNMENT_SEMANTICS.md` defines the next boundary: assignment
+creation may use only matching `allow` evidence from Worker Execution
+Preflight, and initial creation may create only `pending` intent. A
+WorkerAssignmentValidator should be implemented before any creation command.

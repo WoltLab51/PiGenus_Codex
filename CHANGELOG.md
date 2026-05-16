@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added `docs/WORKER_ASSIGNMENT_SEMANTICS.md` to define matching allow evidence
+  before any assignment creation command exists
+- Recorded
+  `D-092: Worker Assignment Creation Requires Matching Preflight Allow Evidence`
 - Added read-only `worker-assignment-list` CLI inspection for governed worker
   assignment intent records
 - Kept assignment inspection separate from assignment creation, scheduling,

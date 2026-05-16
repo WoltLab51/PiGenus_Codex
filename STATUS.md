@@ -85,6 +85,7 @@ PiGenus is a small local GENUS runtime core. It has:
 - Dedicated worker storage repository module for worker profiles, current
   heartbeats, and assignment intent
 - Read-only worker assignment inspection CLI with `worker-assignment-list`
+- Worker assignment creation semantics documented before any creation command
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -249,6 +250,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-assignment-list` is read-only and does not create assignments,
   decisions, audit logs, scheduling enforcement, reservations, routing,
   provider calls, execution logs, or execution results.
+- Future assignment creation requires matching `allow` evidence from
+  `worker_execution_preflight` and may initially create only `pending`
+  assignment intent.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -294,10 +298,12 @@ Worker Runtime preparation:
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
 - WorkerAssignment read-only inspection now exists as `worker-assignment-list`
   before any CLI assignment creation command.
-- Next, define assignment creation semantics before adding any command that
-  creates assignment intent.
-- Avoid adding further worker storage behavior before assignment creation rules
-  are defined and reviewed.
+- Assignment creation semantics are documented before any command that creates
+  assignment intent.
+- Next, build a small WorkerAssignmentValidator before any
+  `worker-assignment-create` command.
+- Avoid adding further worker storage behavior before assignment creation
+  validation is implemented and reviewed.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
   point.

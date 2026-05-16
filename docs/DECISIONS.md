@@ -1413,3 +1413,22 @@ WorkerAssignment persistence should become inspectable before assignment
 creation exists. This keeps worker intent observable while preserving the
 current boundary: assignment records are durable governed intent, not execution
 or routing.
+
+## D-092: Worker Assignment Creation Requires Matching Preflight Allow Evidence
+
+Decision:
+
+Future WorkerAssignment creation requires matching `allow` evidence from
+`worker_execution_preflight`. A generic decision record, scheduling preview
+decision, blocked decision, escalated decision, or unstructured reason is not
+sufficient. The requested assignment must match worker, capability, runtime
+when present, sensitivity when present, network requirement, and room. Initial
+creation may create only `pending` assignment intent.
+
+Reason:
+
+Assignment creation is the first durable step from inspection toward action.
+It must remain narrower than scheduling preview and separate from assignment
+activation, routing, provider calls, and execution. Defining the rule before
+implementing a validator or creation command keeps Worker Runtime growth
+observable and accountable.

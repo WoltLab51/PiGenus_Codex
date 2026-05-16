@@ -28,6 +28,7 @@ Start here when orienting yourself:
 - `docs/CONTEXT_MODEL.md` - Room, ContextFrame, and ContextStack boundaries
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication
 - `docs/MULTIMODAL_SYSTEMFORM.md` - future language, graph, state, visual, and spatial meaning boundary
+- `docs/WORKER_ASSIGNMENT_SEMANTICS.md` - worker assignment creation evidence and status boundary
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

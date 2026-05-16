@@ -261,8 +261,11 @@ Current development arc:
 - Current implementation step: read-only `worker-assignment-list` inspects
   assignment intent records without assignment creation, scheduling
   enforcement, routing, reservation, provider calls, or execution
-- Next implementation decision: define assignment creation semantics before any
-  CLI assignment creation or runtime execution path exists
+- Current decision step: assignment creation semantics require matching
+  `worker_execution_preflight` allow evidence and initial `pending` status
+  before any CLI assignment creation or runtime execution path exists
+- Next implementation decision: build a small WorkerAssignmentValidator before
+  any `worker-assignment-create` command
 
 Readiness source:
 
@@ -324,6 +327,9 @@ meaning, inspection, and backup surfaces remain stable.
   execution
 - Read-only WorkerAssignment inspection comes before CLI assignment creation,
   scheduling enforcement, routing, provider calls, or execution
+- WorkerAssignment creation semantics come before an assignment validator, CLI
+  assignment creation, status activation, scheduling enforcement, routing,
+  provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution
