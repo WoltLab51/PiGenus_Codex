@@ -32,6 +32,9 @@
   checkpoint.
 - Extracted worker and meaning CLI command handling into dedicated static
   boundaries while keeping `pigenus/cli/main.py` as deterministic dispatcher.
+- Split worker-assignment CLI command handling into stable dispatch,
+  read-only inspection, and lifecycle command modules without changing command
+  behavior.
 - Split worker storage repositories into a dedicated worker storage module
   while preserving the existing `pigenus.storage.repositories` import surface.
 

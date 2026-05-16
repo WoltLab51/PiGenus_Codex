@@ -54,6 +54,9 @@ First extraction result:
 | --- | ---: | --- |
 | `pigenus/cli/main.py` | 658 lines | Main CLI remains deterministic entry point and dispatcher |
 | `pigenus/cli/worker_commands.py` | 307 lines | Worker parser and command handling now have a dedicated static module boundary |
+| `pigenus/cli/worker_assignment_commands.py` | 42 lines | Worker-assignment command registration and dispatch remain stable |
+| `pigenus/cli/worker_assignment_inspection_commands.py` | 144 lines | Read-only assignment inspection and scheduling-eligibility inspection are separated |
+| `pigenus/cli/worker_assignment_lifecycle_commands.py` | 227 lines | Pending assignment creation and lifecycle transitions are separated from inspection |
 
 ## Findings
 
@@ -164,15 +167,19 @@ pigenus/cli/worker_commands.py
   owns worker registry construction from WorkerRepository
 
 pigenus/cli/worker_assignment_commands.py
+  remains the stable worker-assignment parser/dispatch entry point
+  preserves command registration order and public import surface
+
+pigenus/cli/worker_assignment_inspection_commands.py
   owns worker-assignment-list
+  owns worker-assignment-scheduling-eligibility
+  keeps read-only assignment inspection separate from lifecycle writes
+
+pigenus/cli/worker_assignment_lifecycle_commands.py
   owns worker-assignment-create
   owns worker-assignment-transition
-  owns worker-assignment-scheduling-eligibility
-  keeps assignment inspection, pending-intent creation, lifecycle status
-  transitions, and scheduling eligibility inspection separate from worker
-  scheduling/preflight commands
-  avoids scheduling enforcement, reservation, routing, provider calls, or
-  execution
+  keeps pending-intent creation and lifecycle status transitions separate from
+  read-only inspection
 ```
 
 Why worker CLI first:
@@ -223,7 +230,7 @@ by subprocess tests.
 | Extract decision/guard CLI handlers | Medium | Medium | After worker and meaning extraction |
 | Split worker repositories by domain | Medium | Medium | Done |
 | Extract worker assignment CLI inspection | Medium | Low-medium | Done |
-| Slice `worker_assignment_commands.py` internally after scheduling eligibility CLI growth | Medium | Low-medium | Next candidate |
+| Slice `worker_assignment_commands.py` internally after scheduling eligibility CLI growth | Medium | Low-medium | Done |
 | Split remaining `repositories.py` domains | Medium | Medium-high | Later, before new execution/resource stores |
 | Introduce dynamic cell routing for CLI commands | Conceptually high | High | Not now |
 | Add runtime command cells or self-routing CLI organs | Future high | High | Only after static module boundaries are stable |

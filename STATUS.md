@@ -20,15 +20,16 @@ Worker Runtime / scheduling eligibility:
 - Frame: check whether assigned WorkerAssignment intent may be considered by
   future scheduling.
 - Result: read-only validator and CLI inspection are implemented.
+- Structure: worker-assignment command handling is split into a stable router,
+  read-only inspection commands, and lifecycle commands.
 - Explicitly not now: no scheduling enforcement, reservation, routing,
   provider calls, execution logs, execution, or logging.
 - Consolidation: read-only boundary is complete for the first pass, no-write
   proof is covered by tests, reason codes are stable for the implemented
   worker inputs, and opt-in decision logging should wait until the CLI surface
   has stayed boring.
-- Fitness note: `pigenus/cli/worker_assignment_commands.py` is now above the
-  practical review threshold, so any further worker-assignment CLI growth
-  should trigger a slicing decision.
+- Fitness note: the worker-assignment CLI slicing decision has been applied;
+  future growth should keep inspection and lifecycle surfaces separate.
 
 ## Current Runtime Shape
 
@@ -127,6 +128,9 @@ PiGenus is a small local GENUS runtime core. It has:
   assigned-intent scheduling eligibility
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
+- Dedicated worker-assignment CLI command modules for inspection and lifecycle
+  command handling while preserving the stable worker-assignment dispatch
+  surface
 - GENUS Systemform hardening documents
 - GENUS philosophy document
 - Living project control documents
@@ -349,6 +353,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   boundaries are introduced without changing runtime behavior.
 - Worker CLI command handling is structurally separated from the main CLI entry
   point without changing command behavior.
+- WorkerAssignment CLI command handling is structurally separated into
+  inspection and lifecycle modules without changing command behavior.
 - Meaning CLI command handling is structurally separated from the main CLI
   entry point without changing command behavior, storage behavior, meaning
   ingestion behavior, or side-effect rules.
@@ -385,14 +391,15 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, decide between worker-assignment CLI slicing and opt-in scheduling
-  eligibility decision logging. Do not add real scheduling, reservation,
-  routing, provider, or execution behavior.
+- Next, decide whether opt-in scheduling eligibility decision logging is mature
+  enough after the worker-assignment CLI split. Do not add real scheduling,
+  reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
-  point.
+  point, and worker-assignment commands are split into inspection and lifecycle
+  boundaries.
 - Use the Cellular Systemform rule when slicing future CLI or service modules:
   smallest governable capability, not smallest possible function.
 - Before implementing RuntimeShape or DeviceProfile behavior, keep shape

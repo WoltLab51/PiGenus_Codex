@@ -218,6 +218,8 @@ Completed worker surfaces in this arc:
   `WorkerAssignmentSchedulingEligibilityValidator`
 - read-only `worker-assignment-scheduling-eligibility` CLI inspection
 - dedicated worker CLI and worker storage module boundaries
+- dedicated worker-assignment CLI module boundaries for inspection and
+  lifecycle command handling
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -235,8 +237,8 @@ Current stop lines:
 
 Next decision:
 
-- Choose between slicing the growing worker-assignment CLI surface and adding
-  opt-in scheduling eligibility decision logging. Do not add real scheduling,
+- Decide whether opt-in scheduling eligibility decision logging is mature
+  enough after the worker-assignment CLI split. Do not add real scheduling,
   reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
@@ -374,8 +376,10 @@ meaning, inspection, and backup surfaces remain stable.
 - CLI command modules should be extracted as static structural boundaries
   before any dynamic command-cell routing exists
 - The first static module boundaries are `pigenus/cli/worker_commands.py` and
-  `pigenus/cli/meaning_commands.py`; later extraction candidates should be
-  reviewed with the Philosophy Alignment Review before code movement
+  `pigenus/cli/meaning_commands.py`; worker-assignment command handling now
+  has separate inspection and lifecycle boundaries. Later extraction
+  candidates should be reviewed with the Philosophy Alignment Review before
+  code movement
 
 ### N. Liquid Runtime
 
