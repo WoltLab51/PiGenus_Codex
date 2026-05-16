@@ -113,6 +113,12 @@ approval thresholds, recovery path, and shadow/dry-run evidence.
 
 ### Arc A: Cellular Inventory And Classification
 
+Status: complete for the first pass.
+
+Source:
+
+- `docs/CELLULAR_INVENTORY_REVIEW.md`
+
 Classify current runtime and operator surfaces by cellular maturity.
 
 Goal:
@@ -124,6 +130,13 @@ Goal:
 - identify which surfaces need Cell-DNA frames before promotion
 
 ### Arc B: Cell-DNA Construction Protocol
+
+Status: started.
+
+Source:
+
+- `docs/CELL_DNA_PROTOCOL.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md`
 
 Define a lightweight implementation template for new responsible capabilities.
 

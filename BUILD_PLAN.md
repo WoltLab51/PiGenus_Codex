@@ -231,6 +231,8 @@ Completed worker surfaces in this arc:
 - dedicated worker CLI and worker storage module boundaries
 - dedicated worker-assignment CLI module boundaries for inspection and
   lifecycle command handling
+- lightweight Cell-DNA protocol and first applied frame for
+  `WorkerAssignmentValidator`
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -248,14 +250,15 @@ Current stop lines:
 
 Next decision:
 
-- Define the lightweight Cell-DNA construction protocol and apply the first
-  frame to `WorkerAssignmentValidator` before deciding whether opt-in
-  scheduling eligibility decision logging is mature enough. Do not add real
-  scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+- Use the `WorkerAssignmentValidator` Cell-DNA frame as the template for the
+  next responsible capability before deciding whether opt-in scheduling
+  eligibility decision logging is mature enough. Do not add real scheduling,
+  reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
 
+- `docs/CELL_DNA_PROTOCOL.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`

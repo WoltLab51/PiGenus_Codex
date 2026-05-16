@@ -212,3 +212,17 @@ construction protocol and one first applied frame for
 `WorkerAssignmentValidator`.
 
 That keeps GENUS cell-first without becoming RuntimeCell-first.
+
+## Follow-Up
+
+The first application target is now documented in:
+
+```text
+docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md
+```
+
+The protocol source is:
+
+```text
+docs/CELL_DNA_PROTOCOL.md
+```

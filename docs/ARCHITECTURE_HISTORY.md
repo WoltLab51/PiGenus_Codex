@@ -1754,3 +1754,22 @@ The canonical systemform now has a practical checkpoint against the actual
 codebase. GENUS stays cell-first, but PiGenus does not jump into RuntimeCell
 ceremony, scheduling enforcement, worker execution, graph implementation, or
 autonomous organism behavior before the membranes are clear.
+
+## Cell-DNA Protocol
+
+The project gained:
+
+- `docs/CELL_DNA_PROTOCOL.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md`
+- a lightweight Cell-DNA frame for responsible capabilities
+- the first applied Cell-DNA description for `WorkerAssignmentValidator`
+- explicit confirmation that Cell-DNA is documentation/protocol only, not
+  RuntimeCell behavior, CellRegistry behavior, dynamic routing, schemas,
+  migrations, CLI, logging, scheduling, or execution
+
+Why it mattered:
+
+GENUS can now think cell-first without forcing every component into heavy
+RuntimeCell ceremony. `WorkerAssignmentValidator` becomes the first documented
+membrane: read-only validation in, stable reasons out, no writes, no audit, no
+decision logging, no scheduling, no routing, and no execution.
