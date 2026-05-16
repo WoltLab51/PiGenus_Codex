@@ -165,6 +165,39 @@ MIGRATIONS: tuple[Migration, ...] = (
             ON worker_heartbeats(seen_at);
         """,
     ),
+    Migration(
+        version="0006_worker_assignments",
+        sql="""
+        CREATE TABLE IF NOT EXISTS worker_assignments (
+            assignment_id TEXT PRIMARY KEY,
+            worker_id TEXT NOT NULL,
+            capability TEXT NOT NULL,
+            room_id TEXT NOT NULL,
+            status TEXT NOT NULL,
+            governance_decision_id TEXT NOT NULL,
+            created_by_actor_id TEXT NOT NULL,
+            event_id TEXT,
+            context_stack_id TEXT,
+            required_runtime TEXT,
+            sensitivity TEXT,
+            network_required INTEGER NOT NULL,
+            created_at TEXT NOT NULL,
+            updated_at TEXT NOT NULL,
+            data TEXT NOT NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_worker_assignments_worker
+            ON worker_assignments(worker_id);
+        CREATE INDEX IF NOT EXISTS idx_worker_assignments_status
+            ON worker_assignments(status);
+        CREATE INDEX IF NOT EXISTS idx_worker_assignments_room
+            ON worker_assignments(room_id);
+        CREATE INDEX IF NOT EXISTS idx_worker_assignments_capability
+            ON worker_assignments(capability);
+        CREATE INDEX IF NOT EXISTS idx_worker_assignments_governance_decision
+            ON worker_assignments(governance_decision_id);
+        """,
+    ),
 )
 
 

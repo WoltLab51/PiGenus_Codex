@@ -279,15 +279,15 @@ Not yet:
 - LLM worker orchestration
 - federation
 
-The first worker store is small:
+The first worker store was intentionally small:
 
 - `worker_profiles` for full `WorkerProfile` JSON plus indexed identity,
   worker type, status, owner, and home room columns
 - `worker_heartbeats` for latest `WorkerHeartbeat` JSON plus indexed worker ID,
   status, and seen-at columns
 
-It should not create scheduling tables, assignment tables, execution records,
-or remote discovery state.
+It did not create scheduling tables, assignment tables, execution records, or
+remote discovery state.
 
 Scheduling preview is storage-free unless an explicit preview logger is called.
 It may rank or explain candidate workers, and it may produce a log-compatible
@@ -296,11 +296,14 @@ through the existing decision log as append-only governance evidence, but it
 must not create durable assignments, execution records, reservations, routes,
 or provider calls.
 
-WorkerAssignment currently exists as a model-only record shape. It identifies
-the future truth boundary for assignment records but does not add an assignment
-table yet. The first future assignment store should remain small, link to
-governance decision evidence, and still avoid execution records, provider
-routes, reservations, and tool-call state.
+WorkerAssignment now has a minimal local truth table:
+
+- `worker_assignments` for full `WorkerAssignment` JSON plus indexed worker,
+  status, room, capability, and governance-decision columns
+
+This store remains assignment intent only. It requires a known worker and an
+existing governance decision record before persistence. It still avoids
+execution records, provider routes, reservations, and tool-call state.
 
 ## Database Design Principles
 

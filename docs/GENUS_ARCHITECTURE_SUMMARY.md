@@ -85,12 +85,12 @@ Implemented:
 - explicit `worker-scheduling-preview --log`
 - storage-free Worker Execution Preflight
 - `worker-execution-preflight` with explicit `--log`
-- model-only WorkerAssignment
+- minimal WorkerAssignment Store for governed assignment intent
 
 Not implemented:
 
 - durable scheduling
-- assignment storage or assignment creation
+- assignment creation
 - execution routing
 - remote workers
 - provider gateways
@@ -98,9 +98,9 @@ Not implemented:
 
 Next worker decision:
 
-Worker source of truth is planned as SQLite for durable profiles and current
-heartbeats. Local files may bootstrap/import worker data later, but should not
-be runtime truth. Discovery waits for federation and trust work.
+Worker source of truth is SQLite for durable profiles, current heartbeats, and
+minimal assignment intent. Local files may bootstrap/import worker data later,
+but should not be runtime truth. Discovery waits for federation and trust work.
 
 Scheduling preview can explain candidate workers, but it does not assign or
 execute work. Its governance conversion is log-compatible and can be persisted
@@ -114,8 +114,9 @@ governance-shaped result, but it does not execute. The
 `worker-execution-preflight` CLI exposes that check and may log one decision
 only with explicit `--log`.
 
-WorkerAssignment now defines the future record shape for governed assignment,
-but it is still model-only. No storage table or assignment creation path exists.
+WorkerAssignment now has a minimal SQLite store for governed assignment intent.
+It requires a known worker and governance decision evidence, but no assignment
+creation command or execution path exists.
 
 ## Data Architecture Rule
 

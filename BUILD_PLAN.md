@@ -238,9 +238,13 @@ Current development arc:
 - Current implementation step: `worker-execution-preflight --log` explicitly
   persists one preflight governance decision with actor, room, and optional
   event metadata, but still does not assign, route, reserve, or execute
-- Current implementation step: model-only WorkerAssignment defines the first
-  governed assignment record shape and requires governance decision evidence,
-  without adding storage, CLI creation, routing, reservation, or execution
+- Current implementation step: WorkerAssignment defines the first governed
+  assignment record shape and requires governance decision evidence, without
+  adding CLI creation, routing, reservation, or execution
+- Current implementation step: minimal SQLite WorkerAssignment Store persists
+  governed assignment intent only when a worker profile and governance decision
+  record already exist, without CLI assignment creation, scheduling
+  enforcement, routing, reservation, provider calls, or execution
 - Current quality step: GitHub Actions runs the Python test suite on push,
   pull request, and manual dispatch
 - Current quality step: architecture fitness review identifies CLI and
@@ -251,9 +255,11 @@ Current development arc:
 - Current structural step: meaning CLI command handling lives in a dedicated
   module boundary without changing commands, output, storage, meaning
   ingestion behavior, or side-effect rules
-- Next implementation decision: whether WorkerAssignment should gain a minimal
-  SQLite repository before any CLI assignment creation or runtime execution
-  path exists
+- Next implementation decision: whether WorkerAssignment should gain read-only
+  inspection before any CLI assignment creation or runtime execution path exists
+- Current structural risk: `pigenus/storage/repositories.py` remains a storage
+  hotspot and should be split by domain before further execution, resource, or
+  assignment expansion
 
 Readiness source:
 
@@ -308,8 +314,11 @@ meaning, inspection, and backup surfaces remain stable.
   scheduling enforcement, routing, provider calls, or execution
 - Explicit preflight logging comes before durable assignment records,
   scheduling enforcement, routing, provider calls, or execution
-- Model-only WorkerAssignment comes before assignment storage, CLI assignment
-  creation, scheduling enforcement, routing, provider calls, or execution
+- Model-only WorkerAssignment has preceded assignment storage, CLI assignment
+  creation, scheduling enforcement, routing, provider calls, and execution
+- Minimal WorkerAssignment Store comes before read-only assignment inspection,
+  CLI assignment creation, scheduling enforcement, routing, provider calls, or
+  execution
 - CI is established before continuing Worker Runtime logging, assignment,
   routing, provider, or execution work
 

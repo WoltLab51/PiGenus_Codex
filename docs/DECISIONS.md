@@ -1361,3 +1361,21 @@ Meaning CLI extraction reduces operator-surface monolith risk while preserving
 the stable core. WorkerAssignment storage remains important, but it touches
 storage, migrations, and governed worker intent, so it should stay a separate
 decision after this behavior-preserving CLI boundary.
+
+## D-089: Worker Assignment Store Requires Governance Evidence
+
+Decision:
+
+PiGenus adds a minimal SQLite `worker_assignments` table and
+`WorkerAssignmentRepository` before any CLI assignment creation, scheduling
+enforcement, reservation, routing, provider call, or execution path exists.
+Persisting a `WorkerAssignment` requires both a known worker profile and an
+existing governance decision record. The repository supports add, get, list,
+and count only.
+
+Reason:
+
+Assignment is durable worker placement intent and belongs in the governed path.
+Persisting it without requiring worker and governance evidence would let the
+runtime create unsupported intent. Keeping the first store small makes the
+future assignment boundary inspectable while preserving the no-execution rule.

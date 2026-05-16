@@ -294,13 +294,17 @@ governance evidence -> pending assignment -> assigned/rejected/cancelled/expired
 
 Current storage:
 
-- no storage table yet
-- model-only `WorkerAssignment`
+- `worker_assignments` table
+- `WorkerAssignmentRepository`
+- full `WorkerAssignment` JSON plus indexed worker, status, room, capability,
+  and governance-decision columns
 
 Boundary:
 
 WorkerAssignment is not execution. It does not store start time, completion
 time, execution result, provider route, reservation, or tool call state.
+Assignment persistence requires a known worker and existing governance decision
+evidence.
 
 ### MutationProposal
 

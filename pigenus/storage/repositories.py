@@ -12,6 +12,8 @@ from pigenus.schemas.systemform import (
     MeaningObject,
     Sensitivity,
     TruthStatus,
+    WorkerAssignment,
+    WorkerAssignmentStatus,
     WorkerHeartbeat,
     WorkerProfile,
     WorkerStatus,
@@ -389,6 +391,116 @@ class WorkerRepository:
     @staticmethod
     def _enum_value(value: WorkerStatus | WorkerType | str) -> str:
         if isinstance(value, WorkerStatus | WorkerType):
+            return value.value
+        return value
+
+
+class WorkerAssignmentRepository:
+    """Persistence adapter for governed worker assignment intent."""
+
+    def __init__(self, database: Database) -> None:
+        self.database = database
+
+    def add(self, assignment: WorkerAssignment) -> None:
+        self._require_known_worker(assignment.worker_id)
+        self._require_governance_decision(assignment.governance_decision_id)
+
+        data = assignment.model_dump(mode="json")
+        self.database.execute(
+            """
+            INSERT INTO worker_assignments (
+                assignment_id, worker_id, capability, room_id, status,
+                governance_decision_id, created_by_actor_id, event_id,
+                context_stack_id, required_runtime, sensitivity, network_required,
+                created_at, updated_at, data
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                assignment.id,
+                assignment.worker_id,
+                assignment.capability,
+                assignment.room_id,
+                assignment.status.value,
+                assignment.governance_decision_id,
+                assignment.created_by_actor_id,
+                assignment.event_id,
+                assignment.context_stack_id,
+                assignment.required_runtime,
+                assignment.sensitivity.value if assignment.sensitivity else None,
+                1 if assignment.network_required else 0,
+                str(data["created_at"]),
+                str(data["updated_at"]),
+                _json(data),
+            ),
+        )
+
+    def get(self, assignment_id: str) -> WorkerAssignment | None:
+        row = self.database.fetchone(
+            "SELECT data FROM worker_assignments WHERE assignment_id = ?",
+            (assignment_id,),
+        )
+        if row is None:
+            return None
+        return WorkerAssignment.model_validate(json.loads(row["data"]))
+
+    def list(
+        self,
+        *,
+        worker_id: str | None = None,
+        status: WorkerAssignmentStatus | str | None = None,
+        room_id: str | None = None,
+        capability: str | None = None,
+        governance_decision_id: str | None = None,
+    ) -> list[WorkerAssignment]:
+        clauses: list[str] = []
+        parameters: list[str] = []
+
+        if worker_id is not None:
+            clauses.append("worker_id = ?")
+            parameters.append(worker_id)
+        if status is not None:
+            clauses.append("status = ?")
+            parameters.append(self._enum_value(status))
+        if room_id is not None:
+            clauses.append("room_id = ?")
+            parameters.append(room_id)
+        if capability is not None:
+            clauses.append("capability = ?")
+            parameters.append(capability)
+        if governance_decision_id is not None:
+            clauses.append("governance_decision_id = ?")
+            parameters.append(governance_decision_id)
+
+        where = f" WHERE {' AND '.join(clauses)}" if clauses else ""
+        rows = self.database.fetchall(
+            f"SELECT data FROM worker_assignments{where} ORDER BY created_at, assignment_id",
+            tuple(parameters),
+        )
+        return [WorkerAssignment.model_validate(json.loads(row["data"])) for row in rows]
+
+    def count(self) -> int:
+        row = self.database.fetchone("SELECT COUNT(*) AS count FROM worker_assignments")
+        return int(row["count"]) if row else 0
+
+    def _require_known_worker(self, worker_id: str) -> None:
+        row = self.database.fetchone(
+            "SELECT 1 FROM worker_profiles WHERE worker_id = ?",
+            (worker_id,),
+        )
+        if row is None:
+            raise ValueError(f"Unknown worker_id: {worker_id}")
+
+    def _require_governance_decision(self, decision_id: str) -> None:
+        row = self.database.fetchone(
+            "SELECT 1 FROM decision_logs WHERE decision_id = ?",
+            (decision_id,),
+        )
+        if row is None:
+            raise ValueError(f"Unknown governance_decision_id: {decision_id}")
+
+    @staticmethod
+    def _enum_value(value: WorkerAssignmentStatus | str) -> str:
+        if isinstance(value, WorkerAssignmentStatus):
             return value.value
         return value
 

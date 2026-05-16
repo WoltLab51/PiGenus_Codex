@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added migration `0006_worker_assignments` and `WorkerAssignmentRepository`
+  for minimal governed worker assignment intent storage
+- Added tests for assignment roundtrip, filters, unknown-worker rejection, and
+  missing-governance-evidence rejection
+- Recorded `D-089: Worker Assignment Store Requires Governance Evidence`
+- Verified: 251 tests passed
 - Extracted meaning CLI parser and command handling into
   `pigenus/cli/meaning_commands.py`
 - Kept `pigenus/cli/main.py` as the deterministic CLI entry point and

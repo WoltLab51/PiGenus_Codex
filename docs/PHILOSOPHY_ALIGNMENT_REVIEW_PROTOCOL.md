@@ -269,7 +269,8 @@ Allowed current worker surfaces:
 - WorkerInspection
 - WorkerSchedulingPreview
 - WorkerExecutionPreflight
-- model-only WorkerAssignment
+- WorkerAssignment model
+- WorkerAssignmentRepository for governed assignment intent
 
 Still out of scope:
 

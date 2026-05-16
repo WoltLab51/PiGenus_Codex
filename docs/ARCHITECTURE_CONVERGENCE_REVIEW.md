@@ -271,7 +271,8 @@ Current surfaces:
 - `WorkerInspectionService`
 - `WorkerSchedulingPreviewService`
 - `WorkerExecutionPreflightService`
-- model-only `WorkerAssignment`
+- `WorkerAssignment`
+- `WorkerAssignmentRepository`
 
 Boundary:
 
@@ -601,14 +602,15 @@ Later dynamic behavior may be allowed only after:
 
 These are deliberately unresolved.
 
-1. Should `WorkerAssignment` gain a minimal SQLite repository before any CLI
-   creation command exists?
+1. WorkerAssignment has gained a minimal SQLite repository before any CLI
+   creation command exists; the next open question is read-only inspection
+   before any assignment creation path.
 2. Meaning CLI extraction has been chosen and implemented as the next
    StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
    cell-worthy service?
-4. Should `repositories.py` split by storage domain before adding assignment
-   storage?
+4. Should `repositories.py` split by storage domain before adding further
+   execution, resource, or assignment inspection stores?
 5. What is the first true Organ candidate: WorkerReadinessOrgan,
    MeaningIngestionOrgan, or SherlookLightOrgan?
 6. What minimal CellSpec/CellContract additions are needed before general
@@ -640,7 +642,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Decide WorkerAssignment storage before assignment creation.
+Option A: Add read-only WorkerAssignment inspection before assignment creation.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -648,7 +650,7 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment storage decision separate from additional CLI slicing.
+1. Keep WorkerAssignment inspection separate from assignment creation.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

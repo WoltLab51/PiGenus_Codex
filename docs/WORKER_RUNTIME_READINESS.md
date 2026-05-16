@@ -368,7 +368,9 @@ the command writes exactly one governance decision record through
 room metadata and may include an event ID. This is still not assignment,
 reservation, routing, provider access, or execution.
 
-Model-only WorkerAssignment now defines the later assignment record shape. It
-does not create assignment storage or assignment commands.
+WorkerAssignment now has minimal SQLite storage for assignment intent. The
+store requires a known worker and existing governance decision evidence. It
+does not create assignment commands, scheduling enforcement, reservations,
+routes, provider calls, execution logs, or execution results.
 
-Assignment storage, scheduling, and execution remain later steps.
+Assignment inspection, scheduling, and execution remain later steps.

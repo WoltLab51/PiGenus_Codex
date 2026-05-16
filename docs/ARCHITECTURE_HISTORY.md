@@ -1448,3 +1448,20 @@ This was the first code move selected through the Philosophy Alignment Review
 Protocol. It reduced operator-surface monolith risk without changing meaning
 storage, ingestion semantics, governed paths, assignments, routing, or
 execution.
+
+## Worker Assignment Store
+
+The system gained:
+
+- migration `0006_worker_assignments`
+- `worker_assignments` local SQLite table
+- `WorkerAssignmentRepository`
+- tests for roundtrip, filters, unknown-worker rejection, and
+  missing-governance-evidence rejection
+
+Why it mattered:
+
+WorkerAssignment moved from model-only shape to minimal governed persistence.
+The store captures assignment intent only after worker and governance decision
+evidence already exist, keeping assignment separate from scheduling
+enforcement, reservation, provider routing, and execution.
