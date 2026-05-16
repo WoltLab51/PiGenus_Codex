@@ -1547,3 +1547,21 @@ Reason:
 The status graph should become executable before any transition service or CLI
 command can change durable state. A read-only validator makes the lifecycle
 testable while preserving the current no-transition, no-execution boundary.
+
+## D-099: Unreleased Changelog Uses Grouped Arc Summaries
+
+Decision:
+
+PiGenus keeps the `CHANGELOG.md` `Unreleased` section grouped by scan-friendly
+categories once an arc grows beyond a few bullets: `Added`, `Changed`,
+`Documented`, `Verified`, and `Not Yet Implemented`. `Unreleased` keeps only
+the latest verified test result, summarizes related micro-commits at
+capability or architecture-arc level, and leaves detailed decision history in
+`docs/DECISIONS.md` and narrative context in `docs/ARCHITECTURE_HISTORY.md`.
+
+Reason:
+
+The v0.4 Worker Runtime preparation arc made the changelog useful as raw
+construction history but hard to read as a changelog. A grouped summary keeps
+release notes durable and operator-readable without losing detailed reasoning
+from the decision log, architecture history, status file, or git history.

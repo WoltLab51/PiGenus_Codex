@@ -17,7 +17,8 @@ name remains stable during the current runtime arc.
 Every checkpoint should leave the repository with:
 
 - Passing tests
-- Updated `CHANGELOG.md`
+- Updated `CHANGELOG.md` using grouped `Unreleased` summaries when the active
+  arc has more than a few entries
 - Updated `STATUS.md`
 - `docs/INDEX.md` kept useful as the documentation entry point
 - This build plan adjusted when the next step changes

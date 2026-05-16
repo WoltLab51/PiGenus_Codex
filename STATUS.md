@@ -287,6 +287,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   expansion.
 - Documentation maintenance is part of the checkpoint process for non-trivial
   runtime and architecture changes.
+- `CHANGELOG.md` keeps `Unreleased` grouped by architecture arc and records
+  only the latest verified test result there.
 - Future capability growth must preserve contracts, rooms, meaning, guards,
   decisions, traces, and tests.
 - `docs/INDEX.md` is the entry point for repository architecture documentation.

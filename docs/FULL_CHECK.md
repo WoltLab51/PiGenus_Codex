@@ -78,7 +78,7 @@ docs/DECISIONS.md updated if durable rule changed
 docs/ARCHITECTURE_HISTORY.md updated if architecture shape changed
 BUILD_PLAN.md updated if roadmap/next step changed
 STATUS.md updated with latest verified test result when relevant
-CHANGELOG.md updated
+CHANGELOG.md updated using grouped `Unreleased` format when the arc has grown
 commit
 push when appropriate
 ```
@@ -107,6 +107,7 @@ docs/ARCHITECTURE_HISTORY.md updated
 BUILD_PLAN.md current checkpoint and next step checked
 STATUS.md current checkpoint and test result updated
 CHANGELOG.md release/checkpoint section prepared
+CHANGELOG.md `Unreleased` section consolidated before or during the checkpoint
 git log --oneline -5 reviewed
 tag created for stable checkpoint if appropriate
 push branch and tag when appropriate

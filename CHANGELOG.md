@@ -2,182 +2,55 @@
 
 ## Unreleased
 
-- Added `WorkerAssignmentStatusTransitionValidator` for read-only assignment
-  lifecycle graph checks
-- Added status-transition validator tests for allowed edges, no-ops, invalid
-  edges, terminal reactivation, unknown targets, and no mutation
-- Recorded `D-098: Worker Assignment Status Transition Validator Is Read-Only`
-- Verified: 273 tests passed
-- Documented WorkerAssignment status transition semantics before transition
-  services or commands
-- Recorded `D-097: Worker Assignment Status Transitions Are Explicit`
-- Added `worker-assignment-create` as a thin CLI wrapper around
-  WorkerAssignmentCreator
-- Added CLI tests for successful pending assignment creation, audit logging,
-  validation failure, and no extra decision writes
-- Recorded `D-096: Worker Assignment Create CLI Is Service-Backed`
-- Verified: 267 tests passed
-- Added `WorkerAssignmentCreator` service for validated pending assignment
-  creation with `worker_assignment_created` audit logging
-- Added creator tests for success, validation failure, no decision creation,
-  and no audit/assignment writes on invalid input
-- Recorded `D-095: Worker Assignment Creator Stays Service-Only`
-- Verified: 265 tests passed
-- Documented future WorkerAssignment creation audit behavior before adding a
-  creation service or CLI command
-- Recorded `D-094: Worker Assignment Creation Must Be Audited`
-- Added `WorkerAssignmentValidator` for matching preflight allow evidence before
-  assignment creation
-- Added validator tests for allow, block, scheduling-preview evidence, worker,
-  capability, room, status, and missing evidence rejection
-- Verified: 262 tests passed
-- Added `docs/WORKER_ASSIGNMENT_SEMANTICS.md` to define matching allow evidence
-  before any assignment creation command exists
-- Recorded
-  `D-092: Worker Assignment Creation Requires Matching Preflight Allow Evidence`
-- Added read-only `worker-assignment-list` CLI inspection for governed worker
-  assignment intent records
-- Kept assignment inspection separate from assignment creation, scheduling,
-  routing, provider calls, and execution
-- Recorded `D-091: Worker Assignment Inspection Is Read-Only`
-- Verified: 254 tests passed
-- Extracted worker storage repositories into
-  `pigenus/storage/worker_repositories.py` while preserving the existing
-  `pigenus.storage.repositories` import surface
-- Recorded `D-090: Worker Storage Repositories Are Domain-Sliced`
-- Added migration `0006_worker_assignments` and `WorkerAssignmentRepository`
-  for minimal governed worker assignment intent storage
-- Added tests for assignment roundtrip, filters, unknown-worker rejection, and
-  missing-governance-evidence rejection
-- Recorded `D-089: Worker Assignment Store Requires Governance Evidence`
-- Verified: 251 tests passed
-- Extracted meaning CLI parser and command handling into
-  `pigenus/cli/meaning_commands.py`
-- Kept `pigenus/cli/main.py` as the deterministic CLI entry point and
-  dispatcher
-- Recorded `D-088: Meaning CLI Boundary Follows Alignment Review`
-- Verified: 246 tests passed
-- Added `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` as a repeatable review
-  protocol for philosophy, governance, cellular, RuntimeShape, documentation,
-  verification, monolith, and overengineering fit
-- Recorded
-  `D-087: Philosophy Alignment Reviews Gate Non-Trivial Changes`
-- Integrated stable-core / variable-runtime-shape architecture language across
-  philosophy, convergence review, vocabulary, build plan, status, and history
-- Recorded
-  `D-086: GENUS Uses Stable Core And Variable Runtime Shapes`
-- Added `docs/CELLULAR_SYSTEMFORM.md` to define GENUS cells as governed
-  capability units and static modules as temporary cell boundaries
-- Added Cellular Systemform vocabulary and recorded
-  `D-085: Cells Are Governed Capability Units`
+### Added
+
+- Added the v0.4 Worker Runtime preparation stack: worker models,
+  storage-free registry and inspection, SQLite worker store, `worker-list`,
+  and `worker-show`.
+- Added worker suitability and preflight surfaces:
+  `WorkerSchedulingPreviewService`, `worker-scheduling-preview`, explicit
+  preview logging, `WorkerExecutionPreflightService`,
+  `worker-execution-preflight`, and explicit preflight logging.
+- Added governed WorkerAssignment intent support: model, SQLite store,
+  read-only inspection, matching preflight evidence validation, service-backed
+  pending assignment creation, `worker-assignment-create`, status-transition
+  semantics, and read-only status-transition validation.
+- Added architecture and process scaffolding for the v0.4 arc: data
+  architecture, compact architecture summary, worker readiness, multimodal
+  systemform, architecture fitness review, cellular systemform, stable-core /
+  variable-form language, philosophy alignment review protocol, and CI.
+
+### Changed
+
 - Clarified GENUS as the broader systemform and PiGenus as the local Python
-  reference runtime distribution
-- Recorded `D-084: PiGenus Is A GENUS Runtime Distribution`
-- Updated `README.md` to reflect the current v0.4 Worker Runtime preparation
-  arc, current CLI surfaces, CI, and non-goals
-- Added model-only `WorkerAssignment` and `WorkerAssignmentStatus` schemas for
-  later governed worker assignment records
-- Added tests proving worker assignments require governance evidence and do not
-  model execution results
-- Recorded `D-083: Worker Assignment Shape Precedes Assignment Creation`
-- Added opt-in `WorkerExecutionPreflightLogger` for persisting one preflight
-  governance decision through the existing decision log
-- Added explicit `worker-execution-preflight --log` support with actor, room,
-  and optional event metadata
-- Added tests for allow logging, block logging, and no implicit preflight
-  persistence
-- Recorded `D-082: Worker Execution Preflight Logging Is Explicit`
-- Extracted worker CLI parser and command handling into
-  `pigenus/cli/worker_commands.py`
-- Kept `pigenus/cli/main.py` as the deterministic CLI entry point and
-  dispatcher
-- Verified: 238 tests passed
-- Added `docs/ARCHITECTURE_FITNESS_REVIEW.md` to analyze CLI, repository, and
-  test-coupling hotspots before structural refactors
-- Recorded `D-081: Architecture Fitness Review Precedes Structural Refactor`
-- Added GitHub Actions CI workflow for Python 3.12 test runs on push, pull
-  request, and manual dispatch
-- Updated full-check guidance to include CI verification for PRs and release
-  checkpoints
-- Recorded `D-080: GitHub Actions Runs The Test Suite`
-- Added read-only `worker-execution-preflight` CLI for checking one worker
-  before execution
-- Added CLI tests for allow, unknown worker, ordered block checks, and no
-  decision/audit persistence
-- Recorded `D-079: Worker Execution Preflight CLI Is Read-Only`
-- Verified: 238 tests passed
-- Added storage-free `WorkerExecutionPreflightService` for checking one worker
-  before assignment, routing, or execution
-- Added preflight tests for allow, unknown worker, not-considerable worker,
-  ordered block reasons, and governance decision compatibility
-- Recorded `D-078: Worker Execution Preflight Is Not Execution`
-- Verified: 235 tests passed
-- Aligned package version to `0.4.0.dev0` for the active Worker Runtime
-  preparation arc
-- Clarified current status as v0.4 development with v0.3.2 as the latest stable
-  checkpoint
-- Added minimum-sufficient documentation rule to avoid both stale docs and
-  unnecessary documentation sprawl
-- Recorded `D-077: Package Version Tracks Active Development Arc`
-- Added explicit `--log` support to `worker-scheduling-preview`
-- Added CLI logging metadata options for actor, room, and optional event ID
-- Added tests proving preview CLI logging persists one governance decision only
-  when requested
-- Recorded `D-076: Scheduling Preview CLI Logging Is Explicit`
-- Verified: 230 tests passed
-- Added read-only `worker-scheduling-preview` CLI for worker suitability
-  previews over the SQLite Worker Store
-- Added CLI tests for empty output, candidate reasons, constraints, and no
-  decision/audit persistence
-- Recorded `D-075: Scheduling Preview CLI Is Read-Only`
-- Verified: 229 tests passed
-- Added opt-in `WorkerSchedulingPreviewLogger` for persisting preview decisions
-  through the existing decision log
-- Added tests for allow/block preview logging and no implicit persistence
-- Recorded `D-074: Scheduling Preview Logging Is Opt-In`
-- Verified: 226 tests passed
-- Added GovernanceDecision conversion for Worker Scheduling Preview without persistence
-- Added tests for allow/block scheduling preview decisions and decision-log compatibility
-- Recorded `D-073: Scheduling Preview Governance Conversion Is Not Persistence`
-- Verified: 223 tests passed
-- Added storage-free `WorkerSchedulingPreviewService` for worker candidate suitability reasoning
-- Added scheduling preview tests for suitable ordering, explainable rejection reasons, network requirement, sensitivity limit, and no mutation
-- Recorded `D-072: Scheduling Preview Does Not Schedule`
-- Verified: 220 tests passed
-- Added read-only `worker-list` and `worker-show` CLI commands over the SQLite Worker Store
-- Added worker inspection CLI tests for empty output, filters, stable JSON detail output, and read-only behavior
-- Recorded `D-071: Worker CLI Is Read-Only Inspection`
-- Verified: 215 tests passed
-- Added migration `0005_worker_store` with `worker_profiles` and `worker_heartbeats`
-- Added `WorkerRepository` for durable worker profiles and current worker heartbeats
-- Added worker store tests for roundtrip, filters, heartbeat freshness, and unknown-worker rejection
-- Updated health checks and migration tests for worker store tables
-- Recorded `D-070: Worker Store Persists Identity And Current Heartbeat Only`
-- Verified: 210 tests passed
-- Documented Worker Runtime source-of-truth policy: SQLite for durable worker profiles and current heartbeats
-- Clarified local worker files as bootstrap/import only and discovery as out of scope before federation/trust
-- Recorded `D-069: Worker Source Of Truth Is SQLite`
-- Added `docs/DATA_ARCHITECTURE.md` to clarify storage roles, performance boundaries, and truth/index/cache/payload distinctions
-- Added `docs/GENUS_ARCHITECTURE_SUMMARY.md` as a compact map of the current GENUS/PiGenus architecture
-- Cleaned the Build Plan current step so worker preparation points to data architecture before worker persistence or CLI
-- Recorded `D-068: Storage Roles Must Be Explicit`
-- Added read-only `WorkerInspectionService` for storage-free worker inspection rows
-- Added worker inspection tests for listing, filters, show behavior, and missing heartbeat handling
-- Recorded `D-067: Worker Inspection Is Read-Only`
-- Verified: 204 tests passed
-- Added storage-free `WorkerRegistry` for known worker profiles and latest heartbeats
-- Added worker registry tests for deterministic listing, filters, heartbeat freshness, and active-considerable status
-- Recorded `D-066: Worker Registry Starts Storage-Free`
-- Verified: 199 tests passed
-- Added model-only `WorkerProfile` and `WorkerHeartbeat` Systemform schemas
-- Added worker model tests without storage, CLI, scheduling, or execution behavior
-- Recorded `D-065: Worker Models Do Not Execute`
-- Verified: 192 tests passed
-- Added `docs/WORKER_RUNTIME_READINESS.md` to define the v0.4 worker readiness boundary
-- Clarified worker identity, heartbeat, capability profile, cost profile, privacy profile, and failure semantics before scheduling or execution
-- Recorded `D-063: Worker Runtime Starts With Readiness`
-- Added `docs/MULTIMODAL_SYSTEMFORM.md` to define future language, graph, state, visual, spatial, and action representations as governed meaning
-- Recorded `D-064: Multimodal Meaning Must Stay Governed`
+  reference runtime distribution.
+- Aligned the active package version to `0.4.0.dev0` while keeping
+  `pigenus-v0.3.2-post-release-runtime-verification` as the latest stable
+  checkpoint.
+- Extracted worker and meaning CLI command handling into dedicated static
+  boundaries while keeping `pigenus/cli/main.py` as deterministic dispatcher.
+- Split worker storage repositories into a dedicated worker storage module
+  while preserving the existing `pigenus.storage.repositories` import surface.
+
+### Documented
+
+- Recorded durable worker, architecture, and documentation-maintenance
+  decisions through `D-099: Unreleased Changelog Uses Grouped Arc Summaries`.
+- Tightened documentation maintenance and changelog hygiene so `Unreleased`
+  stays grouped by architecture arc instead of accumulating raw checkpoint
+  bullets.
+
+### Verified
+
+- Latest local full suite: `273 passed`.
+- GitHub Actions CI runs the Python test suite on push, pull request, and
+  manual dispatch.
+
+### Not Yet Implemented
+
+- No worker execution, scheduling enforcement, reservation, provider routing,
+  remote worker discovery, LLM gateway, dashboard, federation, autonomous
+  agents, or controlled evolution.
 
 ## pigenus-v0.3.2-post-release-runtime-verification
 

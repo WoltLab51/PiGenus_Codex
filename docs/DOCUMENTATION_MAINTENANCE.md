@@ -143,6 +143,28 @@ Update it when:
 Use release sections when cutting a checkpoint. Keep `Unreleased` short enough
 to scan.
 
+When `Unreleased` grows beyond a handful of bullets, group it by:
+
+```text
+### Added
+### Changed
+### Documented
+### Verified
+### Not Yet Implemented
+```
+
+Rules:
+
+- Keep only the latest verified test result in `Unreleased`.
+- Group related micro-commits into capability-level bullets.
+- Do not copy every decision entry into `Unreleased`; summarize the decision
+  range or the durable rule and leave the detailed record in
+  `docs/DECISIONS.md`.
+- Do not use `Unreleased` as architecture history; put narrative context in
+  `docs/ARCHITECTURE_HISTORY.md`.
+- If `Unreleased` becomes hard to scan, either consolidate it or cut a
+  checkpoint section before adding more items.
+
 ## Architecture History Rules
 
 `docs/ARCHITECTURE_HISTORY.md` explains why the system shape changed over time.
