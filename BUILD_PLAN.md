@@ -248,12 +248,15 @@ Current stop lines:
 
 Next decision:
 
-- Decide whether opt-in scheduling eligibility decision logging is mature
-  enough after the worker-assignment CLI split. Do not add real scheduling,
-  reservation, routing, provider calls, execution logs, or execution.
+- Define the lightweight Cell-DNA construction protocol and apply the first
+  frame to `WorkerAssignmentValidator` before deciding whether opt-in
+  scheduling eligibility decision logging is mature enough. Do not add real
+  scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 
 Readiness source:
 
+- `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md`

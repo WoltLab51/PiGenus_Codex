@@ -20,6 +20,9 @@
   future derived diagnostic view, not a second source of truth.
 - Canonical implementation: `docs/CANONICAL_IMPLEMENTATION_PLAN.md` bridges the
   canonical systemform to next build cycles and initial cellular inventory.
+- Cellular inventory review: `docs/CELLULAR_INVENTORY_REVIEW.md` code-checks
+  the initial inventory and recommends Cell-DNA framing before new worker
+  behavior.
 
 ## Current Cycle
 
@@ -399,8 +402,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, decide whether opt-in scheduling eligibility decision logging is mature
-  enough after the worker-assignment CLI split. Do not add real scheduling,
+- Next, define a lightweight Cell-DNA frame and apply it first to
+  WorkerAssignmentValidator before deciding whether opt-in scheduling
+  eligibility decision logging is mature enough. Do not add real scheduling,
   reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.

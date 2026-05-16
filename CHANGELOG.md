@@ -50,6 +50,8 @@
   diagnosis.
 - Added `docs/CANONICAL_IMPLEMENTATION_PLAN.md` to bridge the canonical
   systemform into practical build arcs and an initial cellular inventory.
+- Added `docs/CELLULAR_INVENTORY_REVIEW.md` to code-check the initial
+  cellular inventory and identify first Cell-DNA candidates.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

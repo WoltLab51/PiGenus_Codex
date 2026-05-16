@@ -1734,3 +1734,23 @@ next work practical: classify what already exists, add Cell-DNA discipline to
 new responsible capabilities, and consolidate Worker Runtime before any
 execution, graph implementation, trading behavior, dynamic cells, or autonomous
 organisms are considered.
+
+## Cellular Inventory Review
+
+The project gained:
+
+- `docs/CELLULAR_INVENTORY_REVIEW.md`
+- code-checked validation of the initial cellular inventory
+- explicit distinction between current services, storage boundaries, operator
+  surfaces, tissues, GovernedCell candidates, and later RuntimeCells/organs
+- first recommended Cell-DNA candidates, starting with
+  `WorkerAssignmentValidator`
+- a next-step recommendation to define Cell-DNA before adding more Worker
+  Runtime behavior
+
+Why it mattered:
+
+The canonical systemform now has a practical checkpoint against the actual
+codebase. GENUS stays cell-first, but PiGenus does not jump into RuntimeCell
+ceremony, scheduling enforcement, worker execution, graph implementation, or
+autonomous organism behavior before the membranes are clear.
