@@ -16,7 +16,8 @@
   pending assignment creation, `worker-assignment-create`, status-transition
   semantics, read-only status-transition validation, and service-only status
   transition persistence with audit, `worker-assignment-transition`, and the
-  read-only WorkerAssignment scheduling eligibility validator.
+  read-only WorkerAssignment scheduling eligibility validator and CLI
+  inspection.
 - Added architecture and process scaffolding for the v0.4 arc: data
   architecture, compact architecture summary, worker readiness, multimodal
   systemform, architecture fitness review, cellular systemform, stable-core /
@@ -54,7 +55,7 @@
 
 ### Verified
 
-- Latest local full suite: `288 passed`.
+- Latest local full suite: `292 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 

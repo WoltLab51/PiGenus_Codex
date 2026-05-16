@@ -50,6 +50,7 @@ python -m pigenus.cli.main worker-execution-preflight worker_local meaning_inges
 python -m pigenus.cli.main worker-assignment-list --db pigenus.sqlite3
 python -m pigenus.cli.main worker-assignment-create worker_local meaning_ingester dec_preflight --db pigenus.sqlite3 --room room_developer --actor agent_scheduler_preview --runtime python --sensitivity private
 python -m pigenus.cli.main worker-assignment-transition wasg_candidate assigned --db pigenus.sqlite3 --actor agent_operator --reason operator_ready
+python -m pigenus.cli.main worker-assignment-scheduling-eligibility wasg_candidate --db pigenus.sqlite3
 python -m pigenus.cli.main context-list
 python -m pigenus.cli.main context-boundary-check input_cell@0.1.0 --context developer/default --db pigenus.sqlite3
 python -m pigenus.cli.main context-boundary-list --db pigenus.sqlite3 --allowed no
@@ -75,11 +76,14 @@ reserve, route, call providers, or execute.
 `worker-assignment-transition` applies validated assignment lifecycle status
 changes and writes one audit row. It does not create governance decisions,
 schedule, reserve, route, call providers, or execute.
+`worker-assignment-scheduling-eligibility` is read-only and does not log
+decisions, mutate assignments, schedule, reserve, route, call providers, or
+execute.
 
 `runtime-overview`, `health-check`, `event-list`, `event-show`, `memory-list`,
 `meaning-list`, `meaning-show`, `decision-list`, `guard-decision-list`,
 `guard-decision-summary`, `audit-list`, `cell-list`, `worker-list`,
 `worker-show`, `worker-scheduling-preview` without `--log`, `context-list`,
 `worker-execution-preflight` without `--log`, `worker-assignment-list`,
-`context-boundary-check` without `--log`, `context-boundary-list`, and
-`permission-list` are read-only.
+`worker-assignment-scheduling-eligibility`, `context-boundary-check` without
+`--log`, `context-boundary-list`, and `permission-list` are read-only.

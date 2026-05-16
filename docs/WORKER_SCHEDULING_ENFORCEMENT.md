@@ -220,6 +220,31 @@ It:
 Only after that boundary is boring and tested should PiGenus consider CLI
 inspection or opt-in decision logging.
 
+## Implemented CLI Inspection
+
+`worker-assignment-scheduling-eligibility` exposes the validator as a read-only
+operator command.
+
+It prints:
+
+- assignment ID
+- outcome
+- eligible yes/no
+- ordered reasons
+- worker, capability, room, and governance decision IDs where available
+
+It does not:
+
+- log decisions
+- write audit rows
+- mutate assignments
+- schedule
+- reserve
+- route
+- call providers
+- write execution logs
+- execute work
+
 ## Cycle Consolidation
 
 The first eligibility slice is sufficient as a read-only boundary:
@@ -227,6 +252,7 @@ The first eligibility slice is sufficient as a read-only boundary:
 - the validator does not schedule, reserve, route, log, or execute
 - tests prove it does not mutate assignment, decision, or audit storage
 - reason codes are stable for the currently implemented worker inputs
+- the CLI inspection surface reports the same validator outcome without writes
 - heartbeat freshness, room policy, guard outcomes, resource policy, and human
   approval remain future inputs because those scheduling-enforcement surfaces
   do not exist yet
@@ -234,7 +260,7 @@ The first eligibility slice is sufficient as a read-only boundary:
 Next safe step:
 
 ```text
-read-only CLI inspection
+cycle consolidation
 ```
 
 Not next:

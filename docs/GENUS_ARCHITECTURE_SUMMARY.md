@@ -95,6 +95,10 @@ Implemented:
 - WorkerAssignmentStatusTransitionService for service-only status updates with
   audit
 - `worker-assignment-transition` for service-backed assignment status updates
+- WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
+  scheduling eligibility
+- `worker-assignment-scheduling-eligibility` for read-only eligibility
+  inspection
 
 Documented:
 
@@ -149,10 +153,10 @@ assignment lifecycle status only.
 
 Worker Scheduling Enforcement is now documented as the next boundary. It
 states that `assigned` is necessary for future scheduling consideration but not
-sufficient for execution. A future read-only enforcement check must revalidate
-current worker state, heartbeat freshness, capability and runtime compatibility,
-room/context constraints, guards, resources, and approval evidence before any
-real scheduling can exist.
+sufficient for execution. The current read-only eligibility validator and CLI
+inspection recheck assignment status, worker state, heartbeat state,
+capability, runtime, sensitivity, network requirements, and preflight allow
+evidence before later scheduling behavior exists.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `288 passed`
+- Last verified result: `292 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 
@@ -19,13 +19,12 @@ Worker Runtime / scheduling eligibility:
 
 - Frame: check whether assigned WorkerAssignment intent may be considered by
   future scheduling.
-- Result: `WorkerAssignmentSchedulingEligibilityValidator` is implemented as a
-  read-only eligibility check.
+- Result: read-only validator and CLI inspection are implemented.
 - Explicitly not now: no scheduling enforcement, reservation, routing,
-  provider calls, execution logs, execution, or CLI.
+  provider calls, execution logs, execution, or logging.
 - Consolidation: no-write proof is covered by tests, reason codes are stable
-  for the first eligibility check, and read-only CLI inspection should come
-  before opt-in decision logging.
+  for the first eligibility check, and opt-in decision logging should wait
+  until the CLI inspection surface stays boring.
 
 ## Current Runtime Shape
 
@@ -120,6 +119,8 @@ PiGenus is a small local GENUS runtime core. It has:
   reservation, routing, provider calls, execution logs, or execution
 - WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
   scheduling eligibility checks without writes
+- Read-only `worker-assignment-scheduling-eligibility` CLI inspection for
+  assigned-intent scheduling eligibility
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -318,6 +319,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   intent is eligible for future scheduling consideration; it does not write
   decisions, audits, assignments, reservations, routes, execution logs, or
   execution results.
+- `worker-assignment-scheduling-eligibility` exposes that validator as a
+  read-only CLI inspection command; it does not log decisions, mutate
+  assignments, reserve, route, or execute.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -377,7 +381,7 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, add read-only scheduling eligibility CLI inspection before opt-in
+- Next, consolidate the scheduling eligibility CLI before adding opt-in
   decision logging, real scheduling, reservation, routing, provider, or
   execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution

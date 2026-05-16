@@ -216,6 +216,7 @@ Completed worker surfaces in this arc:
   `worker-assignment-transition`
 - read-only assigned-intent scheduling eligibility through
   `WorkerAssignmentSchedulingEligibilityValidator`
+- read-only `worker-assignment-scheduling-eligibility` CLI inspection
 - dedicated worker CLI and worker storage module boundaries
 - GitHub Actions CI for push, pull request, and manual dispatch
 
@@ -223,7 +224,7 @@ Current stop lines:
 
 - no worker execution
 - no scheduling enforcement yet
-- no scheduling eligibility CLI yet
+- no scheduling eligibility decision logging yet
 - no reservation
 - no provider routing
 - no remote worker discovery
@@ -234,9 +235,9 @@ Current stop lines:
 
 Next step:
 
-- Add read-only scheduling eligibility CLI inspection before opt-in decision
-  logging, real scheduling, reservation, routing, provider calls, execution
-  logs, or execution.
+- Consolidate the scheduling eligibility CLI before opt-in decision logging,
+  real scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 
 Readiness source:
 

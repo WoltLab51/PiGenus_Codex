@@ -5,6 +5,9 @@ from pathlib import Path
 
 from pigenus.core.audit import AuditLogger
 from pigenus.core.worker_assignment_creator import WorkerAssignmentCreator
+from pigenus.core.worker_assignment_scheduling_eligibility import (
+    WorkerAssignmentSchedulingEligibilityValidator,
+)
 from pigenus.core.worker_assignment_status_transition import (
     WorkerAssignmentStatusTransitionService,
 )
@@ -26,6 +29,7 @@ EMPTY_WORKER_ASSIGNMENT_LIST_MESSAGE = "No worker assignments found."
 WORKER_ASSIGNMENT_COMMANDS = {
     "worker-assignment-create",
     "worker-assignment-list",
+    "worker-assignment-scheduling-eligibility",
     "worker-assignment-transition",
 }
 
@@ -141,6 +145,20 @@ def add_worker_assignment_commands(
         help="Optional human-readable transition reason.",
     )
 
+    worker_assignment_scheduling_eligibility = subparsers.add_parser(
+        "worker-assignment-scheduling-eligibility",
+        help="Inspect read-only scheduling eligibility for one assignment.",
+    )
+    worker_assignment_scheduling_eligibility.add_argument(
+        "assignment_id",
+        help="Assignment ID to inspect.",
+    )
+    worker_assignment_scheduling_eligibility.add_argument(
+        "--db",
+        default="pigenus.sqlite3",
+        help="SQLite database path.",
+    )
+
 
 def is_worker_assignment_command(command: str) -> bool:
     return command in WORKER_ASSIGNMENT_COMMANDS
@@ -153,6 +171,8 @@ def handle_worker_assignment_command(args: argparse.Namespace) -> int:
         return _handle_worker_assignment_create(args)
     if args.command == "worker-assignment-transition":
         return _handle_worker_assignment_transition(args)
+    if args.command == "worker-assignment-scheduling-eligibility":
+        return _handle_worker_assignment_scheduling_eligibility(args)
     raise ValueError(f"Unknown worker assignment command: {args.command}")
 
 
@@ -257,6 +277,34 @@ def _handle_worker_assignment_transition(args: argparse.Namespace) -> int:
     print(f"Previous status: {result.validation.details['current_status']}")
     print(f"Status: {result.assignment.status.value}")
     print(f"Audit: {result.audit_id}")
+    return 0
+
+
+def _handle_worker_assignment_scheduling_eligibility(args: argparse.Namespace) -> int:
+    database = Database(Path(args.db))
+    database.initialize()
+    try:
+        result = WorkerAssignmentSchedulingEligibilityValidator(
+            assignments=WorkerAssignmentRepository(database),
+            workers=WorkerRepository(database),
+            decisions=DecisionRepository(database),
+        ).validate(args.assignment_id)
+    finally:
+        database.close()
+
+    print("Worker Assignment Scheduling Eligibility")
+    print(f"Assignment: {result.assignment_id}")
+    print(f"Outcome: {result.outcome.value}")
+    print(f"Eligible: {'yes' if result.eligible else 'no'}")
+    print(f"Reasons: {','.join(result.reasons)}")
+    worker_id = result.details.get("worker_id", "-")
+    capability = result.details.get("capability", "-")
+    room_id = result.details.get("room_id", "-")
+    governance_decision_id = result.details.get("governance_decision_id", "-")
+    print(f"Worker: {worker_id}")
+    print(f"Capability: {capability}")
+    print(f"Room: {room_id}")
+    print(f"Governance decision: {governance_decision_id}")
     return 0
 
 
