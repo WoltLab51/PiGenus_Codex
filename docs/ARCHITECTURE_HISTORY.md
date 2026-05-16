@@ -1686,3 +1686,28 @@ GENUS now has one alignment source above the many useful topic documents. This
 keeps older material available as source memory while preventing agent-first,
 LLM-first, dashboard-first, hidden prompt-bus, premature worker-execution, or
 mutation-as-activation directions from quietly driving implementation.
+
+## GENUS Metabolic State Graph
+
+The project gained:
+
+- `docs/GENUS_METABOLIC_STATE_GRAPH.md`
+- a graph-shaped diagnostic view for cells, tissues, organs, organisms,
+  habitats, workers, rooms, guards, resources, meaning, decisions, lifecycle,
+  reflexes, recovery, mutation proposals, and fossils
+- node and edge vocabulary for activation, inhibition, dependency, governance,
+  resource use, lifecycle transitions, quarantine, recovery, evolution, and
+  fossilization
+- a staged future path from concept-only to derived in-memory projection,
+  read-only CLI/export, optional materialized view, and optional external graph
+  database only if needed
+- a source-of-truth rule preserving SQLite and current runtime stores as the
+  canonical state
+
+Why it mattered:
+
+The canonical systemform made GENUS bio-cybernetic. The Metabolic State Graph
+adds the relational lens: not just what contains what, but what consumes,
+produces, blocks, activates, governs, recovers, and stresses what. It gives
+future diagnosis and planning a precise map without introducing graph storage,
+runtime routing, worker execution, or a second truth source.

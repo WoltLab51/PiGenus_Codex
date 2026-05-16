@@ -504,6 +504,20 @@ meaning, inspection, and backup surfaces remain stable.
 - Keep DeviceProfile and RuntimeShape planned until Worker Runtime can provide
   trustworthy worker, resource, privacy, and failure inputs
 
+### W. Metabolic State Graph
+
+- Keep `docs/GENUS_METABOLIC_STATE_GRAPH.md` as the concept boundary for
+  graph-shaped diagnosis of state, dependencies, metabolic flows, resources,
+  inhibition, activation, reflexes, and recovery
+- Treat the graph as a derived view over current source-of-truth stores, not a
+  second truth source
+- Start with concept only, then derived in-memory projection, then read-only
+  CLI/export, then optional materialized view or external graph database only
+  if needed
+- Do not force graph queries into hot paths
+- Do not add graph schema, graph database, runtime cell routing, scheduling
+  enforcement, worker execution, or mutation activation from this track
+
 ## Non-Goals For The Current Kernel Phase
 
 - No LLM-first behavior

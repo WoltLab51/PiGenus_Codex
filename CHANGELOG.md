@@ -45,9 +45,12 @@
   planning.
 - Added `docs/CANONICAL_ALIGNMENT_PLAN.md` to classify existing documents and
   runtime surfaces against the canonical systemform before further planning.
+- Added `docs/GENUS_METABOLIC_STATE_GRAPH.md` as a conceptual derived graph
+  view for metabolism, state, dependencies, resources, reflexes, recovery, and
+  diagnosis.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-104: GENUS Canonical Systemform Is The Alignment Source Of Truth`.
+  `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.

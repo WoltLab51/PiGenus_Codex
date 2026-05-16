@@ -1665,3 +1665,24 @@ evolution vocabulary that parallel documents can drift. A single canonical
 alignment document keeps future implementation pointed at the same
 bio-cybernetic operating systemform without rewriting older history or
 mistaking source memory for implementation authority.
+
+## D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth
+
+Decision:
+
+GENUS defines the Metabolic State Graph as a conceptual architecture view over
+cells, organs, organisms, habitats, workers, rooms, contracts, guards,
+reflexes, resources, meaning, memory, decisions, traces, audit events,
+lifecycle states, mutation proposals, and fossils. The graph may later become a
+derived in-memory projection, read-only export, materialized view, or external
+graph database only if needed. SQLite and current runtime stores remain the
+source of truth.
+
+Reason:
+
+GENUS is hierarchical and relational. A tree can show cells becoming organs and
+organisms, but it cannot explain activation, inhibition, resource pressure,
+homeostasis, dependencies, quarantine, recovery, or governance bottlenecks.
+The graph gives future planning and diagnosis a precise vocabulary while
+preventing graph state from becoming hidden policy, hot-path routing, worker
+execution, or a second truth source.
