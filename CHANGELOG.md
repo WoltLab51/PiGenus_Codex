@@ -43,6 +43,8 @@
 - Added `docs/GENUS_CANONICAL_SYSTEMFORM.md` as the canonical
   bio-cybernetic systemform orientation and conflict rule for future GENUS
   planning.
+- Added `docs/CANONICAL_ALIGNMENT_PLAN.md` to classify existing documents and
+  runtime surfaces against the canonical systemform before further planning.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-104: GENUS Canonical Systemform Is The Alignment Source Of Truth`.

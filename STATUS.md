@@ -14,6 +14,8 @@
   reference runtime distribution
 - Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
   alignment source of truth for GENUS systemform direction and conflicts.
+- Canonical alignment: `docs/CANONICAL_ALIGNMENT_PLAN.md` maps existing docs
+  and runtime surfaces against the canonical systemform before future cleanup.
 
 ## Current Cycle
 

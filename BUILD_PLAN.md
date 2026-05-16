@@ -23,6 +23,8 @@ Every checkpoint should leave the repository with:
 - Updated `STATUS.md`
 - `docs/GENUS_CANONICAL_SYSTEMFORM.md` checked before new implementation plans
   or architecture directions
+- `docs/CANONICAL_ALIGNMENT_PLAN.md` checked when older documents or runtime
+  surfaces may drift from the canonical systemform
 - `docs/INDEX.md` kept useful as the documentation entry point
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change

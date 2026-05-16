@@ -16,12 +16,14 @@ Start here when orienting yourself:
 7. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
 8. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
 9. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-10. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
-11. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+10. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
+11. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+12. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
 - `docs/GENUS_CANONICAL_SYSTEMFORM.md` - canonical bio-cybernetic systemform orientation and conflict rule
+- `docs/CANONICAL_ALIGNMENT_PLAN.md` - alignment map for current docs and runtime surfaces
 - `docs/GENUS_SYSTEMFORM_v0.1.md` - original Systemform framing
 - `docs/PIGENUS_PHASE_0_CORE_KERNEL_SPEC_v0.1.md` - Phase 0 kernel spec
 - `docs/CELLULAR_SYSTEMFORM.md` - GENUS cell philosophy and static cell boundary rules
