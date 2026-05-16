@@ -1528,3 +1528,22 @@ Assignment creation is now operator-facing, so the next risk is accidental
 activation semantics. Defining the status graph first keeps assignment
 lifecycle accountable and prevents `assigned` from being confused with
 execution proof.
+
+## D-098: Worker Assignment Status Transition Validator Is Read-Only
+
+Decision:
+
+PiGenus adds `WorkerAssignmentStatusTransitionValidator` as a read-only service
+that checks documented WorkerAssignment status transitions without mutating or
+persisting assignments. It accepts a current `WorkerAssignment`, a target
+status, and optional actor/reason metadata for traceability. It returns stable
+reason codes for valid edges, no-op requests, terminal-state reactivation,
+undocumented edges, and unknown target statuses. It does not write audit rows,
+create governance decisions, schedule, reserve, route, call providers, write
+execution logs, or execute work.
+
+Reason:
+
+The status graph should become executable before any transition service or CLI
+command can change durable state. A read-only validator makes the lifecycle
+testable while preserving the current no-transition, no-execution boundary.

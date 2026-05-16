@@ -33,10 +33,10 @@ Already implemented:
 - `WorkerAssignmentCreator`
 - `worker-assignment-create`
 - status transition semantics
+- `WorkerAssignmentStatusTransitionValidator`
 
 Not implemented:
 
-- status transition validator
 - status transition service
 - status transition commands
 - worker reservation
@@ -287,6 +287,34 @@ Future `pending -> assigned` activation may require additional governance or
 approval evidence. If so, that evidence should be passed into the transition
 boundary and referenced; the status transition itself should not silently create
 the decision that authorizes it.
+
+## Implemented Status Transition Validator
+
+`WorkerAssignmentStatusTransitionValidator` is a small read-only service that
+checks the documented status graph.
+
+It accepts:
+
+- a `WorkerAssignment`
+- a target `WorkerAssignmentStatus`
+- optional `actor_id`
+- optional `reason`
+
+It returns:
+
+- `status_transition_valid` for allowed edges
+- `status_transition_noop` for same-status requests
+- `assignment_status_terminal` when a terminal assignment is re-opened
+- `status_transition_not_allowed` for undocumented edges
+- `target_status_unknown` for invalid target status values
+
+The validator does not:
+
+- mutate assignment status
+- update `updated_at`
+- write audit rows
+- persist assignments
+- schedule, reserve, route, call providers, or execute
 
 Out of scope for the next step:
 

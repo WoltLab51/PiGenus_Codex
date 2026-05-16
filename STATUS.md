@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `267 passed`
+- Last verified result: `273 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 
@@ -96,6 +96,8 @@ PiGenus is a small local GENUS runtime core. It has:
   WorkerAssignmentCreator
 - WorkerAssignment status transition semantics documented before transition
   services or commands
+- WorkerAssignmentStatusTransitionValidator for read-only status graph checks
+  before transition services or commands
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -277,6 +279,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - WorkerAssignment status transitions are documented as intent lifecycle only:
   `pending -> assigned/rejected/cancelled/expired` and
   `assigned -> cancelled/expired`; terminal states do not reactivate.
+- `WorkerAssignmentStatusTransitionValidator` checks that graph without
+  mutating assignments, writing audit rows, scheduling, routing, or executing.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -332,8 +336,10 @@ Worker Runtime preparation:
   WorkerAssignmentCreator.
 - WorkerAssignment status transition semantics are documented before adding
   activation, cancellation, expiry, or rejection commands.
-- Next, add a WorkerAssignment status transition validator before any
-  transition service or CLI command.
+- WorkerAssignmentStatusTransitionValidator exists before any transition
+  service or CLI command.
+- Next, add a service-only WorkerAssignment status transition boundary that
+  applies validated transitions and writes one status-change audit row.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

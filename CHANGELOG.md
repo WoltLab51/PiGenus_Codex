@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added `WorkerAssignmentStatusTransitionValidator` for read-only assignment
+  lifecycle graph checks
+- Added status-transition validator tests for allowed edges, no-ops, invalid
+  edges, terminal reactivation, unknown targets, and no mutation
+- Recorded `D-098: Worker Assignment Status Transition Validator Is Read-Only`
+- Verified: 273 tests passed
 - Documented WorkerAssignment status transition semantics before transition
   services or commands
 - Recorded `D-097: Worker Assignment Status Transitions Are Explicit`

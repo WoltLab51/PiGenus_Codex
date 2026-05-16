@@ -1594,3 +1594,20 @@ Assignment creation now exists, so the next risk is accidental activation.
 Documenting the status graph before adding validators, services, or commands
 keeps `assigned` separate from execution and preserves the Worker Runtime
 boundary.
+
+## Worker Assignment Status Transition Validator
+
+The system gained:
+
+- `pigenus/core/worker_assignment_status_transition_validator.py`
+- read-only checks for allowed WorkerAssignment status transitions
+- stable reason codes for valid edges, no-ops, terminal reactivation,
+  undocumented edges, and unknown targets
+- tests proving the validator does not mutate assignment state
+
+Why it mattered:
+
+The documented status graph became executable without adding persistence,
+audit writing, transition commands, routing, or execution. This keeps the next
+Worker Runtime step service-shaped and testable before any operator command can
+change durable assignment status.

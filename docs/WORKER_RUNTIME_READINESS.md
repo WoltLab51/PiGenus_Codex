@@ -404,3 +404,8 @@ lifecycle changes as intent-only: `pending` may become `assigned`, `rejected`,
 `cancelled`, or `expired`, and `assigned` may become `cancelled` or `expired`.
 Rejected, cancelled, and expired assignments are terminal and should be
 recreated with fresh evidence if they need to be considered again.
+
+`WorkerAssignmentStatusTransitionValidator` now checks those rules without
+mutating assignments. It makes the lifecycle graph testable before any
+transition service, CLI command, scheduling enforcement, routing, provider call,
+or execution path exists.

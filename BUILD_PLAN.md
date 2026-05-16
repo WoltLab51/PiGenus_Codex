@@ -279,8 +279,12 @@ Current development arc:
 - Current decision step: WorkerAssignment status transition semantics define
   allowed intent lifecycle changes before activation, cancellation, expiry, or
   rejection commands
-- Next implementation step: add a WorkerAssignment status transition validator
-  before any transition service or CLI command
+- Current implementation step: `WorkerAssignmentStatusTransitionValidator`
+  checks documented status graph transitions without persistence, audit,
+  scheduling, routing, provider calls, or execution
+- Next implementation step: add a service-only WorkerAssignment status
+  transition boundary that applies validated transitions and writes one audit
+  row, before any transition CLI command
 
 Readiness source:
 
@@ -357,6 +361,9 @@ meaning, inspection, and backup surfaces remain stable.
 - WorkerAssignment status transition semantics come before a transition
   validator, transition service, transition CLI commands, scheduling
   enforcement, routing, provider calls, or execution
+- WorkerAssignmentStatusTransitionValidator comes before a transition service,
+  transition CLI commands, scheduling enforcement, routing, provider calls, or
+  execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

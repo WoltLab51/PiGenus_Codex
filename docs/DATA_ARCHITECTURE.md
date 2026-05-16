@@ -318,6 +318,9 @@ WorkerAssignment status transition semantics are documented before any
 transition writer exists. They allow only intent-lifecycle changes from
 `pending` to `assigned`, `rejected`, `cancelled`, or `expired`, and from
 `assigned` to `cancelled` or `expired`; terminal states do not reactivate.
+`WorkerAssignmentStatusTransitionValidator` makes those rules executable
+without persisting changes, writing audit rows, scheduling, routing, or
+executing.
 
 Worker storage adapters now live in a dedicated module:
 
