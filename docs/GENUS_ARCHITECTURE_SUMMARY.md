@@ -121,7 +121,8 @@ It requires a known worker and governance decision evidence, but no assignment
 creation command or execution path exists. `worker-assignment-list` makes those
 records inspectable without creating assignments, scheduling, routing, or
 executing. WorkerAssignmentValidator checks matching preflight allow evidence
-without persisting assignments or opening a creation command.
+without persisting assignments or opening a creation command. Future successful
+assignment creation must write one `worker_assignment_created` audit row.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

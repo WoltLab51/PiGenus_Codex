@@ -34,6 +34,7 @@ Already implemented:
 Not implemented:
 
 - `worker-assignment-create`
+- `WorkerAssignmentCreator`
 - assignment status transitions
 - worker reservation
 - scheduling enforcement
@@ -115,7 +116,30 @@ Execution remains a later and separate lifecycle.
 
 ## Side-Effect Rule
 
-Future assignment creation may write one `WorkerAssignment` record.
+Future successful assignment creation must write:
+
+- one `WorkerAssignment` record
+- one `AuditLog` record
+
+The audit record should use:
+
+```text
+action = "worker_assignment_created"
+actor = assignment.created_by_actor_id
+context = room-derived context for assignment.room_id where available
+```
+
+The audit details should include:
+
+- `assignment_id`
+- `worker_id`
+- `capability`
+- `room_id`
+- `governance_decision_id`
+- `status`
+
+Future assignment creation must not create or mutate a governance decision. The
+governance decision is evidence for creation, not an output of creation.
 
 It must not:
 
@@ -127,8 +151,10 @@ It must not:
 - execute work
 - store execution logs or execution results
 
-Audit behavior is intentionally unresolved. It should be decided before a
-creation command is implemented.
+Validation failure behavior remains intentionally narrow for the first creation
+step: a failed validation must not create an assignment and must not write a
+successful creation audit. A separate rejected-attempt audit can be decided
+later if operator safety requires it.
 
 ## Implemented Validator
 
@@ -147,6 +173,18 @@ own semantic evidence checks before any CLI creation command exists.
 
 The validator does not persist assignments. It only returns a validation
 result.
+
+## Future Creator
+
+The next code step may be a small `WorkerAssignmentCreator` or equivalent
+service that:
+
+1. validates the assignment with `WorkerAssignmentValidator`
+2. persists exactly one pending `WorkerAssignment`
+3. writes exactly one `worker_assignment_created` audit row
+4. returns the created assignment and audit ID
+
+It should not expose a CLI command in the same step.
 
 ## Status Transition Boundary
 

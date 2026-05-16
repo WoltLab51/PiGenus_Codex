@@ -1450,3 +1450,23 @@ The repository enforces basic existence; it should not own the richer evidence
 semantics. A separate validator keeps assignment creation accountable while
 preserving the current boundary: no assignment creation command, no scheduling
 enforcement, no reservation, no routing, no provider calls, and no execution.
+
+## D-094: Worker Assignment Creation Must Be Audited
+
+Decision:
+
+Future successful WorkerAssignment creation must write exactly one pending
+`WorkerAssignment` record and one `worker_assignment_created` audit row. The
+audit row should use the assignment creator as actor, a room-derived context
+where available, and details containing assignment ID, worker ID, capability,
+room ID, governance decision ID, and status. Assignment creation must not create
+or mutate governance decisions, scheduling records, reservations, routes,
+provider calls, execution logs, or execution results.
+
+Reason:
+
+Creating assignment intent is an operationally meaningful act even though it is
+not execution. Audit makes that act accountable without confusing it with the
+governance decision that authorized it. Keeping audit separate from decision
+evidence preserves the distinction between policy reasoning and operational
+action.

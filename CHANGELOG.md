@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Documented future WorkerAssignment creation audit behavior before adding a
+  creation service or CLI command
+- Recorded `D-094: Worker Assignment Creation Must Be Audited`
 - Added `WorkerAssignmentValidator` for matching preflight allow evidence before
   assignment creation
 - Added validator tests for allow, block, scheduling-preview evidence, worker,

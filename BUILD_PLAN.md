@@ -267,7 +267,10 @@ Current development arc:
 - Current implementation step: `WorkerAssignmentValidator` checks matching
   preflight allow evidence without persisting assignments or creating a CLI
   creation path
-- Next implementation decision: define assignment creation audit behavior
+- Current decision step: successful WorkerAssignment creation must write one
+  pending assignment and one `worker_assignment_created` audit row, without
+  creating decisions, routing, reservation, provider calls, or execution
+- Next implementation decision: build a small WorkerAssignmentCreator service
   before any `worker-assignment-create` command
 
 Readiness source:
@@ -335,6 +338,9 @@ meaning, inspection, and backup surfaces remain stable.
   provider calls, or execution
 - WorkerAssignmentValidator comes before CLI assignment creation, status
   activation, scheduling enforcement, routing, provider calls, or execution
+- WorkerAssignment creation audit semantics come before a creation service,
+  CLI assignment creation, status activation, scheduling enforcement, routing,
+  provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

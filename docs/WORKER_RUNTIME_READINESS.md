@@ -383,3 +383,8 @@ creation may use only matching `allow` evidence from Worker Execution
 Preflight, and initial creation may create only `pending` intent.
 WorkerAssignmentValidator now checks that evidence before any creation command
 exists.
+
+Future successful assignment creation must also write one
+`worker_assignment_created` audit row. That audit row records operational
+accountability for creating intent; it is not a new governance decision and not
+execution proof.

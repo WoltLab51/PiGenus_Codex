@@ -289,7 +289,7 @@ Future durable intent that one governed capability is assigned to one worker.
 Lifecycle:
 
 ```text
-governance evidence -> pending assignment -> assigned/rejected/cancelled/expired -> retained for inspection
+governance evidence -> validation -> pending assignment + audit -> assigned/rejected/cancelled/expired -> retained for inspection
 ```
 
 Current storage:
@@ -305,6 +305,9 @@ WorkerAssignment is not execution. It does not store start time, completion
 time, execution result, provider route, reservation, or tool call state.
 Assignment persistence requires a known worker and existing governance decision
 evidence.
+Future successful assignment creation must also write a
+`worker_assignment_created` audit row so creation of durable intent is
+operationally accountable.
 
 ### MutationProposal
 

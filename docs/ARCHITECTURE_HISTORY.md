@@ -1530,3 +1530,17 @@ Why it mattered:
 The validator makes assignment creation semantics executable without adding a
 creation command. It keeps semantic checks outside the repository and preserves
 the no-scheduling, no-routing, no-execution Worker Runtime boundary.
+
+## Worker Assignment Creation Audit
+
+The system gained:
+
+- a documented audit requirement for future successful assignment creation
+- the `worker_assignment_created` audit action boundary
+- D-094 recording that creation must not create decisions, routing, or execution
+
+Why it mattered:
+
+Assignment creation will be the first durable operational step after validation.
+Requiring audit before adding a creator keeps that step accountable while
+preserving the distinction between governance evidence and operational action.

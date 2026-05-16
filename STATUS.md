@@ -88,6 +88,8 @@ PiGenus is a small local GENUS runtime core. It has:
 - Worker assignment creation semantics documented before any creation command
 - WorkerAssignmentValidator for matching preflight allow evidence without
   persisting assignments
+- Worker assignment creation audit behavior documented before any creation
+  service or command
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -257,6 +259,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   assignment intent.
 - `WorkerAssignmentValidator` checks semantic evidence before assignment
   creation, but does not persist assignments or execute work.
+- Future successful assignment creation must write one pending assignment and
+  one `worker_assignment_created` audit row; it must not create decisions,
+  scheduling enforcement, routing, provider calls, or execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -306,10 +311,12 @@ Worker Runtime preparation:
   assignment intent.
 - WorkerAssignmentValidator exists before any `worker-assignment-create`
   command.
-- Next, define assignment creation audit behavior before any command that
+- Assignment creation audit behavior is documented before any command that
   writes assignment intent.
-- Avoid adding further worker storage behavior before assignment creation audit
-  behavior is defined and reviewed.
+- Next, build a small WorkerAssignmentCreator service before any
+  `worker-assignment-create` command.
+- Avoid adding further worker CLI behavior before assignment creation is
+  implemented and tested as a service.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
   point.
