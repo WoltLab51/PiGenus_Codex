@@ -305,6 +305,14 @@ This store remains assignment intent only. It requires a known worker and an
 existing governance decision record before persistence. It still avoids
 execution records, provider routes, reservations, and tool-call state.
 
+Worker storage adapters now live in a dedicated module:
+
+- `pigenus/storage/worker_repositories.py`
+
+The legacy `pigenus.storage.repositories` import surface remains compatible.
+This is a structural domain split only; it does not change SQL, migrations,
+assignment behavior, inspection behavior, routing, or execution.
+
 ## Database Design Principles
 
 1. Keep truth small and inspectable.

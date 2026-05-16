@@ -497,14 +497,15 @@ Do not promote when:
 | `WorkerExecutionPreflightService` | Service / governed-cell candidate | Cell-worthy because it checks capability, sensitivity, network, and worker state, but should not be treated as final cell architecture yet. |
 | `WorkerExecutionPreflightLogger` | Service / governed-cell candidate | Persists one explicit governance decision; candidate for later logging cell. |
 | `WorkerSchedulingPreviewService` | Service / governed-cell candidate | Explains candidate suitability but does not schedule. |
-| `WorkerRepository` | Storage adapter | Source-of-truth access, not a cell by itself. |
+| `WorkerRepository` | Worker storage adapter | Source-of-truth access in `pigenus/storage/worker_repositories.py`, not a cell by itself. |
+| `WorkerAssignmentRepository` | Worker storage adapter | Durable assignment-intent storage in `pigenus/storage/worker_repositories.py`, not execution or routing. |
 | `MeaningRepository` | Storage adapter | Meaning persistence, not a cell by itself. |
 | `MeaningIngestionPreview` | Service / governed-cell candidate | Converts memory to meaning with explicit behavior. |
 | `GuardPipeline` | Governance service / immune tissue | Cell-worthy family surface, but currently best understood as core governance tissue. |
 | `RoomFlowRules` | Governance service | Deterministic policy tissue. |
 | `ContextBoundaryEngine` | Governance service | Checks context boundary; not operator surface. |
 | `SimpleOrchestrator` | Deterministic runtime coordinator | Should not become an autonomous agent. |
-| `pigenus/storage/repositories.py` | Storage module hotspot | Split later by domain before new persistence surfaces make review difficult. |
+| `pigenus/storage/repositories.py` | Shared storage compatibility surface | Worker repositories have been domain-sliced; remaining domains may split later before new execution/resource stores. |
 | `docs/CELLULAR_SYSTEMFORM.md` | Philosophy / cell rulebook | Defines cellular architecture but does not decide every component mapping. |
 
 ## Runtime Flow Boundaries
@@ -609,8 +610,8 @@ These are deliberately unresolved.
    StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
    cell-worthy service?
-4. Should `repositories.py` split by storage domain before adding further
-   execution, resource, or assignment inspection stores?
+4. Should the remaining non-worker repositories split by storage domain before
+   adding further execution, resource, or assignment inspection stores?
 5. What is the first true Organ candidate: WorkerReadinessOrgan,
    MeaningIngestionOrgan, or SherlookLightOrgan?
 6. What minimal CellSpec/CellContract additions are needed before general

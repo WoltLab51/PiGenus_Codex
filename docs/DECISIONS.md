@@ -1379,3 +1379,20 @@ Assignment is durable worker placement intent and belongs in the governed path.
 Persisting it without requiring worker and governance evidence would let the
 runtime create unsupported intent. Keeping the first store small makes the
 future assignment boundary inspectable while preserving the no-execution rule.
+
+## D-090: Worker Storage Repositories Are Domain-Sliced
+
+Decision:
+
+PiGenus moves `WorkerRepository` and `WorkerAssignmentRepository` into
+`pigenus/storage/worker_repositories.py` while preserving the existing
+`pigenus.storage.repositories` import surface. The change does not alter SQL,
+migrations, CLI behavior, worker assignment behavior, scheduling, routing,
+provider calls, or execution.
+
+Reason:
+
+Adding WorkerAssignment persistence made the shared repository module a storage
+hotspot. Splitting the worker storage domain reduces monolith pressure before
+read-only assignment inspection or further Worker Runtime behavior is added,
+while keeping compatibility for existing callers and tests.

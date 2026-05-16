@@ -416,8 +416,9 @@ Current examples:
 - `pigenus/cli/main.py` remains the deterministic CLI entry point
 - `pigenus/cli/worker_commands.py` is a first static cell boundary
 - future CLI modules should stay small enough to become command cells or organs
-- `repositories.py` may later split by storage domain before new persistence
-  surfaces become too dense
+- worker storage repositories have split into a dedicated domain module
+- remaining repository domains may split later before new persistence surfaces
+  become too dense
 
 ## Static Cell Boundary Rule
 

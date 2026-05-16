@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Extracted worker storage repositories into
+  `pigenus/storage/worker_repositories.py` while preserving the existing
+  `pigenus.storage.repositories` import surface
+- Recorded `D-090: Worker Storage Repositories Are Domain-Sliced`
 - Added migration `0006_worker_assignments` and `WorkerAssignmentRepository`
   for minimal governed worker assignment intent storage
 - Added tests for assignment roundtrip, filters, unknown-worker rejection, and

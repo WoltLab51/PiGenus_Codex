@@ -82,6 +82,8 @@ PiGenus is a small local GENUS runtime core. It has:
   for later governed assignment records
 - SQLite-backed WorkerAssignment Store for governed assignment intent requiring
   a known worker and existing governance decision evidence
+- Dedicated worker storage repository module for worker profiles, current
+  heartbeats, and assignment intent
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -267,6 +269,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - Meaning CLI command handling is structurally separated from the main CLI
   entry point without changing command behavior, storage behavior, meaning
   ingestion behavior, or side-effect rules.
+- Worker storage repositories are structurally separated from the shared
+  repository module without changing SQL, migrations, import compatibility, CLI
+  behavior, assignment behavior, or execution boundaries.
 - PiGenus is a GENUS runtime distribution, not the entire GENUS system and not
   limited to Raspberry Pi hardware.
 - Static CLI modules are temporary cell boundaries; modules above roughly 250
@@ -285,8 +290,8 @@ Worker Runtime preparation:
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
 - Next, decide whether WorkerAssignment should gain read-only inspection before
   any CLI assignment creation exists.
-- Before adding further storage domains beyond WorkerAssignment inspection,
-  consider splitting `pigenus/storage/repositories.py` by domain.
+- Avoid adding further worker storage behavior before read-only assignment
+  inspection is defined and reviewed.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
   point.

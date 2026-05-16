@@ -118,6 +118,10 @@ WorkerAssignment now has a minimal SQLite store for governed assignment intent.
 It requires a known worker and governance decision evidence, but no assignment
 creation command or execution path exists.
 
+Worker storage repositories now live in
+`pigenus/storage/worker_repositories.py`, with the existing
+`pigenus.storage.repositories` import surface preserved for compatibility.
+
 ## Data Architecture Rule
 
 SQLite remains the local source of truth for the governed runtime.

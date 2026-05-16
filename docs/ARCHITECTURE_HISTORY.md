@@ -1465,3 +1465,19 @@ WorkerAssignment moved from model-only shape to minimal governed persistence.
 The store captures assignment intent only after worker and governance decision
 evidence already exist, keeping assignment separate from scheduling
 enforcement, reservation, provider routing, and execution.
+
+## Worker Storage Repository Boundary
+
+The system gained:
+
+- `pigenus/storage/worker_repositories.py`
+- `WorkerRepository` and `WorkerAssignmentRepository` outside the shared
+  repository module
+- preserved compatibility through `pigenus.storage.repositories`
+
+Why it mattered:
+
+The WorkerAssignment Store was the right feature boundary, but it increased
+storage-module density. Splitting worker repositories into their own storage
+domain keeps Worker Runtime growth reviewable before assignment inspection,
+scheduling enforcement, routing, or execution appears.

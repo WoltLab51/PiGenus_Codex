@@ -255,11 +255,11 @@ Current development arc:
 - Current structural step: meaning CLI command handling lives in a dedicated
   module boundary without changing commands, output, storage, meaning
   ingestion behavior, or side-effect rules
+- Current structural step: worker storage repositories live in
+  `pigenus/storage/worker_repositories.py` while the legacy
+  `pigenus.storage.repositories` import surface remains compatible
 - Next implementation decision: whether WorkerAssignment should gain read-only
   inspection before any CLI assignment creation or runtime execution path exists
-- Current structural risk: `pigenus/storage/repositories.py` remains a storage
-  hotspot and should be split by domain before further execution, resource, or
-  assignment expansion
 
 Readiness source:
 
@@ -319,6 +319,9 @@ meaning, inspection, and backup surfaces remain stable.
 - Minimal WorkerAssignment Store comes before read-only assignment inspection,
   CLI assignment creation, scheduling enforcement, routing, provider calls, or
   execution
+- Worker storage repositories are domain-sliced before read-only assignment
+  inspection, assignment creation, scheduling enforcement, routing, provider
+  calls, or execution
 - CI is established before continuing Worker Runtime logging, assignment,
   routing, provider, or execution work
 

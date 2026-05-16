@@ -251,7 +251,7 @@ created -> validated -> stored -> inspected later -> suspended/retired later
 Current storage:
 
 - `worker_profiles` table
-- `WorkerRepository`
+- `WorkerRepository` in `pigenus/storage/worker_repositories.py`
 
 Boundary:
 
@@ -273,7 +273,7 @@ observed -> validated against known worker -> stored as latest/current -> replac
 Current storage:
 
 - `worker_heartbeats` table
-- `WorkerRepository`
+- `WorkerRepository` in `pigenus/storage/worker_repositories.py`
 
 Boundary:
 
@@ -295,7 +295,7 @@ governance evidence -> pending assignment -> assigned/rejected/cancelled/expired
 Current storage:
 
 - `worker_assignments` table
-- `WorkerAssignmentRepository`
+- `WorkerAssignmentRepository` in `pigenus/storage/worker_repositories.py`
 - full `WorkerAssignment` JSON plus indexed worker, status, room, capability,
   and governance-decision columns
 

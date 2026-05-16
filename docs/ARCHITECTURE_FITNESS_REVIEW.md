@@ -210,7 +210,8 @@ by subprocess tests.
 | Move worker parser registration into the worker CLI module | Medium | Medium | Done |
 | Extract meaning CLI handlers | Medium | Low-medium | Done |
 | Extract decision/guard CLI handlers | Medium | Medium | After worker and meaning extraction |
-| Split `repositories.py` by domain | Medium | Medium-high | Later, before new execution/resource stores |
+| Split worker repositories by domain | Medium | Medium | Done |
+| Split remaining `repositories.py` domains | Medium | Medium-high | Later, before new execution/resource stores |
 | Introduce dynamic cell routing for CLI commands | Conceptually high | High | Not now |
 | Add runtime command cells or self-routing CLI organs | Future high | High | Only after static module boundaries are stable |
 
