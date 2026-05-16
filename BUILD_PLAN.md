@@ -289,9 +289,12 @@ Current development arc:
 - Current implementation step: `worker-assignment-transition` exposes validated
   assignment status transitions through a small CLI wrapper without scheduling,
   reservation, routing, provider calls, or execution
-- Next implementation decision: define the worker scheduling enforcement
-  boundary before any real scheduling, reservation, routing, provider calls, or
-  execution
+- Current decision step: Worker Scheduling Enforcement boundary defines why
+  `assigned` is necessary but not sufficient for future scheduling
+  consideration
+- Next implementation step: add a read-only WorkerSchedulingEnforcement
+  validator/service before any real scheduling, reservation, routing, provider
+  calls, or execution
 
 Readiness source:
 
@@ -375,6 +378,8 @@ meaning, inspection, and backup surfaces remain stable.
   scheduling enforcement, routing, provider calls, or execution
 - `worker-assignment-transition` comes before scheduling enforcement,
   reservation, routing, provider calls, or execution
+- Worker Scheduling Enforcement boundary comes before a read-only enforcement
+  validator/service, reservation, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

@@ -29,6 +29,7 @@ Start here when orienting yourself:
 - `docs/INTERNAL_COMMUNICATION.md` - governed meaning-based communication
 - `docs/MULTIMODAL_SYSTEMFORM.md` - future language, graph, state, visual, and spatial meaning boundary
 - `docs/WORKER_ASSIGNMENT_SEMANTICS.md` - worker assignment creation evidence and status boundary
+- `docs/WORKER_SCHEDULING_ENFORCEMENT.md` - boundary between assigned intent and future scheduling behavior
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary
@@ -61,6 +62,7 @@ implementation:
 
 - `docs/WORKER_RUNTIME.md` - workers as execution hosts
 - `docs/WORKER_RUNTIME_READINESS.md` - v0.4 worker identity, heartbeat, profile, and failure boundary
+- `docs/WORKER_SCHEDULING_ENFORCEMENT.md` - assigned intent before future scheduling
 - `docs/RESOURCE_ECONOMY.md` - accounting before resource markets
 - `docs/LIQUID_RUNTIME.md` - dynamic form proposals under governance
 - `docs/GITHUB_IDEA_HARVEST.md` - idea harvesting without architecture merge

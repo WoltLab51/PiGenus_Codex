@@ -606,8 +606,8 @@ Later dynamic behavior may be allowed only after:
 
 These are deliberately unresolved.
 
-1. WorkerAssignment has gained a minimal SQLite repository and read-only
-   `worker-assignment-list` inspection before pending creation was exposed.
+1. WorkerAssignment has gained storage, inspection, pending creation, and
+   lifecycle status transitions before any scheduling or execution behavior.
 2. Meaning CLI extraction has been chosen and implemented as the next
    StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
@@ -645,7 +645,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Define worker scheduling enforcement boundary before scheduling.
+Option A: Add read-only WorkerSchedulingEnforcement validator/service.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -653,8 +653,8 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment creation separate from status transitions and
-   execution.
+1. Keep WorkerAssignment creation, status transitions, scheduling enforcement,
+   reservation, routing, and execution separate.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

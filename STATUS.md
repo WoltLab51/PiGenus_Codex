@@ -102,6 +102,8 @@ PiGenus is a small local GENUS runtime core. It has:
   audit before CLI exposure
 - `worker-assignment-transition` CLI for validated status updates via
   WorkerAssignmentStatusTransitionService
+- Worker Scheduling Enforcement boundary documented before real scheduling,
+  reservation, routing, provider calls, execution logs, or execution
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -292,6 +294,10 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   WorkerAssignmentStatusTransitionService; it updates assignment lifecycle
   status only and does not schedule, reserve, route, call providers, or execute
   work.
+- Worker Scheduling Enforcement is documented as the next boundary:
+  `assigned` is necessary for future scheduling consideration, but it is not
+  sufficient for scheduling, reservation, routing, provider calls, execution
+  logs, or execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -351,8 +357,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, define the worker scheduling enforcement boundary before any real
-  scheduling, reservation, routing, provider, or execution behavior.
+- Next, implement a read-only WorkerSchedulingEnforcement validator/service
+  before any real scheduling, reservation, routing, provider, or execution
+  behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

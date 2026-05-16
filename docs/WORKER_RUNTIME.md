@@ -179,6 +179,23 @@ capability inventory
 
 Only after that should scheduling or execution routing be considered.
 
+Before real scheduling, PiGenus must pass through a separate scheduling
+enforcement boundary:
+
+```text
+WorkerAssignment status = assigned
+-> scheduling enforcement check
+-> future reservation
+-> future routing
+-> future execution
+```
+
+`assigned` means governed intent has passed the assignment lifecycle. It does
+not mean work may run. Scheduling enforcement must recheck current worker
+state, heartbeat freshness, capability/runtime compatibility, room and context
+constraints, guards, resources, and approvals before future scheduling can
+consider the assignment.
+
 ## Relationship To v0.3
 
 v0.3 provides the governed runtime baseline.

@@ -418,3 +418,12 @@ not scheduling enforcement, reservation, provider routing, or execution.
 changes assignment lifecycle status only and does not create governance
 decisions, schedule, reserve, route, call providers, write execution logs, or
 execute work.
+
+`docs/WORKER_SCHEDULING_ENFORCEMENT.md` now defines the next boundary: an
+`assigned` WorkerAssignment may be considered by a future scheduler only after
+a separate enforcement check revalidates worker state, heartbeat freshness,
+capability/runtime compatibility, sensitivity, network requirements, room and
+context constraints, guard outcomes, resource policy when available, and any
+required human approval evidence. This boundary is documented only; no
+scheduler, reservation, routing, provider call, execution log, or execution
+path exists yet.

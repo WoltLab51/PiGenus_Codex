@@ -339,6 +339,24 @@ It does not:
 `worker-assignment-transition` is a thin CLI wrapper around this service. It
 does not add scheduling, routing, reservation, provider calls, or execution.
 
+## Scheduling Enforcement Boundary
+
+`assigned` is necessary for future scheduling consideration, but it is not
+sufficient for scheduling execution.
+
+The scheduling enforcement boundary is documented separately in:
+
+```text
+docs/WORKER_SCHEDULING_ENFORCEMENT.md
+```
+
+That boundary sits after assignment status transitions and before any future
+reservation, routing, provider call, execution log, or execution path. Its
+first implementation should be read-only and should recheck assignment status,
+current worker state, heartbeat freshness, capability/runtime compatibility,
+sensitivity, network requirements, room/context constraints, guard outcomes,
+and resource policy when available.
+
 Out of scope for the next step:
 
 - automatic status changes

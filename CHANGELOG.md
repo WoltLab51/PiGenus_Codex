@@ -37,10 +37,13 @@
 
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-101: Worker Assignment Transition CLI Is Service-Backed`.
+  `D-102: Assigned WorkerAssignments Require Scheduling Enforcement`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.
+- Defined the Worker Scheduling Enforcement boundary before any real
+  scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 
 ### Verified
 

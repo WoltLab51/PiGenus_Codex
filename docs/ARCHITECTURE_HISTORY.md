@@ -1647,3 +1647,20 @@ Why it mattered:
 Assignment lifecycle became operator-facing without moving transition policy
 into CLI code. The command is still only lifecycle status management; it does
 not schedule, reserve, route, call providers, or execute work.
+
+## Worker Scheduling Enforcement Boundary
+
+The system gained:
+
+- `docs/WORKER_SCHEDULING_ENFORCEMENT.md`
+- D-102 recording that `assigned` is necessary but not sufficient for future
+  scheduling consideration
+- explicit separation between assignment lifecycle, scheduling enforcement,
+  reservation, routing, provider calls, and execution
+
+Why it mattered:
+
+After `worker-assignment-transition`, assignment status became operator-facing.
+The scheduling enforcement boundary prevents `assigned` from becoming hidden
+runtime permission and keeps the next Worker Runtime step read-only before any
+real scheduling or execution behavior exists.

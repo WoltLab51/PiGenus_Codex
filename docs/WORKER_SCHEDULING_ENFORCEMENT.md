@@ -1,0 +1,208 @@
+# Worker Scheduling Enforcement Boundary
+
+This document defines the boundary between worker assignment lifecycle and any
+future scheduling behavior.
+
+It does not add a migration, service, CLI command, reservation, provider route,
+execution log, or execution path.
+
+## Purpose
+
+Worker Scheduling Enforcement answers one narrow question:
+
+```text
+May this assigned WorkerAssignment be considered by a future scheduler now?
+```
+
+It does not answer:
+
+```text
+Which worker is best?
+Should capacity be reserved?
+Which provider should receive work?
+Has execution started?
+Did execution succeed?
+```
+
+Those are later boundaries.
+
+## Current Sequence
+
+The safe Worker Runtime sequence is:
+
+```text
+worker-scheduling-preview
+-> worker-execution-preflight --log
+-> worker-assignment-create
+-> worker-assignment-transition assigned
+-> future scheduling enforcement
+-> future reservation
+-> future routing
+-> future execution
+```
+
+The important invariant:
+
+```text
+assigned is necessary for scheduling consideration.
+assigned is not sufficient for scheduling execution.
+```
+
+`assigned` means assignment intent has moved through the allowed lifecycle
+graph. It does not prove that the worker is still healthy, that evidence is
+fresh, that resources are available, that room policy still allows the work, or
+that a provider may be called.
+
+## Enforcement Inputs
+
+A future enforcement check should be able to inspect:
+
+- the stored `WorkerAssignment`
+- the assignment status
+- the original `worker_execution_preflight` allow decision
+- the current `WorkerProfile`
+- the current `WorkerHeartbeat`
+- capability and runtime compatibility
+- sensitivity and network requirements
+- room and context-stack constraints
+- relevant guard and room-flow outcomes
+- relevant resource policy or resource grant, when implemented
+- optional human approval evidence, when risk requires it
+- freshness limits for evidence and heartbeat state
+
+The first implementation should keep this read-only.
+
+## Minimum Rules
+
+Scheduling enforcement must reject consideration when:
+
+- the assignment does not exist
+- the assignment is not `assigned`
+- the assignment is terminal: `rejected`, `cancelled`, or `expired`
+- the referenced worker does not exist
+- the referenced governance decision does not exist
+- the evidence is not an allow decision from `worker_execution_preflight`
+- the worker no longer has the required capability
+- the required runtime no longer matches
+- the sensitivity exceeds the worker limit
+- network access is required but no longer allowed
+- heartbeat state is missing or stale beyond policy
+- room, context, guard, or resource policy blocks the work
+
+Scheduling enforcement may require review when:
+
+- evidence is old but not expired by hard policy
+- room policy requires human approval
+- resource policy is ambiguous
+- worker state is degraded but not blocked
+- sensitivity or network exposure is near a configured boundary
+
+## Outcomes
+
+A future result should use stable outcome and reason vocabulary. Candidate
+outcomes:
+
+```text
+allow_scheduling
+deny_scheduling
+require_review
+not_considered
+```
+
+Candidate reasons:
+
+```text
+assignment_unknown
+assignment_status_not_assigned
+assignment_status_terminal
+governance_evidence_missing
+governance_evidence_not_preflight_allow
+worker_unknown
+worker_not_considerable
+worker_capability_missing
+runtime_mismatch
+sensitivity_exceeded
+network_not_allowed
+heartbeat_stale
+room_policy_blocked
+guard_blocked
+resource_policy_blocked
+human_approval_required
+```
+
+The exact model can be smaller, but it should stay deterministic and
+inspectable.
+
+## Side-Effect Boundary
+
+The first scheduling enforcement implementation should not write anything.
+
+Future opt-in logging may write one `GovernanceDecision` with a distinct source
+such as:
+
+```text
+source = "worker_scheduling_enforcement"
+```
+
+Even with logging, enforcement must not:
+
+- create assignments
+- mutate assignment status implicitly
+- reserve capacity
+- route to providers
+- call tools
+- write execution logs
+- store execution results
+- execute work
+
+If enforcement decides an assignment is stale, expiry should remain an explicit
+status transition or service boundary, not a hidden side effect of a scheduling
+check.
+
+## Relationship To Existing Boundaries
+
+```text
+Scheduling Preview
+  Explains possible workers before assignment intent exists.
+
+Execution Preflight
+  Checks one worker and can provide allow evidence for assignment creation.
+
+WorkerAssignment
+  Stores governed intent, not execution.
+
+WorkerAssignment Status Transition
+  Moves assignment intent through a controlled lifecycle.
+
+Scheduling Enforcement
+  Rechecks whether assigned intent may enter future scheduling.
+
+Reservation
+  Future capacity hold. Not implemented.
+
+Routing
+  Future provider or worker handoff. Not implemented.
+
+Execution
+  Future work run. Not implemented.
+```
+
+## First Future Code Step
+
+The next safe code step is a read-only validator or service, not a scheduler:
+
+```text
+WorkerSchedulingEnforcementValidator
+```
+
+It should:
+
+- accept an assignment ID or assignment object plus current worker state
+- return stable allow, deny, review, or not-considered outcomes
+- explain every reason in order
+- write no decisions, audits, assignments, reservations, routes, or execution
+  records
+- include tests proving no storage mutation
+
+Only after that boundary is boring and tested should PiGenus consider CLI
+inspection or opt-in decision logging.

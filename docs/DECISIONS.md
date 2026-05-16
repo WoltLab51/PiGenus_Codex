@@ -1603,3 +1603,25 @@ Reason:
 The status transition service is already validated and audited. Exposing it as
 a small operator command makes assignment lifecycle observable without moving
 policy into CLI code or turning assignment status into execution.
+
+## D-102: Assigned WorkerAssignments Require Scheduling Enforcement
+
+Decision:
+
+PiGenus defines a Worker Scheduling Enforcement boundary before implementing
+real scheduling, reservation, routing, provider calls, execution logs, or
+execution. `assigned` WorkerAssignment status is necessary for future
+scheduling consideration, but it is not sufficient to run work. A future
+enforcement check must revalidate current worker state, heartbeat freshness,
+capability and runtime compatibility, sensitivity, network requirements, room
+and context constraints, guard or room-flow outcomes, resource policy when
+available, and any required human approval evidence. The first implementation
+should be read-only and must not mutate assignments, create reservations,
+route providers, write execution records, or execute work.
+
+Reason:
+
+`worker-assignment-transition` makes `assigned` operator-facing, so the next
+risk is treating lifecycle status as runtime permission. A separate scheduling
+enforcement boundary keeps assignment intent, scheduling consideration,
+reservation, routing, and execution distinct and inspectable.

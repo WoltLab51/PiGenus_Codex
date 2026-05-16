@@ -96,6 +96,11 @@ Implemented:
   audit
 - `worker-assignment-transition` for service-backed assignment status updates
 
+Documented:
+
+- Worker Scheduling Enforcement boundary between assigned intent and any
+  future scheduling, reservation, routing, provider call, or execution
+
 Not implemented:
 
 - durable scheduling
@@ -141,6 +146,13 @@ WorkerAssignmentStatusTransitionService applies validated status changes and
 writes audit, but it remains service-only and does not schedule or execute.
 `worker-assignment-transition` exposes that service as a thin CLI wrapper for
 assignment lifecycle status only.
+
+Worker Scheduling Enforcement is now documented as the next boundary. It
+states that `assigned` is necessary for future scheduling consideration but not
+sufficient for execution. A future read-only enforcement check must revalidate
+current worker state, heartbeat freshness, capability and runtime compatibility,
+room/context constraints, guards, resources, and approval evidence before any
+real scheduling can exist.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing
