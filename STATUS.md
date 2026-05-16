@@ -18,6 +18,8 @@
   and runtime surfaces against the canonical systemform before future cleanup.
 - Metabolic graph direction: `docs/GENUS_METABOLIC_STATE_GRAPH.md` defines a
   future derived diagnostic view, not a second source of truth.
+- Canonical implementation: `docs/CANONICAL_IMPLEMENTATION_PLAN.md` bridges the
+  canonical systemform to next build cycles and initial cellular inventory.
 
 ## Current Cycle
 

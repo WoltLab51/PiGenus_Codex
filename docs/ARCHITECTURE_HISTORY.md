@@ -1711,3 +1711,26 @@ adds the relational lens: not just what contains what, but what consumes,
 produces, blocks, activates, governs, recovers, and stresses what. It gives
 future diagnosis and planning a precise map without introducing graph storage,
 runtime routing, worker execution, or a second truth source.
+
+## Canonical Implementation Plan
+
+The project gained:
+
+- `docs/CANONICAL_IMPLEMENTATION_PLAN.md`
+- a practical bridge from canonical systemform and metabolic graph concepts to
+  next build cycles
+- future arcs for cellular inventory, Cell-DNA protocol, Worker Runtime
+  consolidation, graph projection preview, resource/homeostasis/reflex
+  foundations, RuntimeCell/organ preparation, habitat/device profiles, and
+  high-risk execution readiness as concept-only
+- an initial cellular inventory classifying current runtime and operator
+  surfaces by maturity, reads, writes, allowed effects, forbidden effects, and
+  next possible maturity
+
+Why it mattered:
+
+The canonical documents define the organism. The implementation plan keeps the
+next work practical: classify what already exists, add Cell-DNA discipline to
+new responsible capabilities, and consolidate Worker Runtime before any
+execution, graph implementation, trading behavior, dynamic cells, or autonomous
+organisms are considered.

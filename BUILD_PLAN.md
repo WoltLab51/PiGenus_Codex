@@ -9,6 +9,10 @@ The guiding philosophy lives in `docs/GENUS_PHILOSOPHY.md`. This build plan
 describes how PiGenus grows; the canonical systemform and philosophy explain
 why it grows in this order.
 
+`docs/CANONICAL_IMPLEMENTATION_PLAN.md` is the bridge from the canonical
+systemform to concrete build cycles and should be checked before the next
+implementation arc is selected.
+
 Naming rule: GENUS is the broader systemform and architecture. PiGenus is the
 local Python reference runtime distribution for GENUS. The `pigenus` package
 name remains stable during the current runtime arc.
@@ -25,6 +29,8 @@ Every checkpoint should leave the repository with:
   or architecture directions
 - `docs/CANONICAL_ALIGNMENT_PLAN.md` checked when older documents or runtime
   surfaces may drift from the canonical systemform
+- `docs/CANONICAL_IMPLEMENTATION_PLAN.md` checked before selecting the next
+  build slice from canonical direction
 - `docs/INDEX.md` kept useful as the documentation entry point
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change
