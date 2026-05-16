@@ -57,6 +57,9 @@
   non-runtime Cell-DNA frame and apply it to `WorkerAssignmentValidator`.
 - Added `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md`
   as the second applied Cell-DNA frame for read-only scheduling eligibility.
+- Added `docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md` as the first
+  write-capable Cell-DNA frame, documenting assignment intent creation and its
+  existing creation audit boundary.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

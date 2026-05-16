@@ -228,6 +228,13 @@ creation evidence:
 docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md
 ```
 
+The first write-capable application target documents assignment intent creation
+and its existing audit write:
+
+```text
+docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md
+```
+
 The protocol source is:
 
 ```text

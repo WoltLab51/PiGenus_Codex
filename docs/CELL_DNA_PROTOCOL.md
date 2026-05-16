@@ -164,6 +164,11 @@ List all durable writes. If the capability is read-only, say:
 none
 ```
 
+For write-capable capabilities, list every allowed durable write explicitly.
+If existing code already writes audit, name that audit write directly. Do not
+hide audit, decision, lifecycle, graph, or execution side effects under a broad
+"writes state" phrase.
+
 ### Allowed Effects
 
 Describe what the capability may do. Keep this narrow.
@@ -247,6 +252,7 @@ Current applied Cell-DNA frames:
 ```text
 docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md
 docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md
+docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md
 ```
 
 They describe the first candidates identified by
