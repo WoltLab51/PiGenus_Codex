@@ -94,6 +94,8 @@ PiGenus is a small local GENUS runtime core. It has:
 - WorkerAssignmentCreator for validated pending assignment creation with audit
 - `worker-assignment-create` CLI for validated pending assignment creation via
   WorkerAssignmentCreator
+- WorkerAssignment status transition semantics documented before transition
+  services or commands
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -248,13 +250,13 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-execution-preflight` is read-only unless `--log` is provided; with
   `--log`, it writes one governance decision record and still does not write
   audit logs, assign, reserve, route providers, or execute tasks.
-- `WorkerAssignment` requires governance decision evidence; it does not add CLI
-  creation, scheduling enforcement, reservation, routing, provider calls,
-  execution logs, or execution result fields.
+- `WorkerAssignment` requires governance decision evidence; it does not imply
+  scheduling enforcement, reservation, routing, provider calls, execution logs,
+  or execution result fields.
 - `WorkerAssignmentRepository` persists assignment intent only when the worker
   and governance decision evidence already exist; it does not create workers,
-  decisions, CLI assignment commands, scheduling enforcement, reservations,
-  routing, provider calls, execution logs, or execution results.
+  decisions, scheduling enforcement, reservations, routing, provider calls,
+  execution logs, or execution results.
 - `worker-assignment-list` is read-only and does not create assignments,
   decisions, audit logs, scheduling enforcement, reservations, routing,
   provider calls, execution logs, or execution results.
@@ -272,6 +274,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-assignment-create` is a thin CLI wrapper around
   WorkerAssignmentCreator; it creates pending assignment intent only and does
   not schedule, reserve, route, call providers, or execute work.
+- WorkerAssignment status transitions are documented as intent lifecycle only:
+  `pending -> assigned/rejected/cancelled/expired` and
+  `assigned -> cancelled/expired`; terminal states do not reactivate.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -325,8 +330,10 @@ Worker Runtime preparation:
 - WorkerAssignmentCreator exists before `worker-assignment-create`.
 - `worker-assignment-create` exists as a small CLI wrapper around
   WorkerAssignmentCreator.
-- Next, define WorkerAssignment status transition semantics before adding
+- WorkerAssignment status transition semantics are documented before adding
   activation, cancellation, expiry, or rejection commands.
+- Next, add a WorkerAssignment status transition validator before any
+  transition service or CLI command.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

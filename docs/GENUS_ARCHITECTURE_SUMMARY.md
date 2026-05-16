@@ -90,11 +90,12 @@ Implemented:
 - WorkerAssignmentValidator for matching preflight allow evidence
 - WorkerAssignmentCreator for service-only assignment creation with audit
 - `worker-assignment-create` for pending assignment intent creation
+- WorkerAssignment status transition semantics
 
 Not implemented:
 
 - durable scheduling
-- assignment status activation
+- assignment status transition validator/service/CLI
 - execution routing
 - remote workers
 - provider gateways
@@ -127,6 +128,10 @@ creation must write one `worker_assignment_created` audit row.
 WorkerAssignmentCreator implements that service boundary without scheduling,
 routing, or execution. `worker-assignment-create` exposes the service as a thin
 CLI wrapper for pending intent creation only.
+
+WorkerAssignment status transition semantics are documented before transition
+behavior exists. They define intent-lifecycle changes only and keep `assigned`
+separate from execution proof.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

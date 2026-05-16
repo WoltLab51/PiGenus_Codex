@@ -494,7 +494,7 @@ Do not promote when:
 | --- | --- | --- |
 | `pigenus/cli/main.py` | Operator dispatcher | Deterministic entry point; should shrink through static boundaries, not become dynamic router yet. |
 | `pigenus/cli/worker_commands.py` | StaticCellBoundary | First static cell boundary; useful but not yet a runtime cell or organ. |
-| `pigenus/cli/worker_assignment_commands.py` | StaticCellBoundary | Assignment inspection and pending-intent creation boundary; not status activation, routing, or execution. |
+| `pigenus/cli/worker_assignment_commands.py` | StaticCellBoundary | Assignment inspection and pending-intent creation boundary; not status transitions, routing, or execution. |
 | `WorkerExecutionPreflightService` | Service / governed-cell candidate | Cell-worthy because it checks capability, sensitivity, network, and worker state, but should not be treated as final cell architecture yet. |
 | `WorkerExecutionPreflightLogger` | Service / governed-cell candidate | Persists one explicit governance decision; candidate for later logging cell. |
 | `WorkerSchedulingPreviewService` | Service / governed-cell candidate | Explains candidate suitability but does not schedule. |
@@ -643,7 +643,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Define WorkerAssignment status transition semantics before activation commands.
+Option A: Add WorkerAssignment status transition validator before transition commands.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -651,7 +651,8 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment creation separate from activation and execution.
+1. Keep WorkerAssignment creation separate from status transitions and
+   execution.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

@@ -397,3 +397,10 @@ route, call providers, or execute.
 `worker-assignment-create` now exposes that service as a small CLI wrapper. It
 creates pending assignment intent only after validation and audit logging. It
 does not activate status, schedule, reserve, route, call providers, or execute.
+
+WorkerAssignment status transition semantics are now documented before any
+transition validator, service, or command exists. They define assignment
+lifecycle changes as intent-only: `pending` may become `assigned`, `rejected`,
+`cancelled`, or `expired`, and `assigned` may become `cancelled` or `expired`.
+Rejected, cancelled, and expired assignments are terminal and should be
+recreated with fresh evidence if they need to be considered again.

@@ -292,6 +292,19 @@ Lifecycle:
 governance evidence -> validation -> pending assignment + audit -> assigned/rejected/cancelled/expired -> retained for inspection
 ```
 
+Allowed status transitions:
+
+```text
+pending  -> assigned
+pending  -> rejected
+pending  -> cancelled
+pending  -> expired
+assigned -> cancelled
+assigned -> expired
+```
+
+`rejected`, `cancelled`, and `expired` are terminal lifecycle states.
+
 Current storage:
 
 - `worker_assignments` table

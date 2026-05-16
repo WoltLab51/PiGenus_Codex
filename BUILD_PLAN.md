@@ -276,8 +276,11 @@ Current development arc:
 - Current implementation step: `worker-assignment-create` is a small CLI
   wrapper around WorkerAssignmentCreator, without scheduling, reservation,
   routing, provider calls, or execution
-- Next implementation decision: define WorkerAssignment status transition
-  semantics before activation, cancellation, expiry, or rejection commands
+- Current decision step: WorkerAssignment status transition semantics define
+  allowed intent lifecycle changes before activation, cancellation, expiry, or
+  rejection commands
+- Next implementation step: add a WorkerAssignment status transition validator
+  before any transition service or CLI command
 
 Readiness source:
 
@@ -351,6 +354,9 @@ meaning, inspection, and backup surfaces remain stable.
   activation, scheduling enforcement, routing, provider calls, or execution
 - `worker-assignment-create` comes before assignment status transition commands,
   scheduling enforcement, routing, provider calls, or execution
+- WorkerAssignment status transition semantics come before a transition
+  validator, transition service, transition CLI commands, scheduling
+  enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

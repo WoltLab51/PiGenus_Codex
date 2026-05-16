@@ -32,10 +32,13 @@ Already implemented:
 - `WorkerAssignmentValidator`
 - `WorkerAssignmentCreator`
 - `worker-assignment-create`
+- status transition semantics
 
 Not implemented:
 
-- assignment status transitions
+- status transition validator
+- status transition service
+- status transition commands
 - worker reservation
 - scheduling enforcement
 - provider routing
@@ -169,7 +172,7 @@ later if operator safety requires it.
 - requested initial status is `pending`
 
 The repository may continue to enforce basic existence. The validator should
-own semantic evidence checks before any CLI creation command exists.
+own semantic evidence checks before assignment intent is persisted.
 
 The validator does not persist assignments. It only returns a validation
 result.
@@ -190,18 +193,100 @@ not add scheduling, routing, reservation, provider calls, or execution.
 
 ## Status Transition Boundary
 
-Future status transitions should be explicit and tested.
+Status transitions describe assignment intent only. They do not prove that work
+has started, reserve capacity, route to a provider, or store execution output.
 
-Initial candidate transitions:
+Status meanings:
 
 ```text
-pending -> assigned
-pending -> rejected
-pending -> cancelled
-pending -> expired
+pending
+  Governed assignment intent exists, but it is not activated.
+
+assigned
+  A later activation or reservation boundary accepted the pending intent.
+  This is still not execution proof.
+
+rejected
+  The pending intent was explicitly refused before activation.
+
+cancelled
+  The pending or assigned intent was withdrawn before execution.
+
+expired
+  The pending or assigned intent is no longer valid because time, evidence,
+  room policy, worker state, or resource assumptions became stale.
+```
+
+Allowed transitions:
+
+```text
+pending  -> assigned
+pending  -> rejected
+pending  -> cancelled
+pending  -> expired
 assigned -> cancelled
 assigned -> expired
 ```
+
+Terminal states:
+
+```text
+rejected
+cancelled
+expired
+```
+
+Terminal states must not transition back into `pending` or `assigned`. If work
+needs to be considered again after rejection, cancellation, or expiry, the
+system should create a new assignment intent with fresh evidence instead of
+reactivating the old record.
+
+Forbidden transitions:
+
+- `assigned -> pending`
+- `assigned -> rejected`
+- `rejected -> pending`
+- `rejected -> assigned`
+- `cancelled -> pending`
+- `cancelled -> assigned`
+- `expired -> pending`
+- `expired -> assigned`
+
+Same-status updates should be treated as no-ops unless a future command
+explicitly supports metadata-only annotation. They should not create duplicate
+status-change audit rows.
+
+Transition side effects should be narrow:
+
+- update the assignment status
+- update `updated_at`
+- preserve worker, capability, room, creator, and governance decision evidence
+- write one audit row for successful status change
+- avoid creating or mutating governance decisions
+- avoid routing, reservation, provider calls, execution logs, or execution
+  results
+
+The future audit action should be:
+
+```text
+action = "worker_assignment_status_changed"
+```
+
+Audit details should include:
+
+- `assignment_id`
+- `worker_id`
+- `capability`
+- `room_id`
+- `old_status`
+- `new_status`
+- `actor_id`
+- `reason`, when provided
+
+Future `pending -> assigned` activation may require additional governance or
+approval evidence. If so, that evidence should be passed into the transition
+boundary and referenced; the status transition itself should not silently create
+the decision that authorizes it.
 
 Out of scope for the next step:
 
@@ -210,6 +295,7 @@ Out of scope for the next step:
 - assignment as execution proof
 - execution result storage
 - status transition commands
+- status transition persistence implementation
 
 ## Rule Of Thumb
 

@@ -1504,7 +1504,7 @@ preserving the current no-execution Worker Runtime boundary.
 The system gained:
 
 - `docs/WORKER_ASSIGNMENT_SEMANTICS.md`
-- a matching-evidence rule for future assignment creation
+- a matching-evidence rule for assignment creation
 - the requirement that only `worker_execution_preflight` allow decisions may
   create assignment intent
 - the rule that initial assignment creation may create only `pending` records
@@ -1577,3 +1577,20 @@ Why it mattered:
 Assignment creation became operator-facing without moving policy into CLI code.
 The command remains a thin wrapper around the creator service and still does
 not activate assignment status, schedule, route, call providers, or execute.
+
+## Worker Assignment Status Transition Semantics
+
+The system gained:
+
+- explicit allowed WorkerAssignment status transitions
+- terminal-state rules for `rejected`, `cancelled`, and `expired`
+- a future `worker_assignment_status_changed` audit boundary
+- D-097 recording that status transitions are intent lifecycle, not execution
+  proof
+
+Why it mattered:
+
+Assignment creation now exists, so the next risk is accidental activation.
+Documenting the status graph before adding validators, services, or commands
+keeps `assigned` separate from execution and preserves the Worker Runtime
+boundary.

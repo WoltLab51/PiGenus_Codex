@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Documented WorkerAssignment status transition semantics before transition
+  services or commands
+- Recorded `D-097: Worker Assignment Status Transitions Are Explicit`
 - Added `worker-assignment-create` as a thin CLI wrapper around
   WorkerAssignmentCreator
 - Added CLI tests for successful pending assignment creation, audit logging,

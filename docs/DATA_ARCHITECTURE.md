@@ -314,6 +314,10 @@ The audit row explains that durable assignment intent was created; it is not a
 second truth record and not a governance decision.
 `worker-assignment-create` exposes this as a CLI write path, but it remains
 assignment intent only and does not activate, schedule, route, or execute.
+WorkerAssignment status transition semantics are documented before any
+transition writer exists. They allow only intent-lifecycle changes from
+`pending` to `assigned`, `rejected`, `cancelled`, or `expired`, and from
+`assigned` to `cancelled` or `expired`; terminal states do not reactivate.
 
 Worker storage adapters now live in a dedicated module:
 

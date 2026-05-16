@@ -1418,7 +1418,7 @@ or routing.
 
 Decision:
 
-Future WorkerAssignment creation requires matching `allow` evidence from
+WorkerAssignment creation requires matching `allow` evidence from
 `worker_execution_preflight`. A generic decision record, scheduling preview
 decision, blocked decision, escalated decision, or unstructured reason is not
 sufficient. The requested assignment must match worker, capability, runtime
@@ -1430,7 +1430,7 @@ Reason:
 Assignment creation is the first durable step from inspection toward action.
 It must remain narrower than scheduling preview and separate from assignment
 activation, routing, provider calls, and execution. Defining the rule before
-implementing a validator or creation command keeps Worker Runtime growth
+implementing the validator and creation command kept Worker Runtime growth
 observable and accountable.
 
 ## D-093: Worker Assignment Validator Enforces Matching Evidence
@@ -1506,3 +1506,25 @@ The creation path is now safe to expose because validation and creation
 semantics are already tested as services. Keeping the CLI as a wrapper prevents
 operator-surface code from owning assignment policy and preserves the Worker
 Runtime boundary.
+
+## D-097: Worker Assignment Status Transitions Are Explicit
+
+Decision:
+
+PiGenus defines WorkerAssignment status transitions before implementing a
+transition validator, transition service, or transition CLI commands. The
+allowed transitions are `pending -> assigned`, `pending -> rejected`,
+`pending -> cancelled`, `pending -> expired`, `assigned -> cancelled`, and
+`assigned -> expired`. `rejected`, `cancelled`, and `expired` are terminal
+states. A status transition must preserve the original worker, capability,
+room, creator, and governance evidence, write a future
+`worker_assignment_status_changed` audit row on successful change, and must not
+create governance decisions, schedule, reserve, route, call providers, write
+execution logs, or execute work.
+
+Reason:
+
+Assignment creation is now operator-facing, so the next risk is accidental
+activation semantics. Defining the status graph first keeps assignment
+lifecycle accountable and prevents `assigned` from being confused with
+execution proof.
