@@ -1515,3 +1515,18 @@ WorkerAssignment moved from inspectable storage toward a future creation path
 without opening that path yet. The semantics now make clear that assignment is
 durable governed intent, not scheduling enforcement, reservation, routing, or
 execution.
+
+## Worker Assignment Validator
+
+The system gained:
+
+- `pigenus/core/worker_assignment_validator.py`
+- read-only validation of matching preflight allow evidence
+- tests for allow, block, scheduling-preview evidence, worker mismatch,
+  capability mismatch, room mismatch, non-pending status, and missing evidence
+
+Why it mattered:
+
+The validator makes assignment creation semantics executable without adding a
+creation command. It keeps semantic checks outside the repository and preserves
+the no-scheduling, no-routing, no-execution Worker Runtime boundary.

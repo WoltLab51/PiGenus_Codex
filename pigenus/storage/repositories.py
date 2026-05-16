@@ -456,6 +456,15 @@ class DecisionRepository:
         rows = self.database.fetchall("SELECT data FROM decision_logs ORDER BY created_at, decision_id")
         return [DecisionRecord.model_validate(json.loads(row["data"])) for row in rows]
 
+    def get(self, decision_id: str) -> DecisionRecord | None:
+        row = self.database.fetchone(
+            "SELECT data FROM decision_logs WHERE decision_id = ?",
+            (decision_id,),
+        )
+        if row is None:
+            return None
+        return DecisionRecord.model_validate(json.loads(row["data"]))
+
     def count(self) -> int:
         row = self.database.fetchone("SELECT COUNT(*) AS count FROM decision_logs")
         return int(row["count"]) if row else 0

@@ -643,7 +643,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Add WorkerAssignmentValidator before any creation command.
+Option A: Define assignment creation audit behavior before any creation command.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -651,7 +651,7 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment validation separate from creation and execution.
+1. Keep WorkerAssignment creation separate from validation and execution.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

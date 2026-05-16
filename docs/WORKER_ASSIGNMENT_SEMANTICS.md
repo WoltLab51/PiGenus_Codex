@@ -3,8 +3,8 @@
 This document defines when PiGenus may turn worker-readiness evidence into a
 durable `WorkerAssignment` intent record.
 
-It does not add a CLI command, validator, migration, scheduler, router,
-provider call, or execution path.
+It does not add a CLI command, migration, scheduler, router, provider call, or
+execution path.
 
 ## Purpose
 
@@ -29,10 +29,10 @@ Already implemented:
 - `WorkerAssignmentRepository`
 - `worker_assignments` SQLite table
 - read-only `worker-assignment-list`
+- `WorkerAssignmentValidator`
 
 Not implemented:
 
-- `WorkerAssignmentValidator`
 - `worker-assignment-create`
 - assignment status transitions
 - worker reservation
@@ -130,10 +130,9 @@ It must not:
 Audit behavior is intentionally unresolved. It should be decided before a
 creation command is implemented.
 
-## Future Validator
+## Implemented Validator
 
-The next code step should be a small `WorkerAssignmentValidator` or equivalent
-service that checks:
+`WorkerAssignmentValidator` is a small service that checks:
 
 - worker exists
 - governance decision exists
@@ -145,6 +144,9 @@ service that checks:
 
 The repository may continue to enforce basic existence. The validator should
 own semantic evidence checks before any CLI creation command exists.
+
+The validator does not persist assignments. It only returns a validation
+result.
 
 ## Status Transition Boundary
 
@@ -167,6 +169,7 @@ Out of scope for the next step:
 - implicit assignment on scheduling preview
 - assignment as execution proof
 - execution result storage
+- `worker-assignment-create`
 
 ## Rule Of Thumb
 

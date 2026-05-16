@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added `WorkerAssignmentValidator` for matching preflight allow evidence before
+  assignment creation
+- Added validator tests for allow, block, scheduling-preview evidence, worker,
+  capability, room, status, and missing evidence rejection
+- Verified: 262 tests passed
 - Added `docs/WORKER_ASSIGNMENT_SEMANTICS.md` to define matching allow evidence
   before any assignment creation command exists
 - Recorded

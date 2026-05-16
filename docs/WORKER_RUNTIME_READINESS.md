@@ -378,7 +378,8 @@ operator inspection. Assignment creation, scheduling enforcement, reservations,
 routes, provider calls, execution logs, and execution results remain later
 steps.
 
-`docs/WORKER_ASSIGNMENT_SEMANTICS.md` defines the next boundary: assignment
+`docs/WORKER_ASSIGNMENT_SEMANTICS.md` defines the current boundary: assignment
 creation may use only matching `allow` evidence from Worker Execution
-Preflight, and initial creation may create only `pending` intent. A
-WorkerAssignmentValidator should be implemented before any creation command.
+Preflight, and initial creation may create only `pending` intent.
+WorkerAssignmentValidator now checks that evidence before any creation command
+exists.

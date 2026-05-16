@@ -1432,3 +1432,21 @@ It must remain narrower than scheduling preview and separate from assignment
 activation, routing, provider calls, and execution. Defining the rule before
 implementing a validator or creation command keeps Worker Runtime growth
 observable and accountable.
+
+## D-093: Worker Assignment Validator Enforces Matching Evidence
+
+Decision:
+
+PiGenus adds `WorkerAssignmentValidator` as a read-only semantic validator
+before any `worker-assignment-create` command exists. The validator checks that
+a candidate `WorkerAssignment` references a known worker, an existing
+`worker_execution_preflight` governance decision, an `allow` result, the
+`worker_execution_preflight` family, matching worker, capability, runtime,
+sensitivity, network requirement, room, and initial `pending` status.
+
+Reason:
+
+The repository enforces basic existence; it should not own the richer evidence
+semantics. A separate validator keeps assignment creation accountable while
+preserving the current boundary: no assignment creation command, no scheduling
+enforcement, no reservation, no routing, no provider calls, and no execution.

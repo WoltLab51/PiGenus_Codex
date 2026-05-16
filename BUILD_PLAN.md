@@ -264,8 +264,11 @@ Current development arc:
 - Current decision step: assignment creation semantics require matching
   `worker_execution_preflight` allow evidence and initial `pending` status
   before any CLI assignment creation or runtime execution path exists
-- Next implementation decision: build a small WorkerAssignmentValidator before
-  any `worker-assignment-create` command
+- Current implementation step: `WorkerAssignmentValidator` checks matching
+  preflight allow evidence without persisting assignments or creating a CLI
+  creation path
+- Next implementation decision: define assignment creation audit behavior
+  before any `worker-assignment-create` command
 
 Readiness source:
 
@@ -330,6 +333,8 @@ meaning, inspection, and backup surfaces remain stable.
 - WorkerAssignment creation semantics come before an assignment validator, CLI
   assignment creation, status activation, scheduling enforcement, routing,
   provider calls, or execution
+- WorkerAssignmentValidator comes before CLI assignment creation, status
+  activation, scheduling enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution
