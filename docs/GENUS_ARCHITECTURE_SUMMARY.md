@@ -94,11 +94,11 @@ Implemented:
 - WorkerAssignmentStatusTransitionValidator for read-only status graph checks
 - WorkerAssignmentStatusTransitionService for service-only status updates with
   audit
+- `worker-assignment-transition` for service-backed assignment status updates
 
 Not implemented:
 
 - durable scheduling
-- assignment status transition CLI
 - execution routing
 - remote workers
 - provider gateways
@@ -139,6 +139,8 @@ WorkerAssignmentStatusTransitionValidator makes that graph executable without
 mutating stored assignment state.
 WorkerAssignmentStatusTransitionService applies validated status changes and
 writes audit, but it remains service-only and does not schedule or execute.
+`worker-assignment-transition` exposes that service as a thin CLI wrapper for
+assignment lifecycle status only.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

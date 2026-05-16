@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `278 passed`
+- Last verified result: `281 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 
@@ -99,7 +99,9 @@ PiGenus is a small local GENUS runtime core. It has:
 - WorkerAssignmentStatusTransitionValidator for read-only status graph checks
   before transition services or commands
 - WorkerAssignmentStatusTransitionService for service-only status updates with
-  audit, before transition CLI commands
+  audit before CLI exposure
+- `worker-assignment-transition` CLI for validated status updates via
+  WorkerAssignmentStatusTransitionService
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -284,8 +286,12 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerAssignmentStatusTransitionValidator` checks that graph without
   mutating assignments, writing audit rows, scheduling, routing, or executing.
 - `WorkerAssignmentStatusTransitionService` applies validated status changes
-  and writes one audit row; it does not expose CLI behavior, create decisions,
-  schedule, reserve, route, call providers, or execute work.
+  and writes one audit row; it does not create decisions, schedule, reserve,
+  route, call providers, or execute work.
+- `worker-assignment-transition` is a thin CLI wrapper around
+  WorkerAssignmentStatusTransitionService; it updates assignment lifecycle
+  status only and does not schedule, reserve, route, call providers, or execute
+  work.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -341,14 +347,12 @@ Worker Runtime preparation:
 - WorkerAssignmentCreator exists before `worker-assignment-create`.
 - `worker-assignment-create` exists as a small CLI wrapper around
   WorkerAssignmentCreator.
-- WorkerAssignment status transition semantics are documented before adding
-  activation, cancellation, expiry, or rejection commands.
-- WorkerAssignmentStatusTransitionValidator exists before transition services
-  or CLI commands.
-- WorkerAssignmentStatusTransitionService exists before any transition CLI
-  command.
-- Next, expose worker assignment status transitions through a small CLI wrapper
-  around the service.
+- WorkerAssignment status transition semantics, validator, service, and CLI
+  wrapper now exist as lifecycle-only boundaries.
+- `worker-assignment-transition` exists as a small CLI wrapper around
+  WorkerAssignmentStatusTransitionService.
+- Next, define the worker scheduling enforcement boundary before any real
+  scheduling, reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

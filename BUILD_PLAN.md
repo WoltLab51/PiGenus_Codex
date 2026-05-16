@@ -286,8 +286,12 @@ Current development arc:
 - Current implementation step: `WorkerAssignmentStatusTransitionService`
   applies validated status transitions and writes one audit row without CLI,
   scheduling, reservation, routing, provider calls, or execution
-- Next implementation step: expose assignment status transitions through a
-  small CLI wrapper around the service, without scheduling or execution
+- Current implementation step: `worker-assignment-transition` exposes validated
+  assignment status transitions through a small CLI wrapper without scheduling,
+  reservation, routing, provider calls, or execution
+- Next implementation decision: define the worker scheduling enforcement
+  boundary before any real scheduling, reservation, routing, provider calls, or
+  execution
 
 Readiness source:
 
@@ -350,25 +354,27 @@ meaning, inspection, and backup surfaces remain stable.
 - Read-only WorkerAssignment inspection comes before CLI assignment creation,
   scheduling enforcement, routing, provider calls, or execution
 - WorkerAssignment creation semantics come before an assignment validator, CLI
-  assignment creation, status activation, scheduling enforcement, routing,
+  assignment creation, status transitions, scheduling enforcement, routing,
   provider calls, or execution
 - WorkerAssignmentValidator comes before CLI assignment creation, status
-  activation, scheduling enforcement, routing, provider calls, or execution
+  transitions, scheduling enforcement, routing, provider calls, or execution
 - WorkerAssignment creation audit semantics come before a creation service,
-  CLI assignment creation, status activation, scheduling enforcement, routing,
+  CLI assignment creation, status transitions, scheduling enforcement, routing,
   provider calls, or execution
 - WorkerAssignmentCreator comes before CLI assignment creation, status
-  activation, scheduling enforcement, routing, provider calls, or execution
+  transitions, scheduling enforcement, routing, provider calls, or execution
 - `worker-assignment-create` comes before assignment status transition commands,
   scheduling enforcement, routing, provider calls, or execution
 - WorkerAssignment status transition semantics come before a transition
-  validator, transition service, transition CLI commands, scheduling
+  validator, transition service, transition CLI, scheduling
   enforcement, routing, provider calls, or execution
 - WorkerAssignmentStatusTransitionValidator comes before a transition service,
-  transition CLI commands, scheduling enforcement, routing, provider calls, or
+  transition CLI, scheduling enforcement, routing, provider calls, or
   execution
-- WorkerAssignmentStatusTransitionService comes before transition CLI commands,
+- WorkerAssignmentStatusTransitionService comes before transition CLI,
   scheduling enforcement, routing, provider calls, or execution
+- `worker-assignment-transition` comes before scheduling enforcement,
+  reservation, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

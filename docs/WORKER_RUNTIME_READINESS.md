@@ -398,8 +398,8 @@ route, call providers, or execute.
 creates pending assignment intent only after validation and audit logging. It
 does not activate status, schedule, reserve, route, call providers, or execute.
 
-WorkerAssignment status transition semantics are now documented before any
-transition validator, service, or command exists. They define assignment
+WorkerAssignment status transition semantics were documented before the
+validator, service, and command surfaces were added. They define assignment
 lifecycle changes as intent-only: `pending` may become `assigned`, `rejected`,
 `cancelled`, or `expired`, and `assigned` may become `cancelled` or `expired`.
 Rejected, cancelled, and expired assignments are terminal and should be
@@ -412,5 +412,9 @@ or execution path exists.
 
 `WorkerAssignmentStatusTransitionService` now applies validated transitions and
 writes one `worker_assignment_status_changed` audit row. This is still
-service-only: there is no status transition CLI, scheduling enforcement,
-reservation, provider routing, or execution path.
+not scheduling enforcement, reservation, provider routing, or execution.
+
+`worker-assignment-transition` exposes that service as a small CLI wrapper. It
+changes assignment lifecycle status only and does not create governance
+decisions, schedule, reserve, route, call providers, write execution logs, or
+execute work.

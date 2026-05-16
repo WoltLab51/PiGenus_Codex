@@ -325,6 +325,8 @@ executing.
 updating the existing assignment record and writing one audit row. It does not
 create governance decisions, scheduling records, routes, provider calls, or
 execution records.
+`worker-assignment-transition` exposes this as a CLI write path, but it remains
+assignment lifecycle only and does not schedule, route, or execute.
 
 Worker storage adapters now live in a dedicated module:
 

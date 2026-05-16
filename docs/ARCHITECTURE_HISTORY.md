@@ -1630,3 +1630,20 @@ WorkerAssignment lifecycle can now move under a service boundary without
 exposing operator commands or execution. This keeps status changes auditable
 while preserving the line between assignment intent, scheduling, routing, and
 actual work.
+
+## Worker Assignment Transition CLI
+
+The system gained:
+
+- `worker-assignment-transition`
+- CLI status updates through `WorkerAssignmentStatusTransitionService`
+- tests proving successful transition writes one assignment update and audit
+  row without creating decisions
+- tests proving invalid and missing assignments do not write audits or status
+  changes
+
+Why it mattered:
+
+Assignment lifecycle became operator-facing without moving transition policy
+into CLI code. The command is still only lifecycle status management; it does
+not schedule, reserve, route, call providers, or execute work.

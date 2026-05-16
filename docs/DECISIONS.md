@@ -1585,3 +1585,21 @@ Reason:
 Status changes are operationally meaningful but still not execution. A
 service-only transition boundary makes lifecycle updates accountable and
 testable before any operator command can change assignment status.
+
+## D-101: Worker Assignment Transition CLI Is Service-Backed
+
+Decision:
+
+PiGenus adds `worker-assignment-transition` as a thin CLI wrapper around
+`WorkerAssignmentStatusTransitionService`. The command accepts one assignment
+ID, one target status, and optional actor/reason metadata. It delegates
+validation, persistence, and audit to the service, prints either the applied
+status change plus audit ID or stable rejection reasons, and does not create
+governance decisions, schedule, reserve, route, call providers, write execution
+logs, or execute work.
+
+Reason:
+
+The status transition service is already validated and audited. Exposing it as
+a small operator command makes assignment lifecycle observable without moving
+policy into CLI code or turning assignment status into execution.

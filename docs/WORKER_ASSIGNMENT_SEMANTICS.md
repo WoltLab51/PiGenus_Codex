@@ -35,10 +35,10 @@ Already implemented:
 - status transition semantics
 - `WorkerAssignmentStatusTransitionValidator`
 - `WorkerAssignmentStatusTransitionService`
+- `worker-assignment-transition`
 
 Not implemented:
 
-- status transition commands
 - worker reservation
 - scheduling enforcement
 - provider routing
@@ -329,7 +329,6 @@ The validator does not:
 
 It does not:
 
-- expose a CLI command
 - create or mutate governance decisions
 - schedule work
 - reserve capacity
@@ -337,13 +336,18 @@ It does not:
 - write execution logs or execution results
 - execute work
 
+`worker-assignment-transition` is a thin CLI wrapper around this service. It
+does not add scheduling, routing, reservation, provider calls, or execution.
+
 Out of scope for the next step:
 
 - automatic status changes
 - implicit assignment on scheduling preview
 - assignment as execution proof
 - execution result storage
-- status transition commands
+- scheduling enforcement
+- worker reservation
+- provider routing
 
 ## Rule Of Thumb
 

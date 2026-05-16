@@ -315,6 +315,7 @@ Current storage:
   checks
 - `WorkerAssignmentStatusTransitionService` for service-only status updates
   plus audit
+- `worker-assignment-transition` for CLI status updates through the service
 - full `WorkerAssignment` JSON plus indexed worker, status, room, capability,
   and governance-decision columns
 
