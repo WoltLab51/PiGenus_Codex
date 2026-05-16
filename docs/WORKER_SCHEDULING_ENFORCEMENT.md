@@ -211,11 +211,40 @@ It:
 
 - accepts an assignment ID and reads current assignment, worker, heartbeat, and
   governance evidence state
-- return stable allow, deny, review, or not-considered outcomes
-- explain every reason in order
-- write no decisions, audits, assignments, reservations, routes, or execution
+- returns stable allow, deny, review, or not-considered outcomes
+- explains every reason in order
+- writes no decisions, audits, assignments, reservations, routes, or execution
   records
-- include tests proving no storage mutation
+- includes tests proving no storage mutation
 
 Only after that boundary is boring and tested should PiGenus consider CLI
 inspection or opt-in decision logging.
+
+## Cycle Consolidation
+
+The first eligibility slice is sufficient as a read-only boundary:
+
+- the validator does not schedule, reserve, route, log, or execute
+- tests prove it does not mutate assignment, decision, or audit storage
+- reason codes are stable for the currently implemented worker inputs
+- heartbeat freshness, room policy, guard outcomes, resource policy, and human
+  approval remain future inputs because those scheduling-enforcement surfaces
+  do not exist yet
+
+Next safe step:
+
+```text
+read-only CLI inspection
+```
+
+Not next:
+
+```text
+opt-in decision logging
+real scheduling
+reservation
+routing
+provider calls
+execution logs
+execution
+```

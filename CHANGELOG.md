@@ -48,6 +48,9 @@
 - Clarified project-control document roles and slimmed `BUILD_PLAN.md`
   `Current And Next` to a roadmap summary with detailed worker lifecycle
   semantics referenced from topic documents.
+- Consolidated the scheduling eligibility validator cycle and set read-only
+  CLI inspection as the next step before opt-in decision logging or scheduling
+  behavior.
 
 ### Verified
 

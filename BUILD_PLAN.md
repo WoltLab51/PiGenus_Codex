@@ -232,11 +232,10 @@ Current stop lines:
 - no assignment status change as execution proof
 - no LLM orchestration, federation, dashboard, or autonomous agents
 
-Next decision:
+Next step:
 
-- Consolidate the scheduling eligibility validator result and decide whether
-  the next step is CLI inspection, opt-in decision logging, or another pause
-  before any real scheduling, reservation, routing, provider calls, execution
+- Add read-only scheduling eligibility CLI inspection before opt-in decision
+  logging, real scheduling, reservation, routing, provider calls, execution
   logs, or execution.
 
 Readiness source:

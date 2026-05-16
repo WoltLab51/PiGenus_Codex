@@ -19,12 +19,13 @@ Worker Runtime / scheduling eligibility:
 
 - Frame: check whether assigned WorkerAssignment intent may be considered by
   future scheduling.
-- Current step: `WorkerAssignmentSchedulingEligibilityValidator` as a read-only
-  eligibility check.
+- Result: `WorkerAssignmentSchedulingEligibilityValidator` is implemented as a
+  read-only eligibility check.
 - Explicitly not now: no scheduling enforcement, reservation, routing,
   provider calls, execution logs, execution, or CLI.
-- Consolidation target: confirm no-write proof and decide whether CLI
-  inspection, opt-in logging, or another pause is next.
+- Consolidation: no-write proof is covered by tests, reason codes are stable
+  for the first eligibility check, and read-only CLI inspection should come
+  before opt-in decision logging.
 
 ## Current Runtime Shape
 
@@ -376,9 +377,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate the scheduling eligibility step before adding CLI
-  inspection, opt-in logging, real scheduling, reservation, routing, provider,
-  or execution behavior.
+- Next, add read-only scheduling eligibility CLI inspection before opt-in
+  decision logging, real scheduling, reservation, routing, provider, or
+  execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
