@@ -501,6 +501,7 @@ Do not promote when:
 | `WorkerRepository` | Worker storage adapter | Source-of-truth access in `pigenus/storage/worker_repositories.py`, not a cell by itself. |
 | `WorkerAssignmentRepository` | Worker storage adapter | Durable assignment-intent storage in `pigenus/storage/worker_repositories.py`, not execution or routing. |
 | `WorkerAssignmentStatusTransitionValidator` | Read-only lifecycle validator | Checks documented assignment status graph before any transition writer exists; not persistence, audit, routing, or execution. |
+| `WorkerAssignmentStatusTransitionService` | Worker lifecycle service | Applies validated assignment status changes with one audit row; not CLI, scheduling, routing, or execution. |
 | `MeaningRepository` | Storage adapter | Meaning persistence, not a cell by itself. |
 | `MeaningIngestionPreview` | Service / governed-cell candidate | Converts memory to meaning with explicit behavior. |
 | `GuardPipeline` | Governance service / immune tissue | Cell-worthy family surface, but currently best understood as core governance tissue. |
@@ -644,7 +645,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Add service-only WorkerAssignment status transition boundary before transition commands.
+Option A: Add WorkerAssignment status transition CLI wrapper before scheduling.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.

@@ -313,6 +313,8 @@ Current storage:
 - `worker-assignment-create` for CLI creation of pending assignment intent
 - `WorkerAssignmentStatusTransitionValidator` for read-only lifecycle graph
   checks
+- `WorkerAssignmentStatusTransitionService` for service-only status updates
+  plus audit
 - full `WorkerAssignment` JSON plus indexed worker, status, room, capability,
   and governance-decision columns
 
@@ -325,6 +327,9 @@ evidence.
 Successful assignment creation must also write a
 `worker_assignment_created` audit row so creation of durable intent is
 operationally accountable.
+Successful status changes must write a `worker_assignment_status_changed` audit
+row. Status changes update intent lifecycle only; they are not scheduling,
+reservation, routing, provider calls, or execution proof.
 
 ### MutationProposal
 

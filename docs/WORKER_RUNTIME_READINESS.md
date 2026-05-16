@@ -409,3 +409,8 @@ recreated with fresh evidence if they need to be considered again.
 mutating assignments. It makes the lifecycle graph testable before any
 transition service, CLI command, scheduling enforcement, routing, provider call,
 or execution path exists.
+
+`WorkerAssignmentStatusTransitionService` now applies validated transitions and
+writes one `worker_assignment_status_changed` audit row. This is still
+service-only: there is no status transition CLI, scheduling enforcement,
+reservation, provider routing, or execution path.

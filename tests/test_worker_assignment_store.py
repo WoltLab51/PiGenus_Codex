@@ -111,6 +111,31 @@ def test_worker_assignment_repository_adds_and_gets_assignment():
     database.close()
 
 
+def test_worker_assignment_repository_updates_existing_assignment_status_only():
+    database = Database(db_path("update"))
+    database.initialize()
+    repository = prepare_repository(database)
+    original = assignment("wasg_update")
+    repository.add(original)
+    updated = repository.update_status(
+        "wasg_update",
+        WorkerAssignmentStatus.ASSIGNED,
+        datetime(2026, 5, 16, 9, 0, tzinfo=timezone.utc),
+    )
+
+    stored = repository.get("wasg_update")
+
+    assert stored == updated
+    assert stored is not None
+    assert stored.created_at == original.created_at
+    assert repository.count() == 1
+    assert [item.id for item in repository.list(status=WorkerAssignmentStatus.ASSIGNED)] == [
+        "wasg_update"
+    ]
+    assert repository.list(status=WorkerAssignmentStatus.PENDING) == []
+    database.close()
+
+
 def test_worker_assignment_repository_lists_with_filters_in_created_order():
     database = Database(db_path("filters"))
     database.initialize()

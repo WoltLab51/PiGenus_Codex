@@ -321,6 +321,10 @@ transition writer exists. They allow only intent-lifecycle changes from
 `WorkerAssignmentStatusTransitionValidator` makes those rules executable
 without persisting changes, writing audit rows, scheduling, routing, or
 executing.
+`WorkerAssignmentStatusTransitionService` persists validated status changes by
+updating the existing assignment record and writing one audit row. It does not
+create governance decisions, scheduling records, routes, provider calls, or
+execution records.
 
 Worker storage adapters now live in a dedicated module:
 

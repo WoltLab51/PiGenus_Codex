@@ -14,7 +14,8 @@
 - Added governed WorkerAssignment intent support: model, SQLite store,
   read-only inspection, matching preflight evidence validation, service-backed
   pending assignment creation, `worker-assignment-create`, status-transition
-  semantics, and read-only status-transition validation.
+  semantics, read-only status-transition validation, and service-only status
+  transition persistence with audit.
 - Added architecture and process scaffolding for the v0.4 arc: data
   architecture, compact architecture summary, worker readiness, multimodal
   systemform, architecture fitness review, cellular systemform, stable-core /
@@ -35,14 +36,15 @@
 ### Documented
 
 - Recorded durable worker, architecture, and documentation-maintenance
-  decisions through `D-099: Unreleased Changelog Uses Grouped Arc Summaries`.
+  decisions through
+  `D-100: Worker Assignment Status Transition Service Is Service-Only`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.
 
 ### Verified
 
-- Latest local full suite: `273 passed`.
+- Latest local full suite: `278 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from typing import Any
 
 from pigenus.schemas.systemform import (
@@ -204,6 +205,63 @@ class WorkerAssignmentRepository:
         if row is None:
             return None
         return WorkerAssignment.model_validate(json.loads(row["data"]))
+
+    def update_status(
+        self,
+        assignment_id: str,
+        status: WorkerAssignmentStatus,
+        updated_at: datetime,
+    ) -> WorkerAssignment:
+        current = self.get(assignment_id)
+        if current is None:
+            raise ValueError(f"Unknown assignment_id: {assignment_id}")
+
+        assignment = current.model_copy(
+            update={
+                "status": status,
+                "updated_at": updated_at,
+            }
+        )
+
+        data = assignment.model_dump(mode="json")
+        self.database.execute(
+            """
+            UPDATE worker_assignments
+            SET worker_id = ?,
+                capability = ?,
+                room_id = ?,
+                status = ?,
+                governance_decision_id = ?,
+                created_by_actor_id = ?,
+                event_id = ?,
+                context_stack_id = ?,
+                required_runtime = ?,
+                sensitivity = ?,
+                network_required = ?,
+                created_at = ?,
+                updated_at = ?,
+                data = ?
+            WHERE assignment_id = ?
+            """,
+            (
+                assignment.worker_id,
+                assignment.capability,
+                assignment.room_id,
+                assignment.status.value,
+                assignment.governance_decision_id,
+                assignment.created_by_actor_id,
+                assignment.event_id,
+                assignment.context_stack_id,
+                assignment.required_runtime,
+                assignment.sensitivity.value if assignment.sensitivity else None,
+                1 if assignment.network_required else 0,
+                str(data["created_at"]),
+                str(data["updated_at"]),
+                _json(data),
+                assignment.id,
+            ),
+        )
+        return assignment
 
     def list(
         self,

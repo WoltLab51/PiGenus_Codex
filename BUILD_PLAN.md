@@ -283,9 +283,11 @@ Current development arc:
 - Current implementation step: `WorkerAssignmentStatusTransitionValidator`
   checks documented status graph transitions without persistence, audit,
   scheduling, routing, provider calls, or execution
-- Next implementation step: add a service-only WorkerAssignment status
-  transition boundary that applies validated transitions and writes one audit
-  row, before any transition CLI command
+- Current implementation step: `WorkerAssignmentStatusTransitionService`
+  applies validated status transitions and writes one audit row without CLI,
+  scheduling, reservation, routing, provider calls, or execution
+- Next implementation step: expose assignment status transitions through a
+  small CLI wrapper around the service, without scheduling or execution
 
 Readiness source:
 
@@ -365,6 +367,8 @@ meaning, inspection, and backup surfaces remain stable.
 - WorkerAssignmentStatusTransitionValidator comes before a transition service,
   transition CLI commands, scheduling enforcement, routing, provider calls, or
   execution
+- WorkerAssignmentStatusTransitionService comes before transition CLI commands,
+  scheduling enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

@@ -1611,3 +1611,22 @@ The documented status graph became executable without adding persistence,
 audit writing, transition commands, routing, or execution. This keeps the next
 Worker Runtime step service-shaped and testable before any operator command can
 change durable assignment status.
+
+## Worker Assignment Status Transition Service
+
+The system gained:
+
+- `pigenus/core/worker_assignment_status_transition.py`
+- `WorkerAssignmentRepository.update`
+- service-only validated assignment status updates
+- `worker_assignment_status_changed` audit logging on success
+- tests proving success writes one status update plus audit, invalid input
+  writes neither, missing assignments are rejected cleanly, and no governance
+  decision is created
+
+Why it mattered:
+
+WorkerAssignment lifecycle can now move under a service boundary without
+exposing operator commands or execution. This keeps status changes auditable
+while preserving the line between assignment intent, scheduling, routing, and
+actual work.

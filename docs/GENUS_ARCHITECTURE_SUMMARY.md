@@ -92,11 +92,13 @@ Implemented:
 - `worker-assignment-create` for pending assignment intent creation
 - WorkerAssignment status transition semantics
 - WorkerAssignmentStatusTransitionValidator for read-only status graph checks
+- WorkerAssignmentStatusTransitionService for service-only status updates with
+  audit
 
 Not implemented:
 
 - durable scheduling
-- assignment status transition service/CLI
+- assignment status transition CLI
 - execution routing
 - remote workers
 - provider gateways
@@ -135,6 +137,8 @@ behavior exists. They define intent-lifecycle changes only and keep `assigned`
 separate from execution proof.
 WorkerAssignmentStatusTransitionValidator makes that graph executable without
 mutating stored assignment state.
+WorkerAssignmentStatusTransitionService applies validated status changes and
+writes audit, but it remains service-only and does not schedule or execute.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

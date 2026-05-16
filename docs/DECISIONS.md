@@ -1565,3 +1565,23 @@ The v0.4 Worker Runtime preparation arc made the changelog useful as raw
 construction history but hard to read as a changelog. A grouped summary keeps
 release notes durable and operator-readable without losing detailed reasoning
 from the decision log, architecture history, status file, or git history.
+
+## D-100: Worker Assignment Status Transition Service Is Service-Only
+
+Decision:
+
+PiGenus adds `WorkerAssignmentStatusTransitionService` as a service-only
+boundary for applying validated WorkerAssignment status transitions. The
+service loads a stored assignment, delegates graph checks to
+`WorkerAssignmentStatusTransitionValidator`, updates only `status` and
+`updated_at`, and writes exactly one `worker_assignment_status_changed` audit
+row on successful change. Invalid transitions, unknown assignments, and
+unknown target statuses do not update assignments or write audit rows. The
+service does not expose a CLI command, create governance decisions, schedule,
+reserve, route, call providers, write execution logs, or execute work.
+
+Reason:
+
+Status changes are operationally meaningful but still not execution. A
+service-only transition boundary makes lifecycle updates accountable and
+testable before any operator command can change assignment status.

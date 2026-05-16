@@ -34,10 +34,10 @@ Already implemented:
 - `worker-assignment-create`
 - status transition semantics
 - `WorkerAssignmentStatusTransitionValidator`
+- `WorkerAssignmentStatusTransitionService`
 
 Not implemented:
 
-- status transition service
 - status transition commands
 - worker reservation
 - scheduling enforcement
@@ -316,6 +316,27 @@ The validator does not:
 - persist assignments
 - schedule, reserve, route, call providers, or execute
 
+## Implemented Status Transition Service
+
+`WorkerAssignmentStatusTransitionService` is a service-only boundary that:
+
+1. loads a stored `WorkerAssignment`
+2. validates the requested transition with
+   `WorkerAssignmentStatusTransitionValidator`
+3. updates only `status` and `updated_at`
+4. writes exactly one `worker_assignment_status_changed` audit row on success
+5. returns a clean rejection without writes when validation fails
+
+It does not:
+
+- expose a CLI command
+- create or mutate governance decisions
+- schedule work
+- reserve capacity
+- route to providers
+- write execution logs or execution results
+- execute work
+
 Out of scope for the next step:
 
 - automatic status changes
@@ -323,7 +344,6 @@ Out of scope for the next step:
 - assignment as execution proof
 - execution result storage
 - status transition commands
-- status transition persistence implementation
 
 ## Rule Of Thumb
 
