@@ -252,15 +252,14 @@ Current stop lines:
 
 Next decision:
 
-- Use the first write-capable Cell-DNA frame as the template for the next
-  write-capable responsible capability before deciding whether opt-in
-  scheduling eligibility decision logging is mature enough. Do not add real
-  scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+- Complete `WorkerAssignmentStatusTransitionService` Cell-DNA before opt-in
+  scheduling eligibility decision logging. Do not add real scheduling,
+  reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
 
 - `docs/CELL_DNA_PROTOCOL.md`
+- `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_VALIDATOR.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md`

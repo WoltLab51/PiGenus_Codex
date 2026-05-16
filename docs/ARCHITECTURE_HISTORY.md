@@ -1773,3 +1773,22 @@ GENUS can now think cell-first without forcing every component into heavy
 RuntimeCell ceremony. `WorkerAssignmentValidator` becomes the first documented
 membrane: read-only validation in, stable reasons out, no writes, no audit, no
 decision logging, no scheduling, no routing, and no execution.
+
+## Cell-DNA Consolidation Review
+
+The project gained:
+
+- `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
+- a review of the first three applied Cell-DNA frames
+- a compact required Cell-DNA subset for future candidates
+- a recommendation to document
+  `WorkerAssignmentStatusTransitionService` before opt-in eligibility decision
+  logging
+
+Why it mattered:
+
+The Cell-DNA protocol has now been checked against read-only validation,
+read-only scheduling-adjacent eligibility, and write-capable assignment intent
+creation. The review keeps the protocol useful without making MicroCells too
+heavy, and it prevents new eligibility decision logging from arriving before
+the existing lifecycle write path is documented.
