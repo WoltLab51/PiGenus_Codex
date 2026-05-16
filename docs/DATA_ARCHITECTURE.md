@@ -309,9 +309,9 @@ surface without creating assignments, decisions, audit logs, routing, or
 execution.
 WorkerAssignmentValidator checks semantic evidence before future assignment
 creation, but it does not persist records itself.
-Future successful assignment creation must write one assignment truth record
-and one audit row. The audit row explains that durable assignment intent was
-created; it is not a second truth record and not a governance decision.
+WorkerAssignmentCreator writes one assignment truth record and one audit row.
+The audit row explains that durable assignment intent was created; it is not a
+second truth record and not a governance decision.
 
 Worker storage adapters now live in a dedicated module:
 

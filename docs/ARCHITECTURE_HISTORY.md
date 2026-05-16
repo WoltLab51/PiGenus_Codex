@@ -1544,3 +1544,19 @@ Why it mattered:
 Assignment creation will be the first durable operational step after validation.
 Requiring audit before adding a creator keeps that step accountable while
 preserving the distinction between governance evidence and operational action.
+
+## Worker Assignment Creator
+
+The system gained:
+
+- `pigenus/core/worker_assignment_creator.py`
+- service-only validated assignment creation
+- `worker_assignment_created` audit logging on success
+- tests proving success writes assignment plus audit, invalid input writes
+  neither, and no extra governance decision is created
+
+Why it mattered:
+
+Assignment creation became executable but not operator-facing. The service
+keeps the future CLI small while preserving the current no-scheduling,
+no-routing, no-execution Worker Runtime boundary.

@@ -1470,3 +1470,21 @@ not execution. Audit makes that act accountable without confusing it with the
 governance decision that authorized it. Keeping audit separate from decision
 evidence preserves the distinction between policy reasoning and operational
 action.
+
+## D-095: Worker Assignment Creator Stays Service-Only
+
+Decision:
+
+PiGenus adds `WorkerAssignmentCreator` as a service-only creation boundary. It
+uses `WorkerAssignmentValidator`, persists exactly one pending
+`WorkerAssignment`, and writes exactly one `worker_assignment_created` audit row
+for valid assignments. Invalid assignments do not create assignments or
+successful creation audit rows. The creator does not expose a CLI command,
+create governance decisions, schedule, reserve, route, call providers, write
+execution logs, or execute work.
+
+Reason:
+
+Creation semantics should be executable before they become operator-facing. A
+service-only boundary lets tests prove validation, persistence, audit, and
+no-decision side effects before `worker-assignment-create` is exposed.

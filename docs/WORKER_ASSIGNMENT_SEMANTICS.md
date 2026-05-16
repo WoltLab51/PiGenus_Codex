@@ -30,11 +30,11 @@ Already implemented:
 - `worker_assignments` SQLite table
 - read-only `worker-assignment-list`
 - `WorkerAssignmentValidator`
+- `WorkerAssignmentCreator`
 
 Not implemented:
 
 - `worker-assignment-create`
-- `WorkerAssignmentCreator`
 - assignment status transitions
 - worker reservation
 - scheduling enforcement
@@ -116,7 +116,7 @@ Execution remains a later and separate lifecycle.
 
 ## Side-Effect Rule
 
-Future successful assignment creation must write:
+Successful assignment creation must write:
 
 - one `WorkerAssignment` record
 - one `AuditLog` record
@@ -174,17 +174,16 @@ own semantic evidence checks before any CLI creation command exists.
 The validator does not persist assignments. It only returns a validation
 result.
 
-## Future Creator
+## Implemented Creator
 
-The next code step may be a small `WorkerAssignmentCreator` or equivalent
-service that:
+`WorkerAssignmentCreator` is a small service that:
 
 1. validates the assignment with `WorkerAssignmentValidator`
 2. persists exactly one pending `WorkerAssignment`
 3. writes exactly one `worker_assignment_created` audit row
 4. returns the created assignment and audit ID
 
-It should not expose a CLI command in the same step.
+It does not expose a CLI command.
 
 ## Status Transition Boundary
 

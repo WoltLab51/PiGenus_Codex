@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added `WorkerAssignmentCreator` service for validated pending assignment
+  creation with `worker_assignment_created` audit logging
+- Added creator tests for success, validation failure, no decision creation,
+  and no audit/assignment writes on invalid input
+- Recorded `D-095: Worker Assignment Creator Stays Service-Only`
+- Verified: 265 tests passed
 - Documented future WorkerAssignment creation audit behavior before adding a
   creation service or CLI command
 - Recorded `D-094: Worker Assignment Creation Must Be Audited`

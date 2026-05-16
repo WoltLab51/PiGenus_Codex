@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `262 passed`
+- Last verified result: `265 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 
@@ -90,6 +90,8 @@ PiGenus is a small local GENUS runtime core. It has:
   persisting assignments
 - Worker assignment creation audit behavior documented before any creation
   service or command
+- WorkerAssignmentCreator for validated pending assignment creation with audit,
+  without CLI exposure
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -259,9 +261,12 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   assignment intent.
 - `WorkerAssignmentValidator` checks semantic evidence before assignment
   creation, but does not persist assignments or execute work.
-- Future successful assignment creation must write one pending assignment and
+- Successful assignment creation writes one pending assignment and
   one `worker_assignment_created` audit row; it must not create decisions,
   scheduling enforcement, routing, provider calls, or execution.
+- `WorkerAssignmentCreator` validates, persists one pending assignment, and
+  writes one audit row; it does not create decisions, expose CLI behavior,
+  schedule, reserve, route, call providers, or execute work.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -313,10 +318,11 @@ Worker Runtime preparation:
   command.
 - Assignment creation audit behavior is documented before any command that
   writes assignment intent.
-- Next, build a small WorkerAssignmentCreator service before any
-  `worker-assignment-create` command.
-- Avoid adding further worker CLI behavior before assignment creation is
-  implemented and tested as a service.
+- WorkerAssignmentCreator exists before any `worker-assignment-create` command.
+- Next, decide whether to expose `worker-assignment-create` as a small CLI
+  wrapper around WorkerAssignmentCreator.
+- Avoid adding scheduling, routing, reservation, provider, or execution
+  behavior to the assignment creation CLI.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
   point.

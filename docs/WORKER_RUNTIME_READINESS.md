@@ -384,7 +384,12 @@ Preflight, and initial creation may create only `pending` intent.
 WorkerAssignmentValidator now checks that evidence before any creation command
 exists.
 
-Future successful assignment creation must also write one
+Successful assignment creation must also write one
 `worker_assignment_created` audit row. That audit row records operational
 accountability for creating intent; it is not a new governance decision and not
 execution proof.
+
+WorkerAssignmentCreator now connects validation, assignment persistence, and
+audit logging as a service-only boundary. It does not expose
+`worker-assignment-create`, schedule, reserve, route, call providers, or
+execute.

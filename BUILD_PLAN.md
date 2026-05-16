@@ -270,8 +270,12 @@ Current development arc:
 - Current decision step: successful WorkerAssignment creation must write one
   pending assignment and one `worker_assignment_created` audit row, without
   creating decisions, routing, reservation, provider calls, or execution
-- Next implementation decision: build a small WorkerAssignmentCreator service
-  before any `worker-assignment-create` command
+- Current implementation step: `WorkerAssignmentCreator` validates, persists
+  one pending assignment, and writes one audit row without exposing CLI
+  behavior or creating decisions, routing, reservation, provider calls, or
+  execution
+- Next implementation decision: expose `worker-assignment-create` as a small
+  CLI wrapper around WorkerAssignmentCreator, without scheduling or execution
 
 Readiness source:
 
@@ -341,6 +345,8 @@ meaning, inspection, and backup surfaces remain stable.
 - WorkerAssignment creation audit semantics come before a creation service,
   CLI assignment creation, status activation, scheduling enforcement, routing,
   provider calls, or execution
+- WorkerAssignmentCreator comes before CLI assignment creation, status
+  activation, scheduling enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution
