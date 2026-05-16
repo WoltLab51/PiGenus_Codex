@@ -1645,3 +1645,23 @@ The v0.4 Worker Runtime preparation arc made the same worker lifecycle details
 appear in multiple control documents. Explicit roles keep documentation useful
 without turning roadmap, status, changelog, and topic documents into competing
 sources of truth.
+
+## D-104: GENUS Canonical Systemform Is The Alignment Source Of Truth
+
+Decision:
+
+GENUS keeps `docs/GENUS_CANONICAL_SYSTEMFORM.md` as the current source of truth
+for overall systemform orientation. Older blueprints, local notes, sketches,
+external discussions, and concept documents remain useful only as history or
+source memory unless they map back to the canonical systemform. If another
+document conflicts with the canonical systemform, the canonical systemform wins
+until the conflict is resolved.
+
+Reason:
+
+GENUS now has enough philosophy, cellular language, worker boundaries,
+RuntimeShape direction, resource concepts, safety language, and future
+evolution vocabulary that parallel documents can drift. A single canonical
+alignment document keeps future implementation pointed at the same
+bio-cybernetic operating systemform without rewriting older history or
+mistaking source memory for implementation authority.

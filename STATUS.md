@@ -12,6 +12,8 @@
 - Last verified result: `292 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
+- Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
+  alignment source of truth for GENUS systemform direction and conflicts.
 
 ## Current Cycle
 

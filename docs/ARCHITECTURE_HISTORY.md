@@ -1664,3 +1664,25 @@ After `worker-assignment-transition`, assignment status became operator-facing.
 The scheduling enforcement boundary prevents `assigned` from becoming hidden
 runtime permission and keeps the next Worker Runtime step read-only before any
 real scheduling or execution behavior exists.
+
+## GENUS Canonical Systemform
+
+The project gained:
+
+- `docs/GENUS_CANONICAL_SYSTEMFORM.md`
+- a canonical bio-cybernetic operating systemform orientation
+- a conflict rule for older blueprints, sketches, and concept documents
+- explicit cell maturity language from MicroCell through RuntimeCell
+- physiology language for nervous system, immune system, metabolism,
+  homeostasis, reflexes, kill switches, quarantine, apoptosis, regeneration,
+  ecology, and controlled evolution
+- a high-risk execution rule requiring room policy, budgets, health,
+  contracts, guards, reflexes, kill switch, audit, approval thresholds,
+  recovery path, and shadow/dry-run evidence before live behavior
+
+Why it mattered:
+
+GENUS now has one alignment source above the many useful topic documents. This
+keeps older material available as source memory while preventing agent-first,
+LLM-first, dashboard-first, hidden prompt-bus, premature worker-execution, or
+mutation-as-activation directions from quietly driving implementation.

@@ -4,9 +4,10 @@ This file is the living technical map for PiGenus. It keeps the small
 checkpoints, but groups them by architectural intent so the project stays
 readable as GENUS grows.
 
+The canonical GENUS orientation lives in `docs/GENUS_CANONICAL_SYSTEMFORM.md`.
 The guiding philosophy lives in `docs/GENUS_PHILOSOPHY.md`. This build plan
-describes how PiGenus grows; the philosophy explains why it grows in this
-order.
+describes how PiGenus grows; the canonical systemform and philosophy explain
+why it grows in this order.
 
 Naming rule: GENUS is the broader systemform and architecture. PiGenus is the
 local Python reference runtime distribution for GENUS. The `pigenus` package
@@ -20,6 +21,8 @@ Every checkpoint should leave the repository with:
 - Updated `CHANGELOG.md` using grouped `Unreleased` summaries when the active
   arc has more than a few entries
 - Updated `STATUS.md`
+- `docs/GENUS_CANONICAL_SYSTEMFORM.md` checked before new implementation plans
+  or architecture directions
 - `docs/INDEX.md` kept useful as the documentation entry point
 - This build plan adjusted when the next step changes
 - `docs/GENUS_VOCABULARY.md` checked when terms, statuses, or boundaries change

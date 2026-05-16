@@ -40,9 +40,12 @@
 
 ### Documented
 
+- Added `docs/GENUS_CANONICAL_SYSTEMFORM.md` as the canonical
+  bio-cybernetic systemform orientation and conflict rule for future GENUS
+  planning.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-103: Project Control Documents Have Explicit Roles`.
+  `D-104: GENUS Canonical Systemform Is The Alignment Source Of Truth`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.

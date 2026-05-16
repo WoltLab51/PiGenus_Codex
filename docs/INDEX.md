@@ -7,19 +7,21 @@ documentation.
 
 Start here when orienting yourself:
 
-1. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
-2. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
-3. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
-4. `STATUS.md` - current repository truth and stable invariants
-5. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
-6. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-7. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
-8. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-9. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
-10. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+1. `docs/GENUS_CANONICAL_SYSTEMFORM.md` - current canonical GENUS orientation
+2. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
+3. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
+4. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
+5. `STATUS.md` - current repository truth and stable invariants
+6. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
+7. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
+8. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
+9. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+10. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+11. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
+- `docs/GENUS_CANONICAL_SYSTEMFORM.md` - canonical bio-cybernetic systemform orientation and conflict rule
 - `docs/GENUS_SYSTEMFORM_v0.1.md` - original Systemform framing
 - `docs/PIGENUS_PHASE_0_CORE_KERNEL_SPEC_v0.1.md` - Phase 0 kernel spec
 - `docs/CELLULAR_SYSTEMFORM.md` - GENUS cell philosophy and static cell boundary rules
