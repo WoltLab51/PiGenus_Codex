@@ -3,8 +3,8 @@
 This document defines when PiGenus may turn worker-readiness evidence into a
 durable `WorkerAssignment` intent record.
 
-It does not add a CLI command, migration, scheduler, router, provider call, or
-execution path.
+It does not add a migration, scheduler, router, provider call, or execution
+path.
 
 ## Purpose
 
@@ -31,10 +31,10 @@ Already implemented:
 - read-only `worker-assignment-list`
 - `WorkerAssignmentValidator`
 - `WorkerAssignmentCreator`
+- `worker-assignment-create`
 
 Not implemented:
 
-- `worker-assignment-create`
 - assignment status transitions
 - worker reservation
 - scheduling enforcement
@@ -43,8 +43,8 @@ Not implemented:
 
 ## Evidence Rule
 
-Future assignment creation may use only matching allow evidence from Worker
-Execution Preflight.
+Assignment creation may use only matching allow evidence from Worker Execution
+Preflight.
 
 Allowed evidence:
 
@@ -71,7 +71,7 @@ Assignment intent should be derived from the narrower evidence.
 
 ## Matching Rule
 
-Future assignment creation must prove that the requested assignment matches the
+Assignment creation must prove that the requested assignment matches the
 preflight decision evidence.
 
 The assignment must match:
@@ -100,7 +100,7 @@ through the logged preflight decision.
 
 ## Creation Rule
 
-Future `worker-assignment-create` may create only:
+`worker-assignment-create` may create only:
 
 ```text
 status = pending
@@ -138,7 +138,7 @@ The audit details should include:
 - `governance_decision_id`
 - `status`
 
-Future assignment creation must not create or mutate a governance decision. The
+Assignment creation must not create or mutate a governance decision. The
 governance decision is evidence for creation, not an output of creation.
 
 It must not:
@@ -185,6 +185,9 @@ result.
 
 It does not expose a CLI command.
 
+`worker-assignment-create` is a thin CLI wrapper around this service. It does
+not add scheduling, routing, reservation, provider calls, or execution.
+
 ## Status Transition Boundary
 
 Future status transitions should be explicit and tested.
@@ -206,7 +209,7 @@ Out of scope for the next step:
 - implicit assignment on scheduling preview
 - assignment as execution proof
 - execution result storage
-- `worker-assignment-create`
+- status transition commands
 
 ## Rule Of Thumb
 

@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `265 passed`
+- Last verified result: `267 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 
@@ -85,13 +85,15 @@ PiGenus is a small local GENUS runtime core. It has:
 - Dedicated worker storage repository module for worker profiles, current
   heartbeats, and assignment intent
 - Read-only worker assignment inspection CLI with `worker-assignment-list`
-- Worker assignment creation semantics documented before any creation command
+- Worker assignment creation semantics documented before assignment creation
+  was exposed
 - WorkerAssignmentValidator for matching preflight allow evidence without
   persisting assignments
 - Worker assignment creation audit behavior documented before any creation
   service or command
-- WorkerAssignmentCreator for validated pending assignment creation with audit,
-  without CLI exposure
+- WorkerAssignmentCreator for validated pending assignment creation with audit
+- `worker-assignment-create` CLI for validated pending assignment creation via
+  WorkerAssignmentCreator
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - GENUS Systemform hardening documents
@@ -256,7 +258,7 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-assignment-list` is read-only and does not create assignments,
   decisions, audit logs, scheduling enforcement, reservations, routing,
   provider calls, execution logs, or execution results.
-- Future assignment creation requires matching `allow` evidence from
+- Assignment creation requires matching `allow` evidence from
   `worker_execution_preflight` and may initially create only `pending`
   assignment intent.
 - `WorkerAssignmentValidator` checks semantic evidence before assignment
@@ -267,6 +269,9 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerAssignmentCreator` validates, persists one pending assignment, and
   writes one audit row; it does not create decisions, expose CLI behavior,
   schedule, reserve, route, call providers, or execute work.
+- `worker-assignment-create` is a thin CLI wrapper around
+  WorkerAssignmentCreator; it creates pending assignment intent only and does
+  not schedule, reserve, route, call providers, or execute work.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -310,19 +315,20 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 Worker Runtime preparation:
 
 - Prepare the v0.4 Worker Runtime arc without implementing execution yet.
-- WorkerAssignment read-only inspection now exists as `worker-assignment-list`
-  before any CLI assignment creation command.
-- Assignment creation semantics are documented before any command that creates
-  assignment intent.
-- WorkerAssignmentValidator exists before any `worker-assignment-create`
-  command.
-- Assignment creation audit behavior is documented before any command that
-  writes assignment intent.
-- WorkerAssignmentCreator exists before any `worker-assignment-create` command.
-- Next, decide whether to expose `worker-assignment-create` as a small CLI
-  wrapper around WorkerAssignmentCreator.
+- WorkerAssignment read-only inspection exists as `worker-assignment-list`
+  before pending assignment creation.
+- Assignment creation semantics are documented before activation or execution
+  paths.
+- WorkerAssignmentValidator exists before `worker-assignment-create`.
+- Assignment creation audit behavior is documented before assignment intent
+  creation.
+- WorkerAssignmentCreator exists before `worker-assignment-create`.
+- `worker-assignment-create` exists as a small CLI wrapper around
+  WorkerAssignmentCreator.
+- Next, define WorkerAssignment status transition semantics before adding
+  activation, cancellation, expiry, or rejection commands.
 - Avoid adding scheduling, routing, reservation, provider, or execution
-  behavior to the assignment creation CLI.
+  behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
   CLI command module boundaries are now separated from the main CLI entry
   point.

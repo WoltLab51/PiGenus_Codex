@@ -1367,8 +1367,8 @@ decision after this behavior-preserving CLI boundary.
 Decision:
 
 PiGenus adds a minimal SQLite `worker_assignments` table and
-`WorkerAssignmentRepository` before any CLI assignment creation, scheduling
-enforcement, reservation, routing, provider call, or execution path exists.
+`WorkerAssignmentRepository` as the storage step before pending creation,
+scheduling enforcement, reservation, routing, provider call, or execution.
 Persisting a `WorkerAssignment` requires both a known worker profile and an
 existing governance decision record. The repository supports add, get, list,
 and count only.
@@ -1438,7 +1438,7 @@ observable and accountable.
 Decision:
 
 PiGenus adds `WorkerAssignmentValidator` as a read-only semantic validator
-before any `worker-assignment-create` command exists. The validator checks that
+before assignment intent can be created. The validator checks that
 a candidate `WorkerAssignment` references a known worker, an existing
 `worker_execution_preflight` governance decision, an `allow` result, the
 `worker_execution_preflight` family, matching worker, capability, runtime,
@@ -1448,8 +1448,8 @@ Reason:
 
 The repository enforces basic existence; it should not own the richer evidence
 semantics. A separate validator keeps assignment creation accountable while
-preserving the current boundary: no assignment creation command, no scheduling
-enforcement, no reservation, no routing, no provider calls, and no execution.
+preserving the boundary: no scheduling enforcement, no reservation, no routing,
+no provider calls, and no execution.
 
 ## D-094: Worker Assignment Creation Must Be Audited
 
@@ -1479,12 +1479,30 @@ PiGenus adds `WorkerAssignmentCreator` as a service-only creation boundary. It
 uses `WorkerAssignmentValidator`, persists exactly one pending
 `WorkerAssignment`, and writes exactly one `worker_assignment_created` audit row
 for valid assignments. Invalid assignments do not create assignments or
-successful creation audit rows. The creator does not expose a CLI command,
-create governance decisions, schedule, reserve, route, call providers, write
-execution logs, or execute work.
+successful creation audit rows. At this step, the creator is not exposed
+through a CLI command and does not create governance decisions, schedule,
+reserve, route, call providers, write execution logs, or execute work.
 
 Reason:
 
 Creation semantics should be executable before they become operator-facing. A
 service-only boundary lets tests prove validation, persistence, audit, and
 no-decision side effects before `worker-assignment-create` is exposed.
+
+## D-096: Worker Assignment Create CLI Is Service-Backed
+
+Decision:
+
+PiGenus adds `worker-assignment-create` as a thin CLI wrapper around
+`WorkerAssignmentCreator`. The command creates pending assignment intent only
+after validator approval, writes the creator's `worker_assignment_created`
+audit row, and returns a clean rejection when validation fails. It does not
+create governance decisions, activate assignment status, schedule, reserve,
+route, call providers, write execution logs, or execute work.
+
+Reason:
+
+The creation path is now safe to expose because validation and creation
+semantics are already tested as services. Keeping the CLI as a wrapper prevents
+operator-surface code from owning assignment policy and preserves the Worker
+Runtime boundary.

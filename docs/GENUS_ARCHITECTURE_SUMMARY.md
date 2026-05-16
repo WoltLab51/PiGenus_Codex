@@ -89,11 +89,12 @@ Implemented:
 - read-only `worker-assignment-list`
 - WorkerAssignmentValidator for matching preflight allow evidence
 - WorkerAssignmentCreator for service-only assignment creation with audit
+- `worker-assignment-create` for pending assignment intent creation
 
 Not implemented:
 
 - durable scheduling
-- assignment creation
+- assignment status activation
 - execution routing
 - remote workers
 - provider gateways
@@ -118,14 +119,14 @@ governance-shaped result, but it does not execute. The
 only with explicit `--log`.
 
 WorkerAssignment now has a minimal SQLite store for governed assignment intent.
-It requires a known worker and governance decision evidence, but no assignment
-creation command or execution path exists. `worker-assignment-list` makes those
-records inspectable without creating assignments, scheduling, routing, or
-executing. WorkerAssignmentValidator checks matching preflight allow evidence
-without persisting assignments or opening a creation command. Future successful
-assignment creation must write one `worker_assignment_created` audit row.
-WorkerAssignmentCreator implements that as a service-only boundary without CLI,
-scheduling, routing, or execution.
+It requires a known worker and governance decision evidence, and
+`worker-assignment-list` makes those records inspectable without creating
+assignments, scheduling, routing, or executing. WorkerAssignmentValidator checks
+matching preflight allow evidence before creation. Successful assignment
+creation must write one `worker_assignment_created` audit row.
+WorkerAssignmentCreator implements that service boundary without scheduling,
+routing, or execution. `worker-assignment-create` exposes the service as a thin
+CLI wrapper for pending intent creation only.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

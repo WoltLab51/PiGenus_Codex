@@ -1560,3 +1560,20 @@ Why it mattered:
 Assignment creation became executable but not operator-facing. The service
 keeps the future CLI small while preserving the current no-scheduling,
 no-routing, no-execution Worker Runtime boundary.
+
+## Worker Assignment Create CLI
+
+The system gained:
+
+- `worker-assignment-create`
+- CLI creation of pending worker assignment intent through
+  `WorkerAssignmentCreator`
+- validation-failure output with no assignment or audit writes
+- tests proving successful CLI creation writes one assignment and one audit row
+  without creating extra decisions
+
+Why it mattered:
+
+Assignment creation became operator-facing without moving policy into CLI code.
+The command remains a thin wrapper around the creator service and still does
+not activate assignment status, schedule, route, call providers, or execute.

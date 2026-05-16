@@ -312,6 +312,8 @@ creation, but it does not persist records itself.
 WorkerAssignmentCreator writes one assignment truth record and one audit row.
 The audit row explains that durable assignment intent was created; it is not a
 second truth record and not a governance decision.
+`worker-assignment-create` exposes this as a CLI write path, but it remains
+assignment intent only and does not activate, schedule, route, or execute.
 
 Worker storage adapters now live in a dedicated module:
 

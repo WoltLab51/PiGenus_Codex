@@ -305,15 +305,16 @@ WorkerAssignmentStatus
 A worker assignment is durable intent to place a capability on a worker later.
 It must reference governance decision evidence, but it does not start work,
 reserve capacity, route providers, call tools, or store execution results.
-Assignment creation remains out of scope until the matching-evidence semantics
-are enforced by a validator and a separate creation plan exists.
+Assignment creation may create only validated `pending` intent. Assignment
+activation, reservation, routing, provider calls, and execution remain out of
+scope until explicit status-transition semantics exist.
 
 ## Non-Goals
 
 The readiness step must not introduce:
 
 - remote code execution
-- assignment creation from CLI or runtime paths
+- assignment activation or execution from CLI or runtime paths
 - provider routing
 - LLM gateway behavior
 - autonomous agent spawning
@@ -370,19 +371,19 @@ reservation, routing, provider access, or execution.
 
 WorkerAssignment now has minimal SQLite storage for assignment intent. The
 store requires a known worker and existing governance decision evidence. It
-does not create assignment commands, scheduling enforcement, reservations,
-routes, provider calls, execution logs, or execution results.
+does not create scheduling enforcement, reservations, routes, provider calls,
+execution logs, or execution results.
 
 `worker-assignment-list` exposes stored assignment intent for read-only
-operator inspection. Assignment creation, scheduling enforcement, reservations,
-routes, provider calls, execution logs, and execution results remain later
-steps.
+operator inspection. Assignment activation, scheduling enforcement,
+reservations, routes, provider calls, execution logs, and execution results
+remain later steps.
 
 `docs/WORKER_ASSIGNMENT_SEMANTICS.md` defines the current boundary: assignment
 creation may use only matching `allow` evidence from Worker Execution
 Preflight, and initial creation may create only `pending` intent.
-WorkerAssignmentValidator now checks that evidence before any creation command
-exists.
+WorkerAssignmentValidator checks that evidence before assignment intent can be
+created.
 
 Successful assignment creation must also write one
 `worker_assignment_created` audit row. That audit row records operational
@@ -390,6 +391,9 @@ accountability for creating intent; it is not a new governance decision and not
 execution proof.
 
 WorkerAssignmentCreator now connects validation, assignment persistence, and
-audit logging as a service-only boundary. It does not expose
-`worker-assignment-create`, schedule, reserve, route, call providers, or
-execute.
+audit logging as the creation service boundary. It does not schedule, reserve,
+route, call providers, or execute.
+
+`worker-assignment-create` now exposes that service as a small CLI wrapper. It
+creates pending assignment intent only after validation and audit logging. It
+does not activate status, schedule, reserve, route, call providers, or execute.

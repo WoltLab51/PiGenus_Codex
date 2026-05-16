@@ -31,7 +31,7 @@ Out of scope:
 - no CLI command extraction
 - no repository split
 - no dynamic cell runtime
-- no worker assignment creation
+- no worker assignment activation or execution
 - no worker execution
 - no LLM, dashboard, federation, or evolution behavior
 
@@ -494,7 +494,7 @@ Do not promote when:
 | --- | --- | --- |
 | `pigenus/cli/main.py` | Operator dispatcher | Deterministic entry point; should shrink through static boundaries, not become dynamic router yet. |
 | `pigenus/cli/worker_commands.py` | StaticCellBoundary | First static cell boundary; useful but not yet a runtime cell or organ. |
-| `pigenus/cli/worker_assignment_commands.py` | StaticCellBoundary | Read-only assignment inspection boundary; not assignment creation, routing, or execution. |
+| `pigenus/cli/worker_assignment_commands.py` | StaticCellBoundary | Assignment inspection and pending-intent creation boundary; not status activation, routing, or execution. |
 | `WorkerExecutionPreflightService` | Service / governed-cell candidate | Cell-worthy because it checks capability, sensitivity, network, and worker state, but should not be treated as final cell architecture yet. |
 | `WorkerExecutionPreflightLogger` | Service / governed-cell candidate | Persists one explicit governance decision; candidate for later logging cell. |
 | `WorkerSchedulingPreviewService` | Service / governed-cell candidate | Explains candidate suitability but does not schedule. |
@@ -605,7 +605,7 @@ Later dynamic behavior may be allowed only after:
 These are deliberately unresolved.
 
 1. WorkerAssignment has gained a minimal SQLite repository and read-only
-   `worker-assignment-list` inspection before any CLI creation command exists.
+   `worker-assignment-list` inspection before pending creation was exposed.
 2. Meaning CLI extraction has been chosen and implemented as the next
    StaticCellBoundary; worker command internals remain stable for now.
 3. When should a service become an official GovernedCell rather than a
@@ -643,7 +643,7 @@ without changing storage, runtime behavior, assignments, routing, or execution.
 Before the next code refactor, choose one narrow path:
 
 ```text
-Option A: Add worker-assignment-create as a small service-backed CLI wrapper.
+Option A: Define WorkerAssignment status transition semantics before activation commands.
 Option B: Slice worker_commands.py internally if it exceeds the practical
           review threshold.
 Option C: Extract decision/guard CLI as a StaticCellBoundary.
@@ -651,7 +651,7 @@ Option C: Extract decision/guard CLI as a StaticCellBoundary.
 
 Recommended order:
 
-1. Keep WorkerAssignment creation separate from validation and execution.
+1. Keep WorkerAssignment creation separate from activation and execution.
 2. Apply the Philosophy Alignment Review before choosing storage or more
    operator-surface slicing.
 3. Do not promote any service to GovernedCell or RuntimeCell in the same commit.

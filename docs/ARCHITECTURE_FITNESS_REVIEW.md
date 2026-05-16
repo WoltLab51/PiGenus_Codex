@@ -165,8 +165,10 @@ pigenus/cli/worker_commands.py
 
 pigenus/cli/worker_assignment_commands.py
   owns worker-assignment-list
-  keeps assignment inspection separate from worker scheduling/preflight commands
-  avoids assignment creation, routing, provider calls, or execution
+  owns worker-assignment-create
+  keeps assignment inspection and pending-intent creation separate from worker
+  scheduling/preflight commands
+  avoids status activation, routing, provider calls, or execution
 ```
 
 Why worker CLI first:
@@ -174,8 +176,8 @@ Why worker CLI first:
 - It is the active v0.4 arc.
 - It has strong tests already.
 - It is dense enough to reduce `main.py` meaningfully.
-- It is still read-only or explicit-opt-in logging, so behavior boundaries are
-  clear.
+- Its write paths are explicit, service-backed, and still stop before
+  activation, routing, provider calls, or execution.
 - It prepares future Worker Runtime work without introducing execution.
 
 Recommended later boundaries:

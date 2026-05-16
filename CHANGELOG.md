@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added `worker-assignment-create` as a thin CLI wrapper around
+  WorkerAssignmentCreator
+- Added CLI tests for successful pending assignment creation, audit logging,
+  validation failure, and no extra decision writes
+- Recorded `D-096: Worker Assignment Create CLI Is Service-Backed`
+- Verified: 267 tests passed
 - Added `WorkerAssignmentCreator` service for validated pending assignment
   creation with `worker_assignment_created` audit logging
 - Added creator tests for success, validation failure, no decision creation,

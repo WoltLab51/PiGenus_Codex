@@ -297,6 +297,7 @@ Current storage:
 - `worker_assignments` table
 - `WorkerAssignmentRepository` in `pigenus/storage/worker_repositories.py`
 - `WorkerAssignmentCreator` for validated creation plus audit
+- `worker-assignment-create` for CLI creation of pending assignment intent
 - full `WorkerAssignment` JSON plus indexed worker, status, room, capability,
   and governance-decision columns
 

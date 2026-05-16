@@ -206,8 +206,9 @@ Current development arc:
   bootstrap/import only, and keeps discovery out of scope until federation and
   trust work
 - Current implementation step: minimal SQLite Worker Store persists
-  `worker_profiles` and current `worker_heartbeats` without CLI, scheduling,
-  routing, discovery, heartbeat history, or execution
+  `worker_profiles` and current `worker_heartbeats` beneath CLI inspection,
+  but still without scheduling, routing, discovery, heartbeat history, or
+  execution
 - Current implementation step: read-only `worker-list` and `worker-show` over
   the SQLite Worker Store without worker creation, scheduling, routing,
   discovery, heartbeat history, or execution
@@ -243,8 +244,8 @@ Current development arc:
   adding CLI creation, routing, reservation, or execution
 - Current implementation step: minimal SQLite WorkerAssignment Store persists
   governed assignment intent only when a worker profile and governance decision
-  record already exist, without CLI assignment creation, scheduling
-  enforcement, routing, reservation, provider calls, or execution
+  record already exist; the store itself still avoids scheduling enforcement,
+  routing, reservation, provider calls, or execution
 - Current quality step: GitHub Actions runs the Python test suite on push,
   pull request, and manual dispatch
 - Current quality step: architecture fitness review identifies CLI and
@@ -263,19 +264,20 @@ Current development arc:
   enforcement, routing, reservation, provider calls, or execution
 - Current decision step: assignment creation semantics require matching
   `worker_execution_preflight` allow evidence and initial `pending` status
-  before any CLI assignment creation or runtime execution path exists
+  before assignment activation or runtime execution exists
 - Current implementation step: `WorkerAssignmentValidator` checks matching
-  preflight allow evidence without persisting assignments or creating a CLI
-  creation path
+  preflight allow evidence before assignment intent can be created
 - Current decision step: successful WorkerAssignment creation must write one
   pending assignment and one `worker_assignment_created` audit row, without
   creating decisions, routing, reservation, provider calls, or execution
 - Current implementation step: `WorkerAssignmentCreator` validates, persists
-  one pending assignment, and writes one audit row without exposing CLI
-  behavior or creating decisions, routing, reservation, provider calls, or
-  execution
-- Next implementation decision: expose `worker-assignment-create` as a small
-  CLI wrapper around WorkerAssignmentCreator, without scheduling or execution
+  one pending assignment, and writes one audit row without creating decisions,
+  routing, reservation, provider calls, or execution
+- Current implementation step: `worker-assignment-create` is a small CLI
+  wrapper around WorkerAssignmentCreator, without scheduling, reservation,
+  routing, provider calls, or execution
+- Next implementation decision: define WorkerAssignment status transition
+  semantics before activation, cancellation, expiry, or rejection commands
 
 Readiness source:
 
@@ -347,6 +349,8 @@ meaning, inspection, and backup surfaces remain stable.
   provider calls, or execution
 - WorkerAssignmentCreator comes before CLI assignment creation, status
   activation, scheduling enforcement, routing, provider calls, or execution
+- `worker-assignment-create` comes before assignment status transition commands,
+  scheduling enforcement, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution
