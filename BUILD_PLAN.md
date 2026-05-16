@@ -233,11 +233,11 @@ Current stop lines:
 - no assignment status change as execution proof
 - no LLM orchestration, federation, dashboard, or autonomous agents
 
-Next step:
+Next decision:
 
-- Consolidate the scheduling eligibility CLI before opt-in decision logging,
-  real scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+- Choose between slicing the growing worker-assignment CLI surface and adding
+  opt-in scheduling eligibility decision logging. Do not add real scheduling,
+  reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
 

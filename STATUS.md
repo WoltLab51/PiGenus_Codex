@@ -22,9 +22,13 @@ Worker Runtime / scheduling eligibility:
 - Result: read-only validator and CLI inspection are implemented.
 - Explicitly not now: no scheduling enforcement, reservation, routing,
   provider calls, execution logs, execution, or logging.
-- Consolidation: no-write proof is covered by tests, reason codes are stable
-  for the first eligibility check, and opt-in decision logging should wait
-  until the CLI inspection surface stays boring.
+- Consolidation: read-only boundary is complete for the first pass, no-write
+  proof is covered by tests, reason codes are stable for the implemented
+  worker inputs, and opt-in decision logging should wait until the CLI surface
+  has stayed boring.
+- Fitness note: `pigenus/cli/worker_assignment_commands.py` is now above the
+  practical review threshold, so any further worker-assignment CLI growth
+  should trigger a slicing decision.
 
 ## Current Runtime Shape
 
@@ -381,9 +385,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate the scheduling eligibility CLI before adding opt-in
-  decision logging, real scheduling, reservation, routing, provider, or
-  execution behavior.
+- Next, decide between worker-assignment CLI slicing and opt-in scheduling
+  eligibility decision logging. Do not add real scheduling, reservation,
+  routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

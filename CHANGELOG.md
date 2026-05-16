@@ -52,6 +52,9 @@
 - Consolidated the scheduling eligibility validator cycle and set read-only
   CLI inspection as the next step before opt-in decision logging or scheduling
   behavior.
+- Consolidated the scheduling eligibility CLI cycle and recorded
+  `worker_assignment_commands.py` growth as a future slicing decision before
+  more worker-assignment CLI expansion.
 
 ### Verified
 

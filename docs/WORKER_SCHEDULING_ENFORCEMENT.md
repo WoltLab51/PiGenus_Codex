@@ -257,16 +257,17 @@ The first eligibility slice is sufficient as a read-only boundary:
   approval remain future inputs because those scheduling-enforcement surfaces
   do not exist yet
 
-Next safe step:
+Next decision:
 
 ```text
-cycle consolidation
+worker-assignment CLI slicing
+or
+opt-in scheduling eligibility decision logging
 ```
 
 Not next:
 
 ```text
-opt-in decision logging
 real scheduling
 reservation
 routing
