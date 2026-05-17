@@ -259,6 +259,8 @@ Completed worker surfaces in this arc:
   validator into scheduling eligibility
 - read-only room/context recheck integration into assigned-intent scheduling
   eligibility, opt-in by explicit validator injection
+- room/context scheduling eligibility integration consolidation review before
+  any CLI, logging, or enforcement behavior
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -276,9 +278,9 @@ Current stop lines:
 
 Next decision:
 
-- Consolidate the read-only room/context scheduling eligibility integration
-  before adding CLI, logging, scheduling enforcement, reservation, routing,
-  provider calls, execution logs, or execution.
+- Define resource, risk, and reflex readiness semantics before adding
+  scheduling enforcement, reservation, routing, provider calls, execution
+  logs, or execution.
 
 Readiness source:
 
@@ -297,6 +299,7 @@ Readiness source:
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
+- `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
 - `tests/test_worker_assignment_room_context_recheck.py`
 - `tests/test_worker_freshness_policy.py`
 - `tests/test_worker_assignment_scheduling_eligibility.py`

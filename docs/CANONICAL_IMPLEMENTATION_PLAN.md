@@ -190,6 +190,8 @@ Focus:
   reservation, routing, provider calls, execution logs, and execution
 - consolidate the read-only room/context scheduling eligibility integration
   before exposing it through CLI, logging, or enforcement behavior
+- define resource, risk, and reflex readiness semantics before any scheduling
+  enforcement code
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

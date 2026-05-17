@@ -56,7 +56,7 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 | --- | --- | --- | --- |
 | Heartbeat freshness | Policy and read-only eligibility integration exist; no heartbeat history or enforcement exists. | A worker can be active in storage but too stale for scheduling. | Consolidate read-only behavior before enforcement code. |
 | Evidence freshness | Policy and read-only eligibility integration exist; no revocation model exists. | Old preflight allow evidence may no longer be safe. | Keep expiry/review bands in eligibility; defer revocation and enforcement. |
-| Room/context recheck | Read-only validator implemented and optionally wired into scheduling eligibility; no CLI, logging, or enforcement exists. | Room policy can change after assignment creation. | Consolidate read-only eligibility integration before CLI, logging, or enforcement code. |
+| Room/context recheck | Read-only validator implemented and optionally wired into scheduling eligibility; no CLI, logging, or enforcement exists. | Room policy can change after assignment creation. | Consolidated as read-only eligibility input; do not expose further before resource/risk/reflex semantics. |
 | Resource/risk budget | Resource concepts exist, but no scheduling budget input. | Scheduling needs capacity and risk pressure, not only worker capability. | Define placeholder resource/risk inputs before reservation. |
 | Reflex/circuit breaker | Canonical systemform defines reflexes, but worker runtime has no kill-switch path. | Enforcement must be stoppable before live behavior appears. | Define reflex and kill-switch boundary before any high-risk path. |
 | Human approval thresholds | Human approval exists as a stub, but is not connected to worker scheduling. | Sensitive rooms or capabilities may need approval before scheduling. | Define threshold rules before high-risk scheduling. |
@@ -200,7 +200,8 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-Consolidate the read-only room/context scheduling eligibility integration.
+Define resource, risk, and reflex readiness semantics before scheduling
+enforcement.
 ```
 
 The current policy and implementation now live in
@@ -231,7 +232,9 @@ read-only validator now exists in
 consolidated in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
 The validator is now wired into scheduling eligibility only when explicitly
-supplied by a caller. Next, PiGenus should consolidate that integration without
-adding CLI, logging, scheduling enforcement, reservation, routing, provider
-calls, execution logs, or execution.
+supplied by a caller. That integration is consolidated in
+`docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
+Next, PiGenus should define resource, risk, and reflex readiness semantics
+without adding CLI, logging, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution.
 Scheduling enforcement remains later.

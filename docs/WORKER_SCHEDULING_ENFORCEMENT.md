@@ -278,7 +278,8 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Consolidate the read-only room/context scheduling eligibility integration.
+Define resource, risk, and reflex readiness semantics before scheduling
+enforcement.
 ```
 
 Readiness gaps are documented in
@@ -293,9 +294,11 @@ now exists in `pigenus.core.worker_assignment_room_context_recheck`. The
 validator is consolidated in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`. The
 validator is now wired into scheduling eligibility only when explicitly
-supplied by a caller. The next safe step is consolidating that read-only
-integration before CLI, logging, scheduling enforcement, reservation, routing,
-provider calls, execution logs, or execution.
+supplied by a caller. That integration is consolidated in
+`docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
+The next safe step is defining resource, risk, and reflex readiness semantics
+before scheduling enforcement, reservation, routing, provider calls, execution
+logs, or execution.
 
 Not next:
 

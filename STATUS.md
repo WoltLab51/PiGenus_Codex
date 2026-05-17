@@ -102,6 +102,10 @@ Worker Runtime / scheduling eligibility:
   inputs and maps allow/review/deny/not-considered results without writes,
   CLI changes, logging, scheduling enforcement, reservation, routing, provider
   calls, execution logs, or execution.
+- Room/context eligibility consolidation:
+  `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
+  accepts the opt-in read-only validator composition and sets resource, risk,
+  and reflex readiness semantics as the next safe decision before enforcement.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -483,9 +487,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate the read-only room/context scheduling eligibility
-  integration before adding any CLI, logging, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution behavior.
+- Next, define resource, risk, and reflex readiness semantics before adding
+  scheduling enforcement, reservation, routing, provider calls, execution
+  logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

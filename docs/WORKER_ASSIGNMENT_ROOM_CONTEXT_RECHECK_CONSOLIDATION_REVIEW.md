@@ -187,10 +187,14 @@ provider calls, execution logs, or execution from this review.
 Next safe step:
 
 ```text
-Consolidate the read-only room/context scheduling eligibility integration.
+Define resource, risk, and reflex readiness semantics before scheduling
+enforcement.
 ```
 
-The current integration must continue to:
+The current room/context integration is consolidated in
+`docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
+
+That integration must continue to:
 
 - remain read-only
 - not change assignment status

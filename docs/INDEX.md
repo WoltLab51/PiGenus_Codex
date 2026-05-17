@@ -24,19 +24,20 @@ Start here when orienting yourself:
 15. `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` - room/context recheck semantics before scheduling enforcement
 16. `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md` - room/context recheck validator Cell-DNA frame
 17. `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md` - room/context recheck implementation consolidation before wiring
-18. `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` - review of the first three Cell-DNA frames
-19. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
-20. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
-21. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
-22. `STATUS.md` - current repository truth and stable invariants
-23. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
-24. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-25. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
-26. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
-27. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-28. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
-29. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
-30. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+18. `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md` - consolidation of room/context recheck inside scheduling eligibility
+19. `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` - review of the first three Cell-DNA frames
+20. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
+21. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
+22. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
+23. `STATUS.md` - current repository truth and stable invariants
+24. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
+25. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
+26. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
+27. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
+28. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+29. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
+30. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+31. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -70,6 +71,7 @@ Start here when orienting yourself:
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` - room/context recheck semantics before scheduling enforcement
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md` - Cell-DNA frame for room/context recheck validation
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md` - consolidation of the read-only room/context recheck validator before wiring
+- `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md` - consolidation of optional room/context recheck composition inside scheduling eligibility
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

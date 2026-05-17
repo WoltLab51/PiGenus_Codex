@@ -131,7 +131,8 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Consolidate the read-only room/context scheduling eligibility integration.
+Define resource, risk, and reflex readiness semantics before scheduling
+enforcement.
 ```
 
 Why:
@@ -147,6 +148,8 @@ Why:
   `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
 - the validator is now consumed by scheduling eligibility only when explicitly
   supplied by a caller
+- that integration is consolidated in
+  `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
 
 ## Stop Lines
 

@@ -106,6 +106,10 @@
   input with allow/review/deny/not-considered mapping and no CLI, logging,
   scheduling enforcement, reservation, routing, provider calls, execution
   logs, or execution.
+- Added `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
+  to consolidate the read-only room/context eligibility composition and set
+  resource, risk, and reflex semantics as the next readiness decision before
+  enforcement.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.

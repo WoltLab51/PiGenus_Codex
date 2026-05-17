@@ -302,8 +302,13 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Consolidate the read-only room/context scheduling eligibility integration.
+Define resource, risk, and reflex readiness semantics before scheduling
+enforcement.
 ```
+
+The read-only room/context scheduling eligibility integration is consolidated
+in
+`docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
 
 Still not next:
 

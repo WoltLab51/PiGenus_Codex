@@ -275,8 +275,10 @@ live in `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the read-only
 validator is consolidated in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
 That validator is now consumed by assigned-intent scheduling eligibility only
-when explicitly supplied by a caller. The next readiness step is consolidating
-that read-only integration before any CLI, logging, or enforcement behavior.
+when explicitly supplied by a caller. That integration is consolidated in
+`docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`;
+the next readiness decision is resource, risk, and reflex semantics before
+scheduling enforcement.
 
 The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.

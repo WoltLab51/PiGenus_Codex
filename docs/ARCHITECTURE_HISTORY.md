@@ -2075,3 +2075,23 @@ remaining read-only and opt-in. This is the first small composition of
 responsible WorkerAssignment capability cells without turning the path into
 CLI behavior, logging, scheduling enforcement, reservation, routing, provider
 calls, execution logs, or execution.
+
+## Room / Context Eligibility Integration Consolidation
+
+The project gained:
+
+- `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
+- explicit acceptance of room/context recheck as an optional read-only
+  scheduling eligibility input
+- confirmation that CLI, logging, scheduling enforcement, reservation, routing,
+  provider calls, execution logs, and execution remain out of scope
+- a next-step recommendation to define resource, risk, and reflex readiness
+  semantics before enforcement code
+
+Why it mattered:
+
+The first WorkerAssignment readiness composition now has a clean pause point.
+Freshness and room/context checks can cooperate without making the runtime look
+more executable than it is. The next missing safety layer is physiological:
+budgets, risk pressure, reflexes, and abort boundaries before any scheduling
+enforcement exists.
