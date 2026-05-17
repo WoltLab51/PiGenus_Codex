@@ -21,19 +21,20 @@ Start here when orienting yourself:
 12. `docs/WORKER_FRESHNESS_POLICY.md` - heartbeat and evidence freshness semantics
 13. `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md` - freshness validator Cell-DNA frame
 14. `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` - freshness-integrated eligibility consolidation
-15. `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` - review of the first three Cell-DNA frames
-16. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
-17. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
-18. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
-19. `STATUS.md` - current repository truth and stable invariants
-20. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
-21. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
-22. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
-23. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
-24. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
-25. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
-26. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
-27. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
+15. `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` - room/context recheck semantics before scheduling enforcement
+16. `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` - review of the first three Cell-DNA frames
+17. `docs/GENUS_PHILOSOPHY.md` - why GENUS is built this way
+18. `docs/GENUS_VOCABULARY.md` - shared terms and implementation status
+19. `BUILD_PLAN.md` - roadmap, release arcs, and current architecture tracks
+20. `STATUS.md` - current repository truth and stable invariants
+21. `docs/ARCHITECTURE_CONTRACT.md` - what future work must not break
+22. `docs/GENUS_ARCHITECTURE_SUMMARY.md` - compact map of how the pieces fit
+23. `docs/ARCHITECTURE_CONVERGENCE_REVIEW.md` - anatomy, maturity levels, and static/dynamic boundary rules
+24. `docs/GENUS_METABOLIC_STATE_GRAPH.md` - future diagnostic graph view for metabolism, dependencies, state, and flows
+25. `docs/ARCHITECTURE_FITNESS_REVIEW.md` - current structural hotspot review
+26. `docs/CANONICAL_ALIGNMENT_PLAN.md` - maps existing docs and runtime surfaces to the canonical systemform
+27. `docs/PHILOSOPHY_ALIGNMENT_REVIEW_PROTOCOL.md` - fit check for philosophy, governance, cellular maturity, and runtime shape risk
+28. `docs/DOCUMENTATION_MAINTENANCE.md` - how docs stay current
 
 ## Core Architecture
 
@@ -64,6 +65,7 @@ Start here when orienting yourself:
 - `docs/WORKER_FRESHNESS_POLICY.md` - heartbeat and governance evidence freshness policy semantics
 - `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md` - Cell-DNA frame for freshness validation
 - `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` - consolidation after freshness is wired into scheduling eligibility
+- `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` - room/context recheck semantics before scheduling enforcement
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

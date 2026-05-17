@@ -90,6 +90,9 @@
 - Added `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` to
   consolidate the freshness-integrated eligibility boundary and set
   room/context recheck semantics as the next readiness decision.
+- Added `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` to define assignment
+  room, worker home room, ContextStack, and RoomFlow recheck semantics before
+  any scheduling enforcement.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.

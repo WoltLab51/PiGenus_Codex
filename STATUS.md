@@ -79,8 +79,12 @@ Worker Runtime / scheduling eligibility:
   reservation, routing, provider calls, execution logs, or execution.
 - Freshness eligibility consolidation:
   `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` accepts the
-  read-only integration and recommends room/context recheck semantics as the
-  next readiness boundary.
+  read-only integration and led to room/context recheck semantics as the next
+  readiness boundary.
+- Room/context recheck semantics:
+  `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` defines assignment room,
+  worker home room, ContextStack, and RoomFlow recheck rules before scheduling
+  enforcement.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -462,7 +466,8 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, define WorkerAssignment room/context recheck semantics before adding
+- Next, apply Cell-DNA to a future
+  `WorkerAssignmentRoomContextRecheckValidator` before adding implementation,
   scheduling enforcement, reservation, routing, provider calls, execution
   logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution

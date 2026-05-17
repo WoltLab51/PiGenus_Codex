@@ -104,6 +104,8 @@ Documented:
 
 - Worker Scheduling Enforcement boundary between assigned intent and any
   future scheduling, reservation, routing, provider call, or execution
+- WorkerAssignment room/context recheck semantics before scheduling
+  enforcement
 
 Not implemented:
 

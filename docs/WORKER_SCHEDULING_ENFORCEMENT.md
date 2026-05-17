@@ -276,7 +276,7 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-WorkerAssignment room/context recheck semantics
+WorkerAssignmentRoomContextRecheckValidator Cell-DNA
 ```
 
 Readiness gaps are documented in
@@ -285,7 +285,9 @@ Heartbeat and governance evidence freshness semantics are documented in
 `docs/WORKER_FRESHNESS_POLICY.md` and are now used by assigned-intent
 scheduling eligibility. That integration is consolidated in
 `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`. Scheduling
-enforcement remains later.
+enforcement remains later. Room/context recheck semantics now live in
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the next safe step is
+Cell-DNA, not implementation.
 
 Not next:
 

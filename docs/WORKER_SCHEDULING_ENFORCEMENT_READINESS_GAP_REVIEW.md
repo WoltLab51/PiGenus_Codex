@@ -56,7 +56,7 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 | --- | --- | --- | --- |
 | Heartbeat freshness | Policy and read-only eligibility integration exist; no heartbeat history or enforcement exists. | A worker can be active in storage but too stale for scheduling. | Consolidate read-only behavior before enforcement code. |
 | Evidence freshness | Policy and read-only eligibility integration exist; no revocation model exists. | Old preflight allow evidence may no longer be safe. | Keep expiry/review bands in eligibility; defer revocation and enforcement. |
-| Room/context recheck | Assignment stores `room_id`; ContextStack is not tied into assignment enforcement. | Room policy can change after assignment creation. | Keep room/context recheck as required future enforcement input. |
+| Room/context recheck | Semantics documented; no validator or enforcement exists. | Room policy can change after assignment creation. | Apply Cell-DNA before any read-only validator. |
 | Resource/risk budget | Resource concepts exist, but no scheduling budget input. | Scheduling needs capacity and risk pressure, not only worker capability. | Define placeholder resource/risk inputs before reservation. |
 | Reflex/circuit breaker | Canonical systemform defines reflexes, but worker runtime has no kill-switch path. | Enforcement must be stoppable before live behavior appears. | Define reflex and kill-switch boundary before any high-risk path. |
 | Human approval thresholds | Human approval exists as a stub, but is not connected to worker scheduling. | Sensitive rooms or capabilities may need approval before scheduling. | Define threshold rules before high-risk scheduling. |
@@ -200,7 +200,7 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-WorkerAssignment room/context recheck semantics
+WorkerAssignmentRoomContextRecheckValidator Cell-DNA
 ```
 
 The current policy and implementation now live in
@@ -222,6 +222,7 @@ They define and test:
 The freshness integration is consolidated in
 `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`.
 
-Next, PiGenus should define how assignment room and future context-stack inputs
-are rechecked before scheduling consideration. Scheduling enforcement remains
-later.
+Room/context recheck semantics now live in
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`. Next, PiGenus should apply
+Cell-DNA to a future `WorkerAssignmentRoomContextRecheckValidator`.
+Scheduling enforcement remains later.

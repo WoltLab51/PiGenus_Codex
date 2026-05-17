@@ -129,15 +129,16 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Define WorkerAssignment room/context recheck semantics before scheduling enforcement.
+Apply Cell-DNA to WorkerAssignmentRoomContextRecheckValidator.
 ```
 
 Why:
 
 - freshness is now explicit
-- the next high-value safety gap is whether the assignment's room and future
-  context stack are still valid at scheduling-consideration time
-- this can be documented and tested read-only before any enforcement code
+- WorkerAssignment room/context recheck semantics are now defined in
+  `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
+- the next high-value safety step is making that future validator's membrane
+  explicit before implementation
 
 ## Stop Lines
 

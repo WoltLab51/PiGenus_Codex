@@ -1977,3 +1977,23 @@ The freshness integration now has a clean pause point. PiGenus can move to the
 next readiness boundary without confusing eligibility, logging, scheduling
 enforcement, reservation, routing, provider calls, execution logs, or
 execution.
+
+## WorkerAssignment Room / Context Recheck Semantics
+
+The project gained:
+
+- `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
+- a documented distinction between assignment room, worker home room,
+  ContextStack, ContextFrames, and RoomFlowRules
+- `D-107: WorkerAssignment Room And Context Recheck Precedes Scheduling
+  Enforcement`
+- a next-step recommendation to apply Cell-DNA before implementing a
+  room/context recheck validator
+
+Why it mattered:
+
+Freshness answers whether worker and evidence signals are recent enough.
+Room/context recheck answers whether the assignment still belongs in the
+current governance boundary and operating envelope. Keeping those checks
+separate prevents `assigned`, current heartbeat, or old preflight evidence from
+becoming implicit permission to schedule, reserve, route, or execute work.

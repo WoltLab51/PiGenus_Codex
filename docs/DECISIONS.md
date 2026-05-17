@@ -1705,3 +1705,24 @@ inspect eligibility, and explicitly log eligibility decisions. The next risk is
 using stale heartbeat or stale preflight evidence as if it were live authority.
 Freshness policy keeps future enforcement deterministic, testable, and
 reviewable before any scheduling power appears.
+
+## D-107: WorkerAssignment Room And Context Recheck Precedes Scheduling Enforcement
+
+Decision:
+
+PiGenus defines WorkerAssignment room/context recheck semantics before
+implementing any scheduling-enforcement validator. Future scheduling
+consideration must recheck assignment room identity, worker home room
+compatibility, and ContextStack / ContextFrame compatibility where available.
+RoomFlowRules apply only when meaning, memory, task output, execution result,
+or other payload would cross rooms. The first recheck implementation must be
+read-only and must not mutate assignments, write audit or decision records,
+reserve capacity, route providers, write execution logs, or execute work.
+
+Reason:
+
+WorkerAssignment creation proves that original preflight evidence matched the
+assignment request. It does not prove that the room, context, worker posture,
+or policy is still valid later. A separate room/context recheck keeps room
+governance, future ContextStack envelopes, and room-flow policy visible before
+any scheduling power appears.
