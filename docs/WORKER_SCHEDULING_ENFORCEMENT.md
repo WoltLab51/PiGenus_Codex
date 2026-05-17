@@ -276,7 +276,7 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-WorkerAssignmentRoomContextRecheckValidator Cell-DNA
+WorkerAssignmentRoomContextRecheckValidator read-only implementation
 ```
 
 Readiness gaps are documented in
@@ -287,7 +287,9 @@ scheduling eligibility. That integration is consolidated in
 `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`. Scheduling
 enforcement remains later. Room/context recheck semantics now live in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the next safe step is
-Cell-DNA, not implementation.
+the read-only validator implementation, not CLI, logging, scheduling
+enforcement, reservation, routing, provider calls, execution logs, or
+execution.
 
 Not next:
 

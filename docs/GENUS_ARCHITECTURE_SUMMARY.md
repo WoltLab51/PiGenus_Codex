@@ -106,6 +106,8 @@ Documented:
   future scheduling, reservation, routing, provider call, or execution
 - WorkerAssignment room/context recheck semantics before scheduling
   enforcement
+- Cell-DNA frame for a future read-only
+  WorkerAssignmentRoomContextRecheckValidator
 
 Not implemented:
 

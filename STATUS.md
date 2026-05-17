@@ -85,6 +85,9 @@ Worker Runtime / scheduling eligibility:
   `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` defines assignment room,
   worker home room, ContextStack, and RoomFlow recheck rules before scheduling
   enforcement.
+- Room/context recheck Cell-DNA:
+  `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md` frames
+  the future validator as read-only CapabilityCell / GovernedCellCandidate.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -466,10 +469,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, apply Cell-DNA to a future
-  `WorkerAssignmentRoomContextRecheckValidator` before adding implementation,
-  scheduling enforcement, reservation, routing, provider calls, execution
-  logs, or execution behavior.
+- Next, consider a read-only `WorkerAssignmentRoomContextRecheckValidator`
+  implementation before adding any CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

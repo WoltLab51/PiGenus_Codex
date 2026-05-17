@@ -93,6 +93,8 @@
 - Added `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md` to define assignment
   room, worker home room, ContextStack, and RoomFlow recheck semantics before
   any scheduling enforcement.
+- Added `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
+  to frame the future room/context recheck validator before implementation.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.

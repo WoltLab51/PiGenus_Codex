@@ -129,7 +129,7 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Apply Cell-DNA to WorkerAssignmentRoomContextRecheckValidator.
+Consider read-only WorkerAssignmentRoomContextRecheckValidator implementation.
 ```
 
 Why:
@@ -137,8 +137,8 @@ Why:
 - freshness is now explicit
 - WorkerAssignment room/context recheck semantics are now defined in
   `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
-- the next high-value safety step is making that future validator's membrane
-  explicit before implementation
+- the future validator's membrane is now explicit in
+  `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
 
 ## Stop Lines
 

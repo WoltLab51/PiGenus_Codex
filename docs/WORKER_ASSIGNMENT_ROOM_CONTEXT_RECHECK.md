@@ -250,7 +250,8 @@ Expected first shape:
   logging, no scheduling enforcement, no reservation, no routing, no provider
   call, no execution
 
-Before implementation, create a Cell-DNA frame for that validator.
+The Cell-DNA frame for that validator now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`.
 
 ## Test Expectations For A Later Validator
 
@@ -274,7 +275,7 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Apply Cell-DNA to WorkerAssignmentRoomContextRecheckValidator.
+Consider read-only WorkerAssignmentRoomContextRecheckValidator implementation.
 ```
 
 Still not next:

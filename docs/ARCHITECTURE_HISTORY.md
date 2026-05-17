@@ -1997,3 +1997,21 @@ Room/context recheck answers whether the assignment still belongs in the
 current governance boundary and operating envelope. Keeping those checks
 separate prevents `assigned`, current heartbeat, or old preflight evidence from
 becoming implicit permission to schedule, reserve, route, or execute work.
+
+## WorkerAssignment Room / Context Recheck Cell-DNA
+
+The project gained:
+
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
+- a planned read-only CapabilityCell / GovernedCellCandidate frame for
+  `WorkerAssignmentRoomContextRecheckValidator`
+- explicit input, output, read, write, trace, and no-side-effect boundaries
+- a next-step path toward a narrow validator implementation without CLI,
+  logging, scheduling enforcement, reservation, routing, provider calls,
+  execution logs, or execution
+
+Why it mattered:
+
+Room/context recheck now has a cell-shaped membrane before code exists. This
+keeps the next implementation step narrow: prove room/context compatibility
+as a read-only readiness input, not as scheduling permission.

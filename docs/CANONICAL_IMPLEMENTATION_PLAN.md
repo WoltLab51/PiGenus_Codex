@@ -181,6 +181,9 @@ Focus:
 - define room/context recheck semantics before scheduling enforcement
 - apply Cell-DNA to a future room/context recheck validator before
   implementation
+- keep the first room/context recheck implementation read-only and free of
+  CLI, logging, scheduling enforcement, reservation, routing, provider calls,
+  execution logs, and execution
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist
