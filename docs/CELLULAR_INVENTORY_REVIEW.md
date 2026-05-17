@@ -77,7 +77,7 @@ next safe step: Cell-DNA construction protocol
 | `WorkerAssignmentCreator` | GovernedCellCandidate | Uses validator, writes pending assignment and one audit row on success. | Cell-worthy, but should get Cell-DNA after validator frame exists. |
 | `WorkerAssignmentStatusTransitionValidator` | MicroCell / CapabilityCell candidate | Read-only status transition validation with stable reason codes. | Small responsible capability; can remain lightweight. |
 | `WorkerAssignmentStatusTransitionService` | GovernedCellCandidate | Applies validated lifecycle transition and writes audit on success. | Cell-worthy lifecycle control point; not execution proof. |
-| `WorkerAssignmentSchedulingEligibilityValidator` | GovernedCellCandidate | Read-only assigned-intent eligibility check; tests prove no assignment, decision, or audit writes. | Strong candidate, but logging should wait for Cell-DNA protocol. |
+| `WorkerAssignmentSchedulingEligibilityValidator` | GovernedCellCandidate | Read-only assigned-intent eligibility check including freshness policy input; tests prove no assignment, decision, or audit writes. | Strong candidate; freshness integration still stays below scheduling enforcement. |
 | Worker assignment CLI router | OperatorSurface | Dispatches inspection vs lifecycle command modules; no domain policy. | Keep thin. |
 | Worker assignment inspection CLI | OperatorSurface | `list` and scheduling eligibility inspection; writes one decision only with explicit `--log`. | Correct operator surface; logging remains opt-in and not scheduling. |
 | Worker assignment lifecycle CLI | OperatorSurface | Wraps creator and transition service; writes only through services. | Correct for now; do not let CLI own policy. |

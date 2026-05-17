@@ -96,7 +96,7 @@ Implemented:
   audit
 - `worker-assignment-transition` for service-backed assignment status updates
 - WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
-  scheduling eligibility
+  scheduling eligibility, including heartbeat and preflight evidence freshness
 - `worker-assignment-scheduling-eligibility` for eligibility inspection and
   explicit `--log` decision persistence
 

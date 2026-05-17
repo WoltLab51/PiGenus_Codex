@@ -1942,3 +1942,21 @@ Freshness is now executable as a storage-free, repository-free capability
 without adding CLI, logging, scheduling enforcement, reservation, routing,
 provider calls, execution logs, or execution. This gives later scheduling
 eligibility integration a narrow tested input instead of hidden timing rules.
+
+## Worker Freshness Scheduling Eligibility Integration
+
+The project gained:
+
+- read-only use of `WorkerFreshnessPolicyValidator` inside
+  `WorkerAssignmentSchedulingEligibilityValidator`
+- deterministic `now` support for assigned-intent eligibility checks
+- eligibility reasons for hard-stale heartbeat, review-stale evidence, and
+  hard-stale evidence
+- no-write tests proving assignments, decisions, and audits remain unchanged
+
+Why it mattered:
+
+Freshness is no longer only a standalone capability. Assigned-intent scheduling
+eligibility now uses the freshness policy as an input while still avoiding new
+CLI behavior, implicit logging, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution.

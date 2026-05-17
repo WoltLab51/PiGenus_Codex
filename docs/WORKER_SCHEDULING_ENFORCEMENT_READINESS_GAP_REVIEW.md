@@ -40,11 +40,12 @@ The current runtime has several useful inputs for a future enforcement check.
 | Assignment status graph | Implemented | `pending -> assigned/rejected/cancelled/expired`; `assigned -> cancelled/expired`; terminal states stay terminal. |
 | Creation validation | Implemented | Requires known worker and matching `worker_execution_preflight` allow evidence. |
 | Current worker profile | Implemented | Durable worker identity, capabilities, runtime, sensitivity, and network boundary. |
-| Current worker heartbeat | Implemented | Latest heartbeat state with `seen_at`; no history or staleness policy yet. |
+| Current worker heartbeat | Implemented | Latest heartbeat state with `seen_at`; freshness policy is now used by eligibility checks, but no heartbeat history exists. |
 | Governance decision evidence | Implemented | Durable decision log can store preview, preflight, and eligibility decisions. |
 | Scheduling eligibility validator | Implemented | Rechecks assigned intent against current worker and evidence state. |
 | Eligibility logging | Implemented | Explicit `--log` writes one decision for allow, deny, or review results only. |
-| Tests | Implemented | Current full suite: `313 passed`. |
+| Worker freshness validator | Implemented | Storage-free validator is wired into assigned-intent eligibility for heartbeat and preflight evidence age checks. |
+| Tests | Implemented | Current full suite is tracked in `STATUS.md`. |
 
 These inputs prove that a governed intent chain exists. They do not prove that
 the intent is fresh, budgeted, approved, reservable, routeable, or executable.
@@ -53,8 +54,8 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 
 | Gap | Current State | Why It Matters | First Safe Treatment |
 | --- | --- | --- | --- |
-| Heartbeat freshness | Latest heartbeat has `seen_at`, but no threshold. | A worker can be active in storage but too stale for scheduling. | Define freshness semantics before enforcement code. |
-| Evidence freshness | Decisions have timestamps, but no age policy. | Old preflight allow evidence may no longer be safe. | Define evidence freshness and expiry/review bands. |
+| Heartbeat freshness | Policy and read-only eligibility integration exist; no heartbeat history or enforcement exists. | A worker can be active in storage but too stale for scheduling. | Consolidate read-only behavior before enforcement code. |
+| Evidence freshness | Policy and read-only eligibility integration exist; no revocation model exists. | Old preflight allow evidence may no longer be safe. | Keep expiry/review bands in eligibility; defer revocation and enforcement. |
 | Room/context recheck | Assignment stores `room_id`; ContextStack is not tied into assignment enforcement. | Room policy can change after assignment creation. | Keep room/context recheck as required future enforcement input. |
 | Resource/risk budget | Resource concepts exist, but no scheduling budget input. | Scheduling needs capacity and risk pressure, not only worker capability. | Define placeholder resource/risk inputs before reservation. |
 | Reflex/circuit breaker | Canonical systemform defines reflexes, but worker runtime has no kill-switch path. | Enforcement must be stoppable before live behavior appears. | Define reflex and kill-switch boundary before any high-risk path. |
@@ -63,9 +64,9 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 | Enforcement logging semantics | Eligibility logging exists; enforcement logging source is reserved. | Persisted enforcement records must not be confused with eligibility evidence. | Define later as a distinct source after readiness inputs exist. |
 | No-execution proof | Eligibility tests prove no writes except explicit logging; enforcement has no tests yet. | First enforcement implementation must prove no scheduling, reservation, routing, or execution. | Require no-write/no-execution tests in the first code slice. |
 
-## Freshness Is The First Missing Boundary
+## Freshness Was The First Missing Boundary
 
-The most immediate missing boundary is freshness.
+The first missing boundary identified by this review was freshness.
 
 The current storage already has:
 
@@ -74,19 +75,27 @@ The current storage already has:
 - `WorkerAssignment.updated_at`
 - `GovernanceDecision.created_at`
 
-But the runtime does not yet define:
+The runtime now defines and tests:
 
 - when a heartbeat is fresh
 - when a heartbeat requires review
 - when a heartbeat is too stale to consider
 - when preflight evidence is fresh
 - when preflight evidence requires review
-- when preflight evidence expires
-- whether freshness is room-specific, capability-specific, or global
+- when preflight evidence is too stale to consider
 - whether degraded worker state changes freshness tolerance
 
-Without that policy, enforcement would have to invent hidden timing rules in
-code. That would be the wrong direction.
+Still unresolved:
+
+- whether freshness thresholds become room-specific, capability-specific, or
+  resource-policy-specific
+- evidence revocation beyond age bands
+- heartbeat history beyond current heartbeat state
+
+That policy and a storage-free validator now exist, and assigned-intent
+eligibility consumes them read-only. Enforcement still must not appear until
+the remaining resource, risk, reflex, approval, reservation, and no-execution
+boundaries are explicit.
 
 ## Scheduling Enforcement Must Stay Separate
 
@@ -105,7 +114,8 @@ Has execution started?
 Did execution produce output?
 ```
 
-The first enforcement implementation, when the gaps are closed, should remain
+The first enforcement implementation, when the remaining gaps are closed,
+should remain
 read-only:
 
 - read assignment
@@ -190,12 +200,16 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-Worker Freshness Policy Semantics
+Freshness-integrated scheduling eligibility consolidation
 ```
 
-That policy now lives in `docs/WORKER_FRESHNESS_POLICY.md`.
+The current policy and implementation now live in
+`docs/WORKER_FRESHNESS_POLICY.md`,
+`docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`,
+`pigenus.core.worker_freshness_policy`, and
+`pigenus.core.worker_assignment_scheduling_eligibility`.
 
-It defines:
+They define and test:
 
 - heartbeat freshness bands
 - evidence freshness bands
@@ -203,8 +217,7 @@ It defines:
 - default thresholds for local worker preparation
 - how freshness interacts with degraded workers
 - how future rooms, resources, and risk policy may override thresholds
-- the first no-write test expectations for a later freshness validator
+- no-write expectations for freshness-integrated eligibility
 
-Only after freshness semantics and Cell-DNA are documented should PiGenus
-consider a small, read-only freshness validator. Scheduling enforcement remains
-later.
+Only after this integration is consolidated should PiGenus consider any new
+eligibility logging behavior. Scheduling enforcement remains later.

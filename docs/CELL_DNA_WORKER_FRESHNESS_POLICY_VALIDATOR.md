@@ -3,7 +3,12 @@
 This document applies the lightweight Cell-DNA protocol to
 `WorkerFreshnessPolicyValidator`.
 
-The current implementation is storage-free and read-only. It does not add
+The current implementation is storage-free and read-only. It is consumed by
+`WorkerAssignmentSchedulingEligibilityValidator`, which resolves assignment,
+worker heartbeat, and governance evidence from storage and passes those objects
+in explicitly. The freshness validator itself still owns no repository access.
+
+It does not add
 schemas, migrations, CLI behavior, logging behavior, heartbeat history,
 scheduling enforcement, reservation, routing, provider calls, execution logs,
 execution, RuntimeCell behavior, CellRegistry behavior, or graph projection.
@@ -188,8 +193,8 @@ Implemented tests for the first implementation:
 
 This Cell-DNA and implementation do not add:
 
-- storage reads
-- repository wiring
+- storage reads inside the validator
+- repository ownership inside the validator
 - CLI inspection
 - logging
 - decision persistence

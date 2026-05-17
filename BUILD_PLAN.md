@@ -247,6 +247,8 @@ Completed worker surfaces in this arc:
   enforcement code
 - Cell-DNA frame for `WorkerFreshnessPolicyValidator`
 - storage-free read-only `WorkerFreshnessPolicyValidator`
+- `WorkerFreshnessPolicyValidator` wired into assigned-intent scheduling
+  eligibility for heartbeat and preflight evidence age checks
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -264,8 +266,8 @@ Current stop lines:
 
 Next decision:
 
-- Review how to wire `WorkerFreshnessPolicyValidator` into assigned-intent
-  scheduling eligibility without adding CLI, logging, scheduling enforcement,
+- Consolidate freshness-integrated scheduling eligibility before adding any
+  new CLI surface, decision logging behavior, scheduling enforcement,
   reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
@@ -282,6 +284,7 @@ Readiness source:
 - `docs/WORKER_FRESHNESS_POLICY.md`
 - `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
 - `tests/test_worker_freshness_policy.py`
+- `tests/test_worker_assignment_scheduling_eligibility.py`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`

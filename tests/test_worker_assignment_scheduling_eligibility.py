@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
 
@@ -33,6 +33,9 @@ from pigenus.storage.repositories import (
     WorkerRepository,
 )
 from pigenus.storage.worker_repositories import WorkerAssignmentRepository
+
+
+NOW = datetime(2026, 5, 17, 12, 0, tzinfo=timezone.utc)
 
 
 def db_path(name: str) -> Path:
@@ -90,15 +93,60 @@ def assignment(
     )
 
 
-def prepare_database() -> Database:
+def prepare_database(
+    *,
+    heartbeat_seen_at: datetime | None = None,
+) -> Database:
     database = Database(db_path("eligibility"))
     database.initialize()
     workers = WorkerRepository(database)
     workers.add_profile(worker_profile())
     workers.record_heartbeat(
-        WorkerHeartbeat(worker_id="worker_local", status=WorkerStatus.ACTIVE)
+        WorkerHeartbeat(
+            worker_id="worker_local",
+            status=WorkerStatus.ACTIVE,
+            seen_at=heartbeat_seen_at or datetime.now(timezone.utc),
+        )
     )
     return database
+
+
+def add_preflight_decision(
+    database: Database,
+    *,
+    created_at: datetime = NOW - timedelta(minutes=5),
+    decision_id: str = "dec_preflight_manual",
+) -> DecisionRecord:
+    record = DecisionRecord(
+        decision_id=decision_id,
+        decision_type="governance_decision",
+        context={"name": "developer/default"},
+        subject_id="evt_preflight",
+        actor="agent_preflight",
+        reason="worker_execution_preflight_passed",
+        source="worker_execution_preflight",
+        created_at=created_at,
+        details={
+            "decision": "allow",
+            "family": "worker_execution_preflight",
+            "room_id": "room_developer",
+            "governance_decision": {
+                "room_id": "room_developer",
+                "details": {
+                    "worker_id": "worker_local",
+                    "request": {
+                        "worker_id": "worker_local",
+                        "capability": "meaning_ingester",
+                        "required_runtime": "python",
+                        "sensitivity": "private",
+                        "network_required": True,
+                    },
+                },
+            },
+        },
+    )
+    DecisionRepository(database).add(record)
+    return record
 
 
 def log_preflight_decision(database: Database) -> DecisionRecord:
@@ -266,6 +314,84 @@ def test_worker_assignment_scheduling_eligibility_denies_invalid_evidence():
 
     assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY
     assert result.reasons == ("governance_evidence_not_preflight_allow",)
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_skips_freshness_for_mismatched_evidence():
+    database = prepare_database(heartbeat_seen_at=NOW - timedelta(seconds=30))
+    WorkerRepository(database).add_profile(
+        worker_profile(cells=["meaning_ingester_alt"])
+    )
+    decision = add_preflight_decision(
+        database,
+        created_at=NOW - timedelta(minutes=61),
+    )
+    WorkerAssignmentRepository(database).add(
+        assignment(decision.decision_id, capability="meaning_ingester_alt")
+    )
+
+    result = validator(database).validate("wasg_sched", now=NOW)
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY
+    assert result.reasons == ("evidence_capability_mismatch",)
+    assert "freshness" not in result.details
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_denies_hard_stale_heartbeat():
+    database = prepare_database(heartbeat_seen_at=NOW - timedelta(seconds=601))
+    decision = add_preflight_decision(database)
+    add_assignment(database, decision_id=decision.decision_id)
+
+    result = validator(database).validate("wasg_sched", now=NOW)
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY
+    assert result.reasons == ("heartbeat_hard_stale",)
+    assert result.details["freshness"]["heartbeat_label"] == "hard_stale"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_requires_review_for_stale_evidence():
+    database = prepare_database(heartbeat_seen_at=NOW - timedelta(seconds=30))
+    decision = add_preflight_decision(
+        database,
+        created_at=NOW - timedelta(minutes=16),
+    )
+    add_assignment(database, decision_id=decision.decision_id)
+
+    result = validator(database).validate("wasg_sched", now=NOW)
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.REQUIRE_REVIEW
+    assert result.reasons == ("evidence_review_stale",)
+    assert result.details["freshness"]["evidence_label"] == "review_stale"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_denies_hard_stale_evidence():
+    database = prepare_database(heartbeat_seen_at=NOW - timedelta(seconds=30))
+    decision = add_preflight_decision(
+        database,
+        created_at=NOW - timedelta(minutes=61),
+    )
+    add_assignment(database, decision_id=decision.decision_id)
+
+    result = validator(database).validate("wasg_sched", now=NOW)
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY
+    assert result.reasons == ("evidence_hard_stale",)
+    assert result.details["freshness"]["evidence_label"] == "hard_stale"
     assert WorkerAssignmentRepository(database).count() == 1
     assert DecisionRepository(database).count() == 1
     assert AuditRepository(database).count() == 0

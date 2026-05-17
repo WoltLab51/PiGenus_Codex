@@ -4,9 +4,10 @@ This document applies `docs/CELL_DNA_PROTOCOL.md` to
 `WorkerAssignmentSchedulingEligibilityValidator`, the second concrete
 Cell-DNA frame after `WorkerAssignmentValidator`.
 
-This is documentation only. It does not change runtime code, schemas,
-migrations, CLI behavior, logging behavior, scheduling behavior, worker
-execution, CellRegistry behavior, or RuntimeCell behavior.
+This document is documentation. The validator's current implementation remains
+read-only and does not add schemas, migrations, new CLI behavior, implicit
+logging behavior, scheduling behavior, worker execution, CellRegistry behavior,
+or RuntimeCell behavior.
 
 ## Capability
 
@@ -94,6 +95,12 @@ Current reasons include, but are not limited to:
 - `evidence_sensitivity_mismatch`
 - `evidence_network_requirement_mismatch`
 - `evidence_room_mismatch`
+- `heartbeat_review_stale`
+- `heartbeat_hard_stale`
+- `heartbeat_clock_invalid`
+- `evidence_review_stale`
+- `evidence_hard_stale`
+- `evidence_clock_invalid`
 
 ## Reads
 
@@ -105,6 +112,9 @@ The validator may read:
 - current worker heartbeat
 - `DecisionRepository`
 - durable worker execution preflight governance evidence
+- `WorkerFreshnessPolicyValidator`
+- heartbeat and preflight evidence age labels returned by the freshness
+  validator
 
 ## Writes
 
@@ -128,6 +138,8 @@ The validator may:
 - check governance evidence exists
 - check governance evidence is a worker execution preflight allow decision
 - check governance evidence matches the assignment
+- check heartbeat and preflight evidence freshness through
+  `WorkerFreshnessPolicyValidator`
 - return stable reason codes
 - return details for caller/operator use
 
@@ -172,6 +184,8 @@ The validator assumes:
 - degraded worker state requires review rather than immediate allow
 - missing or non-considerable worker state denies scheduling consideration
 - governance evidence must still match the assignment request
+- review-stale heartbeat or preflight evidence requires review
+- hard-stale heartbeat or preflight evidence denies scheduling consideration
 
 It does not:
 
@@ -195,6 +209,9 @@ Current and expected test coverage includes:
 - missing assignment returns `not_considered`
 - stale or missing worker conditions deny scheduling consideration
 - invalid governance evidence denies scheduling consideration
+- hard-stale heartbeat denies scheduling consideration
+- review-stale preflight evidence requires review
+- hard-stale preflight evidence denies scheduling consideration
 - reason codes remain stable
 - no assignment writes occur during validation
 - no audit writes occur during validation
@@ -226,7 +243,7 @@ This Cell-DNA does not add:
 - decision logging
 - human approval workflow
 - resource budget enforcement
-- evidence expiry or revocation
+- evidence revocation beyond age-based freshness checks
 
 ## Next Possible Maturity
 
@@ -243,8 +260,9 @@ Promotion blockers:
 - no dedicated inspection surface for validator trace shape
 - no persisted trace decision for validator output
 - no resource budget or reservation model
-- no worker/habitat health model beyond current profile and heartbeat
-- no evidence expiry or revocation policy
+- no worker/habitat health model beyond current profile, heartbeat, and
+  freshness labels
+- no evidence revocation policy beyond age-based freshness checks
 
 RuntimeCell maturity is later only. It requires CellRegistry, contract
 validation, lifecycle, inspection, and explicit runtime execution boundaries.

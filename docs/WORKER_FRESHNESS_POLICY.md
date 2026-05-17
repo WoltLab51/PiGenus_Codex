@@ -260,10 +260,15 @@ Implemented tests for that slice:
 This policy is the next input required by
 `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
 
-After this policy is stable, the next safe step is not scheduling enforcement
-itself. The next safe step is to review how the storage-free
-`WorkerFreshnessPolicyValidator` should be wired into assigned-intent
-scheduling eligibility without adding CLI, logging, reservation, routing, or
+The storage-free `WorkerFreshnessPolicyValidator` is now wired into
+assigned-intent scheduling eligibility. That integration evaluates heartbeat
+and preflight evidence age read-only, returns freshness reasons through the
+eligibility result, and still adds no CLI behavior, implicit logging,
+reservation, routing, provider calls, execution logs, or execution behavior.
+
+The next safe step is consolidation, not scheduling enforcement. Any future
+freshness exposure or persisted logging must remain explicit and separate from
+scheduling, reservation, routing, provider calls, execution logs, and
 execution behavior.
 
 The validator Cell-DNA frame lives in

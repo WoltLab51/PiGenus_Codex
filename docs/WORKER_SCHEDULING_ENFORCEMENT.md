@@ -217,14 +217,15 @@ It:
 
 - accepts an assignment ID and reads current assignment, worker, heartbeat, and
   governance evidence state
+- evaluates heartbeat and preflight evidence age through
+  `WorkerFreshnessPolicyValidator`
 - returns stable allow, deny, review, or not-considered outcomes
 - explains every reason in order
 - writes no decisions, audits, assignments, reservations, routes, or execution
   records
 - includes tests proving no storage mutation
 
-Only after that boundary is boring and tested should PiGenus consider CLI
-inspection or opt-in decision logging.
+This remains an eligibility check, not scheduling enforcement.
 
 ## Implemented CLI Inspection
 
@@ -264,22 +265,25 @@ current WorkerAssignment tissue:
 - reason codes are stable for the currently implemented worker inputs
 - the CLI inspection surface reports the same validator outcome without writes
   unless `--log` is explicit
-- heartbeat freshness, room policy, guard outcomes, resource policy, and human
-  approval remain future inputs because those scheduling-enforcement surfaces
-  do not exist yet
+- heartbeat and preflight evidence freshness are now read-only eligibility
+  inputs
+- room policy, guard outcomes, resource policy, reflexes, and human approval
+  remain future inputs because those scheduling-enforcement surfaces do not
+  exist yet
 - `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` consolidates the
   current WorkerAssignment tissue before further scheduling work
 
 Next decision:
 
 ```text
-Worker Freshness Policy Semantics
+Freshness-integrated scheduling eligibility consolidation
 ```
 
 Readiness gaps are documented in
 `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
 Heartbeat and governance evidence freshness semantics are documented in
-`docs/WORKER_FRESHNESS_POLICY.md`.
+`docs/WORKER_FRESHNESS_POLICY.md` and are now used by assigned-intent
+scheduling eligibility. Scheduling enforcement remains later.
 
 Not next:
 

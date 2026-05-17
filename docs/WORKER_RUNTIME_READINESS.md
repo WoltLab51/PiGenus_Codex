@@ -432,6 +432,8 @@ required human approval evidence. This boundary is documented only; no
 scheduler, reservation, routing, provider call, execution log, or execution
 path exists yet.
 
-`docs/WORKER_FRESHNESS_POLICY.md` now defines the current freshness policy
-semantics for heartbeat age and preflight evidence age. It is not runtime code
-and does not add enforcement behavior.
+`docs/WORKER_FRESHNESS_POLICY.md` defines the current freshness policy
+semantics for heartbeat age and preflight evidence age. The storage-free
+validator is now used by assigned-intent scheduling eligibility, but this still
+does not add scheduling enforcement, reservation, routing, provider calls,
+execution logs, or execution.

@@ -101,11 +101,7 @@ What this chain does not prove:
 
 ## Test Evidence
 
-The current local verification result is:
-
-```text
-313 passed
-```
+The current local verification result is tracked in `STATUS.md`.
 
 The relevant coverage proves:
 
@@ -145,7 +141,9 @@ Why some risk remains:
 
 - worker-assignment CLI surfaces now contain several related commands
 - scheduling-adjacent language can easily drift into enforcement language
-- resource, risk, reflex, and heartbeat freshness are not implemented yet
+- resource, risk, and reflex inputs are not implemented yet
+- heartbeat and evidence freshness are now read-only eligibility inputs, but
+  not enforcement inputs
 - future scheduling can become too powerful if introduced before those inputs
 
 ## Readiness For Scheduling Enforcement
@@ -154,8 +152,7 @@ The tissue is not ready for real scheduling enforcement yet.
 
 Still missing before scheduling enforcement can safely exist:
 
-- heartbeat freshness policy
-- evidence freshness policy
+- consolidation of heartbeat/evidence freshness as read-only eligibility input
 - room/context-stack recheck at enforcement time
 - resource or risk budget input
 - reservation model
@@ -190,7 +187,7 @@ Still not next:
 
 Do not implement scheduling enforcement yet.
 
-Next safe step:
+Next safe step from this review:
 
 ```text
 Worker Scheduling Enforcement Readiness Gap Review

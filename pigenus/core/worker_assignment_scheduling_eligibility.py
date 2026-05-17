@@ -1,11 +1,17 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from enum import Enum
-from typing import Any
+from typing import Any, Callable
 
 from pigenus.core.governance_decision_log import GovernanceDecisionLogger
+from pigenus.core.worker_freshness_policy import (
+    WorkerFreshnessPolicyValidator,
+    WorkerFreshnessRecommendation,
+)
 from pigenus.core.worker_scheduling_preview import SENSITIVITY_RANK
+from pigenus.schemas.base import utc_now
 from pigenus.schemas.context import Context
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import (
@@ -13,6 +19,7 @@ from pigenus.schemas.systemform import (
     GuardDecisionType,
     WorkerAssignment,
     WorkerAssignmentStatus,
+    WorkerHeartbeat,
     WorkerStatus,
 )
 from pigenus.storage.repositories import DecisionRepository, WorkerRepository
@@ -128,12 +135,21 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         assignments: WorkerAssignmentRepository,
         workers: WorkerRepository,
         decisions: DecisionRepository,
+        freshness: WorkerFreshnessPolicyValidator | None = None,
+        now_provider: Callable[[], datetime] = utc_now,
     ) -> None:
         self.assignments = assignments
         self.workers = workers
         self.decisions = decisions
+        self.freshness = freshness or WorkerFreshnessPolicyValidator()
+        self.now_provider = now_provider
 
-    def validate(self, assignment_id: str) -> WorkerAssignmentSchedulingEligibilityResult:
+    def validate(
+        self,
+        assignment_id: str,
+        *,
+        now: datetime | None = None,
+    ) -> WorkerAssignmentSchedulingEligibilityResult:
         assignment = self.assignments.get(assignment_id)
         if assignment is None:
             return WorkerAssignmentSchedulingEligibilityResult(
@@ -173,8 +189,23 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         deny_reasons: list[str] = []
         review_reasons: list[str] = []
 
-        self._check_worker_state(assignment, deny_reasons, review_reasons, details)
-        self._check_governance_evidence(assignment, deny_reasons, details)
+        heartbeat = self._check_worker_state(
+            assignment,
+            deny_reasons,
+            review_reasons,
+            details,
+        )
+        evidence = self._check_governance_evidence(assignment, deny_reasons, details)
+        if evidence is not None and "worker_unknown" not in deny_reasons:
+            self._check_freshness(
+                assignment=assignment,
+                heartbeat=heartbeat,
+                evidence=evidence,
+                deny_reasons=deny_reasons,
+                review_reasons=review_reasons,
+                details=details,
+                now=now or self.now_provider(),
+            )
 
         if deny_reasons:
             return WorkerAssignmentSchedulingEligibilityResult(
@@ -205,11 +236,11 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         deny_reasons: list[str],
         review_reasons: list[str],
         details: dict[str, Any],
-    ) -> None:
+    ) -> WorkerHeartbeat | None:
         profile = self.workers.get_profile(assignment.worker_id)
         if profile is None:
             deny_reasons.append("worker_unknown")
-            return
+            return None
 
         heartbeat = self.workers.get_heartbeat(assignment.worker_id)
         details["worker_status"] = profile.status.value
@@ -246,28 +277,31 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         if assignment.network_required and not profile.network_access:
             _append_reason(deny_reasons, "network_not_allowed")
 
+        return heartbeat
+
     def _check_governance_evidence(
         self,
         assignment: WorkerAssignment,
         deny_reasons: list[str],
         details: dict[str, Any],
-    ) -> None:
+    ) -> DecisionRecord | None:
         decision = self.decisions.get(assignment.governance_decision_id)
         if decision is None:
             deny_reasons.append("governance_evidence_missing")
-            return
+            return None
 
         details["decision_source"] = decision.source
         details["decision_type"] = decision.decision_type
         if not _is_preflight_allow(decision):
             deny_reasons.append("governance_evidence_not_preflight_allow")
-            return
+            return None
 
         request, evidence_worker_id, evidence_room_id = _preflight_evidence(decision)
         if request is None:
             deny_reasons.append("governance_evidence_not_preflight_allow")
-            return
+            return None
 
+        reason_count = len(deny_reasons)
         _append_mismatch(
             deny_reasons,
             assignment.worker_id,
@@ -304,6 +338,49 @@ class WorkerAssignmentSchedulingEligibilityValidator:
             evidence_room_id,
             "evidence_room_mismatch",
         )
+        if len(deny_reasons) != reason_count:
+            return None
+        return decision
+
+    def _check_freshness(
+        self,
+        *,
+        assignment: WorkerAssignment,
+        heartbeat: WorkerHeartbeat | None,
+        evidence: DecisionRecord,
+        deny_reasons: list[str],
+        review_reasons: list[str],
+        details: dict[str, Any],
+        now: datetime,
+    ) -> None:
+        result = self.freshness.validate(
+            assignment=assignment,
+            heartbeat=heartbeat,
+            evidence=evidence,
+            now=now,
+        )
+        details["freshness"] = {
+            "recommendation": result.recommendation.value,
+            "heartbeat_label": result.heartbeat_label.value,
+            "evidence_label": result.evidence_label.value,
+            "assignment_age_label": result.assignment_age_label.value
+            if result.assignment_age_label is not None
+            else None,
+            "reasons": list(result.reasons),
+            **result.details,
+        }
+
+        if result.recommendation == WorkerFreshnessRecommendation.CONTINUE:
+            return
+
+        target = (
+            review_reasons
+            if result.recommendation == WorkerFreshnessRecommendation.REQUIRE_REVIEW
+            else deny_reasons
+        )
+        for reason in result.reasons:
+            if reason != "freshness_policy_passed":
+                _append_reason(target, reason)
 
 
 def _is_preflight_allow(decision: DecisionRecord) -> bool:

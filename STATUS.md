@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `313 passed`
+- Last verified result: `317 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 - Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
@@ -44,8 +44,8 @@
   gaps before enforcement code.
 - Worker Freshness Policy:
   `docs/WORKER_FRESHNESS_POLICY.md` defines heartbeat and governance evidence
-  freshness semantics before any freshness validator or scheduling enforcement
-  code.
+  freshness semantics now used by assigned-intent scheduling eligibility before
+  any scheduling enforcement code.
 
 ## Current Cycle
 
@@ -66,12 +66,17 @@ Worker Runtime / scheduling eligibility:
   transitions, eligibility inspection, and explicit eligibility decision
   logging without scheduling or execution.
 - Enforcement readiness: scheduling enforcement is not ready yet; freshness
-  semantics are the next safe boundary.
+  is now a read-only eligibility input, and the next safe boundary is
+  consolidation before any enforcement behavior.
 - Freshness policy: heartbeat and preflight evidence age bands are documented;
-  they are not active runtime behavior yet.
+  assigned-intent scheduling eligibility now evaluates those bands read-only.
 - Freshness Cell-DNA: `WorkerFreshnessPolicyValidator` is framed as a
   read-only CapabilityCell / GovernedCellCandidate and now exists as a
   storage-free implementation.
+- Freshness integration: `WorkerAssignmentSchedulingEligibilityValidator` now
+  uses `WorkerFreshnessPolicyValidator` for heartbeat and preflight evidence
+  age checks without adding CLI behavior, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -179,6 +184,9 @@ PiGenus is a small local GENUS runtime core. It has:
 - Cell-DNA frame for `WorkerFreshnessPolicyValidator`
 - Storage-free `WorkerFreshnessPolicyValidator` with explicit `now`,
   heartbeat/evidence freshness labels, and no-write tests
+- `WorkerFreshnessPolicyValidator` integrated into
+  `WorkerAssignmentSchedulingEligibilityValidator` for read-only heartbeat and
+  preflight evidence age checks
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - Dedicated worker-assignment CLI command modules for inspection and lifecycle
@@ -379,7 +387,8 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `WorkerAssignmentSchedulingEligibilityValidator` checks whether assigned
   intent is eligible for future scheduling consideration; it does not write
   decisions, audits, assignments, reservations, routes, execution logs, or
-  execution results.
+  execution results. It now includes read-only heartbeat and preflight evidence
+  freshness checks through `WorkerFreshnessPolicyValidator`.
 - `worker-assignment-scheduling-eligibility` exposes that validator as a
   CLI inspection command; without `--log`, it does not write decisions,
   mutate assignments, reserve, route, or execute.
@@ -449,9 +458,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, review how to wire WorkerFreshnessPolicyValidator into assigned-intent
-  scheduling eligibility without adding CLI, logging, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution behavior.
+- Next, consolidate freshness-integrated scheduling eligibility before adding
+  any new CLI surface, logging behavior, scheduling enforcement, reservation,
+  routing, provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

@@ -82,6 +82,11 @@
   freshness validator as read-only and side-effect-free.
 - Added storage-free `WorkerFreshnessPolicyValidator` with deterministic
   heartbeat and preflight evidence freshness labels plus no-write tests.
+- Wired `WorkerFreshnessPolicyValidator` into
+  `WorkerAssignmentSchedulingEligibilityValidator` for read-only heartbeat
+  and preflight evidence age checks without adding new CLI behavior, logging,
+  scheduling enforcement, reservation, routing, provider calls, execution logs,
+  or execution.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
@@ -103,7 +108,7 @@
 
 ### Verified
 
-- Latest local full suite: `313 passed`.
+- Latest local full suite: `317 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 
