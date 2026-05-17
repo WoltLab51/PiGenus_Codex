@@ -75,9 +75,12 @@
 - Added `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md` to
   identify freshness, room/context, resource/risk, reflex, approval, and
   reservation gaps before any scheduling-enforcement code.
+- Added `docs/WORKER_FRESHNESS_POLICY.md` to define heartbeat and preflight
+  evidence freshness bands before any freshness validator or scheduling
+  enforcement code.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.
+  `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.

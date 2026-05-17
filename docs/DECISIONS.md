@@ -1686,3 +1686,22 @@ homeostasis, dependencies, quarantine, recovery, or governance bottlenecks.
 The graph gives future planning and diagnosis a precise vocabulary while
 preventing graph state from becoming hidden policy, hot-path routing, worker
 execution, or a second truth source.
+
+## D-106: Worker Freshness Policy Precedes Scheduling Enforcement
+
+Decision:
+
+PiGenus defines Worker Freshness Policy semantics before implementing any
+scheduling-enforcement validator. Heartbeat freshness and preflight evidence
+freshness must use explicit labels such as `fresh`, `review_stale`,
+`hard_stale`, `missing`, and `clock_invalid`. Future validators must not invent
+hidden timing rules, mutate assignments, create audit or decision records,
+reserve capacity, route providers, write execution logs, or execute work.
+
+Reason:
+
+The WorkerAssignment tissue can now create intent, transition lifecycle state,
+inspect eligibility, and explicitly log eligibility decisions. The next risk is
+using stale heartbeat or stale preflight evidence as if it were live authority.
+Freshness policy keeps future enforcement deterministic, testable, and
+reviewable before any scheduling power appears.

@@ -1888,3 +1888,21 @@ governed intent and eligibility evidence to reason about future scheduling,
 but not enough freshness, budget, reflex, approval, or reservation boundaries
 to enforce scheduling safely. The next safe work is policy semantics, not
 worker power.
+
+## Worker Freshness Policy
+
+The project gained:
+
+- `docs/WORKER_FRESHNESS_POLICY.md`
+- heartbeat freshness labels and candidate local thresholds
+- preflight evidence freshness labels and candidate local thresholds
+- no-side-effect rules for future freshness validation
+- `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`
+
+Why it mattered:
+
+PiGenus now has explicit timing semantics before any scheduling-enforcement
+validator exists. A later validator can evaluate heartbeat and preflight
+evidence age deterministically instead of hiding time assumptions inside code.
+This keeps stale worker state from becoming accidental permission to schedule,
+reserve, route, or execute work.

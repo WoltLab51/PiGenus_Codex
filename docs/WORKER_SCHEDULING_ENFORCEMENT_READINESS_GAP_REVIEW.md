@@ -193,7 +193,9 @@ Next safe step:
 Worker Freshness Policy Semantics
 ```
 
-That should define:
+That policy now lives in `docs/WORKER_FRESHNESS_POLICY.md`.
+
+It defines:
 
 - heartbeat freshness bands
 - evidence freshness bands
@@ -203,5 +205,6 @@ That should define:
 - how future rooms, resources, and risk policy may override thresholds
 - the first no-write test expectations for a later freshness validator
 
-Only after freshness semantics are documented should PiGenus consider a small,
-read-only scheduling-enforcement validator.
+Only after freshness semantics and Cell-DNA are documented should PiGenus
+consider a small, read-only freshness validator. Scheduling enforcement remains
+later.

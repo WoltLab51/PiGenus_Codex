@@ -278,6 +278,8 @@ Worker Freshness Policy Semantics
 
 Readiness gaps are documented in
 `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
+Heartbeat and governance evidence freshness semantics are documented in
+`docs/WORKER_FRESHNESS_POLICY.md`.
 
 Not next:
 

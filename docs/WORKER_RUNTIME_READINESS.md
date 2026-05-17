@@ -177,6 +177,10 @@ Before a worker can execute a task, the runtime should be able to prove:
 - guard pipeline allows execution
 - the decision is traceable
 
+`docs/WORKER_FRESHNESS_POLICY.md` owns the first heartbeat and governance
+evidence freshness semantics for this selection rule. Those semantics are not
+execution, scheduling, reservation, routing, or provider access.
+
 ## Source Of Truth Policy
 
 Worker data must not come from hidden defaults or network discovery.
@@ -427,3 +431,7 @@ context constraints, guard outcomes, resource policy when available, and any
 required human approval evidence. This boundary is documented only; no
 scheduler, reservation, routing, provider call, execution log, or execution
 path exists yet.
+
+`docs/WORKER_FRESHNESS_POLICY.md` now defines the current freshness policy
+semantics for heartbeat age and preflight evidence age. It is not runtime code
+and does not add enforcement behavior.
