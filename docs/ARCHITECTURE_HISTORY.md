@@ -1896,7 +1896,7 @@ The project gained:
 - `docs/WORKER_FRESHNESS_POLICY.md`
 - heartbeat freshness labels and candidate local thresholds
 - preflight evidence freshness labels and candidate local thresholds
-- no-side-effect rules for future freshness validation
+- no-side-effect rules for freshness validation
 - `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`
 
 Why it mattered:
@@ -1912,7 +1912,7 @@ reserve, route, or execute work.
 The project gained:
 
 - `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
-- a read-only Cell-DNA frame for future freshness validation
+- a read-only Cell-DNA frame for freshness validation
 - explicit no-write, no-logging, no-enforcement, no-reservation, no-routing,
   and no-execution boundaries
 - a next-step path toward a storage-free implementation with deterministic
@@ -1925,3 +1925,20 @@ runtime power. The future validator can be built as a narrow CapabilityCell
 that classifies heartbeat and evidence age, while scheduling enforcement,
 operator logging, reservation, routing, provider calls, and execution remain
 blocked.
+
+## WorkerFreshnessPolicyValidator Implementation
+
+The project gained:
+
+- `pigenus.core.worker_freshness_policy.WorkerFreshnessPolicyValidator`
+- stable freshness labels for heartbeat and preflight evidence age
+- deterministic `now` input for tests
+- targeted tests for fresh, review-stale, hard-stale, missing, clock-invalid,
+  degraded heartbeat, optional assignment age, and no input mutation
+
+Why it mattered:
+
+Freshness is now executable as a storage-free, repository-free capability
+without adding CLI, logging, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution. This gives later scheduling
+eligibility integration a narrow tested input instead of hidden timing rules.

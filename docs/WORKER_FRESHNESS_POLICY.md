@@ -223,13 +223,13 @@ explicit lifecycle transition or later service boundary.
 
 Do not build this in this document.
 
-A later first code slice may introduce a read-only validator such as:
+The first code slice now introduces a read-only validator:
 
 ```text
 WorkerFreshnessPolicyValidator
 ```
 
-Suggested first slice:
+Current first slice:
 
 - accepts assignment, heartbeat, preflight decision, and explicit `now`
 - evaluates heartbeat freshness
@@ -239,7 +239,7 @@ Suggested first slice:
 - writes nothing
 - includes no CLI at first
 
-Required tests for that later slice:
+Implemented tests for that slice:
 
 - fresh heartbeat and fresh evidence
 - missing heartbeat
@@ -261,11 +261,12 @@ This policy is the next input required by
 `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
 
 After this policy is stable, the next safe step is not scheduling enforcement
-itself. The next safe step is a Cell-DNA frame for the future
-`WorkerFreshnessPolicyValidator`, followed by a small read-only implementation
-only if the frame stays narrow.
+itself. The next safe step is to review how the storage-free
+`WorkerFreshnessPolicyValidator` should be wired into assigned-intent
+scheduling eligibility without adding CLI, logging, reservation, routing, or
+execution behavior.
 
-That Cell-DNA frame now lives in
+The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.
 
 ## Stop Lines

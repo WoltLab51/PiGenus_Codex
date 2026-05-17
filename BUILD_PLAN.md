@@ -245,7 +245,8 @@ Completed worker surfaces in this arc:
   enforcement code
 - Worker Freshness Policy semantics for heartbeat and evidence age before
   enforcement code
-- Cell-DNA frame for a future `WorkerFreshnessPolicyValidator`
+- Cell-DNA frame for `WorkerFreshnessPolicyValidator`
+- storage-free read-only `WorkerFreshnessPolicyValidator`
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -263,9 +264,9 @@ Current stop lines:
 
 Next decision:
 
-- Implement a storage-free, read-only `WorkerFreshnessPolicyValidator` before
-  any CLI, logging, scheduling enforcement validator, reservation, routing,
-  provider calls, execution logs, or execution.
+- Review how to wire `WorkerFreshnessPolicyValidator` into assigned-intent
+  scheduling eligibility without adding CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
 
@@ -280,6 +281,7 @@ Readiness source:
 - `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`
 - `docs/WORKER_FRESHNESS_POLICY.md`
 - `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
+- `tests/test_worker_freshness_policy.py`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
@@ -374,6 +376,9 @@ meaning, inspection, and backup surfaces remain stable.
 - WorkerFreshnessPolicyValidator Cell-DNA is documented before any read-only
   freshness validator, scheduling enforcement validator, reservation, routing,
   provider calls, or execution
+- WorkerFreshnessPolicyValidator is implemented storage-free before any
+  scheduling eligibility integration, scheduling enforcement validator,
+  reservation, routing, provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

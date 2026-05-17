@@ -1,12 +1,12 @@
 # WorkerFreshnessPolicyValidator Cell-DNA
 
-This document applies the lightweight Cell-DNA protocol to the future
+This document applies the lightweight Cell-DNA protocol to
 `WorkerFreshnessPolicyValidator`.
 
-It is documentation-only. It does not add runtime code, schemas, migrations,
-CLI behavior, logging behavior, heartbeat history, scheduling enforcement,
-reservation, routing, provider calls, execution logs, execution, RuntimeCell
-behavior, CellRegistry behavior, or graph projection.
+The current implementation is storage-free and read-only. It does not add
+schemas, migrations, CLI behavior, logging behavior, heartbeat history,
+scheduling enforcement, reservation, routing, provider calls, execution logs,
+execution, RuntimeCell behavior, CellRegistry behavior, or graph projection.
 
 ## Capability
 
@@ -39,12 +39,12 @@ itself.
 CapabilityCell / GovernedCellCandidate
 ```
 
-Current maturity is documentation-only. A later implementation may become a
-read-only CapabilityCell. RuntimeCell maturity is explicitly later.
+Current maturity is a storage-free read-only CapabilityCell implementation and
+GovernedCellCandidate. RuntimeCell maturity is explicitly later.
 
 ## Inputs
 
-Candidate first implementation inputs:
+Current first implementation inputs:
 
 - `WorkerAssignment`
 - current `WorkerHeartbeat` or `None`
@@ -52,13 +52,12 @@ Candidate first implementation inputs:
 - explicit `now` timestamp for deterministic evaluation
 - optional policy thresholds from `docs/WORKER_FRESHNESS_POLICY.md`
 
-Inputs should be passed explicitly by the caller. The validator should not
-query storage in the first slice unless a later implementation review decides
-otherwise.
+Inputs are passed explicitly by the caller. The validator does not query
+storage in the first slice.
 
 ## Outputs
 
-Candidate outputs:
+Current outputs:
 
 - heartbeat freshness label:
   - `fresh`
@@ -80,7 +79,7 @@ validators to consume.
 
 ## Reads
 
-The first implementation should read only input objects it is given:
+The first implementation reads only input objects it is given:
 
 - `WorkerAssignment.created_at`
 - `WorkerAssignment.updated_at`
@@ -91,7 +90,7 @@ The first implementation should read only input objects it is given:
   shape
 - freshness thresholds from policy or explicit configuration
 
-It should not directly read repositories in the first slice.
+It does not directly read repositories in the first slice.
 
 ## Writes
 
@@ -165,7 +164,7 @@ the validator itself must not create audit rows or governance decisions.
 
 ## Tests
 
-Required tests for the first implementation:
+Implemented tests for the first implementation:
 
 - fresh heartbeat and fresh evidence returns fresh labels
 - missing heartbeat returns `missing`
@@ -187,9 +186,8 @@ Required tests for the first implementation:
 
 ## Non-Goals
 
-This Cell-DNA does not add:
+This Cell-DNA and implementation do not add:
 
-- runtime implementation
 - storage reads
 - repository wiring
 - CLI inspection
@@ -209,14 +207,14 @@ This Cell-DNA does not add:
 
 ## Next Possible Maturity
 
-Next safe maturity:
+Current safe maturity:
 
 ```text
 CapabilityCell with a read-only implementation and targeted tests.
 ```
 
-That first implementation should be storage-free or repository-free if
-possible. It should accept explicit inputs and return a deterministic result.
+The first implementation is storage-free and repository-free. It accepts
+explicit inputs and returns a deterministic result.
 
 Later maturity:
 

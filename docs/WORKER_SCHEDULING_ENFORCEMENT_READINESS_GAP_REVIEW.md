@@ -44,7 +44,7 @@ The current runtime has several useful inputs for a future enforcement check.
 | Governance decision evidence | Implemented | Durable decision log can store preview, preflight, and eligibility decisions. |
 | Scheduling eligibility validator | Implemented | Rechecks assigned intent against current worker and evidence state. |
 | Eligibility logging | Implemented | Explicit `--log` writes one decision for allow, deny, or review results only. |
-| Tests | Implemented | Current full suite: `301 passed`. |
+| Tests | Implemented | Current full suite: `313 passed`. |
 
 These inputs prove that a governed intent chain exists. They do not prove that
 the intent is fresh, budgeted, approved, reservable, routeable, or executable.

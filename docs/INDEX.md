@@ -61,7 +61,7 @@ Start here when orienting yourself:
 - `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` - WorkerAssignment tissue consolidation before scheduling enforcement
 - `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md` - freshness and safety gaps before scheduling enforcement
 - `docs/WORKER_FRESHNESS_POLICY.md` - heartbeat and governance evidence freshness policy semantics
-- `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md` - Cell-DNA frame for future freshness validation
+- `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md` - Cell-DNA frame for freshness validation
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

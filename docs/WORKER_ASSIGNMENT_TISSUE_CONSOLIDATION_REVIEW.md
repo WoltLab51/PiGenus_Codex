@@ -104,7 +104,7 @@ What this chain does not prove:
 The current local verification result is:
 
 ```text
-301 passed
+313 passed
 ```
 
 The relevant coverage proves:
