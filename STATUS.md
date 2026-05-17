@@ -77,6 +77,10 @@ Worker Runtime / scheduling eligibility:
   uses `WorkerFreshnessPolicyValidator` for heartbeat and preflight evidence
   age checks without adding CLI behavior, logging, scheduling enforcement,
   reservation, routing, provider calls, execution logs, or execution.
+- Freshness eligibility consolidation:
+  `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` accepts the
+  read-only integration and recommends room/context recheck semantics as the
+  next readiness boundary.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -458,9 +462,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate freshness-integrated scheduling eligibility before adding
-  any new CLI surface, logging behavior, scheduling enforcement, reservation,
-  routing, provider calls, execution logs, or execution behavior.
+- Next, define WorkerAssignment room/context recheck semantics before adding
+  scheduling enforcement, reservation, routing, provider calls, execution
+  logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

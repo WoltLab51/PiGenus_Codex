@@ -1960,3 +1960,20 @@ Freshness is no longer only a standalone capability. Assigned-intent scheduling
 eligibility now uses the freshness policy as an input while still avoiding new
 CLI behavior, implicit logging, scheduling enforcement, reservation, routing,
 provider calls, execution logs, or execution.
+
+## Worker Freshness Eligibility Consolidation
+
+The project gained:
+
+- `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`
+- explicit acceptance of freshness as a read-only eligibility input
+- confirmation that mismatched preflight evidence blocks freshness evaluation
+- a next-step recommendation for WorkerAssignment room/context recheck
+  semantics before scheduling enforcement
+
+Why it mattered:
+
+The freshness integration now has a clean pause point. PiGenus can move to the
+next readiness boundary without confusing eligibility, logging, scheduling
+enforcement, reservation, routing, provider calls, execution logs, or
+execution.

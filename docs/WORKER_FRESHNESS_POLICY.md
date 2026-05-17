@@ -266,10 +266,12 @@ and preflight evidence age read-only, returns freshness reasons through the
 eligibility result, and still adds no CLI behavior, implicit logging,
 reservation, routing, provider calls, execution logs, or execution behavior.
 
-The next safe step is consolidation, not scheduling enforcement. Any future
-freshness exposure or persisted logging must remain explicit and separate from
-scheduling, reservation, routing, provider calls, execution logs, and
-execution behavior.
+That integration is consolidated in
+`docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`.
+Any future freshness exposure or persisted logging must remain explicit and
+separate from scheduling, reservation, routing, provider calls, execution logs,
+and execution behavior. The next readiness boundary is WorkerAssignment
+room/context recheck semantics.
 
 The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.

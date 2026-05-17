@@ -178,6 +178,7 @@ Focus:
   enforcement
 - consolidate freshness-integrated scheduling eligibility before any new
   logging or enforcement behavior
+- define room/context recheck semantics before scheduling enforcement
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

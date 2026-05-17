@@ -276,14 +276,16 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Freshness-integrated scheduling eligibility consolidation
+WorkerAssignment room/context recheck semantics
 ```
 
 Readiness gaps are documented in
 `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
 Heartbeat and governance evidence freshness semantics are documented in
 `docs/WORKER_FRESHNESS_POLICY.md` and are now used by assigned-intent
-scheduling eligibility. Scheduling enforcement remains later.
+scheduling eligibility. That integration is consolidated in
+`docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`. Scheduling
+enforcement remains later.
 
 Not next:
 

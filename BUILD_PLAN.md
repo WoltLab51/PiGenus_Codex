@@ -249,6 +249,7 @@ Completed worker surfaces in this arc:
 - storage-free read-only `WorkerFreshnessPolicyValidator`
 - `WorkerFreshnessPolicyValidator` wired into assigned-intent scheduling
   eligibility for heartbeat and preflight evidence age checks
+- Freshness-integrated scheduling eligibility consolidation review
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -266,9 +267,9 @@ Current stop lines:
 
 Next decision:
 
-- Consolidate freshness-integrated scheduling eligibility before adding any
-  new CLI surface, decision logging behavior, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution.
+- Define WorkerAssignment room/context recheck semantics before any scheduling
+  enforcement, reservation, routing, provider calls, execution logs, or
+  execution.
 
 Readiness source:
 
@@ -283,6 +284,7 @@ Readiness source:
 - `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`
 - `docs/WORKER_FRESHNESS_POLICY.md`
 - `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
+- `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`
 - `tests/test_worker_freshness_policy.py`
 - `tests/test_worker_assignment_scheduling_eligibility.py`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`

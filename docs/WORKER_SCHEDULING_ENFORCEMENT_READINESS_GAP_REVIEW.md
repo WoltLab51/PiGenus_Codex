@@ -200,7 +200,7 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-Freshness-integrated scheduling eligibility consolidation
+WorkerAssignment room/context recheck semantics
 ```
 
 The current policy and implementation now live in
@@ -219,5 +219,9 @@ They define and test:
 - how future rooms, resources, and risk policy may override thresholds
 - no-write expectations for freshness-integrated eligibility
 
-Only after this integration is consolidated should PiGenus consider any new
-eligibility logging behavior. Scheduling enforcement remains later.
+The freshness integration is consolidated in
+`docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`.
+
+Next, PiGenus should define how assignment room and future context-stack inputs
+are rechecked before scheduling consideration. Scheduling enforcement remains
+later.

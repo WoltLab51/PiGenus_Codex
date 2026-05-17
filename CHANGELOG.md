@@ -87,6 +87,9 @@
   and preflight evidence age checks without adding new CLI behavior, logging,
   scheduling enforcement, reservation, routing, provider calls, execution logs,
   or execution.
+- Added `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md` to
+  consolidate the freshness-integrated eligibility boundary and set
+  room/context recheck semantics as the next readiness decision.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
