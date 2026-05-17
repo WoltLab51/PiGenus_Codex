@@ -254,6 +254,28 @@ The Cell-DNA frame for that validator now lives in
 The first implementation consolidation now lives in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
 
+## Scheduling Eligibility Integration
+
+`WorkerAssignmentSchedulingEligibilityValidator` can now consume
+`WorkerAssignmentRoomContextRecheckValidator` as an explicitly supplied
+read-only input.
+
+This integration is opt-in:
+
+- if no room/context recheck validator is supplied, scheduling eligibility
+  behavior remains unchanged
+- if a room/context recheck validator is supplied, caller-provided
+  ContextStack, ContextFrames, source room, and target room inputs are passed
+  into the recheck
+- `allow_context` allows normal scheduling eligibility evaluation to continue
+- `require_review` becomes scheduling `require_review`
+- `deny_context` becomes scheduling `deny_scheduling`
+- `not_considered` becomes scheduling `not_considered`
+
+The integration does not add CLI behavior, logging behavior, audit writes,
+decision writes, scheduling enforcement, reservation, routing, provider calls,
+execution logs, or execution.
+
 ## Validator Test Expectations
 
 Current and future tests should prove:
@@ -268,6 +290,10 @@ Current and future tests should prove:
 - no audit writes
 - no decision writes
 - no reservation, routing, provider, execution-log, or execution writes
+- scheduling eligibility remains unchanged when no room/context validator is
+  supplied
+- scheduling eligibility maps room/context allow, review, deny, and
+  not-considered results without writes
 
 ## Current Recommendation
 
@@ -276,8 +302,7 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
-into assigned-intent scheduling eligibility as a read-only input.
+Consolidate the read-only room/context scheduling eligibility integration.
 ```
 
 Still not next:

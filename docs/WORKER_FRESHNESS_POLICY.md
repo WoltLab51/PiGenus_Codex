@@ -274,8 +274,9 @@ and execution behavior. WorkerAssignment room/context recheck semantics now
 live in `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the read-only
 validator is consolidated in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
-The next readiness decision is whether and how to wire that validator into
-assigned-intent scheduling eligibility as a read-only input.
+That validator is now consumed by assigned-intent scheduling eligibility only
+when explicitly supplied by a caller. The next readiness step is consolidating
+that read-only integration before any CLI, logging, or enforcement behavior.
 
 The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.

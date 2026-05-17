@@ -4,6 +4,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
 
+from pigenus.core.worker_assignment_room_context_recheck import (
+    WorkerAssignmentRoomContextRecheckOutcome,
+    WorkerAssignmentRoomContextRecheckResult,
+    WorkerAssignmentRoomContextRecheckValidator,
+)
 from pigenus.core.worker_assignment_scheduling_eligibility import (
     WorkerAssignmentSchedulingEligibilityLogger,
     WorkerAssignmentSchedulingEligibilityOutcome,
@@ -18,6 +23,9 @@ from pigenus.core.worker_inspection import WorkerInspectionService
 from pigenus.core.worker_registry import WorkerRegistry
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import (
+    ContextFrame,
+    ContextFrameType,
+    ContextStack,
     Sensitivity,
     WorkerAssignment,
     WorkerAssignmentStatus,
@@ -52,13 +60,14 @@ def worker_profile(
     runtimes: list[str] | None = None,
     max_sensitivity: Sensitivity = Sensitivity.PRIVATE,
     network_access: bool = True,
+    home_room_id: str = "room_developer",
 ) -> WorkerProfile:
     return WorkerProfile(
         id=worker_id,
         worker_type=WorkerType.LOCAL_PROCESS,
         display_name=f"{worker_id} display",
         status=status,
-        home_room_id="room_developer",
+        home_room_id=home_room_id,
         available_cells=cells or ["meaning_ingester"],
         supported_runtimes=runtimes or ["python"],
         max_sensitivity=max_sensitivity,
@@ -90,6 +99,31 @@ def assignment(
         reason="preflight_allowed",
         created_at=datetime(2026, 5, 16, 8, 0, tzinfo=timezone.utc),
         updated_at=datetime(2026, 5, 16, 8, 0, tzinfo=timezone.utc),
+    )
+
+
+def context_frame(
+    *,
+    frame_id: str = "cf_developer",
+    room_id: str = "room_developer",
+    allowed_capabilities: list[str] | None = None,
+    denied_capabilities: list[str] | None = None,
+) -> ContextFrame:
+    return ContextFrame(
+        id=frame_id,
+        type=ContextFrameType.GOVERNANCE,
+        name=frame_id,
+        room_id=room_id,
+        allowed_capabilities=allowed_capabilities or [],
+        denied_capabilities=denied_capabilities or [],
+    )
+
+
+def context_stack(*, frame_ids: list[str] | None = None) -> ContextStack:
+    return ContextStack(
+        id="cstack_developer",
+        name="developer context",
+        frame_ids=frame_ids or ["cf_developer"],
     )
 
 
@@ -194,6 +228,31 @@ def validator(database: Database) -> WorkerAssignmentSchedulingEligibilityValida
     )
 
 
+def validator_with_room_context(
+    database: Database,
+) -> WorkerAssignmentSchedulingEligibilityValidator:
+    return WorkerAssignmentSchedulingEligibilityValidator(
+        assignments=WorkerAssignmentRepository(database),
+        workers=WorkerRepository(database),
+        decisions=DecisionRepository(database),
+        room_context_recheck=WorkerAssignmentRoomContextRecheckValidator(
+            assignments=WorkerAssignmentRepository(database),
+            workers=WorkerRepository(database),
+            decisions=DecisionRepository(database),
+        ),
+    )
+
+
+class NotConsideredRoomContextRecheck:
+    def validate(self, assignment_id: str, **_: object):
+        return WorkerAssignmentRoomContextRecheckResult(
+            assignment_id=assignment_id,
+            outcome=WorkerAssignmentRoomContextRecheckOutcome.NOT_CONSIDERED,
+            reasons=("room_context_not_considered",),
+            details={"assignment_id": assignment_id},
+        )
+
+
 def test_worker_assignment_scheduling_eligibility_allows_assigned_current_worker():
     database = prepare_database()
     add_assignment(database)
@@ -204,6 +263,83 @@ def test_worker_assignment_scheduling_eligibility_allows_assigned_current_worker
     assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.ALLOW
     assert result.reasons == ("assignment_scheduling_eligible",)
     assert result.details["assignment_status"] == "assigned"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_allows_matching_room_context():
+    database = prepare_database()
+    add_assignment(database)
+
+    result = validator_with_room_context(database).validate(
+        "wasg_sched",
+        context_stack=context_stack(),
+        context_frames=[context_frame(allowed_capabilities=["meaning_ingester"])],
+    )
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.ALLOW
+    assert result.reasons == ("assignment_scheduling_eligible",)
+    assert result.details["room_context"]["outcome"] == "allow_context"
+    assert result.details["room_context"]["reasons"] == [
+        "room_context_recheck_passed"
+    ]
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_reviews_missing_context_stack():
+    database = prepare_database()
+    add_assignment(database)
+
+    result = validator_with_room_context(database).validate("wasg_sched")
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.REQUIRE_REVIEW
+    assert result.reasons == ("context_stack_not_evaluated",)
+    assert result.details["room_context"]["outcome"] == "require_review"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_denies_context_policy_mismatch():
+    database = prepare_database()
+    add_assignment(database)
+
+    result = validator_with_room_context(database).validate(
+        "wasg_sched",
+        context_stack=context_stack(),
+        context_frames=[context_frame(denied_capabilities=["meaning_ingester"])],
+    )
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY
+    assert result.reasons == ("context_policy_mismatch",)
+    assert result.details["room_context"]["outcome"] == "deny_context"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_maps_room_context_not_considered():
+    database = prepare_database()
+    add_assignment(database)
+    validator = WorkerAssignmentSchedulingEligibilityValidator(
+        assignments=WorkerAssignmentRepository(database),
+        workers=WorkerRepository(database),
+        decisions=DecisionRepository(database),
+        room_context_recheck=NotConsideredRoomContextRecheck(),
+    )
+
+    result = validator.validate("wasg_sched")
+
+    assert result.outcome == WorkerAssignmentSchedulingEligibilityOutcome.NOT_CONSIDERED
+    assert result.reasons == ("room_context_not_considered",)
+    assert result.details["room_context"]["outcome"] == "not_considered"
     assert WorkerAssignmentRepository(database).count() == 1
     assert DecisionRepository(database).count() == 1
     assert AuditRepository(database).count() == 0

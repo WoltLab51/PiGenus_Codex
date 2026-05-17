@@ -55,6 +55,14 @@ Runtime data resolved from that id:
 - sensitivity
 - network requirement
 
+Optional caller-supplied readiness inputs:
+
+- `ContextStack`
+- `ContextFrame` list
+- source room ID
+- target room ID
+- `WorkerAssignmentRoomContextRecheckValidator`
+
 ## Outputs
 
 Returns:
@@ -115,6 +123,9 @@ The validator may read:
 - `WorkerFreshnessPolicyValidator`
 - heartbeat and preflight evidence age labels returned by the freshness
   validator
+- optional `WorkerAssignmentRoomContextRecheckValidator`
+- caller-supplied ContextStack / ContextFrame data passed into the room/context
+  recheck validator
 
 ## Writes
 
@@ -140,6 +151,9 @@ The validator may:
 - check governance evidence matches the assignment
 - check heartbeat and preflight evidence freshness through
   `WorkerFreshnessPolicyValidator`
+- check assignment room, worker home room, ContextStack, ContextFrames, and
+  RoomFlow through an explicitly supplied
+  `WorkerAssignmentRoomContextRecheckValidator`
 - return stable reason codes
 - return details for caller/operator use
 
@@ -186,6 +200,10 @@ The validator assumes:
 - governance evidence must still match the assignment request
 - review-stale heartbeat or preflight evidence requires review
 - hard-stale heartbeat or preflight evidence denies scheduling consideration
+- without an explicitly supplied room/context recheck validator, existing
+  scheduling eligibility behavior remains unchanged
+- with an explicitly supplied room/context recheck validator, missing context
+  stays visible as review evidence rather than hidden permission
 
 It does not:
 
@@ -212,6 +230,10 @@ Current and expected test coverage includes:
 - hard-stale heartbeat denies scheduling consideration
 - review-stale preflight evidence requires review
 - hard-stale preflight evidence denies scheduling consideration
+- matching room/context recheck keeps allow possible
+- missing ContextStack from room/context recheck requires review
+- context policy mismatch from room/context recheck denies consideration
+- room/context `not_considered` maps to scheduling `not_considered`
 - reason codes remain stable
 - no assignment writes occur during validation
 - no audit writes occur during validation

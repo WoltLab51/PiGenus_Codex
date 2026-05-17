@@ -1,9 +1,9 @@
 # WorkerAssignment Room / Context Recheck Consolidation Review
 
-This review consolidates the first read-only
-`WorkerAssignmentRoomContextRecheckValidator` implementation before it is wired
-into scheduling eligibility, exposed through CLI, logged, or used by any future
-scheduling-enforcement boundary.
+This review consolidated the first read-only
+`WorkerAssignmentRoomContextRecheckValidator` implementation before it was
+wired into scheduling eligibility, exposed through CLI, logged, or used by any
+future scheduling-enforcement boundary.
 
 It is documentation-only. It does not add runtime code, schemas, migrations,
 CLI behavior, logging behavior, graph projection, RuntimeCell behavior,
@@ -160,10 +160,11 @@ The targeted tests cover:
 
 This consolidation does not claim scheduling readiness is complete.
 
-Known gaps:
+Known gaps after the first implementation consolidation:
 
 - no CLI inspection for room/context recheck
-- not wired into scheduling eligibility yet
+- wired into scheduling eligibility only when explicitly supplied by the
+  caller; no default CLI or logging path uses it yet
 - no persisted ContextStack / ContextFrame attachment to WorkerAssignment
 - no room policy store
 - no high-risk room approval policy
@@ -183,14 +184,13 @@ small readiness boundary.
 Do not add CLI, logging, scheduling enforcement, reservation, routing,
 provider calls, execution logs, or execution from this review.
 
-Next safe decision:
+Next safe step:
 
 ```text
-Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
-into WorkerAssignmentSchedulingEligibilityValidator as a read-only input.
+Consolidate the read-only room/context scheduling eligibility integration.
 ```
 
-If wired later, the integration must:
+The current integration must continue to:
 
 - remain read-only
 - not change assignment status

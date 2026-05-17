@@ -267,6 +267,8 @@ current WorkerAssignment tissue:
   unless `--log` is explicit
 - heartbeat and preflight evidence freshness are now read-only eligibility
   inputs
+- room/context recheck can now be supplied to scheduling eligibility as an
+  optional read-only input
 - room policy, guard outcomes, resource policy, reflexes, and human approval
   remain future inputs because those scheduling-enforcement surfaces do not
   exist yet
@@ -276,8 +278,7 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
-into assigned-intent scheduling eligibility as a read-only input.
+Consolidate the read-only room/context scheduling eligibility integration.
 ```
 
 Readiness gaps are documented in
@@ -291,9 +292,10 @@ enforcement remains later. Room/context recheck semantics now live in
 now exists in `pigenus.core.worker_assignment_room_context_recheck`. The
 validator is consolidated in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`. The
-next safe step is deciding whether and how to wire it into scheduling
-eligibility without CLI, logging, scheduling enforcement, reservation,
-routing, provider calls, execution logs, or execution.
+validator is now wired into scheduling eligibility only when explicitly
+supplied by a caller. The next safe step is consolidating that read-only
+integration before CLI, logging, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution.
 
 Not next:
 

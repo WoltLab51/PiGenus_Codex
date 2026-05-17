@@ -2054,3 +2054,24 @@ touches scheduling eligibility. This keeps PiGenus from turning a useful
 readiness signal into hidden CLI behavior, implicit logging, scheduling
 enforcement, reservation, routing, provider calls, execution logs, or
 execution.
+
+## Room / Context Recheck Eligibility Integration
+
+The project gained:
+
+- optional `WorkerAssignmentRoomContextRecheckValidator` composition inside
+  `WorkerAssignmentSchedulingEligibilityValidator`
+- caller-supplied ContextStack, ContextFrame, source room, and target room
+  inputs for eligibility validation
+- mapping from room/context allow, review, deny, and not-considered outcomes
+  into scheduling eligibility outcomes
+- no-write tests proving the integration does not mutate assignments, write
+  decisions, or write audit rows
+
+Why it mattered:
+
+Scheduling eligibility now composes freshness and room/context readiness while
+remaining read-only and opt-in. This is the first small composition of
+responsible WorkerAssignment capability cells without turning the path into
+CLI behavior, logging, scheduling enforcement, reservation, routing, provider
+calls, execution logs, or execution.

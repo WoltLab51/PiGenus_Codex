@@ -257,6 +257,8 @@ Completed worker surfaces in this arc:
   targeted no-write tests
 - WorkerAssignment room/context recheck consolidation review before wiring the
   validator into scheduling eligibility
+- read-only room/context recheck integration into assigned-intent scheduling
+  eligibility, opt-in by explicit validator injection
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -274,10 +276,9 @@ Current stop lines:
 
 Next decision:
 
-- Decide whether and how to wire the read-only
-  `WorkerAssignmentRoomContextRecheckValidator` into assigned-intent
-  scheduling eligibility without adding CLI, logging, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution.
+- Consolidate the read-only room/context scheduling eligibility integration
+  before adding CLI, logging, scheduling enforcement, reservation, routing,
+  provider calls, execution logs, or execution.
 
 Readiness source:
 

@@ -3,9 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 from pigenus.core.governance_decision_log import GovernanceDecisionLogger
+from pigenus.core.worker_assignment_room_context_recheck import (
+    WorkerAssignmentRoomContextRecheckOutcome,
+    WorkerAssignmentRoomContextRecheckValidator,
+)
 from pigenus.core.worker_freshness_policy import (
     WorkerFreshnessPolicyValidator,
     WorkerFreshnessRecommendation,
@@ -15,6 +19,8 @@ from pigenus.schemas.base import utc_now
 from pigenus.schemas.context import Context
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import (
+    ContextFrame,
+    ContextStack,
     GovernanceDecision,
     GuardDecisionType,
     WorkerAssignment,
@@ -136,12 +142,14 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         workers: WorkerRepository,
         decisions: DecisionRepository,
         freshness: WorkerFreshnessPolicyValidator | None = None,
+        room_context_recheck: WorkerAssignmentRoomContextRecheckValidator | None = None,
         now_provider: Callable[[], datetime] = utc_now,
     ) -> None:
         self.assignments = assignments
         self.workers = workers
         self.decisions = decisions
         self.freshness = freshness or WorkerFreshnessPolicyValidator()
+        self.room_context_recheck = room_context_recheck
         self.now_provider = now_provider
 
     def validate(
@@ -149,6 +157,10 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         assignment_id: str,
         *,
         now: datetime | None = None,
+        context_stack: ContextStack | None = None,
+        context_frames: Iterable[ContextFrame] | None = None,
+        source_room_id: str | None = None,
+        target_room_id: str | None = None,
     ) -> WorkerAssignmentSchedulingEligibilityResult:
         assignment = self.assignments.get(assignment_id)
         if assignment is None:
@@ -188,6 +200,7 @@ class WorkerAssignmentSchedulingEligibilityValidator:
 
         deny_reasons: list[str] = []
         review_reasons: list[str] = []
+        not_considered_reasons: list[str] = []
 
         heartbeat = self._check_worker_state(
             assignment,
@@ -205,6 +218,25 @@ class WorkerAssignmentSchedulingEligibilityValidator:
                 review_reasons=review_reasons,
                 details=details,
                 now=now or self.now_provider(),
+            )
+        self._check_room_context(
+            assignment=assignment,
+            context_stack=context_stack,
+            context_frames=context_frames,
+            source_room_id=source_room_id,
+            target_room_id=target_room_id,
+            deny_reasons=deny_reasons,
+            review_reasons=review_reasons,
+            not_considered_reasons=not_considered_reasons,
+            details=details,
+        )
+
+        if not_considered_reasons:
+            return WorkerAssignmentSchedulingEligibilityResult(
+                assignment_id=assignment.id,
+                outcome=WorkerAssignmentSchedulingEligibilityOutcome.NOT_CONSIDERED,
+                reasons=tuple(not_considered_reasons),
+                details=details,
             )
 
         if deny_reasons:
@@ -381,6 +413,48 @@ class WorkerAssignmentSchedulingEligibilityValidator:
         for reason in result.reasons:
             if reason != "freshness_policy_passed":
                 _append_reason(target, reason)
+
+    def _check_room_context(
+        self,
+        *,
+        assignment: WorkerAssignment,
+        context_stack: ContextStack | None,
+        context_frames: Iterable[ContextFrame] | None,
+        source_room_id: str | None,
+        target_room_id: str | None,
+        deny_reasons: list[str],
+        review_reasons: list[str],
+        not_considered_reasons: list[str],
+        details: dict[str, Any],
+    ) -> None:
+        if self.room_context_recheck is None:
+            return
+
+        result = self.room_context_recheck.validate(
+            assignment.id,
+            context_stack=context_stack,
+            context_frames=context_frames,
+            source_room_id=source_room_id,
+            target_room_id=target_room_id,
+        )
+        details["room_context"] = {
+            "outcome": result.outcome.value,
+            "reasons": list(result.reasons),
+            **result.details,
+        }
+
+        if result.outcome == WorkerAssignmentRoomContextRecheckOutcome.ALLOW:
+            return
+
+        if result.outcome == WorkerAssignmentRoomContextRecheckOutcome.NOT_CONSIDERED:
+            target = not_considered_reasons
+        elif result.outcome == WorkerAssignmentRoomContextRecheckOutcome.REQUIRE_REVIEW:
+            target = review_reasons
+        else:
+            target = deny_reasons
+
+        for reason in result.reasons:
+            _append_reason(target, reason)
 
 
 def _is_preflight_allow(decision: DecisionRecord) -> bool:

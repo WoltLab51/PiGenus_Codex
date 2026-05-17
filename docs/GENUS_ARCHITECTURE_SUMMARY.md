@@ -97,6 +97,7 @@ Implemented:
 - `worker-assignment-transition` for service-backed assignment status updates
 - WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
   scheduling eligibility, including heartbeat and preflight evidence freshness
+  plus optional room/context recheck input
 - `worker-assignment-scheduling-eligibility` for eligibility inspection and
   explicit `--log` decision persistence
 
@@ -107,7 +108,8 @@ Documented:
 - WorkerAssignment room/context recheck semantics before scheduling
   enforcement
 - read-only WorkerAssignmentRoomContextRecheckValidator for assignment room,
-  worker home room, ContextStack, ContextFrame, and RoomFlow checks
+  worker home room, ContextStack, ContextFrame, and RoomFlow checks; it can be
+  composed into scheduling eligibility without enabling scheduling
 
 Not implemented:
 

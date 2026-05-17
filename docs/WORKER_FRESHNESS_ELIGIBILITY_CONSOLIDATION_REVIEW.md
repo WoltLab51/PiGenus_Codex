@@ -131,8 +131,7 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
-into assigned-intent scheduling eligibility as a read-only input.
+Consolidate the read-only room/context scheduling eligibility integration.
 ```
 
 Why:
@@ -146,6 +145,8 @@ Why:
   `pigenus.core.worker_assignment_room_context_recheck`
 - that validator is consolidated in
   `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
+- the validator is now consumed by scheduling eligibility only when explicitly
+  supplied by a caller
 
 ## Stop Lines
 

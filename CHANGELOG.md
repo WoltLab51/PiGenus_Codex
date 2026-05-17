@@ -101,6 +101,11 @@
 - Added `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
   to consolidate the read-only room/context recheck validator before any
   scheduling eligibility wiring, CLI, logging, or enforcement behavior.
+- Wired `WorkerAssignmentRoomContextRecheckValidator` into
+  `WorkerAssignmentSchedulingEligibilityValidator` as an explicit read-only
+  input with allow/review/deny/not-considered mapping and no CLI, logging,
+  scheduling enforcement, reservation, routing, provider calls, execution
+  logs, or execution.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
@@ -122,7 +127,7 @@
 
 ### Verified
 
-- Latest local full suite: `328 passed`.
+- Latest local full suite: `332 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 
