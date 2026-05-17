@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `292 passed`
+- Last verified result: `301 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 - Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
@@ -31,9 +31,9 @@
 - Cell-DNA consolidation: `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
   recommendation is applied; opt-in eligibility decision logging implementation
   remains a separate code slice.
-- Scheduling eligibility logging semantics:
-  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` defines the
-  future explicit `--log` boundary before implementation.
+- Scheduling eligibility logging:
+  `worker-assignment-scheduling-eligibility --log` can now persist one
+  governance decision for allow, deny, or review results only.
 
 ## Current Cycle
 
@@ -45,11 +45,11 @@ Worker Runtime / scheduling eligibility:
 - Structure: worker-assignment command handling is split into a stable router,
   read-only inspection commands, and lifecycle commands.
 - Explicitly not now: no scheduling enforcement, reservation, routing,
-  provider calls, execution logs, execution, or logging.
+  provider calls, execution logs, execution, or implicit logging.
 - Consolidation: read-only boundary is complete for the first pass, no-write
   proof is covered by tests, reason codes are stable for the implemented
-  worker inputs, and opt-in decision logging semantics are now documented
-  before code.
+  worker inputs, and opt-in decision logging is implemented only for loggable
+  allow, deny, or review results.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -146,8 +146,10 @@ PiGenus is a small local GENUS runtime core. It has:
   reservation, routing, provider calls, execution logs, or execution
 - WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
   scheduling eligibility checks without writes
-- Read-only `worker-assignment-scheduling-eligibility` CLI inspection for
-  assigned-intent scheduling eligibility
+- `worker-assignment-scheduling-eligibility` CLI inspection for
+  assigned-intent scheduling eligibility, read-only unless `--log` is explicit
+- Explicit `worker-assignment-scheduling-eligibility --log` support for one
+  eligibility decision record on allow, deny, or review results
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - Dedicated worker-assignment CLI command modules for inspection and lifecycle
@@ -350,13 +352,13 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
   decisions, audits, assignments, reservations, routes, execution logs, or
   execution results.
 - `worker-assignment-scheduling-eligibility` exposes that validator as a
-  read-only CLI inspection command; it does not log decisions, mutate
-  assignments, reserve, route, or execute.
-- Future `worker-assignment-scheduling-eligibility --log` semantics are
-  documented as explicit decision logging only: one decision record for allow,
-  deny, or review results, no assignment mutation, no audit write, and no
-  scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+  CLI inspection command; without `--log`, it does not write decisions,
+  mutate assignments, reserve, route, or execute.
+- `worker-assignment-scheduling-eligibility --log` is explicit decision
+  logging only: one decision record for allow, deny, or review results, no
+  decision record for not-considered results, no assignment mutation, no audit
+  write, and no scheduling, reservation, routing, provider calls, execution
+  logs, or execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -418,9 +420,8 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, implement opt-in scheduling eligibility decision logging according to
-  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`. Do not add real
-  scheduling, reservation, routing, provider, or execution behavior.
+- Next, consolidate opt-in scheduling eligibility decision logging before any
+  real scheduling, reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

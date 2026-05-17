@@ -1,12 +1,11 @@
 # WorkerAssignment Scheduling Eligibility Logging
 
-This document defines the semantics for future opt-in decision logging of
+This document defines the semantics for opt-in decision logging of
 `WorkerAssignmentSchedulingEligibilityValidator` results.
 
-It is a documentation-only boundary. It does not add runtime code, schemas,
-migrations, CLI flags, audit behavior, scheduling enforcement, reservation,
-routing, provider calls, execution logs, execution, RuntimeCell behavior,
-CellRegistry behavior, or graph projection.
+It does not add schemas, migrations, audit behavior, scheduling enforcement,
+reservation, routing, provider calls, execution logs, execution, RuntimeCell
+behavior, CellRegistry behavior, or graph projection.
 
 ## Purpose
 
@@ -31,7 +30,7 @@ The logged record is inspection evidence. It is not scheduling enforcement.
 
 ## Source And Family
 
-Future logging should use a distinct decision source:
+Logging uses a distinct decision source:
 
 ```text
 source = "worker_assignment_scheduling_eligibility"
@@ -48,14 +47,15 @@ This keeps assignment-level eligibility logging separate from:
 - future routing
 - future execution records
 
-Do not use `worker_scheduling_enforcement` for this first logging surface. The
-current capability is eligibility inspection only.
+Do not use `worker_scheduling_enforcement` for this logging surface. The
+current capability is eligibility inspection with explicit decision logging
+only.
 
 ## Logging Trigger
 
 Logging must be explicit opt-in only.
 
-Expected CLI shape for a later implementation:
+Implemented CLI shape:
 
 ```text
 worker-assignment-scheduling-eligibility <assignment_id> --log
@@ -63,7 +63,8 @@ worker-assignment-scheduling-eligibility <assignment_id> --log
 
 Without `--log`, the command must remain read-only and write nothing.
 
-With `--log`, the command may write exactly one decision record and still must
+With `--log`, the command may write exactly one decision record for loggable
+results and still must
 not write audit rows, mutate assignments, reserve workers, route providers,
 call providers, write execution logs, or execute work.
 
@@ -76,13 +77,6 @@ The logged decision should use:
   `worker_assignment_scheduling_eligibility_cli`
 - `room_id`: the assignment's room when the assignment exists
 - `event_id`: optional operator-supplied event ID
-
-If the assignment does not exist, the implementation may either:
-
-- not log missing-assignment results, or
-- log them only with an explicit fallback room such as `room_developer`
-
-The first code slice should prefer the smaller, safer rule:
 
 ```text
 Do not log unknown assignments.
@@ -103,7 +97,7 @@ decision values as follows:
 | `require_review` | `escalate` | first review reason |
 | `not_considered` | `warn` or no log | first not-considered reason |
 
-Recommended first implementation:
+Current implementation:
 
 ```text
 allow_scheduling -> allow
@@ -123,8 +117,8 @@ as a separate decision with tests and documentation.
 
 ## Decision Details
 
-The future logged record should preserve enough detail for review without
-becoming execution state:
+The logged record preserves enough detail for review without becoming execution
+state:
 
 ```text
 details:
@@ -155,7 +149,7 @@ but it must not replace that evidence or rewrite assignment state.
 
 ## Allowed Effects
 
-Future opt-in logging may:
+Opt-in logging may:
 
 - run the existing read-only eligibility validator
 - convert eligible, denied, or review results into one governance decision
@@ -184,15 +178,15 @@ Future opt-in logging must not:
 - treat a logged eligibility decision as execution proof
 - treat a worker as intelligence
 
-## Test Requirements
+## Test Coverage
 
-The first implementation should add tests for:
+Current test coverage includes:
 
 - no `--log` remains read-only
 - `allow_scheduling --log` writes exactly one decision record
 - `deny_scheduling --log` writes exactly one decision record
 - `require_review --log` writes exactly one decision record
-- `not_considered --log` does not write a decision record in the first slice
+- `not_considered --log` does not write a decision record
 - missing assignment with `--log` does not write a decision record
 - assignment count remains unchanged
 - audit count remains unchanged
@@ -201,8 +195,8 @@ The first implementation should add tests for:
 - logged record family is `worker_assignment_scheduling_eligibility`
 - logged room comes from the assignment when the assignment exists
 
-Full-suite verification is required for the code slice because it changes CLI
-behavior and decision persistence.
+Full-suite verification is required for future code changes because this
+surface changes CLI behavior and decision persistence.
 
 ## Stop Lines
 
@@ -221,9 +215,9 @@ Still not implemented:
 - dynamic cell routing
 - trading or other high-risk live behavior
 
-## Next Safe Implementation Slice
+## Current Implementation Boundary
 
-The next safe code slice may add:
+The current code slice adds:
 
 ```text
 worker-assignment-scheduling-eligibility --log

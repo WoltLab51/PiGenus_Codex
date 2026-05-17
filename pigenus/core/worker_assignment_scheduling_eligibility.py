@@ -4,9 +4,13 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
+from pigenus.core.governance_decision_log import GovernanceDecisionLogger
 from pigenus.core.worker_scheduling_preview import SENSITIVITY_RANK
+from pigenus.schemas.context import Context
 from pigenus.schemas.decisions import DecisionRecord
 from pigenus.schemas.systemform import (
+    GovernanceDecision,
+    GuardDecisionType,
     WorkerAssignment,
     WorkerAssignmentStatus,
     WorkerStatus,
@@ -36,6 +40,83 @@ class WorkerAssignmentSchedulingEligibilityResult:
     @property
     def eligible(self) -> bool:
         return self.outcome == WorkerAssignmentSchedulingEligibilityOutcome.ALLOW
+
+    def to_governance_decision(
+        self,
+        *,
+        actor_id: str,
+        event_id: str | None = None,
+        rule_id: str = "worker_assignment_scheduling_eligibility",
+    ) -> GovernanceDecision | None:
+        decision = _outcome_to_guard_decision(self.outcome)
+        if decision is None:
+            return None
+
+        room_id = self.details.get("room_id")
+        if not isinstance(room_id, str) or not room_id:
+            return None
+
+        reason = self.reasons[0] if self.reasons else self.outcome.value
+        return GovernanceDecision(
+            decision=decision,
+            reason=reason,
+            actor_id=actor_id,
+            room_id=room_id,
+            event_id=event_id,
+            rule_id=rule_id,
+            requires_human=decision == GuardDecisionType.ESCALATE,
+            details={
+                "family": "worker_assignment_scheduling_eligibility",
+                "assignment_id": self.assignment_id,
+                "outcome": self.outcome.value,
+                "eligible": self.eligible,
+                "reasons": list(self.reasons),
+                **self.details,
+                "trace": [
+                    {
+                        "name": "worker_assignment_scheduling_eligibility",
+                        "family": "worker_assignment_scheduling_eligibility",
+                        "decision": decision.value,
+                        "reason": reason,
+                        "details": {
+                            "assignment_id": self.assignment_id,
+                            "outcome": self.outcome.value,
+                            "reasons": ",".join(self.reasons),
+                        },
+                    },
+                ],
+            },
+        )
+
+
+class WorkerAssignmentSchedulingEligibilityLogger:
+    """Opt-in persistence for assignment scheduling eligibility decisions."""
+
+    def __init__(self, repository: DecisionRepository) -> None:
+        self.governance_logger = GovernanceDecisionLogger(repository)
+
+    def add(
+        self,
+        result: WorkerAssignmentSchedulingEligibilityResult,
+        *,
+        actor_id: str,
+        event_id: str | None = None,
+        rule_id: str = "worker_assignment_scheduling_eligibility",
+        context: Context | dict[str, Any] | None = None,
+    ) -> DecisionRecord | None:
+        decision = result.to_governance_decision(
+            actor_id=actor_id,
+            event_id=event_id,
+            rule_id=rule_id,
+        )
+        if decision is None:
+            return None
+        return self.governance_logger.add(
+            decision,
+            context=context,
+            source="worker_assignment_scheduling_eligibility",
+            subject_id=result.assignment_id,
+        )
 
 
 class WorkerAssignmentSchedulingEligibilityValidator:
@@ -265,3 +346,15 @@ def _append_mismatch(
 def _append_reason(reasons: list[str], reason: str) -> None:
     if reason not in reasons:
         reasons.append(reason)
+
+
+def _outcome_to_guard_decision(
+    outcome: WorkerAssignmentSchedulingEligibilityOutcome,
+) -> GuardDecisionType | None:
+    if outcome == WorkerAssignmentSchedulingEligibilityOutcome.ALLOW:
+        return GuardDecisionType.ALLOW
+    if outcome == WorkerAssignmentSchedulingEligibilityOutcome.DENY:
+        return GuardDecisionType.BLOCK
+    if outcome == WorkerAssignmentSchedulingEligibilityOutcome.REQUIRE_REVIEW:
+        return GuardDecisionType.ESCALATE
+    return None

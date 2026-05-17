@@ -227,7 +227,8 @@ Completed worker surfaces in this arc:
   `worker-assignment-transition`
 - read-only assigned-intent scheduling eligibility through
   `WorkerAssignmentSchedulingEligibilityValidator`
-- read-only `worker-assignment-scheduling-eligibility` CLI inspection
+- `worker-assignment-scheduling-eligibility` CLI inspection with explicit
+  `--log`
 - dedicated worker CLI and worker storage module boundaries
 - dedicated worker-assignment CLI module boundaries for inspection and
   lifecycle command handling
@@ -237,27 +238,26 @@ Completed worker surfaces in this arc:
   `WorkerAssignmentCreator`
 - lifecycle-changing Cell-DNA frame for
   `WorkerAssignmentStatusTransitionService`
-- opt-in scheduling eligibility decision logging semantics in
-  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
+- opt-in scheduling eligibility decision logging through the durable decision
+  log for allow, deny, or review results
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
 
 - no worker execution
 - no scheduling enforcement yet
-- no scheduling eligibility decision logging yet
 - no reservation
 - no provider routing
 - no remote worker discovery
 - no heartbeat history
 - no implicit decision logging
+- no implicit scheduling eligibility decision logging
 - no assignment status change as execution proof
 - no LLM orchestration, federation, dashboard, or autonomous agents
 
 Next decision:
 
-- Implement opt-in scheduling eligibility decision logging only according to
-  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`. Do not add real
+- Consolidate opt-in scheduling eligibility decision logging before any real
   scheduling, reservation, routing, provider calls, execution logs, or
   execution.
 

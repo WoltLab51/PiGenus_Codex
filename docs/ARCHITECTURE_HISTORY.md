@@ -1828,3 +1828,22 @@ Eligibility logging is now framed as inspection evidence, not scheduling
 enforcement. This keeps the next code slice small and prevents missing,
 pending, or terminal assignments from becoming noisy governance records before
 operators need that behavior.
+
+## WorkerAssignment Scheduling Eligibility Opt-In Logging
+
+The project gained:
+
+- `WorkerAssignmentSchedulingEligibilityLogger`
+- `worker-assignment-scheduling-eligibility --log`
+- decision-log persistence for `allow_scheduling`, `deny_scheduling`, and
+  `require_review`
+- no persisted decision for `not_considered`
+- tests proving no assignment mutation, no audit writes, and no execution
+  side effects
+
+Why it mattered:
+
+The WorkerAssignment scheduling-eligibility surface now has the same explicit
+operator logging discipline as scheduling preview and execution preflight.
+Eligibility decisions can be reviewed later, but they still do not schedule,
+reserve, route, call providers, write execution logs, or execute work.

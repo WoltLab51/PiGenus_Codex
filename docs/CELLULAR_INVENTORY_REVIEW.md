@@ -79,7 +79,7 @@ next safe step: Cell-DNA construction protocol
 | `WorkerAssignmentStatusTransitionService` | GovernedCellCandidate | Applies validated lifecycle transition and writes audit on success. | Cell-worthy lifecycle control point; not execution proof. |
 | `WorkerAssignmentSchedulingEligibilityValidator` | GovernedCellCandidate | Read-only assigned-intent eligibility check; tests prove no assignment, decision, or audit writes. | Strong candidate, but logging should wait for Cell-DNA protocol. |
 | Worker assignment CLI router | OperatorSurface | Dispatches inspection vs lifecycle command modules; no domain policy. | Keep thin. |
-| Worker assignment inspection CLI | OperatorSurface | `list` and scheduling eligibility inspection; no writes. | Correct operator surface. |
+| Worker assignment inspection CLI | OperatorSurface | `list` and scheduling eligibility inspection; writes one decision only with explicit `--log`. | Correct operator surface; logging remains opt-in and not scheduling. |
 | Worker assignment lifecycle CLI | OperatorSurface | Wraps creator and transition service; writes only through services. | Correct for now; do not let CLI own policy. |
 | Shared repositories | StorageBoundary | Still contains several storage domains, but worker storage has been sliced out. | Continue slicing only when pressure returns. |
 | Worker storage module | StorageBoundary | Contains worker profiles, current heartbeats, assignment intent. | Acceptable domain boundary for v0.4. |

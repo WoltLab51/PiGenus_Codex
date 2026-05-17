@@ -40,17 +40,21 @@ def db_path(name: str) -> Path:
 def run_assignment_scheduling_eligibility(
     path: Path,
     assignment_id: str,
+    extra_args: list[str] | None = None,
 ) -> subprocess.CompletedProcess[str]:
+    command = [
+        sys.executable,
+        "-m",
+        "pigenus.cli.main",
+        "worker-assignment-scheduling-eligibility",
+        assignment_id,
+        "--db",
+        str(path),
+    ]
+    if extra_args:
+        command.extend(extra_args)
     return subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "pigenus.cli.main",
-            "worker-assignment-scheduling-eligibility",
-            assignment_id,
-            "--db",
-            str(path),
-        ],
+        command,
         capture_output=True,
         text=True,
     )
@@ -214,6 +218,140 @@ def test_worker_assignment_scheduling_eligibility_cli_reports_missing_assignment
     assert result.returncode == 0
     assert "Outcome: not_considered" in result.stdout
     assert "Reasons: assignment_unknown" in result.stdout
+    assert WorkerAssignmentRepository(database).count() == 0
+    assert DecisionRepository(database).count() == 0
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_cli_logs_allow_decision():
+    database = prepare_database()
+    path = Path(database.path)
+    database.close()
+
+    result = run_assignment_scheduling_eligibility(
+        path,
+        "wasg_eligibility_cli",
+        ["--log", "--actor", "operator_cli", "--event-id", "evt_eligibility"],
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert result.returncode == 0
+    assert "Outcome: allow_scheduling" in result.stdout
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 2
+    logged = decisions[-1]
+    assert logged.subject_id == "wasg_eligibility_cli"
+    assert logged.actor == "operator_cli"
+    assert logged.source == "worker_assignment_scheduling_eligibility"
+    assert logged.details["decision"] == "allow"
+    assert logged.details["family"] == "worker_assignment_scheduling_eligibility"
+    assert logged.details["room_id"] == "room_developer"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_cli_logs_deny_decision():
+    database = prepare_database()
+    WorkerRepository(database).add_profile(worker_profile(network_access=False))
+    path = Path(database.path)
+    database.close()
+
+    result = run_assignment_scheduling_eligibility(
+        path,
+        "wasg_eligibility_cli",
+        ["--log"],
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert result.returncode == 0
+    assert "Outcome: deny_scheduling" in result.stdout
+    assert "Reasons: network_not_allowed" in result.stdout
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 2
+    logged = decisions[-1]
+    assert logged.source == "worker_assignment_scheduling_eligibility"
+    assert logged.details["decision"] == "block"
+    assert logged.details["family"] == "worker_assignment_scheduling_eligibility"
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_cli_logs_review_decision():
+    database = prepare_database()
+    WorkerRepository(database).record_heartbeat(
+        WorkerHeartbeat(worker_id="worker_local", status=WorkerStatus.DEGRADED)
+    )
+    path = Path(database.path)
+    database.close()
+
+    result = run_assignment_scheduling_eligibility(
+        path,
+        "wasg_eligibility_cli",
+        ["--log"],
+    )
+
+    database = Database(path)
+    database.initialize()
+    decisions = DecisionRepository(database).list()
+    assert result.returncode == 0
+    assert "Outcome: require_review" in result.stdout
+    assert "Logged decision: dec_" in result.stdout
+    assert len(decisions) == 2
+    logged = decisions[-1]
+    assert logged.source == "worker_assignment_scheduling_eligibility"
+    assert logged.details["decision"] == "escalate"
+    assert logged.details["requires_human"] is True
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_cli_skips_not_considered_log():
+    database = prepare_database(assignment_status=WorkerAssignmentStatus.PENDING)
+    path = Path(database.path)
+    database.close()
+
+    result = run_assignment_scheduling_eligibility(
+        path,
+        "wasg_eligibility_cli",
+        ["--log"],
+    )
+
+    database = Database(path)
+    database.initialize()
+    stored = WorkerAssignmentRepository(database).get("wasg_eligibility_cli")
+    assert result.returncode == 0
+    assert "Outcome: not_considered" in result.stdout
+    assert "Logged decision: skipped" in result.stdout
+    assert stored is not None
+    assert stored.status == WorkerAssignmentStatus.PENDING
+    assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_cli_skips_missing_assignment_log():
+    path = db_path("missing-log")
+
+    result = run_assignment_scheduling_eligibility(
+        path,
+        "wasg_missing",
+        ["--log"],
+    )
+
+    database = Database(path)
+    database.initialize()
+    assert result.returncode == 0
+    assert "Outcome: not_considered" in result.stdout
+    assert "Reasons: assignment_unknown" in result.stdout
+    assert "Logged decision: skipped" in result.stdout
     assert WorkerAssignmentRepository(database).count() == 0
     assert DecisionRepository(database).count() == 0
     assert AuditRepository(database).count() == 0

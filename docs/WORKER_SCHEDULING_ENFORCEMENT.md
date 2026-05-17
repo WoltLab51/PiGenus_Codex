@@ -149,7 +149,7 @@ inspectable.
 
 The first scheduling enforcement implementation should not write anything.
 
-Future opt-in eligibility logging may write one `GovernanceDecision` with a
+Opt-in eligibility logging writes one `GovernanceDecision` with a
 distinct source:
 
 ```text
@@ -162,7 +162,7 @@ The detailed logging semantics live in
 after scheduling, reservation, routing, provider, and execution stop lines are
 revisited.
 
-Even with logging, enforcement must not:
+Even with eligibility logging, this boundary must not:
 
 - create assignments
 - mutate assignment status implicitly
@@ -241,7 +241,6 @@ It prints:
 
 It does not:
 
-- log decisions
 - write audit rows
 - mutate assignments
 - schedule
@@ -250,6 +249,10 @@ It does not:
 - call providers
 - write execution logs
 - execute work
+
+With explicit `--log`, it may write one decision record for `allow_scheduling`,
+`deny_scheduling`, or `require_review` results. It does not log
+`not_considered` results in the first slice.
 
 ## Cycle Consolidation
 
@@ -268,8 +271,8 @@ Next decision:
 ```text
 worker-assignment CLI slicing
 or
-implement opt-in scheduling eligibility decision logging according to
-docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md
+consolidate opt-in scheduling eligibility decision logging before any
+scheduling enforcement work
 ```
 
 Not next:

@@ -97,8 +97,8 @@ Implemented:
 - `worker-assignment-transition` for service-backed assignment status updates
 - WorkerAssignmentSchedulingEligibilityValidator for read-only assigned-intent
   scheduling eligibility
-- `worker-assignment-scheduling-eligibility` for read-only eligibility
-  inspection
+- `worker-assignment-scheduling-eligibility` for eligibility inspection and
+  explicit `--log` decision persistence
 
 Documented:
 
@@ -157,6 +157,9 @@ sufficient for execution. The current read-only eligibility validator and CLI
 inspection recheck assignment status, worker state, heartbeat state,
 capability, runtime, sensitivity, network requirements, and preflight allow
 evidence before later scheduling behavior exists.
+With explicit `--log`, the CLI persists one eligibility decision for allow,
+deny, or review results only. It does not mutate assignments, write audit rows,
+schedule, reserve, route, call providers, or execute.
 
 Worker storage repositories now live in
 `pigenus/storage/worker_repositories.py`, with the existing

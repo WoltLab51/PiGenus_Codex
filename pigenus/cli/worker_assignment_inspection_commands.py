@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from pigenus.core.worker_assignment_scheduling_eligibility import (
+    WorkerAssignmentSchedulingEligibilityLogger,
     WorkerAssignmentSchedulingEligibilityValidator,
 )
 from pigenus.schemas.systemform import WorkerAssignmentStatus
@@ -73,6 +74,21 @@ def add_worker_assignment_scheduling_eligibility_command(
         default="pigenus.sqlite3",
         help="SQLite database path.",
     )
+    worker_assignment_scheduling_eligibility.add_argument(
+        "--log",
+        action="store_true",
+        help="Persist loggable eligibility results to the decision log.",
+    )
+    worker_assignment_scheduling_eligibility.add_argument(
+        "--actor",
+        default="worker_assignment_scheduling_eligibility_cli",
+        help="Actor ID for the eligibility governance decision.",
+    )
+    worker_assignment_scheduling_eligibility.add_argument(
+        "--event-id",
+        default=None,
+        help="Optional event ID for the logged eligibility decision.",
+    )
 
 
 def handle_worker_assignment_inspection_command(args: argparse.Namespace) -> int:
@@ -119,12 +135,20 @@ def _handle_worker_assignment_list(args: argparse.Namespace) -> int:
 def _handle_worker_assignment_scheduling_eligibility(args: argparse.Namespace) -> int:
     database = Database(Path(args.db))
     database.initialize()
+    logged_record = None
     try:
+        decisions = DecisionRepository(database)
         result = WorkerAssignmentSchedulingEligibilityValidator(
             assignments=WorkerAssignmentRepository(database),
             workers=WorkerRepository(database),
-            decisions=DecisionRepository(database),
+            decisions=decisions,
         ).validate(args.assignment_id)
+        if args.log:
+            logged_record = WorkerAssignmentSchedulingEligibilityLogger(decisions).add(
+                result,
+                actor_id=args.actor,
+                event_id=args.event_id,
+            )
     finally:
         database.close()
 
@@ -141,4 +165,11 @@ def _handle_worker_assignment_scheduling_eligibility(args: argparse.Namespace) -
     print(f"Capability: {capability}")
     print(f"Room: {room_id}")
     print(f"Governance decision: {governance_decision_id}")
+    if args.log:
+        logged_value = (
+            logged_record.decision_id
+            if logged_record is not None
+            else "skipped"
+        )
+        print(f"Logged decision: {logged_value}")
     return 0

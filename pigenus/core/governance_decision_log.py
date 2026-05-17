@@ -28,8 +28,14 @@ class GovernanceDecisionLogger:
         *,
         context: Context | dict[str, Any] | None = None,
         source: str = "guard_pipeline",
+        subject_id: str | None = None,
     ) -> DecisionRecord:
-        record = governance_decision_to_record(decision, context=context, source=source)
+        record = governance_decision_to_record(
+            decision,
+            context=context,
+            source=source,
+            subject_id=subject_id,
+        )
         self.repository.add(record)
         return record
 
@@ -39,6 +45,7 @@ def governance_decision_to_record(
     *,
     context: Context | dict[str, Any] | None = None,
     source: str = "guard_pipeline",
+    subject_id: str | None = None,
 ) -> DecisionRecord:
     """Convert a Systemform governance decision to a durable prototype decision record."""
 
@@ -46,7 +53,12 @@ def governance_decision_to_record(
     return DecisionRecord(
         decision_type="governance_decision",
         context=_decision_context(decision, context),
-        subject_id=decision.event_id or decision.rule_id or f"{decision.actor_id}:{decision.room_id}",
+        subject_id=(
+            subject_id
+            or decision.event_id
+            or decision.rule_id
+            or f"{decision.actor_id}:{decision.room_id}"
+        ),
         actor=decision.actor_id,
         reason=decision.reason,
         source=source,

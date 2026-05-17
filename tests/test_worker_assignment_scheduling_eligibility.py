@@ -5,6 +5,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from pigenus.core.worker_assignment_scheduling_eligibility import (
+    WorkerAssignmentSchedulingEligibilityLogger,
     WorkerAssignmentSchedulingEligibilityOutcome,
     WorkerAssignmentSchedulingEligibilityValidator,
 )
@@ -267,5 +268,125 @@ def test_worker_assignment_scheduling_eligibility_denies_invalid_evidence():
     assert result.reasons == ("governance_evidence_not_preflight_allow",)
     assert WorkerAssignmentRepository(database).count() == 1
     assert DecisionRepository(database).count() == 1
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_logger_persists_allow_decision():
+    database = prepare_database()
+    add_assignment(database)
+    result = validator(database).validate("wasg_sched")
+    repository = DecisionRepository(database)
+
+    record = WorkerAssignmentSchedulingEligibilityLogger(repository).add(
+        result,
+        actor_id="operator_cli",
+        event_id="evt_eligibility",
+    )
+
+    assert record is not None
+    assert record.subject_id == "wasg_sched"
+    assert record.actor == "operator_cli"
+    assert record.source == "worker_assignment_scheduling_eligibility"
+    assert record.reason == "assignment_scheduling_eligible"
+    assert record.details["decision"] == "allow"
+    assert record.details["family"] == "worker_assignment_scheduling_eligibility"
+    assert record.details["room_id"] == "room_developer"
+    assert record.details["trace"][0]["decision"] == "allow"
+    decision_details = record.details["governance_decision"]["details"]
+    assert decision_details["assignment_id"] == "wasg_sched"
+    assert decision_details["outcome"] == "allow_scheduling"
+    assert decision_details["eligible"] is True
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert repository.count() == 2
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_logger_persists_deny_decision():
+    database = prepare_database()
+    add_assignment(database)
+    WorkerRepository(database).add_profile(
+        worker_profile(
+            cells=["log_reader"],
+            runtimes=["node"],
+            max_sensitivity=Sensitivity.INTERNAL,
+            network_access=False,
+        )
+    )
+    result = validator(database).validate("wasg_sched")
+    repository = DecisionRepository(database)
+
+    record = WorkerAssignmentSchedulingEligibilityLogger(repository).add(
+        result,
+        actor_id="operator_cli",
+    )
+
+    assert record is not None
+    assert record.subject_id == "wasg_sched"
+    assert record.source == "worker_assignment_scheduling_eligibility"
+    assert record.reason == "worker_capability_missing"
+    assert record.details["decision"] == "block"
+    assert record.details["family"] == "worker_assignment_scheduling_eligibility"
+    assert record.details["trace"][0]["decision"] == "block"
+    decision_details = record.details["governance_decision"]["details"]
+    assert decision_details["outcome"] == "deny_scheduling"
+    assert decision_details["eligible"] is False
+    assert decision_details["reasons"] == [
+        "worker_capability_missing",
+        "runtime_mismatch",
+        "sensitivity_exceeded",
+        "network_not_allowed",
+    ]
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert repository.count() == 2
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_logger_persists_review_decision():
+    database = prepare_database()
+    add_assignment(database)
+    WorkerRepository(database).record_heartbeat(
+        WorkerHeartbeat(worker_id="worker_local", status=WorkerStatus.DEGRADED)
+    )
+    result = validator(database).validate("wasg_sched")
+    repository = DecisionRepository(database)
+
+    record = WorkerAssignmentSchedulingEligibilityLogger(repository).add(
+        result,
+        actor_id="operator_cli",
+    )
+
+    assert record is not None
+    assert record.subject_id == "wasg_sched"
+    assert record.source == "worker_assignment_scheduling_eligibility"
+    assert record.reason == "worker_degraded"
+    assert record.details["decision"] == "escalate"
+    assert record.details["requires_human"] is True
+    assert record.details["trace"][0]["decision"] == "escalate"
+    decision_details = record.details["governance_decision"]["details"]
+    assert decision_details["outcome"] == "require_review"
+    assert decision_details["reasons"] == ["worker_degraded"]
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert repository.count() == 2
+    assert AuditRepository(database).count() == 0
+    database.close()
+
+
+def test_worker_assignment_scheduling_eligibility_logger_skips_not_considered():
+    database = prepare_database()
+    add_assignment(database, status=WorkerAssignmentStatus.PENDING)
+    result = validator(database).validate("wasg_sched")
+    repository = DecisionRepository(database)
+
+    record = WorkerAssignmentSchedulingEligibilityLogger(repository).add(
+        result,
+        actor_id="operator_cli",
+    )
+
+    assert record is None
+    assert WorkerAssignmentRepository(database).count() == 1
+    assert repository.count() == 1
     assert AuditRepository(database).count() == 0
     database.close()

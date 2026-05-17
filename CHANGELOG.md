@@ -16,8 +16,8 @@
   pending assignment creation, `worker-assignment-create`, status-transition
   semantics, read-only status-transition validation, and service-only status
   transition persistence with audit, `worker-assignment-transition`, and the
-  read-only WorkerAssignment scheduling eligibility validator and CLI
-  inspection.
+  WorkerAssignment scheduling eligibility validator, CLI inspection, and
+  explicit eligibility decision logging.
 - Added architecture and process scaffolding for the v0.4 arc: data
   architecture, compact architecture summary, worker readiness, multimodal
   systemform, architecture fitness review, cellular systemform, stable-core /
@@ -67,8 +67,8 @@
   document lifecycle status mutation and its existing audit boundary before
   further eligibility logging work.
 - Added `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` to define
-  future explicit `worker-assignment-scheduling-eligibility --log` semantics
-  before implementation.
+  explicit `worker-assignment-scheduling-eligibility --log` semantics and keep
+  the logging boundary separate from scheduling enforcement.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.
@@ -90,7 +90,7 @@
 
 ### Verified
 
-- Latest local full suite: `292 passed`.
+- Latest local full suite: `301 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 
