@@ -27,7 +27,8 @@
   non-runtime frame, with applied frames for `WorkerAssignmentValidator` and
   `WorkerAssignmentSchedulingEligibilityValidator`, plus the first
   write-capable frame for `WorkerAssignmentCreator` and the lifecycle-changing
-  frame for `WorkerAssignmentStatusTransitionService`.
+  frame for `WorkerAssignmentStatusTransitionService`, plus the freshness
+  policy frame for future `WorkerFreshnessPolicyValidator`.
 - Cell-DNA consolidation: `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
   recommendation is applied; opt-in eligibility decision logging implementation
   remains a separate code slice.
@@ -68,6 +69,8 @@ Worker Runtime / scheduling eligibility:
   semantics are the next safe boundary.
 - Freshness policy: heartbeat and preflight evidence age bands are documented;
   they are not active runtime behavior yet.
+- Freshness Cell-DNA: `WorkerFreshnessPolicyValidator` is framed as a
+  read-only CapabilityCell / GovernedCellCandidate before implementation.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -172,6 +175,7 @@ PiGenus is a small local GENUS runtime core. It has:
   freshness semantics must precede enforcement code
 - Worker Freshness Policy semantics for heartbeat age, preflight evidence age,
   review-stale, hard-stale, and no-side-effect requirements
+- Cell-DNA frame for future `WorkerFreshnessPolicyValidator`
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - Dedicated worker-assignment CLI command modules for inspection and lifecycle
@@ -442,9 +446,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, add a Cell-DNA frame for a future WorkerFreshnessPolicyValidator before
-  any read-only freshness validator, scheduling enforcement validator,
-  reservation, routing, provider calls, execution logs, or execution behavior.
+- Next, implement a storage-free, read-only WorkerFreshnessPolicyValidator
+  before any CLI, logging, scheduling enforcement validator, reservation,
+  routing, provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

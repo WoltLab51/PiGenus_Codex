@@ -78,6 +78,9 @@
 - Added `docs/WORKER_FRESHNESS_POLICY.md` to define heartbeat and preflight
   evidence freshness bands before any freshness validator or scheduling
   enforcement code.
+- Added `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md` to frame the
+  future freshness validator as read-only and side-effect-free before
+  implementation.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.

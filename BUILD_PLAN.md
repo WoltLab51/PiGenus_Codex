@@ -245,6 +245,7 @@ Completed worker surfaces in this arc:
   enforcement code
 - Worker Freshness Policy semantics for heartbeat and evidence age before
   enforcement code
+- Cell-DNA frame for a future `WorkerFreshnessPolicyValidator`
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -262,9 +263,9 @@ Current stop lines:
 
 Next decision:
 
-- Add a Cell-DNA frame for a future `WorkerFreshnessPolicyValidator` before
-  any read-only freshness validator, scheduling enforcement validator,
-  reservation, routing, provider calls, execution logs, or execution.
+- Implement a storage-free, read-only `WorkerFreshnessPolicyValidator` before
+  any CLI, logging, scheduling enforcement validator, reservation, routing,
+  provider calls, execution logs, or execution.
 
 Readiness source:
 
@@ -278,6 +279,7 @@ Readiness source:
 - `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md`
 - `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`
 - `docs/WORKER_FRESHNESS_POLICY.md`
+- `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
@@ -367,6 +369,9 @@ meaning, inspection, and backup surfaces remain stable.
   read-only enforcement validator, reservation, routing, provider calls, or
   execution
 - Worker Freshness Policy semantics are documented before any read-only
+  freshness validator, scheduling enforcement validator, reservation, routing,
+  provider calls, or execution
+- WorkerFreshnessPolicyValidator Cell-DNA is documented before any read-only
   freshness validator, scheduling enforcement validator, reservation, routing,
   provider calls, or execution
 - Worker storage repositories are domain-sliced before read-only assignment

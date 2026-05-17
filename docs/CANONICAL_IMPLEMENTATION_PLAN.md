@@ -75,6 +75,7 @@ PiGenus currently has:
 - WorkerAssignment scheduling eligibility logging with explicit opt-in
 - Worker Scheduling Enforcement readiness gap review
 - Worker Freshness Policy semantics
+- WorkerFreshnessPolicyValidator Cell-DNA frame
 - Static CLI module boundaries for worker, worker assignment, and meaning
   commands
 - GitHub Actions CI and local test suite

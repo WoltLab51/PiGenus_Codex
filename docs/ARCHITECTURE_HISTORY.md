@@ -1906,3 +1906,22 @@ validator exists. A later validator can evaluate heartbeat and preflight
 evidence age deterministically instead of hiding time assumptions inside code.
 This keeps stale worker state from becoming accidental permission to schedule,
 reserve, route, or execute work.
+
+## WorkerFreshnessPolicyValidator Cell-DNA
+
+The project gained:
+
+- `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`
+- a read-only Cell-DNA frame for future freshness validation
+- explicit no-write, no-logging, no-enforcement, no-reservation, no-routing,
+  and no-execution boundaries
+- a next-step path toward a storage-free implementation with deterministic
+  `now` input
+
+Why it mattered:
+
+Freshness policy now has a cell-shaped implementation target without gaining
+runtime power. The future validator can be built as a narrow CapabilityCell
+that classifies heartbeat and evidence age, while scheduling enforcement,
+operator logging, reservation, routing, provider calls, and execution remain
+blocked.

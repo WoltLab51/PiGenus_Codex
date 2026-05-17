@@ -265,6 +265,9 @@ itself. The next safe step is a Cell-DNA frame for the future
 `WorkerFreshnessPolicyValidator`, followed by a small read-only implementation
 only if the frame stays narrow.
 
+That Cell-DNA frame now lives in
+`docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.
+
 ## Stop Lines
 
 Still not next:
