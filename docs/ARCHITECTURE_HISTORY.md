@@ -1792,3 +1792,20 @@ read-only scheduling-adjacent eligibility, and write-capable assignment intent
 creation. The review keeps the protocol useful without making MicroCells too
 heavy, and it prevents new eligibility decision logging from arriving before
 the existing lifecycle write path is documented.
+
+## WorkerAssignment Status Transition Cell-DNA
+
+The project gained:
+
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md`
+- the first lifecycle-changing WorkerAssignment Cell-DNA frame
+- explicit documentation of status mutation, `updated_at`, and the existing
+  `worker_assignment_status_changed` audit row
+- preserved stop lines for scheduling, reservation, routing, provider calls,
+  execution, RuntimeCell, CellRegistry, and graph projection
+
+Why it mattered:
+
+The WorkerAssignment tissue now has Cell-DNA coverage for validation, creation,
+transition, and scheduling eligibility inspection. The lifecycle path remains a
+status transition and audit event only: assigned still does not mean executed.

@@ -63,6 +63,9 @@
 - Added `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` to evaluate the first three
   Cell-DNA frames and recommend documenting status-transition Cell-DNA before
   opt-in eligibility decision logging.
+- Added `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md` to
+  document lifecycle status mutation and its existing audit boundary before
+  further eligibility logging work.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

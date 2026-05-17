@@ -272,3 +272,14 @@ Next safe step:
 ```text
 Add WorkerAssignmentStatusTransitionService Cell-DNA.
 ```
+
+## Follow-Up
+
+The recommended lifecycle-changing frame is now documented in:
+
+```text
+docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md
+```
+
+Eligibility decision logging remains out of scope until a separate decision
+and implementation slice.

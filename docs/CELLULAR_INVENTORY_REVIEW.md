@@ -235,6 +235,13 @@ and its existing audit write:
 docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md
 ```
 
+The lifecycle-changing application target documents status updates and their
+existing audit write:
+
+```text
+docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md
+```
+
 The protocol source is:
 
 ```text

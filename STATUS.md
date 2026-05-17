@@ -26,10 +26,11 @@
 - Cell-DNA protocol: `docs/CELL_DNA_PROTOCOL.md` defines the lightweight
   non-runtime frame, with applied frames for `WorkerAssignmentValidator` and
   `WorkerAssignmentSchedulingEligibilityValidator`, plus the first
-  write-capable frame for `WorkerAssignmentCreator`.
-- Cell-DNA consolidation: `docs/CELL_DNA_CONSOLIDATION_REVIEW.md` recommends
-  documenting `WorkerAssignmentStatusTransitionService` before opt-in
-  eligibility decision logging.
+  write-capable frame for `WorkerAssignmentCreator` and the lifecycle-changing
+  frame for `WorkerAssignmentStatusTransitionService`.
+- Cell-DNA consolidation: `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
+  recommendation is applied; opt-in eligibility decision logging remains a
+  separate decision.
 
 ## Current Cycle
 
@@ -409,10 +410,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, document WorkerAssignmentStatusTransitionService Cell-DNA before
-  deciding whether opt-in scheduling eligibility decision logging is mature
-  enough. Do not add real scheduling, reservation, routing, provider, or
-  execution behavior.
+- Next, decide whether opt-in scheduling eligibility decision logging is mature
+  enough after Cell-DNA coverage for validation, creation, transition, and
+  eligibility inspection. Do not add real scheduling, reservation, routing,
+  provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

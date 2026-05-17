@@ -140,6 +140,7 @@ Source:
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md`
 - `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md`
 
 Define a lightweight implementation template for new responsible capabilities.
 
