@@ -196,8 +196,10 @@ Next safe step:
 Worker Scheduling Enforcement Readiness Gap Review
 ```
 
-That review should answer what minimal inputs must exist before the first
-read-only scheduling enforcement validator can be built.
+That review now lives in
+`docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`. It answers what
+minimal inputs must exist before the first read-only scheduling enforcement
+validator can be built.
 
 Focus:
 

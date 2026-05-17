@@ -241,6 +241,8 @@ Completed worker surfaces in this arc:
 - opt-in scheduling eligibility decision logging through the durable decision
   log for allow, deny, or review results
 - WorkerAssignment tissue consolidation review before scheduling enforcement
+- Worker Scheduling Enforcement readiness gap review before scheduling
+  enforcement code
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -258,9 +260,9 @@ Current stop lines:
 
 Next decision:
 
-- Prepare a Worker Scheduling Enforcement Readiness Gap Review before any real
-  scheduling, reservation, routing, provider calls, execution logs, or
-  execution.
+- Define Worker Freshness Policy semantics before any read-only scheduling
+  enforcement validator, reservation, routing, provider calls, execution logs,
+  or execution.
 
 Readiness source:
 
@@ -272,6 +274,7 @@ Readiness source:
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md`
 - `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
 - `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md`
+- `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
@@ -357,6 +360,9 @@ meaning, inspection, and backup surfaces remain stable.
   reservation, routing, provider calls, or execution
 - Worker Scheduling Enforcement boundary comes before a read-only enforcement
   validator/service, reservation, routing, provider calls, or execution
+- Worker Scheduling Enforcement readiness gaps are reviewed before any
+  read-only enforcement validator, reservation, routing, provider calls, or
+  execution
 - Worker storage repositories are domain-sliced before read-only assignment
   inspection, assignment creation, scheduling enforcement, routing, provider
   calls, or execution

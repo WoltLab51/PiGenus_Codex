@@ -73,6 +73,7 @@ PiGenus currently has:
 - WorkerAssignment lifecycle transition validator, service, and CLI
 - WorkerAssignment scheduling eligibility validator and CLI
 - WorkerAssignment scheduling eligibility logging with explicit opt-in
+- Worker Scheduling Enforcement readiness gap review
 - Static CLI module boundaries for worker, worker assignment, and meaning
   commands
 - GitHub Actions CI and local test suite

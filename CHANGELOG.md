@@ -72,6 +72,9 @@
 - Added `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` to consolidate
   WorkerAssignment creation, transition, eligibility inspection, and explicit
   eligibility decision logging before scheduling enforcement.
+- Added `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md` to
+  identify freshness, room/context, resource/risk, reflex, approval, and
+  reservation gaps before any scheduling-enforcement code.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

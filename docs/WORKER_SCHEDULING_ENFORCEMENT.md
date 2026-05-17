@@ -273,8 +273,11 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Worker Scheduling Enforcement Readiness Gap Review
+Worker Freshness Policy Semantics
 ```
+
+Readiness gaps are documented in
+`docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`.
 
 Not next:
 

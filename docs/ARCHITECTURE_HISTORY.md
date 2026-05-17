@@ -1868,3 +1868,23 @@ evidence without crossing into scheduling, reservation, routing, provider
 calls, execution logs, or execution. The next risk is not missing code; it is
 adding scheduling before freshness, resource, risk, and reflex inputs are
 understood.
+
+## Worker Scheduling Enforcement Readiness Gap Review
+
+The project gained:
+
+- `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md`
+- a readiness matrix for heartbeat freshness, evidence freshness,
+  room/context recheck, resource/risk inputs, reflex boundaries, human
+  approval thresholds, reservation distinction, enforcement logging, and
+  no-execution proof
+- a clear recommendation to define Worker Freshness Policy semantics before
+  any scheduling-enforcement validator
+
+Why it mattered:
+
+The WorkerAssignment tissue can now pause at the correct edge. It has enough
+governed intent and eligibility evidence to reason about future scheduling,
+but not enough freshness, budget, reflex, approval, or reservation boundaries
+to enforce scheduling safely. The next safe work is policy semantics, not
+worker power.

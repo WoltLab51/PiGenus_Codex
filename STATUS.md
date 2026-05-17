@@ -37,6 +37,10 @@
 - WorkerAssignment tissue consolidation:
   `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` confirms assignment
   intent remains separate from scheduling, reservation, routing, and execution.
+- Worker Scheduling Enforcement readiness:
+  `docs/WORKER_SCHEDULING_ENFORCEMENT_READINESS_GAP_REVIEW.md` identifies
+  freshness, room/context, resource/risk, reflex, approval, and reservation
+  gaps before enforcement code.
 
 ## Current Cycle
 
@@ -56,6 +60,8 @@ Worker Runtime / scheduling eligibility:
 - Tissue review: WorkerAssignment now has validated creation, lifecycle
   transitions, eligibility inspection, and explicit eligibility decision
   logging without scheduling or execution.
+- Enforcement readiness: scheduling enforcement is not ready yet; freshness
+  semantics are the next safe boundary.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -156,6 +162,8 @@ PiGenus is a small local GENUS runtime core. It has:
   assigned-intent scheduling eligibility, read-only unless `--log` is explicit
 - Explicit `worker-assignment-scheduling-eligibility --log` support for one
   eligibility decision record on allow, deny, or review results
+- Worker Scheduling Enforcement readiness gap review documenting why
+  freshness semantics must precede enforcement code
 - Dedicated worker CLI command module for worker inspection, scheduling
   preview, and execution preflight command handling
 - Dedicated worker-assignment CLI command modules for inspection and lifecycle
@@ -426,8 +434,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, prepare a Worker Scheduling Enforcement Readiness Gap Review before
-  any real scheduling, reservation, routing, provider, or execution behavior.
+- Next, define Worker Freshness Policy semantics before any read-only
+  scheduling enforcement validator, reservation, routing, provider calls,
+  execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
