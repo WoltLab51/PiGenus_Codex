@@ -253,6 +253,8 @@ Completed worker surfaces in this arc:
 - WorkerAssignment room/context recheck semantics before scheduling
   enforcement
 - Cell-DNA frame for future `WorkerAssignmentRoomContextRecheckValidator`
+- read-only `WorkerAssignmentRoomContextRecheckValidator` implementation with
+  targeted no-write tests
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -270,9 +272,10 @@ Current stop lines:
 
 Next decision:
 
-- Consider a read-only `WorkerAssignmentRoomContextRecheckValidator`
-  implementation with no CLI, logging, scheduling enforcement, reservation,
-  routing, provider calls, execution logs, or execution.
+- Consolidate the read-only `WorkerAssignmentRoomContextRecheckValidator`
+  before wiring it into scheduling eligibility or adding CLI, logging,
+  scheduling enforcement, reservation, routing, provider calls, execution logs,
+  or execution.
 
 Readiness source:
 
@@ -290,6 +293,7 @@ Readiness source:
 - `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
+- `tests/test_worker_assignment_room_context_recheck.py`
 - `tests/test_worker_freshness_policy.py`
 - `tests/test_worker_assignment_scheduling_eligibility.py`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`

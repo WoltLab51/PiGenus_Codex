@@ -179,11 +179,13 @@ Focus:
 - consolidate freshness-integrated scheduling eligibility before any new
   logging or enforcement behavior
 - define room/context recheck semantics before scheduling enforcement
-- apply Cell-DNA to a future room/context recheck validator before
-  implementation
+- use the Cell-DNA frame for the room/context recheck validator before
+  further maturity
 - keep the first room/context recheck implementation read-only and free of
   CLI, logging, scheduling enforcement, reservation, routing, provider calls,
   execution logs, and execution
+- consolidate the first room/context recheck implementation before wiring it
+  into scheduling eligibility
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

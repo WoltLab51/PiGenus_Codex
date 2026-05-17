@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `317 passed`
+- Last verified result: `328 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 - Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
@@ -88,6 +88,10 @@ Worker Runtime / scheduling eligibility:
 - Room/context recheck Cell-DNA:
   `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md` frames
   the future validator as read-only CapabilityCell / GovernedCellCandidate.
+- Room/context recheck implementation:
+  `WorkerAssignmentRoomContextRecheckValidator` now exists as a read-only
+  validator with targeted no-write tests and no CLI, logging, enforcement,
+  reservation, routing, provider calls, execution logs, or execution.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -469,9 +473,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consider a read-only `WorkerAssignmentRoomContextRecheckValidator`
-  implementation before adding any CLI, logging, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution behavior.
+- Next, consolidate the read-only `WorkerAssignmentRoomContextRecheckValidator`
+  before wiring it into scheduling eligibility or adding any CLI, logging,
+  scheduling enforcement, reservation, routing, provider calls, execution logs,
+  or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

@@ -2003,7 +2003,7 @@ becoming implicit permission to schedule, reserve, route, or execute work.
 The project gained:
 
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
-- a planned read-only CapabilityCell / GovernedCellCandidate frame for
+- a read-only CapabilityCell / GovernedCellCandidate frame for
   `WorkerAssignmentRoomContextRecheckValidator`
 - explicit input, output, read, write, trace, and no-side-effect boundaries
 - a next-step path toward a narrow validator implementation without CLI,
@@ -2015,3 +2015,22 @@ Why it mattered:
 Room/context recheck now has a cell-shaped membrane before code exists. This
 keeps the next implementation step narrow: prove room/context compatibility
 as a read-only readiness input, not as scheduling permission.
+
+## WorkerAssignment Room / Context Recheck Validator
+
+The project gained:
+
+- `pigenus.core.worker_assignment_room_context_recheck.WorkerAssignmentRoomContextRecheckValidator`
+- read-only outcomes for `allow_context`, `require_review`, `deny_context`,
+  and `not_considered`
+- targeted tests for matching room/context, unknown assignment, non-assigned
+  status, evidence-room mismatch, worker home-room mismatch, missing
+  ContextStack, ContextFrame room/policy mismatch, RoomFlow review/block, and
+  no-write proof
+
+Why it mattered:
+
+Room/context compatibility is now executable as a narrow, read-only
+scheduling-readiness input. It still does not create CLI behavior, logs,
+decisions, audits, scheduling enforcement, reservations, routes, provider
+calls, execution logs, or execution.

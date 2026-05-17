@@ -229,15 +229,13 @@ itself.
 
 ## Future Validator Shape
 
-Do not build this in this document.
-
-A later first implementation should likely be:
+The first read-only implementation is:
 
 ```text
 WorkerAssignmentRoomContextRecheckValidator
 ```
 
-Expected first shape:
+Current first shape:
 
 - Maturity: `CapabilityCell / GovernedCellCandidate`
 - Inputs: assignment ID, optional ContextStack / ContextFrame data, explicit
@@ -275,7 +273,7 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Consider read-only WorkerAssignmentRoomContextRecheckValidator implementation.
+Consolidate read-only WorkerAssignmentRoomContextRecheckValidator implementation.
 ```
 
 Still not next:

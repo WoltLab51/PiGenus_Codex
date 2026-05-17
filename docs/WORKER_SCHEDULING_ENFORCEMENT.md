@@ -276,7 +276,7 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-WorkerAssignmentRoomContextRecheckValidator read-only implementation
+WorkerAssignmentRoomContextRecheckValidator consolidation
 ```
 
 Readiness gaps are documented in
@@ -286,8 +286,9 @@ Heartbeat and governance evidence freshness semantics are documented in
 scheduling eligibility. That integration is consolidated in
 `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`. Scheduling
 enforcement remains later. Room/context recheck semantics now live in
-`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the next safe step is
-the read-only validator implementation, not CLI, logging, scheduling
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`, and the read-only validator
+now exists in `pigenus.core.worker_assignment_room_context_recheck`. The next
+safe step is consolidation before wiring, CLI, logging, scheduling
 enforcement, reservation, routing, provider calls, execution logs, or
 execution.
 

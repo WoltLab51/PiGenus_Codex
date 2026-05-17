@@ -87,11 +87,13 @@ invalid or mismatched evidence -> deny at evidence boundary
 
 ## Test Evidence
 
-Current local verification:
+Local verification at the time of this consolidation:
 
 ```text
 317 passed
 ```
+
+The current full-suite result is tracked in `STATUS.md`.
 
 Targeted coverage includes:
 
@@ -129,7 +131,7 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Consider read-only WorkerAssignmentRoomContextRecheckValidator implementation.
+Consolidate read-only WorkerAssignmentRoomContextRecheckValidator implementation.
 ```
 
 Why:
@@ -139,6 +141,8 @@ Why:
   `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`
 - the future validator's membrane is now explicit in
   `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
+- the read-only validator now exists in
+  `pigenus.core.worker_assignment_room_context_recheck`
 
 ## Stop Lines
 

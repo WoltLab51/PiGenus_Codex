@@ -94,7 +94,10 @@
   room, worker home room, ContextStack, and RoomFlow recheck semantics before
   any scheduling enforcement.
 - Added `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`
-  to frame the future room/context recheck validator before implementation.
+  to frame the room/context recheck validator before its first implementation.
+- Added read-only `WorkerAssignmentRoomContextRecheckValidator` with targeted
+  no-write tests for assignment room, worker home room, ContextStack,
+  ContextFrame, and RoomFlow checks.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
@@ -116,7 +119,7 @@
 
 ### Verified
 
-- Latest local full suite: `317 passed`.
+- Latest local full suite: `328 passed`.
 - GitHub Actions CI runs the Python test suite on push, pull request, and
   manual dispatch.
 

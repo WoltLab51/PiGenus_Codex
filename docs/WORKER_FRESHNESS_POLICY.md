@@ -272,7 +272,7 @@ Any future freshness exposure or persisted logging must remain explicit and
 separate from scheduling, reservation, routing, provider calls, execution logs,
 and execution behavior. WorkerAssignment room/context recheck semantics now
 live in `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`; the next readiness
-step is Cell-DNA for a future room/context recheck validator.
+boundary is consolidation of the read-only room/context recheck validator.
 
 The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.

@@ -56,7 +56,7 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 | --- | --- | --- | --- |
 | Heartbeat freshness | Policy and read-only eligibility integration exist; no heartbeat history or enforcement exists. | A worker can be active in storage but too stale for scheduling. | Consolidate read-only behavior before enforcement code. |
 | Evidence freshness | Policy and read-only eligibility integration exist; no revocation model exists. | Old preflight allow evidence may no longer be safe. | Keep expiry/review bands in eligibility; defer revocation and enforcement. |
-| Room/context recheck | Semantics and Cell-DNA documented; no validator or enforcement exists. | Room policy can change after assignment creation. | Consider a read-only validator before enforcement code. |
+| Room/context recheck | Read-only validator implemented; no CLI, logging, or enforcement exists. | Room policy can change after assignment creation. | Consolidate read-only behavior before wiring or enforcement code. |
 | Resource/risk budget | Resource concepts exist, but no scheduling budget input. | Scheduling needs capacity and risk pressure, not only worker capability. | Define placeholder resource/risk inputs before reservation. |
 | Reflex/circuit breaker | Canonical systemform defines reflexes, but worker runtime has no kill-switch path. | Enforcement must be stoppable before live behavior appears. | Define reflex and kill-switch boundary before any high-risk path. |
 | Human approval thresholds | Human approval exists as a stub, but is not connected to worker scheduling. | Sensitive rooms or capabilities may need approval before scheduling. | Define threshold rules before high-risk scheduling. |
@@ -200,7 +200,7 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-WorkerAssignmentRoomContextRecheckValidator read-only implementation
+WorkerAssignmentRoomContextRecheckValidator consolidation
 ```
 
 The current policy and implementation now live in
@@ -225,6 +225,8 @@ The freshness integration is consolidated in
 Room/context recheck semantics now live in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`. The corresponding Cell-DNA
 frame now lives in
-`docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`. Next,
-PiGenus may consider a read-only validator implementation. Scheduling
-enforcement remains later.
+`docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`. The
+read-only validator now exists in
+`pigenus.core.worker_assignment_room_context_recheck`. Next, PiGenus should
+consolidate the validator before wiring it into scheduling eligibility.
+Scheduling enforcement remains later.

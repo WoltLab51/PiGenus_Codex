@@ -3,10 +3,11 @@
 This document applies `docs/CELL_DNA_PROTOCOL.md` to the future
 `WorkerAssignmentRoomContextRecheckValidator`.
 
-This is documentation only. It does not add runtime code, schemas, migrations,
-CLI behavior, logging behavior, graph projection, RuntimeCell behavior,
-CellRegistry behavior, scheduling enforcement, reservation, routing, provider
-calls, execution logs, or execution.
+The current implementation is read-only and repository-backed for existing
+assignment, worker, and decision evidence. It does not add schemas,
+migrations, CLI behavior, logging behavior, graph projection, RuntimeCell
+behavior, CellRegistry behavior, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution.
 
 ## Capability
 
@@ -39,9 +40,10 @@ enforcement.
 CapabilityCell / GovernedCellCandidate
 ```
 
-Current maturity is Cell-DNA only. There is no implementation yet.
+Current maturity is a read-only CapabilityCell implementation and
+GovernedCellCandidate. RuntimeCell maturity is explicitly later.
 
-Future implementation shape:
+Current implementation shape:
 
 ```text
 pigenus.core.worker_assignment_room_context_recheck.WorkerAssignmentRoomContextRecheckValidator
@@ -51,14 +53,13 @@ RuntimeCell maturity is explicitly later.
 
 ## Inputs
 
-Planned first implementation inputs:
+Current first implementation inputs:
 
 - assignment ID
 - optional ContextStack supplied by caller
 - optional ContextFrames supplied by caller
 - optional source room ID if future payload movement is being evaluated
 - optional target room ID if future payload movement is being evaluated
-- optional explicit room policy inputs where available
 
 Runtime data resolved from assignment ID:
 
@@ -76,7 +77,7 @@ inputs should become stable reasons, not hidden permission.
 
 ## Outputs
 
-Planned output:
+Current output:
 
 - `WorkerAssignmentRoomContextRecheckResult`
 - assignment ID
@@ -114,7 +115,7 @@ tested, reason codes should remain stable.
 
 ## Reads
 
-A future implementation may read:
+The current implementation may read:
 
 - `WorkerAssignmentRepository`
 - `WorkerRepository`
@@ -124,7 +125,6 @@ A future implementation may read:
 - preflight decision source/type/family/details
 - preflight evidence room ID
 - supplied ContextStack and ContextFrames
-- supplied room policy inputs
 - `RoomFlowRules` when source and target rooms imply meaning or payload flow
 
 It should not own persistence for ContextStack, ContextFrame, Room, or policy
@@ -136,11 +136,11 @@ records in the first implementation.
 none
 ```
 
-The future validator must be read-only.
+The validator is read-only.
 
 ## Allowed Effects
 
-The future validator may:
+The validator may:
 
 - perform read-only room/context recheck
 - verify assignment room is present
@@ -156,7 +156,7 @@ The future validator may:
 
 ## Forbidden Effects
 
-The future validator must not:
+The validator must not:
 
 - mutate WorkerAssignment
 - create WorkerAssignment intent
@@ -226,19 +226,18 @@ It does not:
 
 ## Tests
 
-Expected first implementation tests:
+Implemented tests:
 
 - matching assignment room and preflight evidence room passes room identity
   check
 - missing assignment returns `not_considered`
 - non-considered assignment status returns `not_considered`
-- missing assignment room denies or requires review according to final policy
-- mismatched evidence room denies or requires review according to final policy
+- mismatched evidence room denies room/context compatibility
 - missing worker returns deny or not-considered according to final policy
 - worker home room mismatch requires review
-- missing ContextStack is visible and does not silently grant permission
-- supplied ContextFrame room mismatch is visible
-- supplied ContextFrame policy mismatch is visible
+- missing ContextStack requires review and does not silently grant permission
+- supplied ContextFrame room mismatch denies room/context compatibility
+- supplied ContextFrame policy mismatch denies room/context compatibility
 - RoomFlowRules review/block outcomes are carried as reasons when applicable
 - no assignment writes occur during validation
 - no audit writes occur during validation
@@ -274,16 +273,15 @@ This Cell-DNA does not add:
 
 ## Next Possible Maturity
 
-Next safe maturity:
+Current safe maturity:
 
 ```text
 CapabilityCell with a read-only implementation and targeted tests.
 ```
 
-The first implementation should be narrow and repository-backed only for
-existing assignment, worker, and decision evidence. ContextStack, ContextFrame,
-and room policy inputs should be caller-supplied until a separate persistence
-and inspection plan exists.
+The first implementation is narrow and repository-backed only for existing
+assignment, worker, and decision evidence. ContextStack and ContextFrame inputs
+are caller-supplied until a separate persistence and inspection plan exists.
 
 Later maturity:
 
