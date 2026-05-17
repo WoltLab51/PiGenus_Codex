@@ -1726,3 +1726,25 @@ assignment request. It does not prove that the room, context, worker posture,
 or policy is still valid later. A separate room/context recheck keeps room
 governance, future ContextStack envelopes, and room-flow policy visible before
 any scheduling power appears.
+
+## D-108: Resource Risk And Reflex Readiness Precedes Scheduling Enforcement
+
+Decision:
+
+PiGenus defines WorkerAssignment resource, risk, and reflex readiness semantics
+before implementing any scheduling-enforcement validator. Future scheduling
+consideration must not rely only on assignment status, worker freshness, or
+room/context compatibility. It must also have explicit semantics for resource
+budget, risk budget, and protective reflex boundaries such as circuit breakers,
+kill switches, quarantine, abort paths, and recovery paths. The first related
+implementation must be read-only and must not mutate assignments, write audit
+or decision records, reserve capacity, route providers, write execution logs,
+or execute work.
+
+Reason:
+
+Freshness and room/context checks make assigned intent safer to inspect, but
+they still do not prove the runtime can afford the work, tolerate the risk, or
+stop the path if known unsafe conditions appear. Resource, risk, and reflex
+semantics keep scheduling enforcement behind GENUS physiology: budgets,
+pressure, protective responses, and recovery before power.

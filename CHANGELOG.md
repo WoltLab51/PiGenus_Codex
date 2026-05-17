@@ -110,9 +110,12 @@
   to consolidate the read-only room/context eligibility composition and set
   resource, risk, and reflex semantics as the next readiness decision before
   enforcement.
+- Added `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md` to define resource
+  budget, risk budget, and reflex readiness semantics before scheduling
+  enforcement.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
-  `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.
+  `D-108: Resource Risk And Reflex Readiness Precedes Scheduling Enforcement`.
 - Tightened documentation maintenance and changelog hygiene so `Unreleased`
   stays grouped by architecture arc instead of accumulating raw checkpoint
   bullets.

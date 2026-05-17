@@ -164,12 +164,12 @@ surface before those exist would make the path look more mature than it is.
 Next safe decision:
 
 ```text
-Define resource, risk, and reflex readiness semantics before any scheduling
-enforcement code.
+Apply Cell-DNA to a future read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator.
 ```
 
-This should remain documentation / semantics first unless a later explicit
-build frame says otherwise.
+Resource, risk, and reflex readiness semantics now live in
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
 
 ## Stop Lines
 

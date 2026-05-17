@@ -2095,3 +2095,21 @@ Freshness and room/context checks can cooperate without making the runtime look
 more executable than it is. The next missing safety layer is physiological:
 budgets, risk pressure, reflexes, and abort boundaries before any scheduling
 enforcement exists.
+
+## Worker Resource / Risk / Reflex Readiness
+
+The project gained:
+
+- `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`
+- explicit resource readiness semantics before scheduling enforcement
+- explicit risk readiness semantics before scheduling enforcement
+- explicit reflex readiness semantics for circuit breakers, kill switches,
+  quarantine, abort paths, and recovery paths
+- `D-108: Resource Risk And Reflex Readiness Precedes Scheduling Enforcement`
+
+Why it mattered:
+
+Scheduling readiness now has the next physiology layer after freshness and
+room/context recheck. PiGenus can describe budget, pressure, and protective
+response requirements before any scheduling-enforcement validator, reservation,
+routing, provider call, execution log, or execution exists.

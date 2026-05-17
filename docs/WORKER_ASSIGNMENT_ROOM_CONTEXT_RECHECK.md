@@ -302,13 +302,15 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Define resource, risk, and reflex readiness semantics before scheduling
-enforcement.
+Apply Cell-DNA to a future read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator.
 ```
 
 The read-only room/context scheduling eligibility integration is consolidated
 in
 `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
+Resource, risk, and reflex readiness semantics now live in
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
 
 Still not next:
 

@@ -187,8 +187,8 @@ provider calls, execution logs, or execution from this review.
 Next safe step:
 
 ```text
-Define resource, risk, and reflex readiness semantics before scheduling
-enforcement.
+Apply Cell-DNA to a future read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator.
 ```
 
 The current room/context integration is consolidated in
@@ -205,6 +205,9 @@ That integration must continue to:
 - not reserve, route, call providers, create execution logs, or execute work
 - keep missing context visible as review / not-ready evidence rather than
   hidden permission
+
+Resource, risk, and reflex readiness semantics now live in
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
 
 ## Stop Lines
 

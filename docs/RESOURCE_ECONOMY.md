@@ -157,3 +157,16 @@ v0.3 has the foundation:
 
 Resource Economy comes later, after the system can report usage without
 changing behavior. The first milestone should be visibility, not optimization.
+
+## Worker Scheduling Readiness
+
+Worker-specific resource readiness is narrowed in:
+
+```text
+docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md
+```
+
+That document defines the resource, risk, and reflex semantics needed before
+any WorkerAssignment scheduling-enforcement validator. This Resource Economy
+document remains the broader topic-authoritative map for accounting, budgets,
+usage, and later optimization.

@@ -192,6 +192,8 @@ Focus:
   before exposing it through CLI, logging, or enforcement behavior
 - define resource, risk, and reflex readiness semantics before any scheduling
   enforcement code
+- apply Cell-DNA to the first read-only resource/risk/reflex readiness
+  validator before implementation
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

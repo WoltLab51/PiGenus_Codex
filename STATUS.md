@@ -106,6 +106,11 @@ Worker Runtime / scheduling eligibility:
   `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
   accepts the opt-in read-only validator composition and sets resource, risk,
   and reflex readiness semantics as the next safe decision before enforcement.
+- Resource/risk/reflex readiness:
+  `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md` defines resource readiness,
+  risk readiness, and reflex readiness semantics before any scheduling
+  enforcement, reservation, routing, provider calls, execution logs, or
+  execution behavior.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -487,9 +492,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, define resource, risk, and reflex readiness semantics before adding
-  scheduling enforcement, reservation, routing, provider calls, execution
-  logs, or execution behavior.
+- Next, apply Cell-DNA to a future read-only
+  `WorkerAssignmentResourceRiskReflexReadinessValidator` before adding code,
+  CLI, logging, scheduling enforcement, reservation, routing, provider calls,
+  execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

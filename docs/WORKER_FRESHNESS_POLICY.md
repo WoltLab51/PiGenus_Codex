@@ -277,8 +277,8 @@ validator is consolidated in
 That validator is now consumed by assigned-intent scheduling eligibility only
 when explicitly supplied by a caller. That integration is consolidated in
 `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`;
-the next readiness decision is resource, risk, and reflex semantics before
-scheduling enforcement.
+resource, risk, and reflex semantics now live in
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
 
 The validator Cell-DNA frame lives in
 `docs/CELL_DNA_WORKER_FRESHNESS_POLICY_VALIDATOR.md`.

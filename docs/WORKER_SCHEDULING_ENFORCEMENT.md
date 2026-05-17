@@ -278,8 +278,8 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Define resource, risk, and reflex readiness semantics before scheduling
-enforcement.
+Apply Cell-DNA to a future read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator.
 ```
 
 Readiness gaps are documented in
@@ -296,9 +296,12 @@ validator is consolidated in
 validator is now wired into scheduling eligibility only when explicitly
 supplied by a caller. That integration is consolidated in
 `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
-The next safe step is defining resource, risk, and reflex readiness semantics
-before scheduling enforcement, reservation, routing, provider calls, execution
-logs, or execution.
+Those semantics now live in
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`. The next safe step is applying
+Cell-DNA to a future read-only
+`WorkerAssignmentResourceRiskReflexReadinessValidator` before scheduling
+enforcement, reservation, routing, provider calls, execution logs, or
+execution.
 
 Not next:
 
