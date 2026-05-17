@@ -184,8 +184,10 @@ Focus:
 - keep the first room/context recheck implementation read-only and free of
   CLI, logging, scheduling enforcement, reservation, routing, provider calls,
   execution logs, and execution
-- consolidate the first room/context recheck implementation before wiring it
-  into scheduling eligibility
+- consolidate the first room/context recheck implementation before any wiring
+- if wiring the room/context recheck into scheduling eligibility later, keep it
+  read-only and separate from CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, and execution
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

@@ -92,6 +92,10 @@ Worker Runtime / scheduling eligibility:
   `WorkerAssignmentRoomContextRecheckValidator` now exists as a read-only
   validator with targeted no-write tests and no CLI, logging, enforcement,
   reservation, routing, provider calls, execution logs, or execution.
+- Room/context recheck consolidation:
+  `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
+  accepts the read-only validator and sets the next decision as whether and
+  how to wire it into scheduling eligibility without new effects.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -473,10 +477,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate the read-only `WorkerAssignmentRoomContextRecheckValidator`
-  before wiring it into scheduling eligibility or adding any CLI, logging,
-  scheduling enforcement, reservation, routing, provider calls, execution logs,
-  or execution behavior.
+- Next, decide whether and how to wire the read-only
+  `WorkerAssignmentRoomContextRecheckValidator` into scheduling eligibility
+  without adding CLI, logging, scheduling enforcement, reservation, routing,
+  provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

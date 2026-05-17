@@ -251,9 +251,12 @@ Current first shape:
 The Cell-DNA frame for that validator now lives in
 `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`.
 
-## Test Expectations For A Later Validator
+The first implementation consolidation now lives in
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
 
-Future tests should prove:
+## Validator Test Expectations
+
+Current and future tests should prove:
 
 - matching assignment room and evidence room passes the room identity check
 - mismatched evidence room denies or requires review according to final policy
@@ -273,7 +276,8 @@ Accept this semantics document as the current room/context boundary.
 Next safe step:
 
 ```text
-Consolidate read-only WorkerAssignmentRoomContextRecheckValidator implementation.
+Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
+into assigned-intent scheduling eligibility as a read-only input.
 ```
 
 Still not next:

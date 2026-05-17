@@ -200,7 +200,8 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-WorkerAssignmentRoomContextRecheckValidator consolidation
+Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
+into assigned-intent scheduling eligibility as a read-only input.
 ```
 
 The current policy and implementation now live in
@@ -227,6 +228,10 @@ Room/context recheck semantics now live in
 frame now lives in
 `docs/CELL_DNA_WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_VALIDATOR.md`. The
 read-only validator now exists in
-`pigenus.core.worker_assignment_room_context_recheck`. Next, PiGenus should
-consolidate the validator before wiring it into scheduling eligibility.
+`pigenus.core.worker_assignment_room_context_recheck`. The implementation is
+consolidated in
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`.
+Next, PiGenus should decide whether and how to wire the validator into
+scheduling eligibility without adding CLI, logging, scheduling enforcement,
+reservation, routing, provider calls, execution logs, or execution.
 Scheduling enforcement remains later.

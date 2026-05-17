@@ -98,6 +98,9 @@
 - Added read-only `WorkerAssignmentRoomContextRecheckValidator` with targeted
   no-write tests for assignment room, worker home room, ContextStack,
   ContextFrame, and RoomFlow checks.
+- Added `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
+  to consolidate the read-only room/context recheck validator before any
+  scheduling eligibility wiring, CLI, logging, or enforcement behavior.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-106: Worker Freshness Policy Precedes Scheduling Enforcement`.

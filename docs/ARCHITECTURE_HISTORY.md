@@ -2034,3 +2034,23 @@ Room/context compatibility is now executable as a narrow, read-only
 scheduling-readiness input. It still does not create CLI behavior, logs,
 decisions, audits, scheduling enforcement, reservations, routes, provider
 calls, execution logs, or execution.
+
+## WorkerAssignment Room / Context Recheck Consolidation
+
+The project gained:
+
+- `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
+- explicit acceptance of the first read-only
+  `WorkerAssignmentRoomContextRecheckValidator`
+- confirmation that room/context compatibility remains scheduling-readiness
+  evidence, not scheduling permission
+- a next-step decision point for whether and how to wire the validator into
+  assigned-intent scheduling eligibility
+
+Why it mattered:
+
+The room/context recheck implementation now has a clean pause point before it
+touches scheduling eligibility. This keeps PiGenus from turning a useful
+readiness signal into hidden CLI behavior, implicit logging, scheduling
+enforcement, reservation, routing, provider calls, execution logs, or
+execution.

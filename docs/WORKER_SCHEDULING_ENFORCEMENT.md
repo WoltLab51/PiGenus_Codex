@@ -276,7 +276,8 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-WorkerAssignmentRoomContextRecheckValidator consolidation
+Decide whether and how to wire WorkerAssignmentRoomContextRecheckValidator
+into assigned-intent scheduling eligibility as a read-only input.
 ```
 
 Readiness gaps are documented in
@@ -287,10 +288,12 @@ scheduling eligibility. That integration is consolidated in
 `docs/WORKER_FRESHNESS_ELIGIBILITY_CONSOLIDATION_REVIEW.md`. Scheduling
 enforcement remains later. Room/context recheck semantics now live in
 `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK.md`, and the read-only validator
-now exists in `pigenus.core.worker_assignment_room_context_recheck`. The next
-safe step is consolidation before wiring, CLI, logging, scheduling
-enforcement, reservation, routing, provider calls, execution logs, or
-execution.
+now exists in `pigenus.core.worker_assignment_room_context_recheck`. The
+validator is consolidated in
+`docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`. The
+next safe step is deciding whether and how to wire it into scheduling
+eligibility without CLI, logging, scheduling enforcement, reservation,
+routing, provider calls, execution logs, or execution.
 
 Not next:
 
