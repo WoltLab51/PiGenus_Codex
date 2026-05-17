@@ -69,6 +69,9 @@
 - Added `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` to define
   explicit `worker-assignment-scheduling-eligibility --log` semantics and keep
   the logging boundary separate from scheduling enforcement.
+- Added `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` to consolidate
+  WorkerAssignment creation, transition, eligibility inspection, and explicit
+  eligibility decision logging before scheduling enforcement.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

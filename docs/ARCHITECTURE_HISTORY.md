@@ -1847,3 +1847,24 @@ The WorkerAssignment scheduling-eligibility surface now has the same explicit
 operator logging discipline as scheduling preview and execution preflight.
 Eligibility decisions can be reviewed later, but they still do not schedule,
 reserve, route, call providers, write execution logs, or execute work.
+
+## WorkerAssignment Tissue Consolidation
+
+The project gained:
+
+- `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md`
+- a side-effect map for assignment creation, lifecycle transition, eligibility
+  inspection, and eligibility decision logging
+- a clear statement that WorkerAssignment remains intent, not scheduling or
+  execution
+- a next-step recommendation to review scheduling-enforcement readiness gaps
+  before adding more worker power
+
+Why it mattered:
+
+WorkerAssignment now behaves like a coherent governed tissue: it can create
+intent, move lifecycle status, recheck eligibility, and log eligibility
+evidence without crossing into scheduling, reservation, routing, provider
+calls, execution logs, or execution. The next risk is not missing code; it is
+adding scheduling before freshness, resource, risk, and reflex inputs are
+understood.

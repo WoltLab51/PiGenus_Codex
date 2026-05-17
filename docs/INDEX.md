@@ -54,6 +54,7 @@ Start here when orienting yourself:
 - `docs/WORKER_ASSIGNMENT_SEMANTICS.md` - worker assignment creation evidence and status boundary
 - `docs/WORKER_SCHEDULING_ENFORCEMENT.md` - boundary between assigned intent and future scheduling behavior
 - `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` - opt-in decision logging semantics for assigned-intent eligibility
+- `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` - WorkerAssignment tissue consolidation before scheduling enforcement
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

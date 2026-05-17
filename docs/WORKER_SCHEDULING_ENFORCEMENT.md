@@ -256,23 +256,24 @@ With explicit `--log`, it may write one decision record for `allow_scheduling`,
 
 ## Cycle Consolidation
 
-The first eligibility slice is sufficient as a read-only boundary:
+The first eligibility slice and opt-in logging slice are sufficient for the
+current WorkerAssignment tissue:
 
-- the validator does not schedule, reserve, route, log, or execute
-- tests prove it does not mutate assignment, decision, or audit storage
+- the validator does not schedule, reserve, route, or execute
+- eligibility logging is explicit and does not mutate assignments or audit
 - reason codes are stable for the currently implemented worker inputs
 - the CLI inspection surface reports the same validator outcome without writes
+  unless `--log` is explicit
 - heartbeat freshness, room policy, guard outcomes, resource policy, and human
   approval remain future inputs because those scheduling-enforcement surfaces
   do not exist yet
+- `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` consolidates the
+  current WorkerAssignment tissue before further scheduling work
 
 Next decision:
 
 ```text
-worker-assignment CLI slicing
-or
-consolidate opt-in scheduling eligibility decision logging before any
-scheduling enforcement work
+Worker Scheduling Enforcement Readiness Gap Review
 ```
 
 Not next:

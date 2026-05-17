@@ -34,6 +34,9 @@
 - Scheduling eligibility logging:
   `worker-assignment-scheduling-eligibility --log` can now persist one
   governance decision for allow, deny, or review results only.
+- WorkerAssignment tissue consolidation:
+  `docs/WORKER_ASSIGNMENT_TISSUE_CONSOLIDATION_REVIEW.md` confirms assignment
+  intent remains separate from scheduling, reservation, routing, and execution.
 
 ## Current Cycle
 
@@ -50,6 +53,9 @@ Worker Runtime / scheduling eligibility:
   proof is covered by tests, reason codes are stable for the implemented
   worker inputs, and opt-in decision logging is implemented only for loggable
   allow, deny, or review results.
+- Tissue review: WorkerAssignment now has validated creation, lifecycle
+  transitions, eligibility inspection, and explicit eligibility decision
+  logging without scheduling or execution.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -420,8 +426,8 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, consolidate opt-in scheduling eligibility decision logging before any
-  real scheduling, reservation, routing, provider, or execution behavior.
+- Next, prepare a Worker Scheduling Enforcement Readiness Gap Review before
+  any real scheduling, reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
