@@ -66,6 +66,9 @@
 - Added `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md` to
   document lifecycle status mutation and its existing audit boundary before
   further eligibility logging work.
+- Added `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` to define
+  future explicit `worker-assignment-scheduling-eligibility --log` semantics
+  before implementation.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-105: GENUS Metabolic State Graph Is A Derived Diagnostic View, Not A Second Source Of Truth`.

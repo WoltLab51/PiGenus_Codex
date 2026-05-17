@@ -1809,3 +1809,22 @@ Why it mattered:
 The WorkerAssignment tissue now has Cell-DNA coverage for validation, creation,
 transition, and scheduling eligibility inspection. The lifecycle path remains a
 status transition and audit event only: assigned still does not mean executed.
+
+## WorkerAssignment Scheduling Eligibility Logging Semantics
+
+The project gained:
+
+- `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
+- explicit source and family semantics for future opt-in
+  `worker-assignment-scheduling-eligibility --log`
+- a first-slice rule to log `allow_scheduling`, `deny_scheduling`, and
+  `require_review` only, while leaving `not_considered` unpersisted
+- preserved stop lines for assignment mutation, audit writes, scheduling,
+  reservation, routing, provider calls, execution logs, and execution
+
+Why it mattered:
+
+Eligibility logging is now framed as inspection evidence, not scheduling
+enforcement. This keeps the next code slice small and prevents missing,
+pending, or terminal assignments from becoming noisy governance records before
+operators need that behavior.

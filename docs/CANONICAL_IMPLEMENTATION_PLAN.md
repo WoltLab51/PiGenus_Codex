@@ -72,6 +72,7 @@ PiGenus currently has:
 - WorkerAssignment creation service and CLI
 - WorkerAssignment lifecycle transition validator, service, and CLI
 - WorkerAssignment scheduling eligibility validator and read-only CLI
+- WorkerAssignment scheduling eligibility logging semantics before implementation
 - Static CLI module boundaries for worker, worker assignment, and meaning
   commands
 - GitHub Actions CI and local test suite
@@ -168,7 +169,8 @@ power.
 Focus:
 
 - confirm assignment intent lifecycle boundaries
-- decide whether scheduling eligibility decision logging is mature enough
+- implement scheduling eligibility decision logging only according to
+  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist
@@ -296,7 +298,7 @@ should become immediately.
 | `WorkerAssignmentCreator` | Creates pending assignment intent after validation and writes audit. | GovernedCellCandidate | Validator, WorkerAssignmentRepository, AuditRepository | Assignment row and creation audit on success | Create pending intent and audit one operational action | Create decisions, assign status, schedule, route, execute | GovernedCell | Meaningful control point with writes. |
 | `WorkerAssignmentStatusTransitionValidator` | Checks allowed assignment lifecycle transitions. | MicroCell | Current assignment, target status | None | Return transition validation and reason codes | Persist, audit, execute, schedule | CapabilityCell | Small, responsibility-bearing, read-only capability. |
 | `WorkerAssignmentStatusTransitionService` | Applies validated assignment status transitions and writes audit. | GovernedCellCandidate | Assignment repository, transition validator | Assignment status and audit row on success | Update lifecycle status under rules | Create decisions, schedule, route, execute | GovernedCell | Lifecycle control point; not execution proof. |
-| `WorkerAssignmentSchedulingEligibilityValidator` | Checks whether assigned intent may be considered by future scheduling. | GovernedCellCandidate | WorkerAssignmentRepository, WorkerRepository, DecisionRepository | None | Produce eligibility result and reasons | Decision logging, audit, assignment mutation, reservation, routing, execution | GovernedCell | Current safest next candidate for optional decision logging discussion. |
+| `WorkerAssignmentSchedulingEligibilityValidator` | Checks whether assigned intent may be considered by future scheduling. | GovernedCellCandidate | WorkerAssignmentRepository, WorkerRepository, DecisionRepository | None | Produce eligibility result and reasons | Decision logging unless explicit future `--log`, audit, assignment mutation, reservation, routing, execution | GovernedCell | Optional logging semantics are documented before code. |
 | Worker assignment CLI router | Registers and dispatches assignment commands. | OperatorSurface | Parsed args | None directly | Route commands to inspection/lifecycle modules | Own policy, schedule, execute, hidden writes | StaticCellBoundary | Keep thin. |
 | Worker assignment inspection CLI | Lists assignments and scheduling eligibility read-only. | OperatorSurface | Assignment/worker/decision repositories | None | Operator inspection | Decision logging, audit, mutation, reservation, execution | StaticCellBoundary / future command cells | Read-only boundary. |
 | Worker assignment lifecycle CLI | Wraps assignment creation and transition services. | OperatorSurface | Parsed args, services | Through services only | Operator access to validated lifecycle actions | Own policy, bypass services, schedule, execute | StaticCellBoundary / future command cells | Writes must stay service-backed. |

@@ -149,12 +149,18 @@ inspectable.
 
 The first scheduling enforcement implementation should not write anything.
 
-Future opt-in logging may write one `GovernanceDecision` with a distinct source
-such as:
+Future opt-in eligibility logging may write one `GovernanceDecision` with a
+distinct source:
 
 ```text
-source = "worker_scheduling_enforcement"
+source = "worker_assignment_scheduling_eligibility"
 ```
+
+The detailed logging semantics live in
+`docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`. The source
+`worker_scheduling_enforcement` is reserved for a later enforcement boundary
+after scheduling, reservation, routing, provider, and execution stop lines are
+revisited.
 
 Even with logging, enforcement must not:
 
@@ -262,7 +268,8 @@ Next decision:
 ```text
 worker-assignment CLI slicing
 or
-opt-in scheduling eligibility decision logging
+implement opt-in scheduling eligibility decision logging according to
+docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md
 ```
 
 Not next:

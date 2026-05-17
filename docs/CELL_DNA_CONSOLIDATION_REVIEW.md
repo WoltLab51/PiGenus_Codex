@@ -281,5 +281,11 @@ The recommended lifecycle-changing frame is now documented in:
 docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md
 ```
 
-Eligibility decision logging remains out of scope until a separate decision
-and implementation slice.
+Eligibility decision logging remains out of scope for this review. The
+separate semantics decision is now captured in:
+
+```text
+docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md
+```
+
+Implementation remains a separate code slice.

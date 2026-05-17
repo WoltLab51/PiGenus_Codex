@@ -29,8 +29,11 @@
   write-capable frame for `WorkerAssignmentCreator` and the lifecycle-changing
   frame for `WorkerAssignmentStatusTransitionService`.
 - Cell-DNA consolidation: `docs/CELL_DNA_CONSOLIDATION_REVIEW.md`
-  recommendation is applied; opt-in eligibility decision logging remains a
-  separate decision.
+  recommendation is applied; opt-in eligibility decision logging implementation
+  remains a separate code slice.
+- Scheduling eligibility logging semantics:
+  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md` defines the
+  future explicit `--log` boundary before implementation.
 
 ## Current Cycle
 
@@ -45,8 +48,8 @@ Worker Runtime / scheduling eligibility:
   provider calls, execution logs, execution, or logging.
 - Consolidation: read-only boundary is complete for the first pass, no-write
   proof is covered by tests, reason codes are stable for the implemented
-  worker inputs, and opt-in decision logging should wait until the CLI surface
-  has stayed boring.
+  worker inputs, and opt-in decision logging semantics are now documented
+  before code.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -349,6 +352,11 @@ TaskRequest -> MemoryProposal -> GuardDecision -> MemoryStored -> HumanResponse
 - `worker-assignment-scheduling-eligibility` exposes that validator as a
   read-only CLI inspection command; it does not log decisions, mutate
   assignments, reserve, route, or execute.
+- Future `worker-assignment-scheduling-eligibility --log` semantics are
+  documented as explicit decision logging only: one decision record for allow,
+  deny, or review results, no assignment mutation, no audit write, and no
+  scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 - Internal communication uses governed meaning objects, structured events,
   decision traces, and persisted decisions instead of a free-form prompt bus.
 - GENUS vocabulary is centralized before future schema, storage, or runtime
@@ -410,10 +418,9 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, decide whether opt-in scheduling eligibility decision logging is mature
-  enough after Cell-DNA coverage for validation, creation, transition, and
-  eligibility inspection. Do not add real scheduling, reservation, routing,
-  provider, or execution behavior.
+- Next, implement opt-in scheduling eligibility decision logging according to
+  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`. Do not add real
+  scheduling, reservation, routing, provider, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

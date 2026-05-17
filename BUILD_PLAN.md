@@ -237,6 +237,8 @@ Completed worker surfaces in this arc:
   `WorkerAssignmentCreator`
 - lifecycle-changing Cell-DNA frame for
   `WorkerAssignmentStatusTransitionService`
+- opt-in scheduling eligibility decision logging semantics in
+  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -254,10 +256,10 @@ Current stop lines:
 
 Next decision:
 
-- Decide whether opt-in scheduling eligibility decision logging is mature
-  enough after Cell-DNA coverage for validation, creation, transition, and
-  eligibility inspection. Do not add real scheduling, reservation, routing,
-  provider calls, execution logs, or execution.
+- Implement opt-in scheduling eligibility decision logging only according to
+  `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`. Do not add real
+  scheduling, reservation, routing, provider calls, execution logs, or
+  execution.
 
 Readiness source:
 
@@ -267,6 +269,7 @@ Readiness source:
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_VALIDATOR.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_CREATOR.md`
 - `docs/CELL_DNA_WORKER_ASSIGNMENT_STATUS_TRANSITION_SERVICE.md`
+- `docs/WORKER_ASSIGNMENT_SCHEDULING_ELIGIBILITY_LOGGING.md`
 - `docs/CELLULAR_INVENTORY_REVIEW.md`
 - `docs/WORKER_RUNTIME_READINESS.md`
 - `docs/DATA_ARCHITECTURE.md`
