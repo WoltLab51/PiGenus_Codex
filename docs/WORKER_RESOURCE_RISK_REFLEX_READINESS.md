@@ -3,10 +3,14 @@
 This document defines the next scheduling-readiness boundary after freshness
 and room/context recheck: resource, risk, and reflex semantics.
 
-It is documentation-only. It does not add runtime code, schemas, migrations,
-CLI behavior, logging behavior, graph projection, RuntimeCell behavior,
-CellRegistry behavior, scheduling enforcement, reservation, routing, provider
-calls, execution logs, or execution.
+This document started as documentation-only. The first implementation now adds
+only a storage-free read-only validator:
+`WorkerAssignmentResourceRiskReflexReadinessValidator`.
+
+It still does not add schemas, migrations, CLI behavior, logging behavior,
+graph projection, RuntimeCell behavior, CellRegistry behavior, scheduling
+enforcement, reservation, routing, provider calls, execution logs, or
+execution.
 
 ## Purpose
 
@@ -54,6 +58,8 @@ Implemented:
 - WorkerProfile capability, runtime, sensitivity, and network limits
 - WorkerHeartbeat current-state freshness checks
 - WorkerAssignment freshness and room/context eligibility inputs
+- storage-free read-only
+  `WorkerAssignmentResourceRiskReflexReadinessValidator`
 
 Not implemented:
 
@@ -288,20 +294,19 @@ This is still not scheduling enforcement.
 
 ## Future Validator Shape
 
-Do not build this yet.
-
-The first possible validator should be read-only and small:
+The first validator is now implemented as read-only and small:
 
 ```text
 WorkerAssignmentResourceRiskReflexReadinessValidator
 ```
 
-Initial Cell-DNA should state:
+Current shape:
 
 - Maturity: `CapabilityCell / GovernedCellCandidate`
 - Inputs: assignment ID plus explicit resource/risk/reflex policy inputs
 - Outputs: allow, deny, review, or not-considered result with stable reasons
-- Reads: assignment, worker profile, optional resource/risk/reflex inputs
+- Reads: assignment plus explicit resource/risk/reflex inputs supplied by the
+  caller
 - Writes: none
 - Forbidden effects: no assignment mutation, no audit write, no decision
   logging, no reservation, no routing, no provider call, no execution
@@ -370,9 +375,10 @@ before scheduling enforcement.
 Next safe step:
 
 ```text
-Implement a storage-free read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
-tests.
+Consolidate the storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator before wiring it into
+scheduling eligibility, CLI, logging, scheduling enforcement, reservation,
+routing, provider calls, execution logs, or execution.
 ```
 
 The Cell-DNA frame for that future validator now lives in

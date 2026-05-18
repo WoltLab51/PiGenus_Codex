@@ -2131,3 +2131,23 @@ The resource/risk/reflex readiness boundary now has a cell-shaped membrane
 before code exists. This keeps the next implementation narrow: expose budget,
 risk, and protective-response gaps without creating scheduling enforcement,
 reservation, routing, provider calls, execution logs, or execution.
+
+## Worker Resource / Risk / Reflex Readiness Validator
+
+The project gained:
+
+- `pigenus.core.worker_assignment_resource_risk_reflex_readiness`
+- `WorkerAssignmentResourceRiskReflexReadinessValidator`
+- storage-free read-only evaluation of caller-supplied resource budget, risk
+  band, risk budget, and reflex signals
+- targeted tests for allow, review, deny, not-considered, stable reasons, and
+  no-write proof
+
+Why it mattered:
+
+PiGenus now has the first executable physiological readiness check after
+freshness and room/context compatibility. The validator exposes whether an
+assigned intent has enough explicit budget, risk, and reflex evidence to stay
+in future scheduling-readiness consideration, while still creating no CLI
+behavior, logs, decisions, audits, reservations, routes, provider calls,
+execution logs, or execution.

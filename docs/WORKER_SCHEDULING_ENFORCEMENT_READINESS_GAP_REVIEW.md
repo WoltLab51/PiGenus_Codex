@@ -27,7 +27,8 @@ Current answer:
 
 ```text
 Scheduling enforcement is not ready yet.
-The next safe step is freshness semantics, not enforcement code.
+Resource/risk/reflex readiness now has a storage-free read-only validator.
+The next safe step is consolidation, not enforcement code.
 ```
 
 ## Current Ready Inputs
@@ -45,6 +46,7 @@ The current runtime has several useful inputs for a future enforcement check.
 | Scheduling eligibility validator | Implemented | Rechecks assigned intent against current worker and evidence state. |
 | Eligibility logging | Implemented | Explicit `--log` writes one decision for allow, deny, or review results only. |
 | Worker freshness validator | Implemented | Storage-free validator is wired into assigned-intent eligibility for heartbeat and preflight evidence age checks. |
+| Resource/risk/reflex readiness validator | Implemented | Storage-free read-only validator checks caller-supplied budget, risk, and reflex inputs without writes. |
 | Tests | Implemented | Current full suite is tracked in `STATUS.md`. |
 
 These inputs prove that a governed intent chain exists. They do not prove that
@@ -57,8 +59,8 @@ the intent is fresh, budgeted, approved, reservable, routeable, or executable.
 | Heartbeat freshness | Policy and read-only eligibility integration exist; no heartbeat history or enforcement exists. | A worker can be active in storage but too stale for scheduling. | Consolidate read-only behavior before enforcement code. |
 | Evidence freshness | Policy and read-only eligibility integration exist; no revocation model exists. | Old preflight allow evidence may no longer be safe. | Keep expiry/review bands in eligibility; defer revocation and enforcement. |
 | Room/context recheck | Read-only validator implemented and optionally wired into scheduling eligibility; no CLI, logging, or enforcement exists. | Room policy can change after assignment creation. | Consolidated as read-only eligibility input; do not expose further before resource/risk/reflex semantics. |
-| Resource/risk budget | Resource/risk readiness semantics are documented; no runtime budget input exists yet. | Scheduling needs capacity and risk pressure, not only worker capability. | Apply Cell-DNA before any read-only validator implementation. |
-| Reflex/circuit breaker | Reflex readiness semantics are documented; worker runtime has no kill-switch path. | Enforcement must be stoppable before live behavior appears. | Apply Cell-DNA before any read-only validator implementation. |
+| Resource/risk budget | Storage-free read-only validator exists and accepts explicit caller-supplied budget and risk inputs; no resource or risk store exists. | Scheduling needs capacity and risk pressure, not only worker capability. | Consolidate validator behavior before wiring it into eligibility or enforcement. |
+| Reflex/circuit breaker | Storage-free read-only validator accepts explicit kill-switch, circuit-breaker, quarantine, abort, and recovery signals; worker runtime has no reflex store or live kill-switch path. | Enforcement must be stoppable before live behavior appears. | Consolidate validator behavior before wiring it into eligibility or enforcement. |
 | Human approval thresholds | Human approval exists as a stub, but is not connected to worker scheduling. | Sensitive rooms or capabilities may need approval before scheduling. | Define threshold rules before high-risk scheduling. |
 | Reservation distinction | No reservation model exists. | Enforcement must not silently become capacity reservation. | Keep enforcement read-only until reservation has a separate model. |
 | Enforcement logging semantics | Eligibility logging exists; enforcement logging source is reserved. | Persisted enforcement records must not be confused with eligibility evidence. | Define later as a distinct source after readiness inputs exist. |
@@ -200,9 +202,9 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-Implement a storage-free read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
-tests.
+Consolidate the storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator before any scheduling
+enforcement validator exists.
 ```
 
 The current policy and implementation now live in

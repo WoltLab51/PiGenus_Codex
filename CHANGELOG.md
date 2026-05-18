@@ -18,6 +18,8 @@
   transition persistence with audit, `worker-assignment-transition`, and the
   WorkerAssignment scheduling eligibility validator, CLI inspection, and
   explicit eligibility decision logging.
+- Added storage-free read-only resource/risk/reflex readiness validation for
+  assigned WorkerAssignment intent with targeted no-write tests.
 - Added architecture and process scaffolding for the v0.4 arc: data
   architecture, compact architecture summary, worker readiness, multimodal
   systemform, architecture fitness review, cellular systemform, stable-core /

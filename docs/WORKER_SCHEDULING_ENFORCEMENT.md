@@ -278,9 +278,9 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Implement a storage-free read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
-tests.
+Consolidate the storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator before wiring it into
+eligibility, CLI, logging, or enforcement behavior.
 ```
 
 Readiness gaps are documented in
@@ -303,7 +303,8 @@ now lives in
 `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
 The next safe step is a storage-free read-only implementation with targeted
 no-write tests before scheduling enforcement, reservation, routing, provider
-calls, execution logs, or execution.
+calls, execution logs, or execution. That implementation now exists; the next
+safe step is consolidation before wiring it into other runtime surfaces.
 
 Not next:
 

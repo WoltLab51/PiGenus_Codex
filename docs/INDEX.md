@@ -75,7 +75,7 @@ Start here when orienting yourself:
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md` - consolidation of the read-only room/context recheck validator before wiring
 - `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md` - consolidation of optional room/context recheck composition inside scheduling eligibility
 - `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md` - resource, risk, and reflex readiness semantics before scheduling enforcement
-- `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md` - Cell-DNA frame for future resource/risk/reflex readiness validation
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md` - Cell-DNA frame for resource/risk/reflex readiness validation
 - `docs/DATA_LIFECYCLE.md` - lifecycle of events, meaning, memory, decisions, audit, and fossils
 - `docs/DATA_ARCHITECTURE.md` - storage roles, performance boundaries, and truth/index/cache distinctions
 - `docs/GENUS_ARCHITECTURE_SUMMARY.md` - concise current architecture summary

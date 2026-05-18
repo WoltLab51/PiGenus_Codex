@@ -1,12 +1,12 @@
 # WorkerAssignmentResourceRiskReflexReadinessValidator Cell-DNA
 
-This document applies `docs/CELL_DNA_PROTOCOL.md` to the future
+This document applies `docs/CELL_DNA_PROTOCOL.md` to the implemented
 `WorkerAssignmentResourceRiskReflexReadinessValidator`.
 
-It is documentation-only. It does not add runtime code, schemas, migrations,
-CLI behavior, logging behavior, graph projection, RuntimeCell behavior,
-CellRegistry behavior, scheduling enforcement, reservation, routing, provider
-calls, execution logs, or execution.
+The implementation is storage-free and read-only. It does not add schemas,
+migrations, CLI behavior, logging behavior, graph projection, RuntimeCell
+behavior, CellRegistry behavior, scheduling enforcement, reservation, routing,
+provider calls, execution logs, or execution.
 
 ## Capability
 
@@ -39,10 +39,10 @@ scheduling enforcement.
 CapabilityCell / GovernedCellCandidate
 ```
 
-Current maturity is documentation-only. RuntimeCell maturity is explicitly
-later.
+Current maturity is a read-only CapabilityCell implementation /
+GovernedCellCandidate. RuntimeCell maturity is explicitly later.
 
-Planned implementation shape:
+Implementation shape:
 
 ```text
 pigenus.core.worker_assignment_resource_risk_reflex_readiness.WorkerAssignmentResourceRiskReflexReadinessValidator
@@ -50,12 +50,20 @@ pigenus.core.worker_assignment_resource_risk_reflex_readiness.WorkerAssignmentRe
 
 ## Inputs
 
-Future first implementation inputs:
+Current first implementation inputs:
 
 - assignment ID
-- explicit resource readiness policy / thresholds
-- explicit risk readiness policy / thresholds
-- explicit reflex readiness policy / required boundaries
+- explicit resource request
+- explicit resource budget
+- explicit risk band
+- explicit risk budget availability
+- explicit reflex signals:
+  - kill-switch availability
+  - kill-switch active state
+  - circuit-breaker open state
+  - quarantine active state
+  - abort path availability
+  - recovery path availability
 
 Runtime data resolved from assignment ID:
 
@@ -92,7 +100,7 @@ inputs should become stable reasons, not hidden permission.
 
 ## Outputs
 
-Future output:
+Current output:
 
 - `WorkerAssignmentResourceRiskReflexReadinessResult`
 - assignment ID
@@ -144,24 +152,23 @@ Suggested reflex reasons:
 - `reflex_review_required`
 - `reflex_readiness_passed`
 
-Reason names may be refined before implementation. Once implemented and
-tested, reason codes should remain stable.
+Further reason names may be refined only through explicit tests and
+documentation updates. Implemented reason codes should remain stable.
 
 ## Reads
 
-A future first implementation may read:
+Current first implementation reads:
 
 - `WorkerAssignmentRepository`
 - WorkerAssignment status and assignment fields
 - explicit resource/risk/reflex policy inputs supplied by the caller
-- optional ResourceGrant or resource request inputs supplied by the caller
-- optional worker capacity / cost profile inputs supplied by the caller
-- optional risk band / approval-threshold inputs supplied by the caller
-- optional circuit-breaker, kill-switch, quarantine, abort, or recovery
-  signals supplied by the caller
+- resource request and resource budget inputs supplied by the caller
+- risk band and risk budget availability supplied by the caller
+- circuit-breaker, kill-switch, quarantine, abort, and recovery signals
+  supplied by the caller
 
-The first implementation should not own persistence for resource usage, risk
-budgets, reflex state, kill switches, quarantine records, or recovery paths.
+The implementation does not own persistence for resource usage, risk budgets,
+reflex state, kill switches, quarantine records, or recovery paths.
 
 ## Writes
 
@@ -267,13 +274,13 @@ It does not:
 
 ## Tests
 
-Future tests should prove:
+Current tests prove:
 
 - missing assignment returns `not_considered`
 - non-assigned assignment status returns `not_considered`
 - matching resource/risk/reflex inputs allow readiness
 - missing resource budget returns review or deny according to explicit policy
-- exhausted resource budget denies readiness
+- resource request above budget denies readiness
 - unknown risk band requires review
 - denied risk band denies readiness
 - active kill switch denies readiness
@@ -284,15 +291,12 @@ Future tests should prove:
 - no assignment writes occur during validation
 - no audit writes occur during validation
 - no decision writes occur during validation
-- no resource, risk, reflex, kill-switch, quarantine, abort, or recovery
-  records are created or mutated
 - no reservation, routing, provider, execution-log, or execution writes occur
 
 ## Non-Goals
 
-This Cell-DNA does not add:
+This Cell-DNA and implementation do not add:
 
-- runtime code
 - schemas
 - migrations
 - resource usage records
@@ -322,13 +326,14 @@ This Cell-DNA does not add:
 Current safe maturity:
 
 ```text
-Documented Cell-DNA only.
+Storage-free read-only CapabilityCell implementation.
 ```
 
 Next reasonable maturity:
 
 ```text
-Read-only CapabilityCell implementation with targeted no-write tests.
+Consolidation review before any eligibility wiring, CLI, logging, enforcement,
+reservation, routing, provider calls, execution logs, or execution.
 ```
 
 Promotion blockers:

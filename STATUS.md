@@ -9,7 +9,7 @@
 - Status: Worker Runtime preparation in progress; no worker execution
 - Test command: `.venv\Scripts\python.exe -m pytest`
 - CI command: `python -m pytest` on GitHub Actions / Python 3.12
-- Last verified result: `332 passed`
+- Last verified result: `343 passed`
 - Naming: GENUS is the broader systemform; PiGenus is the local Python
   reference runtime distribution
 - Canonical orientation: `docs/GENUS_CANONICAL_SYSTEMFORM.md` is the current
@@ -113,9 +113,14 @@ Worker Runtime / scheduling eligibility:
   execution behavior.
 - Resource/risk/reflex Cell-DNA:
   `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
-  frames the future validator as documentation-only CapabilityCell /
-  GovernedCellCandidate before any code, CLI, logging, scheduling enforcement,
+  frames the validator as a storage-free read-only CapabilityCell /
+  GovernedCellCandidate before any CLI, logging, scheduling enforcement,
   reservation, routing, provider calls, execution logs, or execution behavior.
+- Resource/risk/reflex readiness implementation:
+  `WorkerAssignmentResourceRiskReflexReadinessValidator` now evaluates
+  caller-supplied resource budget, risk band, risk budget, and reflex signals
+  without assignment mutation, decision logging, audit writes, reservation,
+  routing, provider calls, execution logs, or execution.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -497,10 +502,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, implement a storage-free read-only
-  `WorkerAssignmentResourceRiskReflexReadinessValidator` with targeted
-  no-write tests before adding CLI, logging, scheduling enforcement,
-  reservation, routing, provider calls, execution logs, or execution behavior.
+- Next, consolidate the storage-free read-only
+  `WorkerAssignmentResourceRiskReflexReadinessValidator` before wiring it into
+  scheduling eligibility, CLI, logging, scheduling enforcement, reservation,
+  routing, provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning
