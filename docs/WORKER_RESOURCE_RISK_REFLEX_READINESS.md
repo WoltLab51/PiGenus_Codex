@@ -370,9 +370,13 @@ before scheduling enforcement.
 Next safe step:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
+
+The Cell-DNA frame for that future validator now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
 
 Still not next:
 

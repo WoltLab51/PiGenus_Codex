@@ -111,6 +111,11 @@ Worker Runtime / scheduling eligibility:
   risk readiness, and reflex readiness semantics before any scheduling
   enforcement, reservation, routing, provider calls, execution logs, or
   execution behavior.
+- Resource/risk/reflex Cell-DNA:
+  `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
+  frames the future validator as documentation-only CapabilityCell /
+  GovernedCellCandidate before any code, CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution behavior.
 - Fitness note: the worker-assignment CLI slicing decision has been applied;
   future growth should keep inspection and lifecycle surfaces separate.
 
@@ -492,10 +497,10 @@ Worker Runtime preparation:
   wrapper now exist as lifecycle-only boundaries.
 - `worker-assignment-transition` exists as a small CLI wrapper around
   WorkerAssignmentStatusTransitionService.
-- Next, apply Cell-DNA to a future read-only
-  `WorkerAssignmentResourceRiskReflexReadinessValidator` before adding code,
-  CLI, logging, scheduling enforcement, reservation, routing, provider calls,
-  execution logs, or execution behavior.
+- Next, implement a storage-free read-only
+  `WorkerAssignmentResourceRiskReflexReadinessValidator` with targeted
+  no-write tests before adding CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution behavior.
 - Avoid adding scheduling, routing, reservation, provider, or execution
   behavior to assignment status transitions.
 - Keep further CLI slicing focused and behavior-preserving; worker and meaning

@@ -194,6 +194,8 @@ Focus:
   enforcement code
 - apply Cell-DNA to the first read-only resource/risk/reflex readiness
   validator before implementation
+- keep the first resource/risk/reflex readiness implementation storage-free
+  and read-only
 - keep assigned status separate from execution proof
 - keep worker as host, not intelligence
 - avoid scheduling enforcement until resource/risk/reflex boundaries exist

@@ -131,8 +131,9 @@ Do not add more eligibility logging or scheduling behavior immediately.
 Next safe decision:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
 
 Why:
@@ -152,6 +153,8 @@ Why:
   `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
 - resource, risk, and reflex readiness semantics now live in
   `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`
+- the related Cell-DNA frame now lives in
+  `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
 
 ## Stop Lines
 

@@ -200,8 +200,9 @@ Do not implement scheduling enforcement yet.
 Next safe step:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
 
 The current policy and implementation now live in
@@ -235,9 +236,10 @@ The validator is now wired into scheduling eligibility only when explicitly
 supplied by a caller. That integration is consolidated in
 `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
 The resource/risk/reflex semantic boundary now lives in
-`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`. Next, PiGenus should apply
-Cell-DNA to a future read-only
-`WorkerAssignmentResourceRiskReflexReadinessValidator` without adding code,
-CLI, logging, scheduling enforcement, reservation, routing, provider calls,
-execution logs, or execution.
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`, and the related Cell-DNA frame
+now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
+Next, PiGenus should implement a storage-free read-only validator with
+targeted no-write tests, without adding CLI, logging, scheduling enforcement,
+reservation, routing, provider calls, execution logs, or execution.
 Scheduling enforcement remains later.

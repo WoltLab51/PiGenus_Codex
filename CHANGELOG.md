@@ -113,6 +113,10 @@
 - Added `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md` to define resource
   budget, risk budget, and reflex readiness semantics before scheduling
   enforcement.
+- Added
+  `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
+  to frame the future read-only resource/risk/reflex readiness validator
+  before implementation.
 - Recorded durable worker, architecture, and documentation-maintenance
   decisions through
   `D-108: Resource Risk And Reflex Readiness Precedes Scheduling Enforcement`.

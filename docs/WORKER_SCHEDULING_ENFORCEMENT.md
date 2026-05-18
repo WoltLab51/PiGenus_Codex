@@ -278,8 +278,9 @@ current WorkerAssignment tissue:
 Next decision:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
 
 Readiness gaps are documented in
@@ -297,11 +298,12 @@ validator is now wired into scheduling eligibility only when explicitly
 supplied by a caller. That integration is consolidated in
 `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`.
 Those semantics now live in
-`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`. The next safe step is applying
-Cell-DNA to a future read-only
-`WorkerAssignmentResourceRiskReflexReadinessValidator` before scheduling
-enforcement, reservation, routing, provider calls, execution logs, or
-execution.
+`docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`, and the related Cell-DNA frame
+now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
+The next safe step is a storage-free read-only implementation with targeted
+no-write tests before scheduling enforcement, reservation, routing, provider
+calls, execution logs, or execution.
 
 Not next:
 

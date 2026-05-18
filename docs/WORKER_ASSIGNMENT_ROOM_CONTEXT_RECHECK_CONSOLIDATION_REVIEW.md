@@ -187,8 +187,9 @@ provider calls, execution logs, or execution from this review.
 Next safe step:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
 
 The current room/context integration is consolidated in
@@ -208,6 +209,8 @@ That integration must continue to:
 
 Resource, risk, and reflex readiness semantics now live in
 `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
+The related Cell-DNA frame now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
 
 ## Stop Lines
 

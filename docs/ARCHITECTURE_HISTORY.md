@@ -2113,3 +2113,21 @@ Scheduling readiness now has the next physiology layer after freshness and
 room/context recheck. PiGenus can describe budget, pressure, and protective
 response requirements before any scheduling-enforcement validator, reservation,
 routing, provider call, execution log, or execution exists.
+
+## Worker Resource / Risk / Reflex Readiness Cell-DNA
+
+The project gained:
+
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
+- a documentation-only CapabilityCell / GovernedCellCandidate frame for the
+  future `WorkerAssignmentResourceRiskReflexReadinessValidator`
+- explicit input, output, read, write, trace, and no-side-effect boundaries
+- a next-step path toward a storage-free read-only validator implementation
+  with targeted no-write tests
+
+Why it mattered:
+
+The resource/risk/reflex readiness boundary now has a cell-shaped membrane
+before code exists. This keeps the next implementation narrow: expose budget,
+risk, and protective-response gaps without creating scheduling enforcement,
+reservation, routing, provider calls, execution logs, or execution.

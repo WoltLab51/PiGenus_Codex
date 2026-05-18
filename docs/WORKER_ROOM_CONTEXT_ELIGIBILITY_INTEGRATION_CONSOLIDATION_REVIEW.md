@@ -164,12 +164,15 @@ surface before those exist would make the path look more mature than it is.
 Next safe decision:
 
 ```text
-Apply Cell-DNA to a future read-only
-WorkerAssignmentResourceRiskReflexReadinessValidator.
+Implement a storage-free read-only
+WorkerAssignmentResourceRiskReflexReadinessValidator with targeted no-write
+tests.
 ```
 
 Resource, risk, and reflex readiness semantics now live in
 `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`.
+The Cell-DNA frame now lives in
+`docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`.
 
 ## Stop Lines
 

@@ -263,6 +263,8 @@ Completed worker surfaces in this arc:
   any CLI, logging, or enforcement behavior
 - Worker resource/risk/reflex readiness semantics before scheduling
   enforcement
+- Cell-DNA frame for future
+  `WorkerAssignmentResourceRiskReflexReadinessValidator`
 - GitHub Actions CI for push, pull request, and manual dispatch
 
 Current stop lines:
@@ -280,10 +282,10 @@ Current stop lines:
 
 Next decision:
 
-- Apply Cell-DNA to a future read-only
-  `WorkerAssignmentResourceRiskReflexReadinessValidator` before adding code,
-  CLI, logging, scheduling enforcement, reservation, routing, provider calls,
-  execution logs, or execution.
+- Implement a storage-free read-only
+  `WorkerAssignmentResourceRiskReflexReadinessValidator` with targeted
+  no-write tests, before adding CLI, logging, scheduling enforcement,
+  reservation, routing, provider calls, execution logs, or execution.
 
 Readiness source:
 
@@ -304,6 +306,7 @@ Readiness source:
 - `docs/WORKER_ASSIGNMENT_ROOM_CONTEXT_RECHECK_CONSOLIDATION_REVIEW.md`
 - `docs/WORKER_ROOM_CONTEXT_ELIGIBILITY_INTEGRATION_CONSOLIDATION_REVIEW.md`
 - `docs/WORKER_RESOURCE_RISK_REFLEX_READINESS.md`
+- `docs/CELL_DNA_WORKER_ASSIGNMENT_RESOURCE_RISK_REFLEX_READINESS_VALIDATOR.md`
 - `tests/test_worker_assignment_room_context_recheck.py`
 - `tests/test_worker_freshness_policy.py`
 - `tests/test_worker_assignment_scheduling_eligibility.py`
